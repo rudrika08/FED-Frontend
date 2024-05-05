@@ -26,7 +26,7 @@ FED Desktop is the official website of the Federation of Entrepreneurship Develo
 - **Backend**: Node.js with Express
 - **Database**: MongoDB
 - **Authentication**: Firebase Authentication
-- **Styling**: CSS for custom design and layout
+- **Styling**: Modular SCSS for customizable and maintainable styles.
 
 ### How to Run Locally
 
