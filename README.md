@@ -53,7 +53,7 @@ To run FED FRONTEND locally on your machine, follow these steps:
    ```
 
 3. **Install Dependencies**:
-   After succesSful installation of pnpm on your system, install the required node modules and dependencies for the project.
+   After successful installation of pnpm on your system, install the required node modules and dependencies for the project.
    ```bash
    pnpm i
    ```
