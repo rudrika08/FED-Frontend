@@ -125,7 +125,7 @@ Acknowledgements and credits go here.
 
 ### Screenshots
 
-Include screenshots of the FED Desktop website in action:
+Include screenshots of the Fed-Frontend website in action:
 
 1. Landing Page
 2. Events Page
@@ -134,4 +134,4 @@ Include screenshots of the FED Desktop website in action:
 
 ---
 
-Feel free to reach out for any inquiries or assistance regarding FED Desktop. Happy coding and entrepreneurship!
+Feel free to reach out for any inquiries or assistance regarding Fed-Frontend. Happy coding and entrepreneurship!
