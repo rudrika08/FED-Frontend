@@ -1,4 +1,4 @@
-## FED Desktop
+## FED Frontend
 
 ### Overview
 
@@ -58,7 +58,7 @@ To run FED Desktop locally on your machine, follow these steps:
    pnpm i
    ```
    
-4. **Set Up Firebase Credentials (Not required at this phase of development) **: 
+4. **Set Up Firebase Credentials (Not required at this phase of development):**
    - Obtain Firebase configuration keys from the Firebase Console.
    - Create a `.env` file in the root directory and add Firebase configuration details:
      ```
