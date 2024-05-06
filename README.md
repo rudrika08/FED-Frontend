@@ -1,8 +1,8 @@
-## FED Frontend
+## FED FRONTEND
 
 ### Overview
 
-FED Desktop is the official website of the Federation of Entrepreneurship Development (FED), designed to showcase upcoming events, introduce team members and leads, and provide resources for developing entrepreneurial skills. This platform aims to empower individuals interested in entrepreneurship and innovation.
+FED FRONTEND is the official website of the Federation of Entrepreneurship Development (FED), designed to showcase upcoming events, introduce team members and leads, and provide resources for developing entrepreneurial skills. This platform aims to empower individuals interested in entrepreneurship and innovation.
 
 ### Features (Currently in Development)
 
@@ -30,7 +30,7 @@ FED Desktop is the official website of the Federation of Entrepreneurship Develo
 
 ### How to Run Locally
 
-To run FED Desktop locally on your machine, follow these steps:
+To run FED FRONTEND locally on your machine, follow these steps:
 
 1. **Clone Repository**:
    ```bash
@@ -53,7 +53,7 @@ To run FED Desktop locally on your machine, follow these steps:
    ```
 
 3. **Install Dependencies**:
-   After succesfull installation of pnpm on your system, install the required node modules and dependencies for the project.
+   After succesSful installation of pnpm on your system, install the required node modules and dependencies for the project.
    ```bash
    pnpm i
    ```
@@ -73,7 +73,7 @@ To run FED Desktop locally on your machine, follow these steps:
    ```
 
 6. **Access Local Deployment**:
-   Open your browser and navigate to `http://localhost:5174` to view the Fed-frontend website locally.
+   Open your browser and navigate to `http://localhost:5174` to view the Fed-Frontend website locally.
 
 
 ### Fork and Contribution
