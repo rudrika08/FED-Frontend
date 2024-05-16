@@ -1,8 +1,8 @@
-## FED Desktop
+## FED FRONTEND
 
 ### Overview
 
-FED Desktop is the official website of the Federation of Entrepreneurship Development (FED), designed to showcase upcoming events, introduce team members and leads, and provide resources for developing entrepreneurial skills. This platform aims to empower individuals interested in entrepreneurship and innovation.
+FED FRONTEND is the official website of the Federation of Entrepreneurship Development (FED), designed to showcase upcoming events, introduce team members and leads, and provide resources for developing entrepreneurial skills. This platform aims to empower individuals interested in entrepreneurship and innovation.
 
 ### Features (Currently in Development)
 
@@ -30,7 +30,7 @@ FED Desktop is the official website of the Federation of Entrepreneurship Develo
 
 ### How to Run Locally
 
-To run FED Desktop locally on your machine, follow these steps:
+To run FED FRONTEND locally on your machine, follow these steps:
 
 1. **Clone Repository**:
    ```bash
@@ -53,12 +53,12 @@ To run FED Desktop locally on your machine, follow these steps:
    ```
 
 3. **Install Dependencies**:
-   After succesfull installation of pnpm on your system, install the required node modules and dependencies for the project.
+   After successful installation of pnpm on your system, install the required node modules and dependencies for the project.
    ```bash
    pnpm i
    ```
    
-4. **Set Up Firebase Credentials (Not required at this phase of development) **: 
+4. **Set Up Firebase Credentials (Not required at this phase of development):**
    - Obtain Firebase configuration keys from the Firebase Console.
    - Create a `.env` file in the root directory and add Firebase configuration details:
      ```
@@ -73,7 +73,7 @@ To run FED Desktop locally on your machine, follow these steps:
    ```
 
 6. **Access Local Deployment**:
-   Open your browser and navigate to `http://localhost:5174` to view the Fed-frontend website locally.
+   Open your browser and navigate to `http://localhost:5174` to view the Fed-Frontend website locally.
 
 
 ### Fork and Contribution
@@ -125,7 +125,7 @@ Acknowledgements and credits go here.
 
 ### Screenshots
 
-Include screenshots of the FED Desktop website in action:
+Include screenshots of the Fed-Frontend website in action:
 
 1. Landing Page
 2. Events Page
@@ -134,4 +134,4 @@ Include screenshots of the FED Desktop website in action:
 
 ---
 
-Feel free to reach out for any inquiries or assistance regarding FED Desktop. Happy coding and entrepreneurship!
+Feel free to reach out for any inquiries or assistance regarding Fed-Frontend. Happy coding and entrepreneurship!
