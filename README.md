@@ -1,8 +1,5 @@
-<<<<<<< HEAD
+
 ## FED Frontend Beta
-=======
-## FED FRONTEND
->>>>>>> main
 
 ### Overview
 
