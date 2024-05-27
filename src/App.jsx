@@ -15,7 +15,10 @@ const Home = React.lazy(() => import("./pages/Home/Home"));
 // const About = React.lazy(() => import("./pages/About/About"));
 const Contact = React.lazy(() => import("./pages/Contact/Contact"));
 const EventCards = React.lazy(() => import("./components/EventCards/EventCards"));
+const EventCards1 = React.lazy(() => import("./components/EventCards/EventCards-1"));
 
+const EventCards2 = React.lazy(() => import("./components/EventCards/EventCards-2"));
+const EventCardsModal = React.lazy(() => import("./components/EventCards/EventCardModal2"));
 // // microInteraction
 import Loading from "./microInteraction/Load/Load";
 // import { Alert } from "./MicroInteraction/Alert";
@@ -30,7 +33,8 @@ import Loading from "./microInteraction/Load/Load";
 function App() {
 
   return (
-    <Router>
+    <>
+    {/* <Router>
       <Nav />
 
       <div className="page">
@@ -50,6 +54,15 @@ function App() {
               element={
                 <Suspense fallback={<Loading />}>
                   <EventCards />
+                </Suspense>
+              }
+            />
+
+            <Route
+              path="/EventCards-1"
+              element={
+                <Suspense fallback={<Loading />}>
+                  <EventCards1 />
                 </Suspense>
               }
             />
@@ -76,8 +89,14 @@ function App() {
       </div>
 
       <Footer />
-    </Router>
+    </Router> */}
+  
+  <EventCards1/>
+  <EventCards2/>
+  </>
+  
   );
+
 }
 
 export default App;
