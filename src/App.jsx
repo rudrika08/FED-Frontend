@@ -12,11 +12,12 @@ import Footer from "./layouts/Footer/Footer";
 
 // // pages
 const Home = React.lazy(() => import("./pages/Home/Home"));
-const About = React.lazy(() => import("./pages/About/About"));
+// const About = React.lazy(() => import("./pages/About/About"));
 const Contact = React.lazy(() => import("./pages/Contact/Contact"));
+const EventCards = React.lazy(() => import("./components/EventCards/EventCards"));
 
 // // microInteraction
-import Loading from "./microInteraction/Load/Loading";
+import Loading from "./microInteraction/Load/Load";
 // import { Alert } from "./MicroInteraction/Alert";
 
 // // state
@@ -45,10 +46,10 @@ function App() {
             />
 
             <Route
-              path="/About"
+              path="/EventCards"
               element={
                 <Suspense fallback={<Loading />}>
-                  <About />
+                  <EventCards />
                 </Suspense>
               }
             />
