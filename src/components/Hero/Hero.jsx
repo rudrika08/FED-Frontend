@@ -1,33 +1,38 @@
-import React from 'react'
-import styles from "./styles/Hero.module.scss"
+import style from "./style/Hero.module.scss"
+import { CarouselImg } from "../../data/carouselImages";
+import Carousel from "../Carousel/styles/Carousel"
 
-const Hero = () => {
-  return (
-    <>
-    <div className = "styles.hero">
-    <div id={styles.div}>
-        <div id={styles.hero1-1}>
-          <div id ={styles.e}>
-          <h2>Nurturing</h2>
-          <h3>entrepreneurship</h3>
-          </div>
-          <h2>through creative, authentic,</h2> 
-          <h2>and efficient techniques.</h2>
-        </div>
-        <div id={styles.hero1-2}>
-          <div id ={styles.f}>
-          <h2>Nurturing</h2>
-          <h3>entrepreneurship </h3>
-          <h2>through</h2>
-          </div>
-          <h2> creative, authentic,and efficient techniques.</h2> 
-        </div>
-    </div>
-    <div id={styles.hero2}></div>
-</div>
-<div id={styles.gola}></div>
-</>
-  )
-}
 
-export default Hero
+
+function Hero() {
+    return (
+      <div className={style.main}>
+         <div className = {style.hero}>
+             <div className={style.hero1}>
+                 <div className={style.hero1one}>
+                   <div className={style.e}>
+                   <h2>Nurturing</h2>
+                   <h3>entrepreneurship</h3>
+                   </div>
+                   <h2>through creative,authentic,</h2> 
+                   <h2>and efficient techniques.</h2>
+                 </div>
+
+                 <div className={style.hero1two}>
+                   <div className={style.f}>
+                   <h4>Nurturing</h4>
+                   <h5>entrepreneurship </h5>
+                   <h4>through</h4>
+                   </div>
+                   <h4> creative, authentic,and efficient techniques.</h4> 
+                 </div>
+             </div>
+             <div className={style.hero2}><Carousel images={CarouselImg}/></div>
+         </div>
+         <div className={style.gola}></div>
+      </div>
+    );
+  }
+  
+  export default Hero;
+  
