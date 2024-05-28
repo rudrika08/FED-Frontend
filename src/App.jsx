@@ -34,7 +34,7 @@ function App() {
 
   return (
     <>
-    {/* <Router>
+    <Router>
       <Nav />
 
       <div className="page">
@@ -89,10 +89,11 @@ function App() {
       </div>
 
       <Footer />
-    </Router> */}
+    </Router>
   
-  <EventCards1/>
-  <EventCards2/>
+  {/* <EventCards1/>
+  <EventCards2/> */}
+  {/* <Footer /> */}
   </>
   
   );
