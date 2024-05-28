@@ -1,3 +1,4 @@
+
 import style from "./style/Hero.module.scss"
 import { CarouselImg } from "../../data/carouselImages";
 import Carousel from "../Carousel/styles/Carousel"
@@ -27,7 +28,10 @@ function Hero() {
                    <h4> creative, authentic,and efficient techniques.</h4> 
                  </div>
              </div>
+
              <div className={style.hero2}><Carousel images={CarouselImg}/></div>
+
+
          </div>
          <div className={style.gola}></div>
       </div>
