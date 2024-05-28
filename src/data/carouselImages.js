@@ -21,4 +21,8 @@ export const CarouselImg = [
       image: image,
       title: "our team",
     },
+    {
+      image: image,
+      title: "our team",
+    },
   ];

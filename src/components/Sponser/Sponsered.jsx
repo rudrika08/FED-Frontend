@@ -1,5 +1,5 @@
 import React from 'react';
-import { CarouselImg } from '../../data/carouselImages';
+import { SponserImg } from '../../data/SponserImages';
 import styles from './Styles/Sponser.module.scss';
 
 const SponserCard = ({ image }) => {
@@ -12,13 +12,22 @@ const SponserCard = ({ image }) => {
 
 const Sponsered = () => {
   return (
+    <>
+    
+     <div className={styles.sponser_title}>our { }
+                 <span className={styles.sponser_title2}>Sponsers</span>
+      </div>
+      <div className={styles.bottom_line}></div>
+    <div className={styles.sponser_container}>
     <div className={styles.sponser_all}>
-      {CarouselImg.map((image, index) => (
+      {SponserImg.map((image, index) => (
         <div key={index}>
           <SponserCard image={image} />
         </div>
       ))}
     </div>
+    </div>
+    </>
   );
 };
 
