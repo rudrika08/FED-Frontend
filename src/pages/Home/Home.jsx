@@ -2,9 +2,7 @@
 import Carousel from "../../components/Carousel/styles/Carousel"
 import { CarouselImg } from "../../data/carouselImages";
 import Sponsered from "../../components/Sponser/Sponsered";
-
-
-import Hero from "../../components/Hero/Hero"
+import HeroSection from "../../components/Hero/HeroSection";
 
 
 export default function Home() {
@@ -13,7 +11,7 @@ export default function Home() {
 
      {/* <Carousel images={CarouselImg} />
      <Sponsered /> */}
-      <Hero />
+      <HeroSection />
       <Sponsered />
 
     </div>
