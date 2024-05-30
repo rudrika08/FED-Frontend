@@ -65,15 +65,6 @@ function App() {
             />
 
             <Route
-              path="/About"
-              element={
-                <Suspense fallback={<Loading />}>
-                  <About />
-                </Suspense>
-              }
-            />
-
-            <Route
               path="*"
               element={
                 <Suspense fallback={<Loading />}>
@@ -87,7 +78,6 @@ function App() {
 
       <Footer />
     </Router>
-    // <About />
   );
 }
 
