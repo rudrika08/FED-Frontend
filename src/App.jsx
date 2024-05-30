@@ -15,6 +15,7 @@ const Home = React.lazy(() => import("./pages/Home/Home"));
 // const About = React.lazy(() => import("./pages/About/About"));
 const Contact = React.lazy(() => import("./pages/Contact/Contact"));
 const EventCards = React.lazy(() => import("./components/EventCards/EventCards"));
+
 const EventCards1 = React.lazy(() => import("./components/EventCards/EventCards-1"));
 
 const EventCards2 = React.lazy(() => import("./components/EventCards/EventCards-2"));
