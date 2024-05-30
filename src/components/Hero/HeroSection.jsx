@@ -31,9 +31,9 @@ function HeroSection() {
 
              <div className={style.hero2}><Carousel images={CarouselImg}/></div>
 
-
+             <div className={style.gola}></div>
          </div>
-         <div className={style.gola}></div>
+         
       </div>
     );
   }
