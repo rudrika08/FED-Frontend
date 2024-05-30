@@ -1,14 +1,15 @@
+@import "/src/assets/styles/Global.scss";
+
 * {
     margin: 0px;
     padding: 0px;
-    background-color: #000000;
     box-sizing: border-box;
     color: white;
   }
 
 
 span{
-    color: rgb(255, 100, 0);
+    color: $About-orange;
 }
 
 .head{
@@ -22,7 +23,7 @@ span{
     content:'';
     height:5px;
     width:6.5rem;
-    background:rgb(255, 100, 0);
+    background: $About-orange;
     border-radius: 5px;
     position:absolute;
     margin:auto;
@@ -36,7 +37,6 @@ span{
     height: 10rem;
     width: 60%;
     padding: 2rem;
-    // background-color: aqua;
     background: transparent;
     font-size: 1.25rem;
     border: 2px solid white;
@@ -69,7 +69,6 @@ span{
 
 .whyfed{
     order: 1;
-    // margin-bottom: 50px;
     margin-top: 80px;
     position: relative;
     left: 50px;
