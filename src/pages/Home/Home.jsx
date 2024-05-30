@@ -1,7 +1,19 @@
+
+import Carousel from "../../components/Carousel/styles/Carousel"
+import { CarouselImg } from "../../data/carouselImages";
+import Sponsered from "../../components/Sponser/Sponsered";
+import HeroSection from "../../components/Hero/HeroSection";
+
+
 export default function Home() {
   return (
     <div>
-      <h1>Home</h1>
+
+     {/* <Carousel images={CarouselImg} />
+     <Sponsered /> */}
+      <HeroSection />
+      <Sponsered />
+
     </div>
   )
 }
