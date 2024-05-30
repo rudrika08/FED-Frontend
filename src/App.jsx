@@ -34,7 +34,7 @@ function App() {
 
   return (
     <>
-    <Router>
+    {/* <Router>
       <Nav />
 
       <div className="page">
@@ -54,15 +54,6 @@ function App() {
               element={
                 <Suspense fallback={<Loading />}>
                   <EventCards />
-                </Suspense>
-              }
-            />
-
-            <Route
-              path="/EventCards-1"
-              element={
-                <Suspense fallback={<Loading />}>
-                  <EventCards1 />
                 </Suspense>
               }
             />
@@ -89,11 +80,10 @@ function App() {
       </div>
 
       <Footer />
-    </Router>
+    </Router> */}
   
-  {/* <EventCards1/>
-  <EventCards2/> */}
-  {/* <Footer /> */}
+  <EventCards1/>
+  <EventCards2/>
   </>
   
   );
