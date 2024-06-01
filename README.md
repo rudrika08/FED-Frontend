@@ -1,4 +1,5 @@
-## FED FRONTEND
+
+## FED Frontend Beta
 
 ### Overview
 
@@ -34,7 +35,7 @@ To run FED FRONTEND locally on your machine, follow these steps:
 
 1. **Clone Repository**:
    ```bash
-   git clone https://github.com/PrityanshuSingh/Fed-Frontend.git
+   git clone -b beta https://github.com/PrityanshuSingh/Fed-Frontend.git
    ```
 
 2. **Navigate to Project Directory**:
@@ -53,7 +54,7 @@ To run FED FRONTEND locally on your machine, follow these steps:
    ```
 
 3. **Install Dependencies**:
-   After successful installation of pnpm on your system, install the required node modules and dependencies for the project.
+   After succesfull installation of pnpm on your system, install the required node modules and dependencies for the project.
    ```bash
    pnpm i
    ```
@@ -73,8 +74,7 @@ To run FED FRONTEND locally on your machine, follow these steps:
    ```
 
 6. **Access Local Deployment**:
-   Open your browser and navigate to `http://localhost:5174` to view the Fed-Frontend website locally.
-
+   Open your browser and navigate to `http://localhost:5174` to view the Fed-frontend website locally.
 
 ### Fork and Contribution
 
