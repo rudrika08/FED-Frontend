@@ -20,6 +20,8 @@ const EventCards1 = React.lazy(() => import("./components/EventCards/EventCards-
 
 const EventCards2 = React.lazy(() => import("./components/EventCards/EventCards-2"));
 const EventCardsModal = React.lazy(() => import("./components/EventCards/EventCardModal2"));
+
+const SignUP = React.lazy(() => import ( "./pages/SignUp/SignUP"));
 // // microInteraction
 import Loading from "./microInteraction/Load/Load";
 // import { Alert } from "./MicroInteraction/Alert";
@@ -58,6 +60,14 @@ function App() {
                 </Suspense>
               }
             />
+                <Route
+                    path="/Register"
+                    element={
+                      <Suspense fallback={<Loading />}>
+                        <SignUP />
+                      </Suspense>
+                    }
+                  />
 
             <Route
               path="/Contact"
