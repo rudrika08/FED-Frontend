@@ -1,6 +1,6 @@
-import image1 from './images/Redbull.png'
-import image2 from './images/biryanibox.png'
-import image3 from './images/prabhuji.png'
+import image1 from '../assets/images/Redbull.png'
+import image2 from '../assets/images/biryanibox.png'
+import image3 from '../assets/images/prabhuji.png'
 
 export const SponserImg = [
     {

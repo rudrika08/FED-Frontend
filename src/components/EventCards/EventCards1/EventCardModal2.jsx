@@ -1,5 +1,5 @@
 import React,{ useState,useEffect} from 'react'
-import EventCardModal from './styles/EventCardModal2.module.scss'
+import EventCardModal from '../styles/EventCardModal2.module.scss'
 import { X } from 'lucide-react';
 
 

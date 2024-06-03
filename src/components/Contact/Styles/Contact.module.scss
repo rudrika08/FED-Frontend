@@ -105,15 +105,15 @@
   }
 
   .contact-form-container .gola{
-    height: 50vh;
-    width: 30vh;
-    background-color: #FF5C00;
+    height: 52rem;
+    width: 50rem;
+    background-color:  rgba(255, 92, 0, 0.19);
+    filter: blur(100px);
     position: absolute;
-   
-    top: 30%;
-    right: -6%;
     border-radius: 50%;
-    filter: blur(80px);
-    // overflow: hidden;
+    overflow: hidden;
+    top: -30%;
+    right: -40%;
+
 }
   

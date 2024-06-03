@@ -16,14 +16,17 @@ const Home = React.lazy(() => import("./pages/Home/Home"));
 const Contact = React.lazy(() => import("./pages/Contact/Contact"));
 const EventCards = React.lazy(() => import("./components/EventCards/EventCards"));
 
-const EventCards1 = React.lazy(() => import("./components/EventCards/EventCards-1"));
+// const EventCards1 = React.lazy(() => import("./components/EventCards/EventCards-1"));
 
-const EventCards2 = React.lazy(() => import("./components/EventCards/EventCards-2"));
-const EventCardsModal = React.lazy(() => import("./components/EventCards/EventCardModal2"));
+// const EventCards2 = React.lazy(() => import("./components/EventCards/EventCards-2"));
+// const EventCardsModal = React.lazy(() => import("./components/EventCards/EventCardModal2"));
 
 const SignUP = React.lazy(() => import ( "./pages/SignUp/SignUP"));
+const Socialpage=React.lazy(()=>import("./pages/SocialMedia/SocialMedia"))
+
 // // microInteraction
 import Loading from "./microInteraction/Load/Load";
+
 // import { Alert } from "./MicroInteraction/Alert";
 
 // // state
@@ -60,7 +63,7 @@ function App() {
                 </Suspense>
               }
             />
-                <Route
+              <Route
                     path="/Register"
                     element={
                       <Suspense fallback={<Loading />}>
@@ -74,6 +77,14 @@ function App() {
               element={
                 <Suspense fallback={<Loading />}>
                   <Contact />
+                </Suspense>
+              }
+            />
+            <Route
+              path="/social"
+              element={
+                <Suspense fallback={<Loading />}>
+                 <Socialpage />
                 </Suspense>
               }
             />
