@@ -1,9 +1,5 @@
-import React ,{ Suspense } from "react";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-} from "react-router-dom";
+import React, { Suspense } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 // layouts
 import Nav from "./layouts/Navbar/Navbar";
@@ -14,12 +10,23 @@ import Footer from "./layouts/Footer/Footer";
 const Home = React.lazy(() => import("./pages/Home/Home"));
 // const About = React.lazy(() => import("./pages/About/About"));
 const Contact = React.lazy(() => import("./pages/Contact/Contact"));
-const EventCards = React.lazy(() => import("./components/EventCards/EventCards"));
+const EventCards = React.lazy(() =>
+  import("./components/EventCards/EventCards")
+);
+const Login = React.lazy(() => import("./pages/Login/Login"));
 
-const EventCards1 = React.lazy(() => import("./components/EventCards/EventCards-1"));
+const EventCards1 = React.lazy(() =>
+  import("./components/EventCards/EventCards-1")
+);
+const Profile = React.lazy(() => import("./pages/Profile/Profile"));
 
-const EventCards2 = React.lazy(() => import("./components/EventCards/EventCards-2"));
-const EventCardsModal = React.lazy(() => import("./components/EventCards/EventCardModal2"));
+const EventCards2 = React.lazy(() =>
+  import("./components/EventCards/EventCards-2")
+);
+const EventCardsModal = React.lazy(() =>
+  import("./components/EventCards/EventCardModal2")
+);
+
 // // microInteraction
 import Loading from "./microInteraction/Load/Load";
 // import { Alert } from "./MicroInteraction/Alert";
@@ -30,63 +37,74 @@ import Loading from "./microInteraction/Load/Load";
 // // axios
 // import axios from "axios";
 
-
 function App() {
-
   return (
     <>
-    <Router>
-      <Nav />
+      <Router>
+        <Nav />
 
-      <div className="page">
-        <div className="pageExt">
-          <Routes>
-            <Route
-              path="/"
-              element={
-                <Suspense fallback={<Loading />}>
-                  <Home />
-                </Suspense>
-              }
-            />
+        <div className="page">
+          <div className="pageExt">
+            <Routes>
+              <Route
+                path="/"
+                element={
+                  <Suspense fallback={<Loading />}>
+                    <Home />
+                  </Suspense>
+                }
+              />
 
-            <Route
-              path="/EventCards"
-              element={
-                <Suspense fallback={<Loading />}>
-                  <EventCards />
-                </Suspense>
-              }
-            />
+              <Route
+                path="/EventCards"
+                element={
+                  <Suspense fallback={<Loading />}>
+                    <EventCards />
+                  </Suspense>
+                }
+              />
+              <Route
+                path="/profile"
+                element={
+                  <Suspense fallback={<Loading />}>
+                    <Profile />
+                  </Suspense>
+                }
+              />
+              <Route
+                path="/Login"
+                element={
+                  <Suspense fallback={<Loading />}>
+                    <Login />
+                  </Suspense>
+                }
+              />
 
-            <Route
-              path="/Contact"
-              element={
-                <Suspense fallback={<Loading />}>
-                  <Contact />
-                </Suspense>
-              }
-            />
+              <Route
+                path="/Contact"
+                element={
+                  <Suspense fallback={<Loading />}>
+                    <Contact />
+                  </Suspense>
+                }
+              />
 
-            <Route
-              path="*"
-              element={
-                <Suspense fallback={<Loading />}>
-                  <h1>Not Found</h1>
-                </Suspense>
-              }
-            />  
-          </Routes>
+              <Route
+                path="*"
+                element={
+                  <Suspense fallback={<Loading />}>
+                    <h1>Not Found</h1>
+                  </Suspense>
+                }
+              />
+            </Routes>
+          </div>
         </div>
-      </div>
 
-      <Footer />
-    </Router>
-  
-  </>
-  
+        <Footer />
+      </Router>
+    </>
   );
-
 }
 
 export default App;

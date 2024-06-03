@@ -1,0 +1,36 @@
+.mainPreview {
+  display: flex;
+  flex-direction: column;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  position: fixed;
+  background: rgba(7, 7, 7, 0.33);
+  z-index: 50;
+  backdrop-filter: blur(2px);
+}
+
+.previewContainer {
+  display: flex;
+  flex-direction: column;
+  background: #2e2e2e;
+  border-radius: 10px;
+  width: 50%;
+  padding: 1.6em;
+  height: 50%;
+  margin: auto;
+  z-index: 100;
+  overflow-y: scroll;
+}
+
+.previewContainer::-webkit-scrollbar {
+  width: 6px;
+}
+.previewContainer::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 10px;
+}
+.previewContainer::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}

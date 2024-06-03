@@ -1,0 +1,35 @@
+.formHeader {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1.6em;
+  width: 86%;
+}
+.formInput {
+  width: 90% !important;
+  margin-bottom: 1.4em;
+}
+.formInputTxtArea {
+  width: 90% !important;
+  height: 31vh !important;
+}
+
+.formFieldContainer {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+}
+
+.mainFieldForm {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  margin-bottom: 8px;
+}
+.fieldInput {
+  width: 90% !important;
+}
+.containerInput {
+  display: flex;
+  flex-direction: column;
+  width: 30%;
+}
