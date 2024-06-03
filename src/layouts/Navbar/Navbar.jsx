@@ -1,32 +1,36 @@
-import style from './style/Navbar.module.scss';
+import style from "./style/Navbar.module.scss";
+import logo from "../../assets/images/Logo/logo.svg";
+import { Link } from "react-router-dom";
 
 export default function Navbar() {
-    return (
-      <nav className={style.nav}>
-      <img
-        loading="lazy"
-        src="https://cdn.builder.io/api/v1/image/assets/TEMP/8a723ff2a5558303e924c50f292f82cb2d54f7fbdbc1f67d588b9a73daaf2c16?apiKey=e259011a0b7e4d6e8e6cd8c4440eea14&"
-        alt="Logo"
-        className={style.logo}
-      />
+  return (
+    <nav className={style.nav}>
+       <Link to="./">
+      <div className={style.logo_div}>
+        <div className={style.logo}> </div>
+        <div className={style.logo_text}></div>
+      </div>
+      </Link>
+
       <ul className={style.navItems}>
-        <li className={style.navLink} >
-          Home
-        </li>
-        <li className={style.navLink} >
-          Events
-        </li>
-        <li className={style.navLink}>
-          Social
-        </li>
-        <li className={style.navLink}>
-          Team
-        </li>
+        <Link to="./">
+          {" "}
+          <li className={style.navLink}>Home</li>
+        </Link>
+        <Link to="./EventCards">
+          {" "}
+          <li>Events</li>
+        </Link>
+        <Link to="./social">
+          <li className={style.navLink}>Social</li>
+        </Link>
+        <Link to="./">
+          <li className={style.navLink}>Team</li>
+        </Link>
       </ul>
-      <button className={style.authButton}>
-        Login/Sign up
-      </button>
+      <Link to="./register">
+      <button className={style.authButton}>Login/Sign up</button>
+      </Link>
     </nav>
-    )
+  );
 }
-  

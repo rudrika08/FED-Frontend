@@ -1,4 +1,4 @@
-@import "/src/assets/styles/Global.scss";
+@import "../../../assets/styles/Global.scss";
 
 * {
     margin: 0px;
@@ -9,7 +9,7 @@
 
 
 span{
-    color: $About-orange;
+    color: $orange-color;
 }
 
 .head{
@@ -23,7 +23,7 @@ span{
     content:'';
     height:5px;
     width:6.5rem;
-    background: $About-orange;
+    background: $orange-color;
     border-radius: 5px;
     position:absolute;
     margin:auto;

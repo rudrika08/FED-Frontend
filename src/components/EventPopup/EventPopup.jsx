@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import styles from './EventPopup.module.scss';
-import eventImg from '../../data/images/EventPopup.png'
+import styles from './styles/EventPopup.module.scss';
+import eventImg from '../../assets/images/EventPopup.png'
 
 const EventPopup = () => {
   const [isVisible, setIsVisible] = useState(false);

@@ -1,6 +1,6 @@
 import React from 'react';
-import styles from './Styles/Contact.module.scss';
-import contactImg from "../../data/images/contact.png";
+import styles from './styles/Contact.module.scss';
+import contactImg from "../../assets/images/contact.png";
 
 const ContactForm = () => {
   return (

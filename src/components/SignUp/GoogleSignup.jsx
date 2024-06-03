@@ -1,5 +1,5 @@
 import React from 'react'
-import GoogleIcon from "../../data/images/googleIcon.svg"
+import GoogleIcon from "../../assets/images/googleIcon.svg"
 import Gscss from "./style/SignupFun.module.scss";
 
 const GoogleSignup = () => {

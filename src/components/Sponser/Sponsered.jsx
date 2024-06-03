@@ -1,6 +1,6 @@
 import React from 'react';
 import { SponserImg } from '../../data/SponserImages';
-import styles from './Styles/Sponser.module.scss';
+import styles from './styles/Sponser.module.scss';
 
 const SponserCard = ({ image }) => {
   return (

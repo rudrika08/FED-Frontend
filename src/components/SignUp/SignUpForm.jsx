@@ -5,7 +5,6 @@ import GoogleSignup from "./GoogleSignup";
 import Or from "./Or";
 
 function SignUpForm() {
-//   const [loadingEffect, setLoad] = useState(false);
   const [selected, setSelected] = useState("");
   const [DropShow, hideDrop] = useState(false);
   const containerRef = useRef(null);
@@ -38,10 +37,8 @@ function SignUpForm() {
   const DataInp = (e) => {
     const name = e.target.name;
     const value = e.target.value;
-    // setUser((prevUser) => ({
-    //   ...prevUser,
-    //   [name]: value,
-    // }));
+    setUser({ ...showUser, [name]: value }); // Update the state
+
     if (name === "email") {
       if (value === "") {
         e.target.style.border = "1px solid  #FF0000";
@@ -67,16 +64,14 @@ function SignUpForm() {
     }
 
     if (name === "MobileNo") {
-      if (value.length == 10) {
+      if (value.length === 10) {
         containerRef.current.style.border = "1px solid #FFF";
       } else {
-        // e.target.style.outline = "none";
-       containerRef.current.style.border = "1px solid #FF0000";
+        containerRef.current.style.border = "1px solid #FF0000";
       }
     }
 
-
-    if (name == "College") {
+    if (name === "College") {
       if (
         "Kalinga Institute of Industrial Technology"
           .toLowerCase()
@@ -101,7 +96,7 @@ function SignUpForm() {
     if (DropShow) {
       document.addEventListener("mousedown", handler);
     }
-  });
+  }, [DropShow]);
 
   const handler = (e) => {
     try {
@@ -109,6 +104,7 @@ function SignUpForm() {
         hideDrop(false);
       }
     } catch (error) {
+      console.error(error);
     }
   };
 
@@ -122,13 +118,19 @@ function SignUpForm() {
     }
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Handle form submission logic here
+    console.log(showUser); // You can replace this with an API call or other logic
+  };
+
   return (
     <>
       <GoogleSignup />
       <Or />
 
       <div className={style.form}>
-        <form>
+        <form onSubmit={handleSubmit}>
           {/* Name */}
           <div className={style.nameInpDiv}>
             <input
@@ -151,30 +153,30 @@ function SignUpForm() {
             />
           </div>
 
-           <div className={style.nameInpDiv}>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            placeholder="Email"
-            className={style.inpNameTag}
-            onChange={DataInp}
-            required
-          />
-
-          {/* Phone Number */}
-          <div className={style.mobileno_container} ref={containerRef}>
-            <p className={style.mobileno91}>+91</p>
+          <div className={style.nameInpDiv}>
             <input
-              type="number"
-              id="number"
-              name="MobileNo"
-              placeholder="Mobile Number"
-              className={style.inputNoTag}
+              type="email"
+              id="email"
+              name="email"
+              placeholder="Email"
+              className={style.inpNameTag}
               onChange={DataInp}
               required
             />
-          </div>
+
+            {/* Phone Number */}
+            <div className={style.mobileno_container} ref={containerRef}>
+              <p className={style.mobileno91}>+91</p>
+              <input
+                type="number"
+                id="number"
+                name="MobileNo"
+                placeholder="Mobile Number"
+                className={style.inputNoTag}
+                onChange={DataInp}
+                required
+              />
+            </div>
           </div>
 
           {/* College */}
@@ -190,12 +192,11 @@ function SignUpForm() {
               onFocus={() => {
                 DropCheck();
               }}
-              spellcheck="true"
-              autocomplete="off"
+              spellCheck="true"
+              autoComplete="off"
               required
             />
-           
-           {
+
             <div
               className={style.DropDownmDiv}
               style={{ display: DropShow ? "block" : "none" }}
@@ -209,8 +210,6 @@ function SignUpForm() {
             >
               Kalinga Institute of Industrial Technology
             </div>
-           }
-
           </div>
 
           {/* School */}
@@ -261,8 +260,7 @@ function SignUpForm() {
             required
           />
 
-
-          <button type="submit" className={style.btn} >
+          <button type="submit" className={style.btn}>
             SignUp
           </button>
         </form>
