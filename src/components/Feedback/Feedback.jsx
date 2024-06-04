@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { feedbackEach } from '../../data/feedback';
 import styles from './Styles/Feedback.module.scss';
-import quoteImg from "../../data/images/quote.png";
+import quoteImg from "../../assets/images/quote.png";
 
 const FeedbackCard = ({ quote }) => {
   return (

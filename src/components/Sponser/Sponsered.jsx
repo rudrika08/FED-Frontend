@@ -15,7 +15,7 @@ const Sponsered = () => {
     <>
     
      <div className={styles.sponser_title}>our { }
-                 <span className={styles.sponser_title2}>Sponsers</span>
+                 <span className={styles.sponser_title2}>Sponsors</span>
       </div>
       <div className={styles.bottom_line}></div>
     <div className={styles.sponser_container}>

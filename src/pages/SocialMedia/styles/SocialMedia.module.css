@@ -1,0 +1,152 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap");
+* {
+  background-color: black;
+}
+
+.texticon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.text p {
+  font-size: 47.45px;
+  text-align: center;
+  font-family: Poppins;
+  font-weight: 600;
+  color: white;
+}
+
+.text .highlight {
+  font-size: 135.84px;
+  font-family: Poppins;
+  font-weight: 700;
+  background: rgb(255, 190, 11);
+  background: linear-gradient(270deg, rgb(255, 190, 11) 0%, rgb(244, 43, 3) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text #faded::after {
+  font-size: 135.84px;
+  font-family: Poppins;
+  font-weight: 700;
+  background: rgb(255, 190, 11);
+  background: linear-gradient(90deg, rgba(255, 190, 11, 0.062) 0%, rgba(244, 43, 3, 0.54) 100%);
+  content: "FED";
+  display: flex;
+  margin-right: -0.75rem;
+  margin-top: -7rem;
+  justify-content: center;
+  align-content: center;
+  transform: rotateX(180deg);
+  -webkit-background-clip: text;
+}
+
+.socialMedia {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  margin-top: -20rem;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  background-color: transparent;
+  height: 730px;
+  width: 1323px;
+  gap: 58.55px;
+  padding-left: 59px;
+}
+
+.instagramfeed {
+  height: 348.45px;
+  width: 350px;
+}
+
+.instagramreel {
+  height: 930px;
+}
+
+.leftColumn,
+.centerColumn,
+.rightColumn {
+  display: flex;
+  flex-direction: column;
+  height: 730px;
+}
+
+.leftColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.post {
+  margin-bottom: 20px;
+}
+
+.post img,
+.centerColumn img,
+.rightColumn img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  transition: transform 0.3s ease-in-out;
+}
+
+.post img:hover,
+.centerColumn img:hover,
+.rightColumn img:hover {
+  transform: scale(1.05);
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 1200px) {
+  .container {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 730px;
+    width: 1000px;
+  }
+  .leftColumn,
+  .centerColumn,
+  .rightColumn {
+    display: flex;
+    height: auto;
+  }
+  .instagramreel,
+  .instagramfeed {
+    width: 100%;
+    height: auto;
+  }
+}
+@media (max-width: 768px) {
+  .text p {
+    font-size: 24px;
+  }
+  .text .highlight {
+    font-size: 80px;
+  }
+  .socialMedia {
+    margin-top: -10rem;
+  }
+}
+@media (max-width: 480px) {
+  .text p {
+    font-size: 18px;
+  }
+  .text .highlight {
+    font-size: 60px;
+  }
+  .socialMedia {
+    margin-top: -5rem;
+  }
+}/*# sourceMappingURL=SocialEvents.module.css.map */

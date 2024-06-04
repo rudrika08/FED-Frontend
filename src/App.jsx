@@ -15,20 +15,13 @@ const EventCards = React.lazy(() =>
 );
 const Login = React.lazy(() => import("./pages/Login/Login"));
 
-const EventCards1 = React.lazy(() =>
-  import("./components/EventCards/EventCards-1")
-);
-const Profile = React.lazy(() => import("./pages/Profile/Profile"));
+const EventCards1 = React.lazy(() => import("./components/EventCards/EventCards1/EventCards-1"));
 
-const EventCards2 = React.lazy(() =>
-  import("./components/EventCards/EventCards-2")
-);
-const EventCardsModal = React.lazy(() =>
-  import("./components/EventCards/EventCardModal2")
-);
-
+const EventCards2 = React.lazy(() => import("./components/EventCards/EventCards2/EventCards-2"));
+const EventCardsModal = React.lazy(() => import("./components/EventCards/EventCards1/EventCardModal2"));
 // // microInteraction
 import Loading from "./microInteraction/Load/Load";
+
 // import { Alert } from "./MicroInteraction/Alert";
 
 // // state
@@ -55,39 +48,23 @@ function App() {
                 }
               />
 
-              <Route
-                path="/EventCards"
-                element={
-                  <Suspense fallback={<Loading />}>
-                    <EventCards />
-                  </Suspense>
-                }
-              />
-              <Route
-                path="/profile"
-                element={
-                  <Suspense fallback={<Loading />}>
-                    <Profile />
-                  </Suspense>
-                }
-              />
-              <Route
-                path="/Login"
-                element={
-                  <Suspense fallback={<Loading />}>
-                    <Login />
-                  </Suspense>
-                }
-              />
+            <Route
+              path="/EventCards"
+              element={
+                <Suspense fallback={<Loading />}>
+                  <EventCards />
+                </Suspense>
+              }
+            />
 
-              <Route
-                path="/Contact"
-                element={
-                  <Suspense fallback={<Loading />}>
-                    <Contact />
-                  </Suspense>
-                }
-              />
+            <Route
+              path="/Contact"
+              element={
+                <Suspense fallback={<Loading />}>
+                  <Contact />
+                </Suspense>
+              }
+            />
 
               <Route
                 path="*"

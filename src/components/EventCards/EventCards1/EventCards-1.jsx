@@ -1,5 +1,5 @@
 import React,{useState,useEffect} from 'react'
-import EventCard from './styles/EventCards-1.module.scss'
+import EventCard from '../styles/EventCards-1.module.scss'
 import Modal from './EventCardModal2'
 import AOS from 'aos';
 import 'aos/dist/aos.css'
