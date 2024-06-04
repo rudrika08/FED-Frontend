@@ -15,10 +15,10 @@ const EventCards = React.lazy(() =>
 );
 const Login = React.lazy(() => import("./pages/Login/Login"));
 
-const EventCards1 = React.lazy(() => import("./components/EventCards/EventCards-1"));
+const EventCards1 = React.lazy(() => import("./components/EventCards/EventCards1/EventCards-1"));
 
-const EventCards2 = React.lazy(() => import("./components/EventCards/EventCards-2"));
-const EventCardsModal = React.lazy(() => import("./components/EventCards/EventCardModal2"));
+const EventCards2 = React.lazy(() => import("./components/EventCards/EventCards2/EventCards-2"));
+const EventCardsModal = React.lazy(() => import("./components/EventCards/EventCards1/EventCardModal2"));
 // // microInteraction
 import Loading from "./microInteraction/Load/Load";
 
