@@ -1,30 +1,15 @@
+import { Hero, About, Sponser, Feedback, Contact } from "../../components";
 
-import Carousel from "../../components/Carousel/styles/Carousel"
-import { CarouselImg } from "../../data/carouselImages";
-import Sponsered from "../../components/Sponser/Sponsered";
-import HeroSection from "../../components/hero/HeroSection";
-import Feedback from "../../components/Feedback/Feedback" ;
-import Contact from "../../components/Contact/Contact";
-import EventPopup from "../../components/EventPopup/EventPopup"
-import About from '../../components/About/About'
-
-export default function Home() {
+function Home() {
   return (
-    <div>
-
-     {/* <Carousel images={CarouselImg} />
-     <Sponsered /> */}
-     <EventPopup/>
-      <HeroSection />
+    <>
+      <Hero />
       <About />
-      <Sponsered />
-      <Contact/>
-      <Feedback/>
-
-
-
-      
-
-    </div>
-  )
+      <Sponser />
+      <Contact />
+      <Feedback />
+    </>
+  );
 }
+
+export default Home;

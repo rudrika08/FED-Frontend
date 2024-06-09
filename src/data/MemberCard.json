@@ -1,0 +1,400 @@
+[
+    {
+      "name": "John Doe",
+      "image": "https://via.placeholder.com/150",
+      "social": {
+        "linkedin": "https://www.linkedin.com/in/johndoe",
+        "twitter": "https://twitter.com/johndoe",
+        "github": "https://github.com/johndoe"
+      },
+      "role": "Director",
+      "title": "President"
+    },
+    {
+      "name": "Jane Smith",
+      "image": "https://via.placeholder.com/150",
+      "social": {
+        "linkedin": "https://www.linkedin.com/in/janesmith",
+        "twitter": "https://twitter.com/janesmith",
+        "github": "https://github.com/janesmith"
+      },
+      "role": "Director",
+      "title": "Vice President"
+    },
+    {
+      "name": "Alice Johnson",
+      "image": "https://via.placeholder.com/150",
+      "social": {
+        "linkedin": "https://www.linkedin.com/in/alicejohnson",
+        "twitter": "https://twitter.com/alicejohnson",
+        "github": "https://github.com/alicejohnson"
+      },
+      "role": "Director",
+      "title": "Director of Technical"
+    },
+    {
+      "name": "Bob Brown",
+      "image": "https://via.placeholder.com/150",
+      "social": {
+        "linkedin": "https://www.linkedin.com/in/bobbrown",
+        "twitter": "https://twitter.com/bobbrown",
+        "github": "https://github.com/bobbrown"
+      },
+      "role": "Director",
+      "title": "Director of Marketing"
+    },
+    {
+      "name": "Carol Davis",
+      "image": "https://via.placeholder.com/150",
+      "social": {
+        "linkedin": "https://www.linkedin.com/in/caroldavis",
+        "twitter": "https://twitter.com/caroldavis",
+        "github": "https://github.com/caroldavis"
+      },
+      "role": "Director",
+      "title": "Director of Creative"
+    },
+    {
+      "name": "David Wilson",
+      "image": "https://via.placeholder.com/150",
+      "social": {
+        "linkedin": "https://www.linkedin.com/in/davidwilson",
+        "twitter": "https://twitter.com/davidwilson",
+        "github": "https://github.com/davidwilson"
+      },
+      "role": "Director",
+      "title": "Director of Operations"
+    },
+    {
+      "name": "Eve Thompson",
+      "image": "https://via.placeholder.com/150",
+      "social": {
+        "linkedin": "https://www.linkedin.com/in/evethompson",
+        "twitter": "https://twitter.com/evethompson",
+        "github": "https://github.com/evethompson"
+      },
+      "role": "Director",
+      "title": "Director of Sponsorship & PR"
+    },
+    {
+      "name": "Frank Green",
+      "image": "https://via.placeholder.com/150",
+      "social": {
+        "linkedin": "https://www.linkedin.com/in/frankgreen",
+        "twitter": "https://twitter.com/frankgreen",
+        "github": "https://github.com/frankgreen"
+      },
+      "role": "Technical",
+      "title": "Technical Specialist"
+    },
+    {
+      "name": "Grace Hall",
+      "image": "https://via.placeholder.com/150",
+      "social": {
+        "linkedin": "https://www.linkedin.com/in/gracehall",
+        "twitter": "https://twitter.com/gracehall",
+        "github": "https://github.com/gracehall"
+      },
+      "role": "Technical",
+      "title": "Software Engineer"
+    },
+    {
+      "name": "Hank King",
+      "image": "https://via.placeholder.com/150",
+      "social": {
+        "linkedin": "https://www.linkedin.com/in/hankking",
+        "twitter": "https://twitter.com/hankking",
+        "github": "https://github.com/hankking"
+      },
+      "role": "Technical",
+      "title": "Backend Developer"
+    },
+    {
+      "name": "Ivy Lee",
+      "image": "https://via.placeholder.com/150",
+      "social": {
+        "linkedin": "https://www.linkedin.com/in/ivylee",
+        "twitter": "https://twitter.com/ivylee",
+        "github": "https://github.com/ivylee"
+      },
+      "role": "Technical",
+      "title": "Frontend Developer"
+    },
+    {
+      "name": "Jack Martin",
+      "image": "https://via.placeholder.com/150",
+      "social": {
+        "linkedin": "https://www.linkedin.com/in/jackmartin",
+        "twitter": "https://twitter.com/jackmartin",
+        "github": "https://github.com/jackmartin"
+      },
+      "role": "Technical",
+      "title": "DevOps Engineer"
+    },
+    {
+      "name": "Kelly Nelson",
+      "image": "https://via.placeholder.com/150",
+      "social": {
+        "linkedin": "https://www.linkedin.com/in/kellynelson",
+        "twitter": "https://twitter.com/kellynelson",
+        "github": "https://github.com/kellynelson"
+      },
+      "role": "Technical",
+      "title": "Security Engineer"
+    },
+    {
+      "name": "Leo Owens",
+      "image": "https://via.placeholder.com/150",
+      "social": {
+        "linkedin": "https://www.linkedin.com/in/leoowens",
+        "twitter": "https://twitter.com/leoowens",
+        "github": "https://github.com/leoowens"
+      },
+      "role": "Marketing",
+      "title": "Marketing Specialist"
+    },
+    {
+      "name": "Mia Perez",
+      "image": "https://via.placeholder.com/150",
+      "social": {
+        "linkedin": "https://www.linkedin.com/in/miaperez",
+        "twitter": "https://twitter.com/miaperez",
+        "github": "https://github.com/miaperez"
+      },
+      "role": "Marketing",
+      "title": "Social Media Manager"
+    },
+    {
+      "name": "Nina Quinn",
+      "image": "https://via.placeholder.com/150",
+      "social": {
+        "linkedin": "https://www.linkedin.com/in/ninaquinn",
+        "twitter": "https://twitter.com/ninaquinn",
+        "github": "https://github.com/ninaquinn"
+      },
+      "role": "Marketing",
+      "title": "Content Creator"
+    },
+    {
+      "name": "Oscar Roberts",
+      "image": "https://via.placeholder.com/150",
+      "social": {
+        "linkedin": "https://www.linkedin.com/in/oscarroberts",
+        "twitter": "https://twitter.com/oscarroberts",
+        "github": "https://github.com/oscarroberts"
+      },
+      "role": "Marketing",
+      "title": "SEO Specialist"
+    },
+    {
+      "name": "Paula Scott",
+      "image": "https://via.placeholder.com/150",
+      "social": {
+        "linkedin": "https://www.linkedin.com/in/paulascott",
+        "twitter": "https://twitter.com/paulascott",
+        "github": "https://github.com/paulascott"
+      },
+      "role": "Marketing",
+      "title": "Brand Manager"
+    },
+    {
+      "name": "Quinn Taylor",
+      "image": "https://via.placeholder.com/150",
+      "social": {
+        "linkedin": "https://www.linkedin.com/in/quinntaylor",
+        "twitter": "https://twitter.com/quinntaylor",
+        "github": "https://github.com/quinntaylor"
+      },
+      "role": "Creative",
+      "title": "Graphic Designer"
+    },
+    {
+      "name": "Rachel Upton",
+      "image": "https://via.placeholder.com/150",
+      "social": {
+        "linkedin": "https://www.linkedin.com/in/rachelupton",
+        "twitter": "https://twitter.com/rachelupton",
+        "github": "https://github.com/rachelupton"
+      },
+      "role": "Creative",
+      "title": "UI/UX Designer"
+    },
+    {
+      "name": "Steve Vance",
+      "image": "https://via.placeholder.com/150",
+      "social": {
+        "linkedin": "https://www.linkedin.com/in/stevevance",
+        "twitter": "https://twitter.com/stevevance",
+        "github": "https://github.com/stevevance"
+      },
+      "role": "Creative",
+      "title": "Illustrator"
+    },
+    {
+      "name": "Tina Wright",
+      "image": "https://via.placeholder.com/150",
+      "social": {
+        "linkedin": "https://www.linkedin.com/in/tinawright",
+        "twitter": "https://twitter.com/tinawright",
+        "github": "https://github.com/tinawright"
+      },
+      "role": "Creative",
+      "title": "Animator"
+    },
+    {
+      "name": "Uma Yates",
+      "image": "https://via.placeholder.com/150",
+      "social": {
+        "linkedin": "https://www.linkedin.com/in/umayates",
+        "twitter": "https://twitter.com/umayates",
+        "github": "https://github.com/umayates"
+      },
+      "role": "Creative",
+      "title": "Videographer"
+    },
+    {
+      "name": "Victor Zane",
+      "image": "https://via.placeholder.com/150",
+      "social": {
+        "linkedin": "https://www.linkedin.com/in/victorzane",
+        "twitter": "https://twitter.com/victorzane",
+        "github": "https://github.com/victorzane"
+      },
+      "role": "Creative",
+      "title": "Photographer"
+    },
+    {
+      "name": "Wendy Adams",
+      "image": "https://via.placeholder.com/150",
+      "social": {
+        "linkedin": "https://www.linkedin.com/in/wendyadams",
+        "twitter": "https://twitter.com/wendyadams",
+        "github": "https://github.com/wendyadams"
+      },
+      "role": "Creative",
+      "title": "Creative Writer"
+    },
+    {
+      "name": "Xander Black",
+      "image": "https://via.placeholder.com/150",
+      "social": {
+        "linkedin": "https://www.linkedin.com/in/xanderblack",
+        "twitter": "https://twitter.com/xanderblack",
+        "github": "https://github.com/xanderblack"
+      },
+      "role": "Operations",
+      "title": "Operations Coordinator"
+    },
+    {
+      "name": "Yara Clarke",
+      "image": "https://via.placeholder.com/150",
+      "social": {
+        "linkedin": "https://www.linkedin.com/in/yaraclarke",
+        "twitter": "https://twitter.com/yaraclarke",
+        "github": "https://github.com/yaraclarke"
+      },
+      "role": "Operations",
+      "title": "Logistics Manager"
+    },
+    {
+      "name": "Zane Dawson",
+      "image": "https://via.placeholder.com/150",
+      "social": {
+        "linkedin": "https://www.linkedin.com/in/zanedawson",
+        "twitter": "https://twitter.com/zanedawson",
+        "github": "https://github.com/zanedawson"
+      },
+      "role": "Operations",
+      "title": "Supply Chain Specialist"
+    },
+    {
+      "name": "Alex Evans",
+      "image": "https://via.placeholder.com/150",
+      "social": {
+        "linkedin": "https://www.linkedin.com/in/alexevans",
+        "twitter": "https://twitter.com/alexevans",
+        "github": "https://github.com/alexevans"
+      },
+      "role": "Operations",
+      "title": "Project Manager"
+    },
+    {
+      "name": "Bella Foster",
+      "image": "https://via.placeholder.com/150",
+      "social": {
+        "linkedin": "https://www.linkedin.com/in/bellafoster",
+        "twitter": "https://twitter.com/bellafoster",
+        "github": "https://github.com/bellafoster"
+      },
+      "role": "Operations",
+      "title": "Operations Analyst"
+    },
+    {
+      "name": "Charlie Graham",
+      "image": "https://via.placeholder.com/150",
+      "social": {
+        "linkedin": "https://www.linkedin.com/in/charliegraham",
+        "twitter": "https://twitter.com/charliegraham",
+        "github": "https://github.com/charliegraham"
+      },
+      "role": "Sponsorship & PR",
+      "title": "Sponsorship Coordinator"
+    },
+    {
+      "name": "Dana Hayes",
+      "image": "https://via.placeholder.com/150",
+      "social": {
+        "linkedin": "https://www.linkedin.com/in/danahayes",
+        "twitter": "https://twitter.com/danahayes",
+        "github": "https://github.com/danahayes"
+      },
+      "role": "Sponsorship & PR",
+      "title": "PR Manager"
+    },
+    {
+      "name": "Eli Jenkins",
+      "image": "https://via.placeholder.com/150",
+      "social": {
+        "linkedin": "https://www.linkedin.com/in/elijenkins",
+        "twitter": "https://twitter.com/elijenkins",
+        "github": "https://github.com/elijenkins"
+      },
+      "role": "Sponsorship & PR",
+      "title": "Media Relations Specialist"
+    },
+    {
+      "name": "Fiona Kelly",
+      "image": "https://via.placeholder.com/150",
+      "social": {
+        "linkedin": "https://www.linkedin.com/in/fionakelly",
+        "twitter": "https://twitter.com/fionakelly",
+        "github": "https://github.com/fionakelly"
+      },
+      "role": "Sponsorship & PR",
+      "title": "Community Engagement Officer"
+    },
+    {
+      "name": "George Lewis",
+      "image": "https://via.placeholder.com/150",
+      "social": {
+        "linkedin": "https://www.linkedin.com/in/georgelewis",
+        "twitter": "https://twitter.com/georgelewis",
+        "github": "https://github.com/georgelewis"
+      },
+      "role": "Sponsorship & PR",
+      "title": "Event Planner"
+    },
+    {
+      "name": "Hannah Moore",
+      "image": "https://via.placeholder.com/150",
+      "social": {
+        "linkedin": "https://www.linkedin.com/in/hannahmoore",
+        "twitter": "https://twitter.com/hannahmoore",
+        "github": "https://github.com/hannahmoore"
+      },
+      "role": "Sponsorship & PR",
+      "title": "Public Relations Officer"
+    }
+  ]
+  
+  

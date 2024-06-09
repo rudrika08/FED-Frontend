@@ -27,4 +27,16 @@ export const SponserImg = [
       image: image3,
       title: "our team",
     },
+    {
+      image: image1,
+      title: "our team",
+    },
+    {
+      image: image2,
+      title: "our team",
+    },
+    {
+      image: image3,
+      title: "our team",
+    },
   ];

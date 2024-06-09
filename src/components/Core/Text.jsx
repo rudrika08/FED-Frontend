@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./Style/core.module.scss";
+import styles from "./styles/Core.module.scss";
 
 const Text = (props) => {
   const {

@@ -2,6 +2,7 @@
 @import "/src/assets/styles/Global.scss";
 @import 'react-date-picker/dist/DatePicker.css';
 @import 'react-calendar/dist/Calendar.css';
+@import "./assets/styles/Global.scss";
 
 * {
   margin: 0px;
@@ -18,17 +19,19 @@ html {
 }
 
 body {
-  background-color: white;
+  background-color: $page-color;
   color: $text-color;
   overflow-x: hidden;
 }
+
+
 
 .page {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
- 
+  
   background-color: $page-color;
 }
 
@@ -39,11 +42,22 @@ body {
   overflow: hidden;
 }
 
+
+
 body::-webkit-scrollbar {
-  width: 8px;
+  width: 10px;
+  height: 0px;
+  transition: .2s linear;
 }
+
+body::-webkit-scrollbar-thumb {
+  border-radius: 22px;
+  background-color:#FF8A00;
+  border: 1.5px solid hwb(0 11% 89%);
+}
+
 
 body::-webkit-scrollbar-track {
   padding: 0px 20px;
-  background-color: transparent;
+  background-color: $page-color;
 }
