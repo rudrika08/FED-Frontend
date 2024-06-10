@@ -1,4 +1,4 @@
-import styles from "./styles/Load.module.scss"
+import styles from "./styles/load.module.scss"
 import {Commet} from "react-loading-indicators"
 
 export default function Loading() {
