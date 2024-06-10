@@ -1,28 +1,24 @@
 import image from '../assets/images/hero.png'
 
-export const CarouselImg = [
-    {
-      image: image,
-      title: "our team",
-    },
-    {
-      image: image,
-      title: "our team",
-    },
-    {
-      image: image,
-      title: "our team",
-    },
-    {
-      image: image,
-      title: "our team",
-    },
-    {
-      image: image,
-      title: "our team",
-    },
-    {
-      image: image,
-      title: "our team",
-    },
-  ];
+const CarouselImg = [
+  {
+    "image": image,
+  },
+  {
+    "image": image,
+  },
+  {
+    "image": image,
+  },
+  {
+    "image": image,
+  },
+  {
+    "image": image,
+  },
+  {
+    "image": image,
+  }
+];
+
+export default CarouselImg;

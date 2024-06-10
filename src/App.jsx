@@ -1,26 +1,23 @@
-import React, { Suspense } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+
+import { Suspense, lazy } from "react";
+import { Routes, Route } from "react-router-dom";
 
 // layouts
-import Nav from "./layouts/Navbar/Navbar";
+import Navbar from "./layouts/Navbar/Navbar";
 import Footer from "./layouts/Footer/Footer";
-// import MobileNav from "./components/header/MobileHeader";
 
-// // pages
-const Home = React.lazy(() => import("./pages/Home/Home"));
-// const About = React.lazy(() => import("./pages/About/About"));
-const Contact = React.lazy(() => import("./pages/Contact/Contact"));
-const EventCards = React.lazy(() =>
-  import("./components/EventCards/EventCards")
-);
-const Login = React.lazy(() => import("./pages/Login/Login"));
+// pages
+const Home = lazy(() => import("./pages/Home/Home"));
+const Event = lazy(() => import("./pages/Event/Event"));
+const Social = lazy(() => import("./pages/Social/Social"));
+const Team = lazy(() => import("./pages/Team/Team"));
+const Login = lazy(() => import("./pages/Authentication/Login/Login"));
+const SignUp = lazy(() => import("./pages/Authentication/SignUp/SignUp"));
+const Error = lazy(() => import("./pages/Error/Error"));
 
-const EventCards1 = React.lazy(() => import("./components/EventCards/EventCards1/EventCards-1"));
-
-const EventCards2 = React.lazy(() => import("./components/EventCards/EventCards2/EventCards-2"));
-const EventCardsModal = React.lazy(() => import("./components/EventCards/EventCards1/EventCardModal2"));
-// // microInteraction
+// microInteraction
 import Loading from "./microInteraction/Load/Load";
+
 
 // import { Alert } from "./MicroInteraction/Alert";
 
@@ -30,56 +27,32 @@ import Loading from "./microInteraction/Load/Load";
 // // axios
 // import axios from "axios";
 
+
 function App() {
   return (
     <>
-      <Router>
-        <Nav />
+      
+      <Navbar />
+      <div className="page">
+       
+          <Suspense fallback={<Loading />}>
 
-        <div className="page">
-          <div className="pageExt">
             <Routes>
-              <Route
-                path="/"
-                element={
-                  <Suspense fallback={<Loading />}>
-                    <Home />
-                  </Suspense>
-                }
-              />
-
-            <Route
-              path="/EventCards"
-              element={
-                <Suspense fallback={<Loading />}>
-                  <EventCards />
-                </Suspense>
-              }
-            />
-
-            <Route
-              path="/Contact"
-              element={
-                <Suspense fallback={<Loading />}>
-                  <Contact />
-                </Suspense>
-              }
-            />
-
-              <Route
-                path="*"
-                element={
-                  <Suspense fallback={<Loading />}>
-                    <h1>Not Found</h1>
-                  </Suspense>
-                }
-              />
+              <Route path="/" element={<Home />} />
+              <Route path="/Event" element={<Event />} />
+              <Route path="/Social" element={<Social />} />
+              <Route path="/Team" element={<Team />} />
+              <Route path="/Login" element={<Login />} />
+              <Route path="/SignUp" element={<SignUp />} />
+              <Route path="*" element={<Error />} />
             </Routes>
-          </div>
-        </div>
 
-        <Footer />
-      </Router>
+          </Suspense>
+          
+      </div>
+      <Footer />
+
+     
     </>
   );
 }

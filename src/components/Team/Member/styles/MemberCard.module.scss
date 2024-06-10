@@ -1,0 +1,35 @@
+.cards {
+  height: 50vw;
+  width: 100%;
+  margin-top: 2vw;
+  border-radius: 10px;
+  position: relative;
+  padding: 0.5vw;
+  display: flex;
+}
+.one {
+  height: 17vw;
+  width: 14vw;
+  padding: 0.1vw;
+  margin: 10px;
+  border-radius: 15px;
+  position: relative;
+  z-index: 100;
+}
+.image {
+  height: 10vw;
+  width: 100%;
+  border-top-right-radius: 15px;
+  border-top-left-radius: 15px;
+  background-color: #555050;
+}
+.name {
+  height: 3vw;
+  width: 100%;
+  background-color: #ffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #333;
+  font-weight: 900;
+}

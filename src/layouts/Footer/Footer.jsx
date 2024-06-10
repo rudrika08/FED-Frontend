@@ -2,62 +2,62 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { HashLink } from "react-router-hash-link";
 
-import style from "./style/Footer.module.scss"
+import styles from "./styles/Footer.module.scss"
 
 export default function Footer() {
   return (
-    <section id={style.footer}>
-      <footer className={style.f1}>
-        <div className={style.logodiv}>
+    <section id={styles.footer}>
+      <footer className={styles.f1}>
+        <div className={styles.logodiv}>
           <img
-            className={style.fedlogo}
+            className={styles.fedlogo}
             src="https://uploads-ssl.webflow.com/629d87f593841156e4e0d9a4/62eeaa9927e6aea4ff13590e_FedLogo.png"
             alt="fedlogo"
           />
-          <p className={style.fed}>FED</p>
+          <p className={styles.fed}>FED</p>
         </div>
-        <div className={style.flexdiv}>
-          <div className={style.footerleft}>
-            <div className={style.row1}>
+        <div className={styles.flexdiv}>
+          <div className={styles.footerleft}>
+            <div className={styles.row1}>
               <h4>Community</h4>
 
               {/* ContactUs */}
 
-              <HashLink to="/#ContactUs" className={style.footerleftlink}>
+              <HashLink to="/#ContactUs" className={styles.footerleftlink}>
                 Contact
               </HashLink>
-              <Link to="/Team" className={style.footerleftlink}>
+              <Link to="/Team" className={styles.footerleftlink}>
                 Member
               </Link>
-              <Link to="/Alumni" className={style.footerleftlink}>
+              <Link to="/Alumni" className={styles.footerleftlink}>
                 Alumni
               </Link>
             </div>
-            <div className={style.row2}>
+            <div className={styles.row2}>
               <h4>About Us</h4>
 
               {/* KnowUs */}
-              <HashLink smooth to="/#KnowUs" className={style.footerleftlink}>
+              <HashLink smooth to="/#KnowUs" className={styles.footerleftlink}>
                 Manifesto
               </HashLink>
 
               {/* work */}
-              <HashLink smooth to="/#work" className={style.footerleftlink}>
+              <HashLink smooth to="/#work" className={styles.footerleftlink}>
                 Partner
               </HashLink>
             </div>
-            <div className={style.row3}></div>
+            <div className={styles.row3}></div>
           </div>
-          <div className={style.footerright}>
-            <h4 className={style.social}>Social</h4>
-            <div className={style.icondiv}>
+          <div className={styles.footerright}>
+            <h4 className={styles.social}>Social</h4>
+            <div className={styles.icondiv}>
               <a
                 href="https://www.instagram.com/fedkiit/"
-                className={style.link1}
+                className={styles.link1}
                 target="_blank"
               >
                 <svg
-                  className={style.iconimg}
+                  className={styles.iconimg}
                   width="40"
                   height="40"
                   viewBox="0 0 40 40"
@@ -147,11 +147,11 @@ export default function Footer() {
               </a>
               <a
                 href="https://www.linkedin.com/company/fedkiit/"
-                className={style.link1}
+                className={styles.link1}
                 target="_blank"
               >
                 <svg
-                  className={style.iconimg}
+                  className={styles.iconimg}
                   width="40"
                   height="40"
                   viewBox="0 0 40 40"
@@ -182,11 +182,11 @@ export default function Footer() {
               </a>
               <a
                 href="https://open.spotify.com/show/3s0jcteh4gcNcJeECstoMj?si=G7NjOL73Qxq4K6r3fy_-VA&utm_source=whatsapp&nd=1"
-                className={style.link1}
+                className={styles.link1}
                 target="_blank"
               >
                 <svg
-                  className={style.iconimg}
+                  className={styles.iconimg}
                   width="40"
                   height="40"
                   viewBox="0 0 40 40"
@@ -202,11 +202,11 @@ export default function Footer() {
               </a>
               <a
                 href="https://www.youtube.com/channel/UC7LjeEyGyr656BU2VpCbCJA"
-                className={style.link1}
+                className={styles.link1}
                 target="_blank"
               >
                 <svg
-                  className={style.iconimg}
+                  className={styles.iconimg}
                   width="40"
                   height="40"
                   viewBox="0 0 40 40"
@@ -224,15 +224,15 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className={style.bottomdiv}>
-          <div className={style.bottomleft}>
+        <div className={styles.bottomdiv}>
+          <div className={styles.bottomleft}>
             <p>
               Made with❤️
               <br />
               from Federation of Entrepreneurship Development
             </p>
           </div>
-          <div className={style.bottomright}>
+          <div className={styles.bottomright}>
             <p>
               To boost the confidence of aspiring entrepreneurs worldwide.
               <br />
@@ -240,21 +240,21 @@ export default function Footer() {
             </p>
           </div>
         </div>
-        <div className={style.tnpMDiv}>
-          <div className={style.terms_and_policies}>
-            <div className={style.tap1Div}>
-              <Link to="/T&C" className={style.LinkStyle}>
+        <div className={styles.tnpMDiv}>
+          <div className={styles.terms_and_policies}>
+            <div className={styles.tap1Div}>
+              <Link to="/T&C" className={styles.Linkstyles}>
                 Terms and conditions
               </Link>
             </div>
-            <dv className={style.dotDIv}></dv>
-            <div className={style.tap1Div}>
-              <Link to="/PrivacyPolicies" className={style.LinkStyle}>
+            <dv className={styles.dotDIv}></dv>
+            <div className={styles.tap1Div}>
+              <Link to="/PrivacyPolicies" className={styles.Linkstyles}>
                 Privacy policy
               </Link>
             </div>
           </div>
-          <p className={style.copyrightPTag}>© 2019-2023, fedkiit.com</p>
+          <p className={styles.copyrightPTag}>© 2024-2028, fedkiit.com</p>
         </div>
       </footer>
     </section>
