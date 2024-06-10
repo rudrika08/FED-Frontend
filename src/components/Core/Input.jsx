@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import styles from "./Style/core.module.scss";
+import styles from "./styles/Core.module.scss";
 import { FaRegCalendarAlt, FaZhihu } from "react-icons/fa";
 import Select, { components } from "react-select";
 import DatePicker from "react-date-picker";
