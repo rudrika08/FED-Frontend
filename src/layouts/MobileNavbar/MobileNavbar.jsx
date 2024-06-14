@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Link, useLocation } from "react-router-dom";
 import style from './styles/MobileNavbar.module.scss';
 import Headroom from 'react-headroom';
@@ -21,6 +21,12 @@ export default function Navbar() {
 
   const isActive = (path) => {
     return location.pathname === path;
+  };
+
+  const handleLinkClick = () => {
+    if (isOpen) {
+      toggleMenu();
+    }
   };
 
   return (
@@ -48,22 +54,22 @@ export default function Navbar() {
             </>
           )}
           <li className={style.navLink}>
-            <Link to="/" style={{ color: isActive("/") ? "#FF8A00" : "white" }}>Home</Link>
+            <Link to="/" style={{ color: isActive("/") ? "#FF8A00" : "white" }} onClick={handleLinkClick}>Home</Link>
           </li>
           <li className={style.navLink}>
-            <Link to="/Events" style={{ color: isActive("/Events") ? "#FF8A00" : "white" }}>Events</Link>
+            <Link to="/Events" style={{ color: isActive("/Events") ? "#FF8A00" : "white" }} onClick={handleLinkClick}>Events</Link>
           </li>
           <li className={style.navLink}>
-            <Link to="/Social" style={{ color: isActive("/Social") ? "#FF8A00" : "white" }}>Social</Link>
+            <Link to="/Social" style={{ color: isActive("/Social") ? "#FF8A00" : "white" }} onClick={handleLinkClick}>Social</Link>
           </li>
           <li className={style.navLink}>
-            <Link to="/Team" style={{ color: isActive("/Team") ? "#FF8A00" : "white" }}>Team</Link>
+            <Link to="/Team" style={{ color: isActive("/Team") ? "#FF8A00" : "white" }} onClick={handleLinkClick}>Team</Link>
           </li>
           <button className={style.mobilesignup} onClick={handleAuthClick}>
           {isLoggedIn ? <><MdOutlineLogout size={25} /> Logout</> : 'Login/Sign up'}
         </button>
         </ul>
-        
+
         {isOpen && <div className={style.blurBackground}></div>}
       </nav>
     </Headroom>
