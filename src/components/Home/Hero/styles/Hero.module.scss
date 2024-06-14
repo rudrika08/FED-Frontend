@@ -107,6 +107,13 @@ h5{
     }
 }
 
+@media (max-width: 1200px) {
+    .heroone, 
+    .herotwo{
+        width: 110%;
+    }
+}
+
 
 @media screen and (max-width: 768px){
 
@@ -174,6 +181,7 @@ h5{
         background-color: #1C1C1C;
         position: relative; 
         margin-top: -3rem;
+        margin-left: -2rem;
     }
 
     .hero1 h2{
