@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import styles from './styles/Feedback.module.scss';
-import feedbackData from '../../../data/feedback.json'; // Import the entire JSON array
+import feedbackData from '../../../data/feedback.json';
 import quoteImg from "../../../assets/images/quote.png";
 
 const Feedback = () => {
@@ -19,10 +19,10 @@ const Feedback = () => {
   useEffect(() => {
     const feedbacksContainer = feedbacksRef.current;
     const handleMouseEnter = () => {
-      feedbacksContainer.style.animationPlayState = 'paused'; //stop on hovering
+      feedbacksContainer.style.animationPlayState = 'paused'; // Stop on hovering
     };
     const handleMouseLeave = () => {
-      feedbacksContainer.style.animationPlayState = 'running'; 
+      feedbacksContainer.style.animationPlayState = 'running';
     };
 
     feedbacksContainer.addEventListener('mouseenter', handleMouseEnter);
@@ -38,14 +38,16 @@ const Feedback = () => {
     <div className={styles.feedbackContainer}>
       <img className={styles.upQuote} src={quoteImg} alt="Up Quote" />
       <div className={styles.heading}>
-        <h2>FEEDBACK ON <span className={styles.highlight}>US</span></h2>
+        <h2>TESTIM<span className={styles.highlight}>ONIALS</span></h2>
         <div className={styles.bottomLine}></div>
       </div>
       <div className={styles.feedbacksContainer}>
         <div className={styles.feedbacks} ref={feedbacksRef}>
-          {feedbackData.map((quote, index) => ( // Access the imported JSON array directly
+          
+          {feedbackData.concat(feedbackData).map((quote, index) => ( // Duplicate the feedback data array
             <FeedbackCard key={index} quote={quote} />
           ))}
+          
         </div>
       </div>
       <img className={styles.downQuote} src={quoteImg} alt="Down Quote" />

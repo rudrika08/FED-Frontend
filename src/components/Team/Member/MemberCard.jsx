@@ -9,7 +9,7 @@ const MemberCard = ({ name, image, social, title, role, know }) => {
     <div className={styles.teamMember}>
       <div className={styles.teamMemberInner}>
         <div className={styles.teamMemberFront}>
-          <img src={image} alt={name} className={styles.teamMemberImg} />
+          <img src={image} alt={`Profile of ${name}`} className={styles.teamMemberImg} />
           <div className={styles.teamMemberInfo}>
             <h4 style={{ color: '#FF5C00' }}>{name}</h4>
           </div>
@@ -17,17 +17,33 @@ const MemberCard = ({ name, image, social, title, role, know }) => {
         <div className={styles.teamMemberBack}>
           {!showMore ? (
             <>
-              <h3 style={{ color: '#fff' }}>{title}</h3>
+              <h5 style={{ color: '#fff' }}>{title}</h5>
               <div className={styles.socialLinks}>
-                {social.linkedin && <a href={social.linkedin} target="_blank" rel="noopener noreferrer"><FaLinkedin /></a>}
-                {social.github && <a href={social.github} target="_blank" rel="noopener noreferrer"><FaGithub /></a>}
+                {social.linkedin && (
+                  <a href={social.linkedin} target="_blank" rel="noopener noreferrer" aria-label={`${name} LinkedIn`}>
+                    <FaLinkedin />
+                  </a>
+                )}
+                {social.github && (
+                  <a href={social.github} target="_blank" rel="noopener noreferrer" aria-label={`${name} GitHub`}>
+                    <FaGithub />
+                  </a>
+                )}
               </div>
-              {role === 'Director' && <button onClick={() => setShowMore(true)}>Know More</button>}
+              {role === 'Director' && (
+                <button onClick={() => setShowMore(true)} aria-expanded={showMore}>
+                  Know More
+                </button>
+              )}
             </>
           ) : (
             <div className={styles.knowMoreContent}>
-              <div className={styles.knowPara}><p>{know}</p></div>
-              <button onClick={() => setShowMore(false)}>Back</button>
+              <div className={styles.knowPara}>
+                <p>{know}</p>
+              </div>
+              <button onClick={() => setShowMore(false)} aria-expanded={showMore}>
+                Back
+              </button>
             </div>
           )}
         </div>
