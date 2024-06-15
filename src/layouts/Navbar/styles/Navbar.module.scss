@@ -123,6 +123,15 @@ a{
   margin-right: 2.4rem;
 }
 
+.profileImg {
+  width: 40px;
+  height: 40px;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-top: -6px;
+}
+
 @media screen and (max-width: 825px) {
   .nav {
     padding: 0.25rem 1.25rem;
