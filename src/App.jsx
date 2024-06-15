@@ -4,6 +4,7 @@ import { Routes, Route ,Outlet} from "react-router-dom";
 
 // layouts
 import Navbar from "./layouts/Navbar/Navbar";
+import MobileNavbar from "./layouts/MobileNavbar/MobileNavbar";
 import Footer from "./layouts/Footer/Footer";
 
 // pages
@@ -35,6 +36,7 @@ const MainLayout = () => {
   return (
     <>
       <Navbar />
+      <MobileNavbar />
       <div className="page">
         <Outlet />
       </div>
