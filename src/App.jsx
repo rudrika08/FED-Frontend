@@ -9,6 +9,7 @@ import Footer from "./layouts/Footer/Footer";
 // pages
 const Home = lazy(() => import("./pages/Home/Home"));
 const Event = lazy(() => import("./pages/Event/Event"));
+const PastEvents = lazy(() => import("./pages/Event/pastPage"));
 const Social = lazy(() => import("./pages/Social/Social"));
 const Team = lazy(() => import("./pages/Team/Team"));
 const Login = lazy(() => import("./pages/Authentication/Login/Login"));
@@ -43,7 +44,7 @@ const MainLayout = () => {
 };
 
 
-const SimpleLayout = () => {
+const AuthLayout = () => {
   return (
     <div className="page">
       <Outlet />
@@ -62,12 +63,13 @@ function App() {
       <Routes>
         <Route element={<MainLayout />}>
           <Route path="/" element={<Home />} />
-          <Route path="/Event" element={<Event />} />
+          <Route path="/Events" element={<Event />} />
+          <Route path="/pastEvents" element={<PastEvents />} />
           <Route path="/Social" element={<Social />} />
           <Route path="/Team" element={<Team />} />
           <Route path="/profile" element={<Admin />} />
         </Route>
-        <Route element={<SimpleLayout />}>
+        <Route element={<AuthLayout />}>
           <Route path="/Login" element={<Login />} />
           <Route path="/SignUp" element={<Signup />} />
         </Route>
