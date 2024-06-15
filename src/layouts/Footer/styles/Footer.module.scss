@@ -32,6 +32,7 @@
   flex-direction: row;
   justify-content: space-between;
   width: 100%;
+  margin-bottom: 20px;
 }
 
 .footerleftlink {
@@ -71,8 +72,16 @@
   color: #afafaf;
 }
 
+.icondiv2 {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-direction: row;
+  color: #afafaf;
+}
+
 .link1 {
-  color: inherit;
+  color: #afafaf;
   text-decoration: none;
   font-family: "Manrope", sans-serif;
   font-weight: 700;
@@ -82,8 +91,9 @@
 }
 
 .icon{
-  margin-right: 5px;
+  margin-right: 10px;
   margin-bottom: -3px;
+  font-size: 40px;
 }
 
 .bottomdiv {
@@ -103,7 +113,8 @@
 .terms_and_policies {
   display: flex;
   justify-content: center;
-  margin-top: 30px;
+  margin-top: 10px;
+  margin-bottom: 20px;
 }
 
 .tap1Div {
@@ -116,6 +127,13 @@
 
 .copyrightPTag {
   text-align: center;
+}
+.dotDiv{
+  background-color: #ffffff;
+  height: 8px;
+  width: 8px;
+  border-radius: 50%;
+  margin-top: 8px;
 }
 
 
@@ -134,7 +152,13 @@
 @media screen and (max-width: 480px) {
   .logodiv {
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
+  }
+
+  .icon {
+    font-size: 30px;
+    flex-direction: column;
+    
   }
 
   .fed {
@@ -145,12 +169,28 @@
 
   .footerleft {
     display: flex;
-    flex-direction: column;
-    text-align: center;
-    gap: 1.5rem;
+    align-items: flex-start;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    text-align: left;
+    width: 100%;
   }
-  .icondiv{
+
+  .row1, .row2 {
+    margin: 0;
+  }
+
+  .icondiv2 {
+    display: flex;
+    justify-content: center;
     align-items: center;
+    width: 88vw;
+  }
+
+  .socialh4{
+    visibility: hidden;
   }
 }
+
 

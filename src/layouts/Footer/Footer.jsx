@@ -18,7 +18,28 @@ export default function Footer() {
           <p className={styles.fed}>FED</p>
         </div>
         <div className={styles.flexdiv}>
-          <div className={styles.footerleft}>
+          <div className={styles.footerleft}> 
+          <div className={styles.footerright}>
+            <div className={styles.row2}>
+            <h4>Explore</h4>
+              <Link to="/" className={styles.footerleftlink} target="_blank">
+                Home
+              </Link>
+              <Link
+                to="/Events"
+                className={styles.footerleftlink}
+                target="_blank"
+              >
+                Events
+              </Link>
+              
+              <Link to="/Team" className={styles.footerleftlink} target="_blank">
+                Team
+              </Link>
+            </div>
+          </div>
+            
+
             <div className={styles.row1}>
               <h4>Community</h4>
               <HashLink smooth to="/#ContactUs" className={styles.footerleftlink}>
@@ -31,6 +52,7 @@ export default function Footer() {
                 Alumni
               </Link>
             </div>
+
             <div className={styles.row2}>
               <h4>About Us</h4>
               <HashLink smooth to="/#KnowUs" className={styles.footerleftlink}>
@@ -41,73 +63,60 @@ export default function Footer() {
               </HashLink>
             </div>
 
-            <div className={styles.footerright}>
-            <h4>Pages</h4>
-            <div className={styles.icondiv}>
-              <Link to="/" className={styles.link1} target="_blank">
-                Home
-              </Link>
-              <Link
-                to="/Events"
-                className={styles.link1}
-                target="_blank"
-              >
-                Events
-              </Link>
-              <Link to="/Social" className={styles.link1} target="_blank">
-                Social
-              </Link>
-              <Link to="/Team" className={styles.link1} target="_blank">
-                Team
-              </Link>
-            </div>
-          </div>
-          <div className={styles.footerright}>
-            <h4>Social</h4>
-            <div className={styles.icondiv}>
-              <Link to="/" className={styles.link1} target="_blank">
-              <FaLinkedin className={styles.icon} />Linkedln
-              </Link>
-              <Link
-                to="/Events"
-                className={styles.link1}
-                target="_blank"
-              >
-                <FaInstagram className={styles.icon} />Instagram
-              </Link>
-              <Link to="/Social" className={styles.link1} target="_blank">
-              <FaYoutube className={styles.icon} />Youtube
-              </Link>
-
-            </div>
-          </div>
-          
-
             
+          <div className={styles.footerright}>
+          <h4 className={styles.socialh4}>Social</h4>
+            <div className={styles.icondiv2}>
+              
+              <Link to="/" className={styles.link1} target="_blank">
+              <FaLinkedin className={styles.icon} />
+              </Link>
+              <Link
+                to="/Events"
+                className={styles.link1}
+                target="_blank"
+              >
+                <FaInstagram className={styles.icon} />
+              </Link>
+              <Link to="/Social" className={styles.link1} target="_blank">
+              <FaYoutube className={styles.icon} />
+              </Link>
+
+            </div>
+          </div>  
           </div>
-          
         </div>
+
+        
+        
+        <div className={styles.bottomdiv}>
+
         <div className={styles.terms_and_policies}>
           <div className={styles.tap1Div}>
             <Link to="/T&C" className={styles.Linkstyles}>
               Terms and conditions
             </Link>
+            
           </div>
-          <div className={styles.dotDIv}></div>
+          <div className={styles.dotDiv}></div>
           <div className={styles.tap1Div}>
             <Link to="/PrivacyPolicies" className={styles.Linkstyles}>
               Privacy policy
             </Link>
           </div>
         </div>
-        <div className={styles.bottomdiv}>
+
           <div className={styles.bottomleft}>
             <p>Made with ❤️ from Federation of Entrepreneurship Development</p>
           </div>
+
+          <div className={styles.tnpMDiv}>
+          <p className={styles.copyrightPTag}>© 2024-2028, fedkiit</p>
         </div>
-        <div className={styles.tnpMDiv}>
-          <p className={styles.copyrightPTag}>© 2024-2028, fedkiit.com</p>
+
+
         </div>
+
       </footer>
     </section>
   );

@@ -10,8 +10,10 @@ const Feedback = () => {
     return (
       <div className={styles.feedbackCard}>
         <p className={styles.feedbackText}>{quote.quote}</p>
+        <div>
         <p className={styles.feedbackAuthor}>{quote.title}</p>
         <p className={styles.feedbackEv}>{quote.post}</p>
+        </div>
       </div>
     );
   };

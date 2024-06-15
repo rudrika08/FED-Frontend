@@ -63,7 +63,6 @@
 
 .feedbacks {
   display: flex;
-  // animation: scroll 8s linear infinite;
   display: flex;
   animation: scroll 15s linear infinite;
   margin-left: 1300px;
@@ -81,7 +80,10 @@
   margin: 10px;
   min-width: 300px;
   text-align: left;
-  display: inline-block;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-direction: column;
   height: auto;
   
 }
@@ -166,7 +168,7 @@
 
   .feedbacks {
     display: flex;
-    animation: scroll 9s linear infinite;
+    animation: scroll 15s linear infinite;
   }
 
   .feedbackContainer .upQuote,
