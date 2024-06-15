@@ -35,7 +35,7 @@
 .teamMember:hover .teamMemberInner {
   transform: rotateY(180deg);
   outline: none;
-  border-color: #FF5C00;
+  border-color: #FF8A00;
 }
 
 .teamMember:hover .teamMemberFront {
@@ -111,14 +111,11 @@
     padding: 10px;
     padding-bottom: 0;
     margin: 7px;
-    border: 2px solid transparent;
-    border-radius: 20%;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    
 
     &:hover,
     &:focus {
-      border-color: #FF5C00;
-      box-shadow: 0 0 15px #FF5C00;
+      color: #FF8A00;
     }
   }
 }
@@ -138,7 +135,7 @@
 }
 
 button {
-  color: #FF5C00;
+  color: #FF8A00;
   background-color: transparent;
   border: none;
   cursor: pointer;

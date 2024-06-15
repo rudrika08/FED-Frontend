@@ -11,7 +11,7 @@ const MemberCard = ({ name, image, social, title, role, know }) => {
         <div className={styles.teamMemberFront}>
           <img src={image} alt={`Profile of ${name}`} className={styles.teamMemberImg} />
           <div className={styles.teamMemberInfo}>
-            <h4 style={{ color: '#FF5C00' }}>{name}</h4>
+            <h4 style={{ color: '#FF8A00' }}>{name}</h4>
           </div>
         </div>
         <div className={styles.teamMemberBack}>

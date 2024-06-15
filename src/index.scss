@@ -52,12 +52,11 @@ body::-webkit-scrollbar {
 
 body::-webkit-scrollbar-thumb {
   border-radius: 22px;
-  background-color:#FF8A00;
+  background-color:#FF5C00;
   border: 1.5px solid hwb(0 11% 89%);
 }
 
 
 body::-webkit-scrollbar-track {
   padding: 0px 20px;
-  background-color: $page-color;
 }

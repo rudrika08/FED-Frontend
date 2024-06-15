@@ -2,6 +2,7 @@ import React from 'react';
 import styles from './styles/Team.module.scss'; 
 import teamMembers from '../../data/MemberCard.json'; 
 import MemberCard from '../../components/Team/Member/MemberCard';
+import { FaRegArrowAltCircleRight } from "react-icons/fa";
 
 const Team = () => {
   const roles = ['Director', 'Technical', 'Creative', 'Marketing', 'Operations', 'Sponsorship & PR'];
@@ -60,8 +61,11 @@ const Team = () => {
           isDirector={false}
         />
       ))}
+
+      <div className={styles.alumniBut}><button>Meet Our Alumni</button><FaRegArrowAltCircleRight /></div>
     </div>
   );
+  
 };
 
 export default Team;
