@@ -9,7 +9,7 @@ h2 {
 }
 
 h2 span {
-  color: #FF5C00;
+  color: #FF8A00;
 }
 
 .para p{
@@ -32,7 +32,7 @@ h2 span {
 
 .teamSection h3 {
   font-size: 3em;
-  color: #FF5C00;
+  color: #FF8A00;
   margin-bottom: 60px;
 }
 
@@ -69,23 +69,46 @@ strong {
 .circle {
   height: 50vh;
   width: 30vh;
-  background-color: #FF5C00;
+  background-color: #FF8A00;
   position: absolute;
-  top: 35%;
+  top: 80%;
   left: -10%;
   border-radius: 50%;
-  filter: blur(80px);
+  filter: blur(150px);
 }
 
 .circle2 {
   height: 50vh;
   width: 30vh;
-  background-color: #FF5C00;
+  background-color: #FF8A00;
   position: absolute;
   bottom: -700%;
   right: -5%;
   border-radius: 50%;
-  filter: blur(80px);
+  filter: blur(150px);
+}
+
+.alumniBut{
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-right: 60px;
+  color: #FF8A00;
+  font-size: 25px;
+
+}
+
+.alumniBut a{
+  margin-right: 10px;
+  font-weight: 700;
+  padding: 20px;
+  padding-right: 0;
+  font-size: 25px;
+  color: #FF8A00;
+}
+
+.alumniBut a:hover{
+  text-decoration: underline;
 }
 
 /* Responsive styles */
@@ -112,7 +135,8 @@ strong {
     padding: 0px;
   }
   .directorGrid {
-    grid-template-columns: repeat(2, 1fr); /* Change to 2 columns for tablet view */
+    grid-template-columns: repeat(3, 1fr); 
+    padding: 0 2rem;
   }
   .circle {
     left: -20%;
@@ -170,10 +194,12 @@ strong {
   .circle {
     left: -40%;
   }
-  .directorGrid {
-    grid-template-columns: repeat(2, minmax(100px, 1fr));
-    // padding-left: 10rem;
-    // padding-right: 10rem;
-    // padding-top: 0;
+
+  .alumniBut {
+    margin-right: 10px;
+    padding-right: 15px;
+  }
+  .alumniBut a{
+    font-size: 20px;
   }
 }

@@ -2,6 +2,7 @@ import React from 'react';
 import styles from './styles/Team.module.scss'; 
 import teamMembers from '../../data/MemberCard.json'; 
 import MemberCard from '../../components/Team/Member/MemberCard';
+import { FaRegArrowAltCircleRight } from "react-icons/fa";
 
 const Team = () => {
   const roles = ['Director', 'Technical', 'Creative', 'Marketing', 'Operations', 'Sponsorship & PR'];
@@ -55,13 +56,16 @@ const Team = () => {
       {teamByRole.filter(section => section.role !== 'Director').map((section, index) => (
         <TeamSection
           key={index}
-          title={<span><span style={{ color: '#fff' }}>Team </span><strong style={{ color: '#FF5C00' }}>{section.role}</strong></span>}
+          title={<span><span style={{ color: '#fff' }}>Team </span><strong style={{ color: '#FF8A00' }}>{section.role}</strong></span>}
           members={section.members}
           isDirector={false}
         />
       ))}
+
+      <div className={styles.alumniBut}><a href='#'><span style={{ color: '#fff' }}>Meet</span> Our Alumni</a><FaRegArrowAltCircleRight /></div>
     </div>
   );
+  
 };
 
 export default Team;

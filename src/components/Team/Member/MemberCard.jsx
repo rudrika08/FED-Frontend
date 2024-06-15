@@ -11,7 +11,7 @@ const MemberCard = ({ name, image, social, title, role, know }) => {
         <div className={styles.teamMemberFront}>
           <img src={image} alt={`Profile of ${name}`} className={styles.teamMemberImg} />
           <div className={styles.teamMemberInfo}>
-            <h4 style={{ color: '#FF5C00' }}>{name}</h4>
+            <h4 style={{ color: '#000' }}>{name}</h4>
           </div>
         </div>
         <div className={styles.teamMemberBack}>
@@ -20,12 +20,12 @@ const MemberCard = ({ name, image, social, title, role, know }) => {
               <h5 style={{ color: '#fff' }}>{title}</h5>
               <div className={styles.socialLinks}>
                 {social.linkedin && (
-                  <a href={social.linkedin} target="_blank" rel="noopener noreferrer" aria-label={`${name} LinkedIn`}>
+                  <a href={social.linkedin} target="_blank" rel="social">
                     <FaLinkedin />
                   </a>
                 )}
                 {social.github && (
-                  <a href={social.github} target="_blank" rel="noopener noreferrer" aria-label={`${name} GitHub`}>
+                  <a href={social.github} target="_blank" rel="social">
                     <FaGithub />
                   </a>
                 )}
