@@ -49,12 +49,10 @@ importers:
         version: 2.4.3
       framer-motion:
         specifier: ^11.2.10
-
-        version: 11.2.10(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        version: 11.2.10(@emotion/is-prop-valid@1.2.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       load-script:
         specifier: ^2.0.0
         version: 2.0.0
-
       lucide-react:
         specifier: ^0.379.0
         version: 0.379.0(react@18.3.1)

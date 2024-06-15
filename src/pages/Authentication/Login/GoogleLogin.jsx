@@ -151,7 +151,7 @@
 
 import React, { useContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import style from "../../../context/Authentication/SignUp/style/signup.module.scss";
+import style from "../../../context/Authentication/SignUp/style/Signup.module.scss";
 
 // OAuth
 import { useGoogleLogin } from "@react-oauth/google";
