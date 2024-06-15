@@ -38,8 +38,8 @@ const Feedback = () => {
     <div className={styles.feedbackContainer}>
       <img className={styles.upQuote} src={quoteImg} alt="Up Quote" />
       <div className={styles.heading}>
-        <h2>TESTIM<span className={styles.highlight}>ONIALS</span></h2>
-        <div className={styles.bottomLine}></div>
+        <h2>TESTIMONIALS</h2>
+        <div className={styles.bottom_line}></div>
       </div>
       <div className={styles.feedbacksContainer}>
         <div className={styles.feedbacks} ref={feedbacksRef}>
