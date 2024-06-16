@@ -3,7 +3,7 @@ import { NavLink, Link, useLocation } from "react-router-dom";
 import style from "./styles/Navbar.module.scss";
 import Headroom from 'react-headroom';
 import logo from "../../assets/images/Logo/logo.svg";
-import defaultImg from "../../assets/images/defaultImg.jpg"; // Corrected import path
+import defaultImg from "../../assets/images/defaultImg.jpg"; 
 import AuthContext from '../../store/AuthContext';
 import { useContext } from 'react';
 
