@@ -4,10 +4,10 @@
   backdrop-filter: blur(10px);
   gap: 20px;
   font-size: 19px;
-  background-color: $page-color;
+  background-color: $page-color; 
   color: #fff;
   text-align: center;
-  padding: 20px 56px;
+  padding: 5px 5px;
   position: relative;
 
   .logo {
@@ -37,26 +37,31 @@
     border: 1.652px solid rgba(214, 214, 214, 0.81);
     background: linear-gradient(91deg, rgba(217, 217, 217, 0) -147.64%, rgba(217, 217, 217, 0.00) 143.9%);
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 25rem;
+    flex-direction: column;
+    align-items: center; 
+    width: 80%; 
     gap: 20px;
     font-weight: 500;
     white-space: nowrap;
     padding: 13px 46px;
-    height: 3.5rem;
+    height: max-content;
     list-style: none;
     margin: 0;
+    position: fixed;
+    top: 78px; 
+    left: -100%; 
+    transition: left 0.3s ease-in-out;
 
     &.open {
-      display: flex;
+      left: 0; 
     }
 
     .navLink {
       font-family: Poppins, sans-serif;
-      justify-content: center;
       padding: 8px 0;
       cursor: pointer;
+      text-align: center;
+      width: 100%; 
 
       &:hover {
         color: var(--Tab-Color, #ff8a00);
@@ -83,29 +88,35 @@
   }
 
   @media (max-width: 601px) {
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 0.5rem;
-    height: 78px;
-    z-index: 2;
 
-    .nav{
+    .nav {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 0.5rem;
+      height: 78px;
+      z-index: 2;
       backdrop-filter: blur(65px);
+    }
+
+    .name {
+      display: block;
+      font-size: 2rem;
+      font-weight: 600;
     }
 
     .icon {
       display: block;
       position: relative;
-      
       height: 30.39px;
       width: 54.85px;
       color: #fff;
-      cursor:pointer;
+      cursor: pointer;
       margin-top: 2rem;
       padding-top: 0.5vw;
       padding-bottom: 9vw;
-      background: rgba(255, 255, 255, 0.064); // Add a background for the blur effect
-      backdrop-filter: blur(50px); // Apply the blur effect
+      background: rgba(255, 255, 255, 0.064);
+      backdrop-filter: blur(50px);
       border-radius: 16.35px;
     }
 
@@ -120,24 +131,24 @@
       background-color: white;
       border-radius: 50%;
     }
-     
-    .logo{
+
+    .logo {
       height: 60%;
       margin-top: 1.2rem;
       margin-right: 1rem;
     }
+
     .mobile {
       width: 100%;
       display: flex;
       justify-content: space-between;
       flex-direction: row-reverse;
-      
     }
-    .icon{
+
+    .icon {
       margin-left: 2vw;
     }
 
-    
     .mobilesignup {
       display: block;
       font-family: Poppins, sans-serif;
@@ -154,37 +165,25 @@
     }
 
     .navItems {
-      flex-direction: column;
-      width: 100%;
-      align-items: flex-start;
-      height: max-content;
-      gap: 0.1vh;
-      align-items: center;
-      display: none;
-      background-color: #202020;
+      width: 80%;
+      background-color: #202020; 
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+      left: -100%;
+      transition: left 0.3s ease-in-out;
 
       &.open {
-        display: flex;
+        left: 0;
       }
 
       .navLink {
         margin: 0.5rem 0;
         text-align: center;
+        width: 100%;
       }
     }
   }
-}
 
-@media screen and (min-width: 601px) {
-  .navItems {
-    display: none;
-  }
-
-  .authButton {
-    display: none;
-  }
-
-  .nav{
+  @media (min-width: 601px) {
     display: none;
   }
 }
