@@ -120,7 +120,7 @@ const SocialMedia = () => {
       if (viewportWidth >= 1200) {
         return 730;
       } else if (viewportWidth >= 1024) {
-        return 710;
+        return 730;
       } else if (viewportWidth >= 768) {
         return 730;
       } else {
