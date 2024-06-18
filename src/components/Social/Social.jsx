@@ -68,7 +68,7 @@ const SocialMedia = () => {
         } else if (viewportWidth >= 768) {
         return 330; 
         } else {
-        return 360; 
+        return 315; 
         }
     };
 
@@ -90,7 +90,7 @@ const SocialMedia = () => {
         } else if (viewportWidth >= 768) {
         return 600; 
         } else {
-        return 360; 
+        return 315; 
         }
     };
 
@@ -112,7 +112,7 @@ const SocialMedia = () => {
         } else if (viewportWidth >= 768) {
         return 600; 
         } else {
-        return 360; 
+        return 315; 
         }
     };
 
