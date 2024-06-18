@@ -87,7 +87,9 @@ export default function Footer() {
           </div>
         </div>
 
-        
+        <div className={styles.bottomleft}>
+            <p>Made with ❤️ from Federation of Entrepreneurship Development</p>
+          </div>
         
         <div className={styles.bottomdiv}>
 
@@ -96,23 +98,23 @@ export default function Footer() {
             <Link to="/T&C" className={styles.Linkstyles}>
               Terms and conditions
             </Link>
-            
-          </div>
-          <div className={styles.dotDiv}></div>
-          <div className={styles.tap1Div}>
+            <p>&</p>
             <Link to="/PrivacyPolicies" className={styles.Linkstyles}>
               Privacy policy
             </Link>
+          
           </div>
-        </div>
-
-          <div className={styles.bottomleft}>
-            <p>Made with ❤️ from Federation of Entrepreneurship Development</p>
-          </div>
-
           <div className={styles.tnpMDiv}>
-          <p className={styles.copyrightPTag}>© 2024-2028, fedkiit</p>
+          <p className={styles.copyrightPTag}>© 2024, fedkiit</p>
+          </div>
+          {/* <div className={styles.dotDiv}></div> */}
+          
+          
         </div>
+
+          
+
+          
 
 
         </div>
