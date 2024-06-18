@@ -96,7 +96,7 @@ const SocialMedia = () => {
 
     const calculateInstagramReelHeight = () => {
       if (viewportWidth >= 1200) {
-        return 730;
+        return 700;
       } else if (viewportWidth >= 768) {
         return 730;
       } else {

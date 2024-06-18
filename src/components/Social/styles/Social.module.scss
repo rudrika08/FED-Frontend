@@ -152,7 +152,7 @@ background: linear-gradient(270deg, rgba(255,190,11,1) 0%, rgba(244,43,3,1) 100%
   }
 
   .instagramreel{
-    height: 930px;
+    height: 730px;
   }
   
   .leftColumn, .centerColumn, .rightColumn {
@@ -166,10 +166,6 @@ background: linear-gradient(270deg, rgba(255,190,11,1) 0%, rgba(244,43,3,1) 100%
     flex-direction: column;
     gap: 30px;
     margin-left: 5rem;
-  }
-
-  .centerColumn{
-    margin-top: 0.5rem;
   }
 
   .rightColumn{
