@@ -157,7 +157,7 @@ const Login = () => {
             </Text>
           </form>
         </div>
-        <div className={style.sideImage}></div>
+        {/* <div className={style.sideImage}></div> */}
       </div>
     </div>
   );

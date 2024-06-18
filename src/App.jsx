@@ -20,6 +20,9 @@ const Admin = lazy(()=>import("./pages/Profile/Admin/Admin"))
 
 // microInteraction
 import Loading from "./microInteraction/Load/Load";
+import OngoingEvent from "./components/Event/EventCards/OngoingEventCard/OngoingEventCard";
+import OngoingEventModal from "./features/Modals/Event/EventModal/OngoingEventCardModal";
+import PastEventModal from "./features/Modals/Event/EventModal/PastEventCardModal";
 
 
 // import { Alert } from "./MicroInteraction/Alert";
@@ -66,10 +69,13 @@ function App() {
         <Route element={<MainLayout />}>
           <Route path="/" element={<Home />} />
           <Route path="/Events" element={<Event />} />
-          <Route path="/pastEvents" element={<PastEvents />} />
+          <Route path="/Events/pastEvents" element={<PastEvents />} />
           <Route path="/Social" element={<Social />} />
           <Route path="/Team" element={<Team />} />
           <Route path="/profile" element={<Admin />} />
+          <Route path="/Events/:eventId" element={[<Event />,<OngoingEventModal/>]}/>
+          <Route path="/Events/pastEvents/:eventId" element={[<Event />,<PastEventModal  isPastPage={false}/>]}/>
+          <Route path="pastEvents/:eventId" element={[<PastEvents/>,<PastEventModal isPastPage={true}/>]}/>
         </Route>
         <Route element={<AuthLayout />}>
           <Route path="/Login" element={<Login />} />

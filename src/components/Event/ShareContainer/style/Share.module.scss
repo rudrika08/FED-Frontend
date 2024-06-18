@@ -1,0 +1,27 @@
+.maindiv{
+    position:absolute ;
+    z-index: 20;
+    top: 10%;
+    left: 45%;
+    // width: 100vw;
+    display: flex;
+  
+
+    justify-content: center;
+    align-items: center;
+}
+.closebtn:hover{
+    transform:rotate(260deg);
+}
+
+.makeStyles-container-17 {
+    color: #000;
+    height: 13rem;
+    outline: none;
+    padding: 30px;
+    position: relative;
+    max-width: 568px;
+    min-width: 250px;
+    background: white;
+    width: 19rem;
+}

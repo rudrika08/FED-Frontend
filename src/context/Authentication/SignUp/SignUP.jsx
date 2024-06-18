@@ -193,7 +193,7 @@ const SignUP = () => {
                 />
               </div>
             </div>
-            <div style={{ display: "flex", gap: "2%" }}>
+            <div style={{ display: "flex", gap: "2%" ,alignItems:"center" }}>
               <div style={{ width: "48%" }}>
                 <Input
                   type="select"
@@ -236,7 +236,7 @@ const SignUP = () => {
                   style={{ width: "96%" }}
                 />
               </div>
-              <div style={{ width: "47%" }}>
+              <div style={{ width: "48%" }}>
                 <Input
                   type="select"
                   placeholder="Select year"

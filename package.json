@@ -39,6 +39,7 @@
     "react-router-dom": "^6.23.0",
     "react-router-hash-link": "^2.4.3",
     "react-select": "^5.8.0",
+    "react-share-social": "^0.1.60",
     "react-social-media-embed": "^2.5.13",
     "sass": "^1.76.0",
     "sister": "^3.0.2"
