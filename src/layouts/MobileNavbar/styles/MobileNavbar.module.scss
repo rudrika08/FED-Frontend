@@ -59,7 +59,7 @@
       cursor: pointer;
 
       &:hover {
-        color: var(--Tab-Color, #ff8a00);
+        color: var(--Tab-Color, #ff8a00);//hover not working
       }
     }
   }
