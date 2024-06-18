@@ -26,7 +26,7 @@
 }
 
 .feedbackContainer h2 {
-  font-size: 2.5em;
+  font-size: 50px;
   margin-bottom: 20px;
   padding-top: 20px;
 }
@@ -62,7 +62,6 @@
 }
 
 .feedbacks {
-  display: flex;
   display: flex;
   animation: scroll 15s linear infinite;
   margin-left: 1300px;
@@ -140,6 +139,9 @@
 }
 
 @media (max-width: 480px) {
+  .feedbackContainer{
+    width: 100%;
+  }
   .feedbackContainer h2 {
     font-size: 40px;
   }
@@ -168,7 +170,10 @@
 
   .feedbacks {
     display: flex;
-    animation: scroll 15s linear infinite;
+    animation: scroll 8s linear infinite;
+    margin-left: -1700px;
+    margin-right: -2000px;
+  
   }
 
   .feedbackContainer .upQuote,

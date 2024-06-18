@@ -4,7 +4,7 @@
 
 h2 {
   text-align: center;
-  font-size: 3.5em;
+  font-size: 50px;
   margin-top: 20px;
 }
 
@@ -31,7 +31,7 @@ h2 span {
 }
 
 .teamSection h3 {
-  font-size: 3em;
+  font-size: 40px;
   color: #FF8A00;
   margin-bottom: 60px;
 }
@@ -43,6 +43,7 @@ h2 span {
 
 strong {
   font-weight: 800;
+  
 }
 
 .teamTitle {
@@ -59,11 +60,20 @@ strong {
 }
 
 .directorGrid {
-  grid-template-columns: repeat(3, minmax(100px, 1fr));
-  padding-left: 13rem;
-  padding-right: 13rem;
+  grid-template-columns: repeat(4, minmax(100px, 1fr));
   padding-top: 0;
 }
+
+.lastRowCentered {
+display: flex;
+align-items: center;
+justify-content: center;
+gap: 32px;
+margin-top: 4.3rem;
+margin-bottom: 4rem;
+}
+
+
 
 
 .circle {
@@ -121,29 +131,27 @@ strong {
   .circle {
     left: -30%;
   }
-  .directorGrid {
-    grid-template-columns: repeat(3, minmax(100px, 1fr));
-    padding-left: 2rem;
-    padding-right: 2rem;
-    padding-top: 0;
+  .teamGrid{
+    gap: 4rem;
   }
+
+  
+  // .directorGrid {
+  //   grid-template-columns: repeat(4, minmax(100px, 1fr));
+  //   padding-left: 2rem;
+  //   padding-right: 2rem;
+  //   padding-top: 0;
+  // }
 }
 
 @media (max-width: 768px) {
-  .teamGrid {
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    padding: 0px;
-  }
-  .directorGrid {
-    grid-template-columns: repeat(3, 1fr); 
-    padding: 0 2rem;
-  }
   .circle {
     left: -20%;
   }
   .circle2 {
     bottom: -500%;
     right: -20%;
+    display: none;
   }
 
   h2 {
@@ -158,25 +166,30 @@ strong {
     margin-left: 5px;
   }
 
-  // .teamSection {
-  //   padding: 50px;
-  // }
   .para p{
     font-size: 13px;
   }
 }
+
+@media (max-width: 550px) {
+  .teamGrid {
+    gap: 5vw;
+  }
+}
+
 
 @media (max-width: 480px) {
   .teamGrid {
     grid-template-columns: repeat(2, 1fr);
     padding: 0;
   }
-  .directorGrid {
-    grid-template-columns: repeat(2, 1fr);
+
+  .lastRowCentered{
+    margin-top: 2.3rem;
   }
 
   h2 {
-    font-size: 2.5rem;
+    font-size: 50px;
   }
 
   .teamSection h3 {
@@ -201,5 +214,12 @@ strong {
   }
   .alumniBut a{
     font-size: 20px;
+  }
+}
+
+@media (max-width: 415px) {
+  .teamGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10vw;
   }
 }

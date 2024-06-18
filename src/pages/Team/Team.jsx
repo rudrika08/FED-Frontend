@@ -1,8 +1,24 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './styles/Team.module.scss'; 
 import teamMembers from '../../data/MemberCard.json'; 
 import MemberCard from '../../components/Team/Member/MemberCard';
 import { FaRegArrowAltCircleRight } from "react-icons/fa";
+
+
+function useWindowWidth() {
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    function handleResize() {
+      setWindowWidth(window.innerWidth);
+    }
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  return windowWidth;
+}
 
 const Team = () => {
   const roles = ['Director', 'Technical', 'Creative', 'Marketing', 'Operations', 'Sponsorship & PR'];
@@ -14,13 +30,17 @@ const Team = () => {
   console.log('Team by role:', teamByRole);
 
   const TeamSection = ({ title, members, isDirector }) => {
-    console.log('Rendering TeamSection:', title, members);
+    const windowWidth = useWindowWidth();
+    const membersPerRow = windowWidth < 500 ? 2 : 4;
+    const remainderMembersCount = members.length % membersPerRow;
+    const lastRowMembers = remainderMembersCount > 0 ? members.slice(-remainderMembersCount) : [];
+    const otherMembers = remainderMembersCount > 0 ? members.slice(0, -remainderMembersCount) : members;
 
     return (
       <div className={`${styles.teamSection} ${isDirector ? styles.directorSection : ''}`}>
         <h3>{title}</h3>
         <div className={`${styles.teamGrid} ${isDirector ? styles.directorGrid : ''}`}>
-          {members.map((member, idx) => (
+          {otherMembers.map((member, idx) => (
             <MemberCard
               key={idx}
               className="teamMember"
@@ -33,6 +53,22 @@ const Team = () => {
             />
           ))}
         </div>
+        {lastRowMembers.length > 0 && (
+          <div className={styles.lastRowCentered}>
+            {lastRowMembers.map((member, idx) => (
+              <MemberCard
+                key={idx}
+                className="teamMember"
+                name={member.name}
+                image={member.image}
+                social={member.social}
+                title={member.title}
+                role={member.role}
+                know={member.know}
+              />
+            ))}
+          </div>
+        )}
       </div>
     );
   };
@@ -65,7 +101,6 @@ const Team = () => {
       <div className={styles.alumniBut}><a href='#'><span style={{ color: '#fff' }}>Meet</span> Our Alumni</a><FaRegArrowAltCircleRight /></div>
     </div>
   );
-  
 };
 
 export default Team;
