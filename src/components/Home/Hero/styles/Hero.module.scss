@@ -140,11 +140,8 @@
     }
   
     .hero1 {
-      margin-left: 7%;
-      margin-top: 21%;
-      padding: 2vw;
-      padding-top: 2vw;
       z-index: 1; 
+      padding-left: 25px;
     }
   }
 
@@ -173,6 +170,10 @@
     .heroone strong{
         font-size: 1.25rem;
         text-align: center;
+    }
+
+    .hero1{
+      padding-left: 45px;
     }
   
     // .hero1 h2 {
@@ -208,10 +209,7 @@
     }
   
     .hero1 {
-      margin-left: 7%;
-      margin-top: 21%;
-      padding: 2vw;
-      padding-top: 2vw;
+      
       z-index: 1; 
     }
   }

@@ -16,16 +16,16 @@
   border: 0.88px solid rgba(255, 255, 255, 0.40);
   background: rgba(255, 255, 255, 0.10);
   backdrop-filter: blur(6.7px);
-  padding: 5rem 5rem;
-  margin-top: 3rem;
-  width: 70rem;
+  padding: 3rem 2rem;
+  margin-top: 2rem;
+  width: 65rem;
   gap: 3rem 3rem;
-  margin-bottom: 3rem;
+  margin-bottom: 2rem;
 }
 
 .sponser_card {
-  height: 8rem;
-  width: 8rem;
+  height: 7rem;
+  width: 7rem;
   border-radius: 2.5rem;
   border: 2px solid white;
   overflow: hidden;
@@ -33,7 +33,8 @@
 
 .SponserCard_image {
   height: 100%;
-  width: 100%;
+  width: 110%;
+  margin-left: -2px;
   object-fit: cover;
 }
 
@@ -126,8 +127,9 @@
   .sponser_title {
     font-size: 42px;
     margin-right: 1rem;
-  //   margin-top: -15rem;
+    margin-top: -15rem;
    }
+
 
   .bottom_line{
     margin-right: 9rem;

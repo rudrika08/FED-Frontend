@@ -41,7 +41,11 @@ function About() {
   
   return (
     <div className={styles.container}>
+      <div className={styles.heading}>
       <p className={styles.head}>ABOUT <span>US</span></p>
+      <div className={styles.bottomLine}></div>
+      </div>
+      
       <AnimatedBox direction="right">
         <div className={`${styles.box1} ${styles.boxflex}`}>
           <img className={styles.whyfedimg} src="https://uploads-ssl.webflow.com/663d299655b46de106de40d7/665730072a5e426c487dd8da_Frame%201000001327.svg" alt="" />

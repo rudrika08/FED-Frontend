@@ -243,6 +243,9 @@ form button {
     font-size: 45px;
   }
   
+  form{
+    width: 125%;
+  }
   .imageSection{
     width: 100%;
     display: none;
@@ -253,7 +256,7 @@ form button {
   }
 
   .form-group{
-    width: 120%;
+    width: 110%;
     margin-left: -2rem;
   }
 
@@ -263,5 +266,10 @@ form button {
   }
 
   
+}
+@media (max-width: 400px){
+  form{
+    width: 100%;
+  }
 }
 

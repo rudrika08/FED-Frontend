@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useLocation } from "react-router-dom";
 import style from './styles/MobileNavbar.module.scss';
 import Headroom from 'react-headroom';
@@ -10,6 +10,14 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const location = useLocation();
+
+  useEffect(() => {
+    if (isOpen) {
+      document.body.classList.add(style.lockScroll);
+    } else {
+      document.body.classList.remove(style.lockScroll);
+    }
+  }, [isOpen]);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -45,7 +53,7 @@ export default function Navbar() {
             {isOpen ? <RxCross2 size={25} /> : <FiMenu size={25} />}
           </div>
         </div>
-
+        
         <ul className={`${style.navItems} ${isOpen ? style.open : ''}`}>
           {isLoggedIn && (
             <>
@@ -66,11 +74,11 @@ export default function Navbar() {
             <Link to="/Team" style={{ color: isActive("/Team") ? "#FF8A00" : "white" }} onClick={handleLinkClick}>Team</Link>
           </li>
           <button className={style.mobilesignup} onClick={handleAuthClick}>
-          {isLoggedIn ? <><MdOutlineLogout size={25} /> Logout</> : 'Login/Sign up'}
-        </button>
+            {isLoggedIn ? <><MdOutlineLogout size={25} /> Logout</> : 'Login/Sign up'}
+          </button>
         </ul>
 
-        {isOpen && <div className={style.blurBackground}></div>}
+        {isOpen && <div className={`${style.blurBackground} ${isOpen ? style.visible : ''}`} onClick={toggleMenu}></div>}
       </nav>
     </Headroom>
   );

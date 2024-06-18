@@ -6,41 +6,54 @@ span{
     color:#FF8A00;
 }
 
-.container{
-    //  margin-top: -10rem;
-}
+// .container{
+//     //  margin-top: -10rem;
+// }
 
 .head{
     font-weight: 700;
     font-size: 50px;
-    position: relative;
+    // position: relative;
     text-align: center;
-    margin-top: 13rem;
-    margin-right: 25px;
-    margin-bottom: -3rem;
-    color: white;
+    margin-top: 2rem;
+    // margin-bottom: -3rem;
 }
 
 .head span{
     color: #FF8A00;
 }
 
-.head ::before{
-    content:'';
-    height:5px;
-    width:8rem;
+.bottomLine {
+    width: 12rem;
+    height: 0.3125rem;
     background: #FF8A00;
     border-radius: 5px;
-    position:absolute;
-    margin:auto;
-    bottom:-5px;
-    left:0; 
-    right:0;
+    margin-bottom: 1rem;
+  }
+
+.heading{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
 }
+
+// .head ::before{
+//     content:'';
+//     height:5px;
+//     width:8rem;
+//     background: #FF8A00;
+//     border-radius: 5px;
+//     position:absolute;
+//     margin:auto;
+//     bottom:-5px;
+//     left:0; 
+//     right:0;
+// }
 
 
 .box{
-    height: 14rem;
+    // height: 14rem;
     width: 65%;
     padding: 2rem;
     background: transparent;
@@ -75,7 +88,6 @@ span{
 
 .box1{
     align-items: center;
-    padding-top: 1rem;
     width: 1500px;
 }
 
@@ -136,16 +148,12 @@ span{
 
 
 @media screen and (max-width: 1046px){
-    .container{
-        margin-top: -13rem;
-    }
     .head{
         font-size: 60.8px;
     }
 
     .box1{
         align-items: center;
-        padding-top: 3rem;
     }
     
     .box2{
@@ -155,6 +163,7 @@ span{
     .box3{
         padding-top: 3rem;
         // padding-bottom: -9rem;
+        // height: 10px;
     }
 
     .box{
@@ -169,7 +178,7 @@ span{
     }
     .box{
         font-size: 1.3rem;
-        height: 9rem;
+        // height: 9rem;
         width: 55%;
     }
 
@@ -189,7 +198,7 @@ span{
     }
 
     .whatfed{
-        height: 9.5rem;
+        // height: 9.5rem;
     }
 }
 
@@ -455,11 +464,10 @@ span{
 @media screen and (max-width: 443px){
     .head{
         font-size: 45px;
-        margin-bottom: 20px;
     }
     .box{
         font-size: 1.15rem;
-        height: 18rem;
+        // height: 18rem;
         width: 80%;
         text-align: left;
         padding: 1rem;
@@ -471,6 +479,7 @@ span{
         align-items: center;
         width: 100%;
     }
+
     .boxflex{
         display: flex;
         flex-direction: column;
