@@ -97,13 +97,13 @@
       display: block;
       position: relative;
       
-      height: 30.39px;
+      height: 50px;
       width: 54.85px;
       color: #fff;
       cursor:pointer;
-      margin-top: 2rem;
-      padding-top: 0.5vw;
-      padding-bottom: 9vw;
+      margin-top: 1rem;
+      padding-top: 0.75rem;
+      padding-bottom: 0.5rem;
       background: rgba(255, 255, 255, 0.064); // Add a background for the blur effect
       backdrop-filter: blur(50px); // Apply the blur effect
       border-radius: 16.35px;
@@ -122,8 +122,8 @@
     }
      
     .logo{
-      height: 60%;
-      margin-top: 1.2rem;
+      height: 65%;
+      margin-top: 1rem;
       margin-right: 1rem;
     }
     .mobile {
