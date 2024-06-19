@@ -137,7 +137,7 @@ const SignUP = () => {
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
-              margin: "15px 0 4px 0",
+              margin: "8 px 0 4px 0",
             }}
           >
             <div className={style.divider} />
@@ -145,8 +145,8 @@ const SignUP = () => {
             <div className={style.divider} />
           </div>
           <form onSubmit={handleSignup}>
-            <div  style={{ display: "flex" }}>
-              <div style={{ width: "50%" }}>
+            <div  style={{ display: "flex",justifyContent:"space-between" }}>
+              <div style={{ width: "48%" }}>
                 <Input
                   type="text"
                   placeholder="First Name"
@@ -157,7 +157,7 @@ const SignUP = () => {
                   style={{ width: "96%" }}
                 />
               </div>
-              <div style={{ width: "50%" }}>
+              <div style={{ width: "48%" }}>
                 <Input
                   type="text"
                   placeholder="Last Name"
@@ -169,8 +169,8 @@ const SignUP = () => {
                 />
               </div>
             </div>
-            <div style={{ display: "flex" }}>
-              <div style={{ width: "50%" }}>
+            <div style={{ display: "flex",justifyContent:"space-between" }}>
+              <div style={{ width: "48%" }}>
                 <Input
                   type="email"
                   placeholder="eg.-myemail@gmail.com"
@@ -181,7 +181,7 @@ const SignUP = () => {
                   style={{ width: "96%" }}
                 />
               </div>
-              <div style={{ width: "50%" }}>
+              <div style={{ width: "48%" }}>
                 <Input
                   type="text"
                   placeholder="1234567890"
@@ -193,8 +193,8 @@ const SignUP = () => {
                 />
               </div>
             </div>
-            <div style={{ display: "flex", gap: "2%" ,alignItems:"center" }}>
-              <div style={{ width: "48%" }}>
+            <div style={{ display: "flex", gap: "2%" ,alignItems:"center" ,justifyContent:"space-between" }}>
+              <div style={{ width: "46%" }}>
                 <Input
                   type="select"
                   placeholder="College Name"
@@ -212,7 +212,7 @@ const SignUP = () => {
                   style={{ width: "96%" }}
                 />
               </div>
-              <div style={{ width: "50%" }}>
+              <div style={{ width: "48%" }}>
                 <Input
                   type="text"
                   placeholder="School"
@@ -224,19 +224,8 @@ const SignUP = () => {
                 />
               </div>
             </div>
-            <div style={{ display: "flex" }}>
-              <div style={{ width: "50%" }}>
-                <Input
-                  type="text"
-                  placeholder="Roll Number"
-                  label="Roll Number"
-                  name="RollNumber"
-                  onChange={(e) => DataInp(e.target.name, e.target.value)}
-                  required
-                  style={{ width: "96%" }}
-                />
-              </div>
-              <div style={{ width: "48%" }}>
+            <div style={{ display: "flex",justifyContent:"space-between",alignItems:"center" }}>
+            <div style={{ width: "46%" }}>
                 <Input
                   type="select"
                   placeholder="Select year"
@@ -255,6 +244,18 @@ const SignUP = () => {
                   style={{ width: "96%" }}
                 />
               </div>
+              <div style={{ width: "48%" }}>
+                <Input
+                  type="text"
+                  placeholder="Roll Number"
+                  label="Roll Number"
+                  name="RollNumber"
+                  onChange={(e) => DataInp(e.target.name, e.target.value)}
+                  required
+                  style={{ width: "96%" }}
+                />
+              </div>
+          
             </div>
             <Input
               type="password"

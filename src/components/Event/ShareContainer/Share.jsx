@@ -2,6 +2,8 @@ import React from 'react';
 import { ShareSocial } from "react-share-social";
 import style from "./style/Share.module.scss";
 import { X } from 'lucide-react'
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 const Share = ({ onClose,urlpath }) => {
   const sharestyle = {
@@ -9,6 +11,7 @@ const Share = ({ onClose,urlpath }) => {
       background: '#2a2a2a',
       borderRadius: 3,
       border: 0,
+      width:'20rem',
       boxShadow: '0 3px 5px 2px rgba(24, 15, .3)',
       color: 'white',
     },
@@ -24,14 +27,17 @@ const Share = ({ onClose,urlpath }) => {
 
   return (
     <div className={style.maindiv}>
+
+      <div data-aos="zoom-in-up" data-aos-duration="500"> 
       <div onClick={onClose} className={style.closebtn} style={{ cursor: "pointer" ,position:"absolute",right:"1.5rem",top:"1.4rem",zIndex:"20" }}><X/></div>
       <div style={{ cursor: "pointer" ,position:"absolute",left:"1.5rem",top:"1.4rem",zIndex:"20" }}>Share</div>
-      <ShareSocial  
+          <ShareSocial  
         url={urlpath}
         style={sharestyle}
         socialTypes={['facebook', 'twitter', 'whatsapp','reddit', 'linkedin']}
         onSocialButtonClicked={data => console.log(data)}    
-      />
+      /></div>
+   
     </div>
   );
 }

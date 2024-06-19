@@ -8,7 +8,7 @@
       "school": "School of Engineering",
       "college": "Kalinga Institute of Industrial Technology",
       "mobileNo": "1234567890",
-      "selected": "",
+      "year": "3rd",
       "access": "1",
       "regForm": []
     },
@@ -21,7 +21,7 @@
       "school": "School of Management",
       "college": "Kalinga Institute of Industrial Technology",
       "mobileNo": "0987654321",
-      "selected": "",
+      "year": "3rd",
       "access": "0",
       "regForm": []
     }

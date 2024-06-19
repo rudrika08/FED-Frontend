@@ -44,7 +44,7 @@ const Login = () => {
         user.school,
         user.college,
         user.mobileNo,
-        user.selected,
+        user.year,
         user.regForm,
         user.access,
         "someToken",
@@ -88,7 +88,7 @@ const Login = () => {
             <p style={{ color: "#fff", textAlign: "center" }}>or</p>
             <div className={style.divider} />
           </div>
-          <form>
+          <form className={style.form}>
             <Input
               type="text"
               placeholder="eg:something@gmail.com"
@@ -117,6 +117,7 @@ const Login = () => {
               variant="secondary"
               style={{
                 fontSize: "0.7rem",
+                cursor:"pointer"
               }}
             >
               Forget Password?

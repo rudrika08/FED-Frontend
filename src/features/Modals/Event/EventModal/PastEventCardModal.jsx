@@ -31,23 +31,26 @@ const PastEventModal = ({ onClose, isPastPage }) => {
     <div style={{
       position: "absolute",
       width: "100vw",
-      height: "100rem",
+      height: "auto",
       display: "flex",
       zIndex: "15",
       justifyContent: "center",
       alignItems: "center",
       left: "0",
-      top: isPastPage ? "0%" : "95%"
+      top:"0",
+      backdropFilter: "blur(4px)",
+    
     }}>
       <div style={{
         width: "100%",
-        height: "100%",
+        height: "100rem",
         position: "relative",
-        backdropFilter: "blur(4px)"
+       
+         top: isPastPage ? "0%" : "95%"
       }}>
         <div className={EventCardModal2.modalOverlay}>
           {data && (
-            <div className={EventCardModal2.card}>
+            <div className={EventCardModal2.card} style={{top:isPastPage?'7rem' :'50rem'}}>
               <div style={{ position: "relative" }}>
                 <button className={EventCardModal2.closeModal} onClick={handleModalClose}>
                   <X />

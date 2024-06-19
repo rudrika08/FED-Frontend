@@ -2,6 +2,8 @@ import PastEvents from '../../components/Event/EventCards/PastEventCard/PastEven
 import style from './styles/pastPage.module.scss';
 import eventData from '../../data/eventData.json';
 import { useEffect,useState } from 'react';
+import { Link } from 'react-router-dom';
+import ArrowBackIcon from "@mui/icons-material/ArrowBack"
 
 
 
@@ -28,6 +30,11 @@ const PastPage = () => {
   const pastEvents = eventData.filter(event => !event.ongoingEvent);
     return(
       <div className={style.main}>
+          <Link to={'/Events'}>
+          <div className={style.ArrowBackIcon}>
+            <ArrowBackIcon />
+          </div>
+        </Link>
       <div className={style.whole}>
         <div className={style.eventwhole}>
 

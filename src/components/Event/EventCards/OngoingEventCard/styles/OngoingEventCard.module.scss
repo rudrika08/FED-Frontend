@@ -162,16 +162,14 @@
   justify-content: center;
   align-items: center;
   gap: 0.71575rem;
-  /* color: #000; */
+
   outline: noene;
   border: none;
   font-size: 0.9rem;
   color: #fff;
 }
 
-// .price{
-//   margin-left: 3%;
-// }
+
 
 .backtxt {
  
@@ -193,7 +191,7 @@
   background-clip: text;
 }
 
-/* Media Query for max 400px */
+
 @media (max-width: 600px) {
 .backbtn{
   margin-top: .2rem;

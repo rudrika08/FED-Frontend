@@ -60,8 +60,8 @@
   position: relative;
 }
 
-.name span {
-  font-size: 3rem;
+.name .w1 {
+  font-size: 2.1rem;
   background: var(--Primary, linear-gradient(260deg, rgba(255, 190, 11, 0.84) -29.7%, rgba(244, 43, 3, 0.84) 128.34%));
   font-weight: 700;
   // margin-right: 1rem;
@@ -69,17 +69,13 @@
   background-clip: text;
 }
 
-.name h3 {
-  background-color: #1c1c1c;
-  font-size: 3rem;
+.name .w2 {
+  color: white;
+  font-weight: 700;
+  font-size: 2.1rem;
 }
 
-.SponserCard_image {
-  height: 20vw;
-  width: 35vw;
-  padding: 2vw;
-  margin: 5vw;
-}
+
 
 .cardsin {
   display: flex;
@@ -118,9 +114,10 @@
   margin-left: 0;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around;
-  margin-left: -4rem;
+  // justify-content: space-around;
+  // margin-left: -4rem;
   margin-top: -5rem;
+  column-gap: 5rem;
 }
 
 .cardtwo {
@@ -148,7 +145,7 @@
   align-items: center;
 }
 
-.seeall {
+.seeall  {
   background-color: #1c1c1c;
   font-size: 1.5rem;
   border: none;
@@ -160,8 +157,9 @@
   cursor: pointer;
 }
 
-.seeall:hover {
+.seeall {
   text-decoration: underline;
+ 
 }
 
 .circle, .circleone, .circleleft, .circletwo {
@@ -199,7 +197,7 @@
   right: -15%;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 650px) {
   .line, .ring1, .ring2 {
     display: none;
   }
@@ -226,6 +224,8 @@
     margin-top: 1.9rem;
   }
 
+ 
+
   .name p {
     font-size: 3rem;
     background: var(--Primary, linear-gradient(260deg, rgba(255, 190, 11, 0.84) -29.7%, rgba(244, 43, 3, 0.84) 128.34%));
@@ -239,7 +239,7 @@
     margin-left: 0;
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-around;
+    // justify-content: space-around;
     margin-top: -5rem;
   }
 
@@ -260,8 +260,8 @@
   margin-left: 0;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around;
-  margin-left: -4rem;
+  // justify-content: space-around;
+  // margin-left: -4rem;
   margin-top: -5rem;
 }
 }
@@ -270,8 +270,8 @@
   margin-left: 0;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around;
-  margin-left: -4rem;
+  // justify-content: space-around;
+  // margin-left: -4rem;
   margin-top: -5rem;
 }
 }
@@ -280,18 +280,19 @@
   margin-left: 0;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around;
-  margin-left: -4rem;
+  // justify-content: space-around;
+  // margin-left: -4rem;
   margin-top: -5rem;
 }
 }
 @media (min-width: 900px){
  .cardone {
-  margin-left: 0;
+  // margin-left: 0;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around;
-  margin-left: -4rem;
+  // justify-content: space-around;
+  // margin-left: -1rem;
+  
   margin-top: -5rem;
 }
 }
