@@ -37,7 +37,8 @@
   margin-top: 6rem;
 }
 
-.ring1, .ring2 {
+.ring1,
+.ring2 {
   position: absolute;
   background-color: #1c1c1c;
 }
@@ -55,14 +56,21 @@
 .name {
   // width: 100%;
   display: flex;
-   gap: 1rem;
+  gap: 1rem;
   align-items: center;
   position: relative;
 }
 
 .name .w1 {
   font-size: 2.1rem;
-  background: var(--Primary, linear-gradient(260deg, rgba(255, 190, 11, 0.84) -29.7%, rgba(244, 43, 3, 0.84) 128.34%));
+  background: var(
+    --Primary,
+    linear-gradient(
+      260deg,
+      rgba(255, 190, 11, 0.84) -29.7%,
+      rgba(244, 43, 3, 0.84) 128.34%
+    )
+  );
   font-weight: 700;
   // margin-right: 1rem;
   color: transparent;
@@ -74,8 +82,6 @@
   font-weight: 700;
   font-size: 2.1rem;
 }
-
-
 
 .cardsin {
   display: flex;
@@ -103,29 +109,22 @@
   margin-top: 6rem;
 }
 
-.outcard {
-  height: 95%;
-  width: 100%;
-  background-color: #1c1c1c;
-  margin-top: 3.9rem;
-}
+// .outcard {
+//   height: 95%;
+//   width: 100%;
+//   background-color: #1c1c1c;
+//   margin-top: 3.9rem;
+// }
 
 .cardone {
   margin-left: 0;
+  margin-top: 3.7rem;
   display: flex;
   flex-wrap: wrap;
   // justify-content: space-around;
   // margin-left: -4rem;
   margin-top: -5rem;
   column-gap: 5rem;
-}
-
-.cardtwo {
-  height: 40%;
-  margin: 1vw;
-  margin-top: 3vw;
-  display: flex;
-  justify-content: space-around;
 }
 
 .ca {
@@ -145,13 +144,20 @@
   align-items: center;
 }
 
-.seeall  {
+.seeall {
   background-color: #1c1c1c;
   font-size: 1.5rem;
   border: none;
   display: flex;
   align-items: center;
-  background: var(--Primary, linear-gradient(260deg, rgba(255, 190, 11, 0.84) -29.7%, rgba(244, 43, 3, 0.84) 128.34%));
+  background: var(
+    --Primary,
+    linear-gradient(
+      260deg,
+      rgba(255, 190, 11, 0.84) -29.7%,
+      rgba(244, 43, 3, 0.84) 128.34%
+    )
+  );
   color: transparent;
   background-clip: text;
   cursor: pointer;
@@ -159,10 +165,12 @@
 
 .seeall {
   text-decoration: underline;
- 
 }
 
-.circle, .circleone, .circleleft, .circletwo {
+.circle,
+.circleone,
+.circleleft,
+.circletwo {
   background-color: rgba(255, 92, 0, 0.19);
   filter: blur(120px);
   position: absolute;
@@ -197,38 +205,52 @@
   right: -15%;
 }
 
-@media (max-width: 650px) {
-  .line, .ring1, .ring2 {
+@media (max-width: 658px) {
+  .line,
+  .ring1,
+  .ring2 {
     display: none;
   }
 
-  .eventcard, .pasteventcard {
+  .eventcard,
+  .pasteventcard {
     width: 70%;
     border-radius: 20px;
-    margin-left: 0;
     margin-inline: auto;
   }
 
   .eventcard {
     margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
   .pasteventcard {
     margin-top: 3rem;
+    padding-right: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
-  .outcard {
-    height: 95%;
-    width: 100%;
-    background-color: #1c1c1c;
-    margin-top: 1.9rem;
-  }
-
- 
+  // .outcard {
+  //   height: 95%;
+  //   width: 100%;
+  //   background-color: #1c1c1c;
+  //   margin-top: 1.9rem;
+  // }
 
   .name p {
     font-size: 3rem;
-    background: var(--Primary, linear-gradient(260deg, rgba(255, 190, 11, 0.84) -29.7%, rgba(244, 43, 3, 0.84) 128.34%));
+    background: var(
+      --Primary,
+      linear-gradient(
+        260deg,
+        rgba(255, 190, 11, 0.84) -29.7%,
+        rgba(244, 43, 3, 0.84) 128.34%
+      )
+    );
     font-weight: 700;
     margin-right: 1rem;
     color: transparent;
@@ -236,11 +258,9 @@
   }
 
   .cardone {
-    margin-left: 0;
     display: flex;
     flex-wrap: wrap;
-    // justify-content: space-around;
-    margin-top: -5rem;
+    margin-top: -2rem;
   }
 
   .cardsin {
@@ -255,44 +275,43 @@
   }
 }
 
-@media (min-width: 600px){
- .cardone {
-  margin-left: 0;
-  display: flex;
-  flex-wrap: wrap;
-  // justify-content: space-around;
-  // margin-left: -4rem;
-  margin-top: -5rem;
+@media (min-width: 600px) {
+  .cardone {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 0.1rem;
+    width: 100%;
+    margin-inline: auto;
+  }
 }
+@media (min-width: 700px) {
+  .cardone {
+    margin-left: 0;
+    display: flex;
+    flex-wrap: wrap;
+    // justify-content: space-around;
+    // margin-left: -4rem;
+    margin-top: 0;
+  }
 }
-@media (min-width: 700px){
- .cardone {
-  margin-left: 0;
-  display: flex;
-  flex-wrap: wrap;
-  // justify-content: space-around;
-  // margin-left: -4rem;
-  margin-top: -5rem;
+@media (min-width: 800px) {
+  // .cardone {
+  //   margin-left: 0;
+  //   display: flex;
+  //   flex-wrap: wrap;
+  //   // justify-content: space-around;
+  //   // margin-left: -4rem;
+  //   margin-top: 0;
+  // }
 }
-}
-@media (min-width: 800px){
- .cardone {
-  margin-left: 0;
-  display: flex;
-  flex-wrap: wrap;
-  // justify-content: space-around;
-  // margin-left: -4rem;
-  margin-top: -5rem;
-}
-}
-@media (min-width: 900px){
- .cardone {
-  // margin-left: 0;
-  display: flex;
-  flex-wrap: wrap;
-  // justify-content: space-around;
-  // margin-left: -1rem;
-  
-  margin-top: -5rem;
-}
+@media (min-width: 900px) {
+  // .cardone {
+  //   // margin-left: 0;
+  //   display: flex;
+  //   flex-wrap: wrap;
+  //   // justify-content: space-around;
+  //   // margin-left: -1rem;
+
+  //   margin-top: 0rem;
+  // }
 }

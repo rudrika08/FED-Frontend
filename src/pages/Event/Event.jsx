@@ -60,7 +60,7 @@ const Event = () => {
               <span className={style.w1}>Past</span>
               <span className={style.w2}>Events</span>
             </div>
-            <div className={style.outcard}>
+            {/* <div className={style.outcard}> */}
               <div className={style.cardone}>
                 {pastEvents.map((event, index) => (
                   <div key={index}>
@@ -68,7 +68,7 @@ const Event = () => {
                   </div>
                 ))}
               </div>
-            </div>
+            {/* </div> */}
           </div>
         </div>
       </div>
