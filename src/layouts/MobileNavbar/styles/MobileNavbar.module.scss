@@ -13,9 +13,6 @@
   position: relative;
   z-index: 2;
  
-  // .navback{
-  //   background-color: #fff;
-  // }
 
   .logo {
     aspect-ratio: 2.38;
@@ -70,6 +67,10 @@
       &:hover {
         color: var(--Tab-Color, #ff8a00);
       }
+    }
+
+    .navLink a{
+      text-decoration: none;
     }
   }
 

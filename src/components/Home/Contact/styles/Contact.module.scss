@@ -152,7 +152,6 @@ form button {
     margin-top: -30rem;
     margin-right: -6rem;
     z-index: -3;
-    visibility: hidden;
   }
   .backCircle {
     position: absolute;
@@ -176,8 +175,9 @@ form button {
     margin-top: 20px;
   }
   .contactFormContainer img {
-    width: 50%;
+    width: 60%;
     height: auto;
+    margin-right: 2rem;
   }
   .backCircle {
     width: 15rem;
@@ -185,10 +185,10 @@ form button {
     right: 50%;
     top: 10%;
     transform: translateX(50%);
-    display: none; //off for now to remove zoom out error
+    display: none;
   }
   .circle {
-    display: none; //off for now to remove zoom out error
+     overflow-x: hidden;
   }
 }
 
@@ -205,7 +205,7 @@ form button {
   }
   .imageSection{
     width: 100%;
-    display: none;
+    overflow-x: hidden;
   }
 
   .form-section{

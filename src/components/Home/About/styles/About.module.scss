@@ -6,9 +6,10 @@ span{
     color:#FF8A00;
 }
 
-// .container{
-//     //  margin-top: -10rem;
-// }
+.container{
+    overflow: hidden;
+}
+
 
 .head{
     font-weight: 700;
@@ -38,18 +39,6 @@ span{
     flex-direction: column;
 }
 
-// .head ::before{
-//     content:'';
-//     height:5px;
-//     width:8rem;
-//     background: #FF8A00;
-//     border-radius: 5px;
-//     position:absolute;
-//     margin:auto;
-//     bottom:-5px;
-//     left:0; 
-//     right:0;
-// }
 
 
 .box{

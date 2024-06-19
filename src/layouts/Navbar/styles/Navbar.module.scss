@@ -2,9 +2,6 @@
 
 .headerMain {
   background: transparent;
-  // transition: top 0.3s;
-  // add any other default styles
-  // transition: transform 0.3s ease-in-out, background-color 0.3s ease-in-out;
 }
 
 .sticky {
@@ -37,18 +34,18 @@
   z-index: 10;
 }
 
-.nav a{
+.navItems a{
   color: #fff;
   text-decoration: none;
   position: relative;
 }
 
-.nav a:hover{
+.navItems a:hover{
   color: #ff8a00;
   transition: 0.2s ease-in;
 }
 
-.nav a:after {    
+.navItems a:after {    
   background: none repeat scroll 0 0 transparent;
   bottom: 0;
   content: "";
@@ -60,7 +57,7 @@
   transition: width 0.3s ease 0s, left 0.3s ease 0s;
   width: 0;
 }
-.nav a:hover:after { 
+.navItems a:hover:after { 
   width: 100%; 
   left: 0; 
 }
@@ -178,41 +175,6 @@
     padding: 0.5rem 1rem;
   }
 }
-// @media screen and (max-width: 600px) {
-//   // .nav{
-//   //   gap: 4px;
-//   // }
-
-//   // .logo {
-//   //   width: 1.8rem;
-//   //   height: 1.8rem;
-//   //   border-radius: 1.8rem;
-//   //   background: url("../../../assets/images/Logo/logo.svg") lightgray 50% / cover no-repeat;
-//   // }
-  
-//   // .logo_text {
-//   //   width: 4.9rem;
-//   //   height: 2.3rem;
-//   //   background: url("../../../assets/images/Logo/FED.svg") no-repeat;
-//   // }
-
-//   // .nav {
-//   //   padding: 0.25rem 1.25rem;
-//   // }
-  
-//   // .navItems {
-//   //   gap: 0.25rem;
-//   //   padding: 0.2125rem 0.4rem;
-//   //   height: 1.8rem;
-//   // }
-  
-//   // .authButton {
-//   //   height: 1.9rem;
-//   //   font-size: 0.5rem;
-//   //   padding: 0.4rem 1rem;
-//   // }
-// }
-
 
 
 @media screen and (max-width: 600px) {
