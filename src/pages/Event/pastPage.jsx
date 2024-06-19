@@ -39,9 +39,9 @@ const PastPage = () => {
         <div className={style.eventwhole}>
 
           <div className={style.pasteventCard}>
-            <div className={style.Name}>
-              <p>Past</p>
-              <h3>Events</h3>
+            <div className={style.name}>
+            <span className={style.w1}>Past</span>
+            <span className={style.w2}>Events</span>
             </div>
             <div className={style.Outcard}>
               <div className={style.cardone}>

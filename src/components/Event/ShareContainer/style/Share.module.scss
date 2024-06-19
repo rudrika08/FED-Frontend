@@ -30,3 +30,10 @@
     box-shadow: rgb(24, 15, 0) 0px 3px 5px 2px;
     color: white;
 }
+
+
+@media screen and (max-width:600px){
+    .maindiv{
+        left: 15%;
+    }
+}
