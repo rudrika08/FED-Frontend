@@ -37,10 +37,35 @@
   z-index: 10;
 }
 
-a{
+.nav a{
   color: #fff;
   text-decoration: none;
+  position: relative;
 }
+
+.nav a:hover{
+  color: #ff8a00;
+  transition: 0.2s ease-in;
+}
+
+.nav a:after {    
+  background: none repeat scroll 0 0 transparent;
+  bottom: 0;
+  content: "";
+  display: block;
+  height: 2px;
+  left: 50%;
+  position: absolute;
+  background: #fff;
+  transition: width 0.3s ease 0s, left 0.3s ease 0s;
+  width: 0;
+}
+.nav a:hover:after { 
+  width: 100%; 
+  left: 0; 
+}
+
+
 
 .logo_div {
   display: flex;

@@ -8,6 +8,7 @@
   background-color: #1C1C1C;
   color: white;
   margin-top: 1rem;
+  width: 100%;
 }
 
 .contactFormContainer h2 {
@@ -110,7 +111,7 @@ form button {
 .circle {
   height: 50vh;
   width: 30vh;
-  background-color: #FF8A00;
+  background-color: rgba(255, 92, 0, 0.19);
   position: absolute;
   top: 15%;
   right: -10%;
@@ -191,56 +192,12 @@ form button {
   }
 }
 
-// @media (max-width: 560px) {
-//   .contactFormContainer h2 {
-//     font-size: 40px;
-//   }
-//   .bottomLine {
-//     width: 10rem;
-//   }
-//   form {
-//     padding: 30px 10px;
-//     padding-right: 30px;
-//   }
-//   .formGroup input,
-//   .formGroup textarea {
-//     font-size: 14px;
-//   }
-//   .formGroup input {
-//     height: 50px;
-//   }
-//   .formGroup textarea {
-//     height: 150px;
-//   }
-//   .imageSection {
-//     margin-top: 2rem;
-//     margin-right: 2rem;
-//   }
-//   form button {
-//     font-size: 14px;
-//     padding: 8px 16px;
-//     margin-top: 1rem;
-//   }
-//   .contactFormContainer img {
-//     width: 70%;
-//     height: auto;
-//     margin-right: 5rem;
-//   }
-//   .backCircle {
-//     width: 10rem;
-//     height: 5rem;
-//   }
-//   .circle {
-//     height: 30vh;
-//     width: 20vh;
-//     margin-top: -40rem;
-//     visibility: visible;
-//   }
-// }
-
 @media (max-width: 480px) {
   .contactFormContainer h2 {
-    font-size: 45px;
+    font-size: 30px;
+  }
+  .bottomLine{
+    width: 6rem;
   }
   
   form{

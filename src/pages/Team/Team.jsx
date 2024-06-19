@@ -98,7 +98,7 @@ const Team = () => {
         />
       ))}
 
-      <div className={styles.alumniBut}><a href='#'><span style={{ color: '#fff' }}>Meet</span> Our Alumni</a><FaRegArrowAltCircleRight /></div>
+      <div className={styles.alumniBut}><div className={styles.ulhover}><a href='#'><span style={{ color: '#fff' }}>Meet</span> Our Alumni</a><FaRegArrowAltCircleRight /></div></div>
     </div>
   );
 };

@@ -79,7 +79,7 @@ margin-bottom: 4rem;
 .circle {
   height: 50vh;
   width: 30vh;
-  background-color: #FF8A00;
+  background-color: rgba(255, 92, 0, 0.19);
   position: absolute;
   top: 80%;
   left: -10%;
@@ -90,7 +90,7 @@ margin-bottom: 4rem;
 .circle2 {
   height: 50vh;
   width: 30vh;
-  background-color: #FF8A00;
+  background-color: rgba(255, 92, 0, 0.19);
   position: absolute;
   bottom: -700%;
   right: -5%;
@@ -109,50 +109,41 @@ margin-bottom: 4rem;
 
 }
 
+.alumniBut a{
+  color: #FF8A00;
+  text-decoration: none;
+}
 
-.alumniBut a {
 
+.alumniBut .ulhover{
   margin-right: 10px;
   font-weight: 700;
-  padding: 20px;
+  padding: 5px;
   padding-right: 0;
   font-size: 25px;
-
-  background-image: linear-gradient(
-    to right,
-    #fff,
-    #FF8A00 50%,
-
-    
-  );
-  background-size: 200% 100%;
-  background-position: -100%;
-  display: inline-block;
-  padding: 5px 0;
   position: relative;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  transition: all 0.3s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
 }
 
-.alumniBut a:before{
-  content: '';
-  background: #FF8A00;
+
+.alumniBut .ulhover:after {    
+  background: none repeat scroll 0 0 transparent;
+  bottom: 0;
+  content: "";
   display: block;
+  height: 2px;
+  left: 50%;
   position: absolute;
-  bottom: -3px;
-  left: 0;
+  background: #fff;
+  transition: width 0.3s ease 0s, left 0.3s ease 0s;
   width: 0;
-  height: 3px;
-  transition: all 0.3s ease-in-out;
 }
-
-.alumniBut a:hover {
- background-position: 0;
-}
-
-.alumniBut a:hover::before{
-  width: 100%;
+.alumniBut .ulhover:hover:after { 
+  width: 100%; 
+  left: 0; 
 }
 
 // .alumniBut a:hover{
@@ -227,12 +218,9 @@ margin-bottom: 4rem;
   }
 
   h2 {
-    font-size: 50px;
+    font-size: 40px;
   }
 
-  .teamSection h3 {
-    font-size: 1.7em;
-  }
 
   .teamSection span {
     margin-left: 5px;
@@ -258,6 +246,9 @@ margin-bottom: 4rem;
 @media (max-width: 415px) {
   .teamGrid {
     grid-template-columns: repeat(2, 1fr);
-    gap: 10vw;
+    gap: 6vw;
+  }
+  .lastRowCentered{
+    margin-bottom: 0;
   }
 }
