@@ -1,9 +1,9 @@
-import { useContext } from "react";
-import styles from "./styles/MemberEvents.module.scss";
+import React, { useContext } from "react";
+import styles from "./styles/EventsView.module.scss";
 import AuthContext from "../../../../store/AuthContext";
 import eventsData from "../../../../data/eventData.json";
 
-const UserEvents = () => {
+const Events = () => {
   const authCtx = useContext(AuthContext);
 
   const userEvents = eventsData.filter((event) =>
@@ -46,4 +46,4 @@ const UserEvents = () => {
   );
 };
 
-export default UserEvents;
+export default Events;

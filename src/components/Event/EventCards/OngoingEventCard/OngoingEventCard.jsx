@@ -62,7 +62,7 @@ const OngoingEvent = ({ data, isActive, onOpen, onClose }) => {
           </div>
         </div>
       </div>
-      {isOpen && <Share onClose={handleShare} urlpath={url} />}
+      {isOpen && <Share onClose={handleShare} urlpath={url+'/'+data.id} />}
     </>
   );
 };

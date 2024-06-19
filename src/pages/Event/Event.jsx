@@ -39,8 +39,8 @@ const Event = () => {
           <div className={style.eventcard}>
             <div className={style.name}>
               <img className={style.ring1} src={ring}></img>
-              <span>Ongoing</span>
-              <h3>Events</h3>
+              <span className={style.w1}>Ongoing</span>
+              <span className={style.w2}>Events</span>
             </div>
             {/* <div className={style.cardsout}> */}
             <div className={style.cardsin}>
@@ -57,8 +57,8 @@ const Event = () => {
           <div className={style.pasteventcard}>
             <div className={style.name}>
               <img className={style.ring2} src={ring}></img>
-              <span>Past</span>
-              <h3>Events</h3>
+              <span className={style.w1}>Past</span>
+              <span className={style.w2}>Events</span>
             </div>
             <div className={style.outcard}>
               <div className={style.cardone}>

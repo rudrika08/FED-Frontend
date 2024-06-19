@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import styles from "./styles/AdminProfile.module.scss";
+import styles from "./styles/ProfileView.module.scss";
 import { useContext } from "react";
 import AuthContext from "../../../../store/AuthContext";
 
-const AdminProfile = () => {
+const Profile = () => {
 
   const authCtx = useContext(AuthContext);
 
@@ -72,4 +72,4 @@ const AdminProfile = () => {
   );
 };
 
-export default AdminProfile;
+export default Profile;

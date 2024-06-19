@@ -55,11 +55,12 @@ function Navbar() {
 
         {authCtx.isLoggedIn ? (
           <NavLink to="/profile" className="LinkStyle">
-            <img
+            <div className={style.profileImgdiv}>   <img
               src={authCtx.user.pic || defaultImg}
               alt="Profile"
               className={style.profileImg}
-            />
+            /></div>
+         
           </NavLink>
         ) : (
           <a href="/Login">

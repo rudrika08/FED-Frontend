@@ -52,9 +52,9 @@
     background: $back-glass;
     border: 1px solid $border-color;
     color: $text-color;
-    position: relative;
-    top: -185px;
-    left: 15px;
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
     border-radius: 10px;
     text-align: center;
     font-size: 1rem;
@@ -73,11 +73,7 @@
     border-top: none;
 }
 
-// span {
-//     color: $orange-color;
-//     font-weight: 800;
-//     cursor: pointer;
-// }
+
 
 .seemore{
     

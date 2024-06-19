@@ -125,6 +125,7 @@
     justify-content: space-around;
     margin-left: -4rem;
     margin-top: -5rem;
+    margin-bottom: 4rem;
   }
   
   .cardtwo {
@@ -202,6 +203,16 @@
     bottom: -10%;
     right: -15%;
   }
+
+  .ArrowBackIcon {
+    position: absolute;
+    top: 3rem;
+    left: 4rem;
+    color: #fff;
+    cursor: pointer;
+
+  }
+  
   
   @media (max-width: 600px) {
     .line, .ring1, .ring2 {
