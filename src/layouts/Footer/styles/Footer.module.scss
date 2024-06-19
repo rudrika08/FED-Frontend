@@ -90,14 +90,16 @@
   margin-bottom: 10px;
 }
 
-.icon{
+.icon {
   margin-right: 10px;
   margin-bottom: -3px;
   margin-top: 10px;
   font-size: 40px;
 }
-
-.link1:hover{
+.icon:hover{
+  color: #FF8A00;
+}
+.link1 :hover{
   color: #FF8A00;
   transition: 0.3s ease-in-out;
 }

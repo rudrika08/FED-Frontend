@@ -74,7 +74,7 @@ const Team = () => {
   };
 
   return (
-    <div className={styles.contain}>
+    <div>
       <h2>Meet Our <span>Team</span></h2>
       <div className={styles.para}><p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Totam provident commodi consequatur neque magni, non tempore dolor corporis voluptate animi voluptatibus assumenda illo consectetur voluptatem quam, cum eligendi libero quos.</p></div>
       <div className={styles.circle}></div>

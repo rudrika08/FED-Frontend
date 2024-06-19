@@ -169,7 +169,6 @@ margin-bottom: 4rem;
   .circle2 {
     bottom: -500%;
     right: -20%;
-    display: none;
   }
 
 
@@ -210,7 +209,10 @@ margin-bottom: 4rem;
   h2 {
     font-size: 40px;
   }
-
+  .circle {
+    left: -30%;
+    background-color: rgba(255, 92, 0, 0.59);
+  }
 
   .teamSection span {
     margin-left: 5px;
@@ -218,11 +220,10 @@ margin-bottom: 4rem;
 
   .circle2 {
     bottom: -500%;
-    right: -30%;
+    left: 30%;
+    background-color: rgba(255, 92, 0, 0.59);
   }
-  .circle {
-    left: -40%;
-  }
+  
 
   .alumniBut {
     margin-right: 10px;
@@ -230,6 +231,12 @@ margin-bottom: 4rem;
   }
   .alumniBut a{
     font-size: 20px;
+  }
+}
+
+@media (max-width: 430px){
+  .lastRowCentered{
+    margin-bottom: 0;
   }
 }
 

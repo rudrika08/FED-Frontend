@@ -53,26 +53,16 @@
   .circle {
     height: 52rem;
     width: 50rem;
-    background-color: rgba(255, 92, 0, 0.19);
+    background-color: rgba(255, 92, 0, 0.29);
     filter: blur(100px);
     position: absolute;
     top: 60%; 
     left: -35%;
     border-radius: 50%;
     overflow: hidden;
+    z-index: -1;
   }
   
-//   .hero1 h2 {
-//     color: #FFFFFF;
-//     font-size: 2.8vw;
-//     letter-spacing: 0.1vh;
-//     line-height: 3rem;
-//   }
-  
-//   .hero1 p {
-//     color: #FF8A00;
-//     margin-left: 0.5vw;
-//   }
   
   .maincontent {
     padding-top: 50px;
@@ -85,29 +75,12 @@
     align-items: center;
   }
   
-//   .hero1 h3 {
-//     margin-left: 0.5vw;
-//     color: #FF8A00;
-//     font-size: 3vw;
-//   }
   
   .herotwo {
     padding-top: 2vw;
     padding-bottom: 3vw;
   }
   
-//   h4 {
-//     font-size: 1.7vw;
-//     color: #FFFFFF;
-//     margin-left: 0.3vw;
-//     letter-spacing: 0.1vw;
-//   }
-  
-//   h5 {
-//     font-size: 1.7vw;
-//     color: #FF8A00;
-//     margin-left: 0.5vw;
-//   }
 
 @media (max-width: 1025px) {
 .heroone strong{
@@ -129,10 +102,6 @@
       position: relative; 
       margin-top: 1rem;
       margin-right: 0rem;
-    }
-
-    .circle{
-      display: none; //for now to remove zoom out error
     }
   
     .smallcontent {
@@ -170,6 +139,13 @@
     }
 
     .smallcontent {
-      padding-top: 2rem;
+      padding-top: 1rem;
+    }
+
+    .circle{
+      top: 20%;
+      left: -150%;
+      height: 100vw;
+      background-color: rgba(255, 92, 0, 0.49);
     }
   }
