@@ -16,7 +16,7 @@ const Team = lazy(() => import("./pages/Team/Team"));
 const Login = lazy(() => import("./pages/Authentication/Login/Login"));
 const Signup = lazy(()=>import("./pages/Authentication/Signup/SignupMain"))
 const Error = lazy(() => import("./pages/Error/Error"));
-const Admin = lazy(()=>import("./pages/Profile/Admin/Admin"))
+const Profile = lazy(()=>import("./pages/Profile/Profile"))
 
 // microInteraction
 import Loading from "./microInteraction/Load/Load";
@@ -72,7 +72,7 @@ function App() {
           <Route path="/Events/pastEvents" element={<PastEvents />} />
           <Route path="/Social" element={<Social />} />
           <Route path="/Team" element={<Team />} />
-          <Route path="/profile" element={<Admin />} />
+          <Route path="/profile" element={<Profile />} />
           <Route path="/Events/:eventId" element={[<Event />,<OngoingEventModal/>]}/>
           <Route path="/Events/pastEvents/:eventId" element={[<Event />,<PastEventModal  isPastPage={false}/>]}/>
           <Route path="pastEvents/:eventId" element={[<PastEvents/>,<PastEventModal isPastPage={true}/>]}/>

@@ -1,5 +1,5 @@
-import { useContext } from "react";
-import styles from "./styles/MemberEvents.module.scss";
+import React, { useContext } from "react";
+import styles from "./styles/AlumniEvents.module.scss";
 import AuthContext from "../../../../store/AuthContext";
 import eventsData from "../../../../data/eventData.json";
 
