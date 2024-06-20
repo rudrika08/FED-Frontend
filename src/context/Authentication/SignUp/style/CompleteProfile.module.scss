@@ -1,7 +1,5 @@
-
-
 .mDiv {
-  position:fixed;
+  position: fixed;
 
   width: 100%;
   right: 0px;
@@ -21,8 +19,8 @@
 }
 
 .mDivCon {
-  margin-top: 0.9%;
-  
+  margin-top: 0.2%;
+
   position: relative;
   display: flex;
   flex-direction: column;
@@ -33,12 +31,12 @@
   color: #fff;
 }
 
-#showCreate{
+#showCreate {
   width: 100%;
   display: block;
 }
 
-#hideCreate{
+#hideCreate {
   width: 0;
   display: none;
 }
@@ -55,7 +53,6 @@
 .Please {
   font-family: "Mulish", sans-serif;
   text-align: center;
-
 }
 
 .CreateProfile {
@@ -80,18 +77,17 @@
   width: 40vw;
   max-width: 550px;
   display: flex;
-  padding-bottom: 10px;
-  
-  
+  padding-bottom: 15px;
+
   // justify-content: center;
   // align-items: center;
   // padding: 20px;
 }
 
-.BackGround:hover{
-  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
- 
-
+.BackGround:hover {
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
+    rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
+    rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
 }
 
 .FormTag {
@@ -103,24 +99,19 @@
   margin-inline: auto;
   gap: 0px 0px;
   // margin-bottom: 20px;
-  
 }
 
 //
 
 .year {
-
-   display: flex;
+  display: flex;
   outline: none;
   width: 100%;
-
-
-
 
   border: none;
   // width: 100%
   font-size: 12px;
-  background-Color: transparent;
+  background-color: transparent;
   border-radius: 4px;
   color: #fff;
   // margin-bottom: 8px;
@@ -133,15 +124,14 @@
   box-shadow: none;
 }
 
-.year:hover{
+.year:hover {
   border-color: #fff !important;
-
 }
 .year option {
-  color:white;
+  color: white;
   background-color: #2f2f2f;
   padding: 15px;
-  font-size:15px;
+  font-size: 15px;
 }
 
 @media (max-width: 500px) {
@@ -219,5 +209,3 @@
     font-weight: 300;
   }
 }
-
-  

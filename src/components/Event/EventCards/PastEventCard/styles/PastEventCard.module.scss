@@ -3,6 +3,9 @@
 
 @import "/src/assets/styles/Global.scss";
 
+
+
+
 .card {
   height: 18rem;
   width: 22rem;
@@ -11,11 +14,13 @@
   border-radius: 20px;
   font-size: 0.7rem;
   color: $text-color;
+  position: relative;
 
   border-bottom-left-radius: 20px;
   border-bottom-right-radius: 20px;
   border: 2px solid $border-color;
   font-family: "Poppins", sans-serif;
+
 }
 
 .eventname {
