@@ -1,39 +1,45 @@
-.maindiv{
-    position:absolute ;
-    z-index: 20;
-    top: 10%;
-    left: 45%;
-
-    display: flex;
-  
-
-    justify-content: center;
-    align-items: center;
-}
-.closebtn:hover{
-    transform:rotate(260deg);
+.shareContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 50;
 }
 
-.makeStyles-container-17 {
-    // color: #000;
-    height: auto;
-    outline: none;
-    padding: 30px;
-    position: relative;
-    max-width: 20rem;
-    min-width: 20rem;
-    background: white;
-    width: 20rem;
-    background: rgb(42, 42, 42);
-    border-radius: 3px;
-    border: 0px;
-    box-shadow: rgb(24, 15, 0) 0px 3px 5px 2px;
-    color: white;
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(5px);
+  z-index: 5;
 }
 
+.maindiv {
+  z-index: 1000;
 
-@media screen and (max-width:600px){
-    .maindiv{
-        left: 15%;
-    }
+  border-radius: 10px;
+  padding: 2rem;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 9rem;
+}
+
+.closebtn {
+  cursor: pointer;
+  position: absolute;
+  right: 2.5rem;
+  top: 2.4rem;
+  font-size: 1.2rem;
+  color: white;
+  z-index: 20;
+}
+
+.closebtn:hover {
+  transform: rotate(260deg);
 }

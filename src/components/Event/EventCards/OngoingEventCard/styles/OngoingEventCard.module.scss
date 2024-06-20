@@ -1,7 +1,7 @@
-// Import Poppins font
+
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
 
-// Import global styles
+
 @import "/src/assets/styles/Global.scss";
 
 .card {
@@ -133,7 +133,7 @@
   margin-inline: auto;
   display: flex;
   justify-content: space-between;
-  margin-top: .4rem;
+  margin-top: 0rem;
   align-items: center;
   z-index: 1;
 }
@@ -177,12 +177,12 @@
     margin-inline: auto;
     color: #fff;
     font-family: "Poppins", sans-serif;
-    font-size: .7rem;
+    font-size: .8rem;
     font-style: normal;
     font-weight: 400;
     line-height: normal;
     margin-top: 0.1rem;
-    margin-bottom: 0.2rem;
+    margin-bottom: 0;
 }
 
 .seeMore{

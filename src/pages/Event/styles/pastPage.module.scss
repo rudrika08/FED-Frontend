@@ -136,17 +136,17 @@
     height: auto;
     width: 100%;
     border-radius: 20px;
-    padding-right: 7rem;
+    // padding-right: 7rem;
     position: relative;
     // margin-left: 5.5rem;
-    margin-top: 4rem;
+    margin-top: 2.5rem;
   }
   
   .Outcard {
     height: 95%;
     width: 90%;
     background-color: #1c1c1c;
-    margin-top: 3.9rem;
+    margin-top: 5.9rem;
     margin-inline: auto;
   }
   
@@ -156,8 +156,10 @@
     flex-wrap: wrap;
     // justify-content: space-around;
     // margin-left: -4rem;
-    column-gap: 5rem;
+    column-gap: 2rem;
     margin-top: -5rem;
+    row-gap: 2rem;
+
     margin-bottom: 4rem;
   }
   
@@ -239,15 +241,16 @@
 
   .ArrowBackIcon {
     position: absolute;
-    top: 1rem;
+    top: 3.3rem;
     left: 3rem;
     color: #fff;
     cursor: pointer;
+    z-index:5;
 
   }
   
   
-  @media (max-width: 600px) {
+  @media (max-width: 700px) {
     .line, .ring1, .ring2 {
       display: none;
     }
@@ -265,6 +268,11 @@
   
     .pasteventcard {
       margin-top: 3rem;
+      padding-right: 0rem;
+      margin-left: 0rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
   
     .outcard {
@@ -297,9 +305,10 @@
       margin-top: 2.3rem;
     }
   
-    .name h3 {
-      background-color: #1c1c1c;
-      font-size: 3rem;
+    .name {
+      margin-left: 0;
+      justify-content: center;
+          align-items: center;
     }
   }
   
@@ -345,15 +354,15 @@
   }
   
 
-  @media screen and (max-width:600px){
-    .name{
-      justify-content: center;
-      align-items: center;
-    }
+  // @media screen and (max-width:600px){
+  //   .name{
+  //     justify-content: center;
+  //     align-items: center;
+  //   }
 
-    .pasteventCard{
-      padding-right: 0rem; 
-    // position: relative;
-  margin-left: 0rem;
-    }
-  }
+  //   .pasteventCard{
+  //     padding-right: 0rem; 
+  //   // position: relative;
+  // margin-left: 0rem;
+  //   }
+  // }

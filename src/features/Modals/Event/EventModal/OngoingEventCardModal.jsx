@@ -1,5 +1,3 @@
-/* eslint-disable react/prop-types */
-/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from "react";
 import EventCardModal from "./styles/OngoingEventCardModal.module.scss";
 import groupIcon from "../../../../assets/images/groups.svg";
@@ -117,7 +115,7 @@ const OngoingEventModal = ({ onClose }) => {
                   </div>
                 </div>
               </div>
-              {isOpen && <Share onClose={handleShare} urlpath={url}/>}
+              {isOpen && <Share onClose={handleShare} urlpath={url} />}
             </>
           )}
         </div>
