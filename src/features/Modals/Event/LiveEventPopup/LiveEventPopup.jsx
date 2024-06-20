@@ -50,7 +50,7 @@ const LiveEventPopup = () => {
         <div className={`${styles.popup} ${isVisible ? styles.fadeIn : ''}`}>
           <div className={styles.popupContent}>
             <button className={styles.closeButton} onClick={closePopup}>×</button>
-            <a href="#"><img src={eventImage} alt="Event" /></a>
+            <a href="/Events"><img src={eventImage} alt="Event" /></a>
           </div>
         </div>
       )}

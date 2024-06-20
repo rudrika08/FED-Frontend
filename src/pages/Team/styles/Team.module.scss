@@ -4,7 +4,7 @@
 
 h2 {
   text-align: center;
-  font-size: 3.5em;
+  font-size: 50px;
   margin-top: 20px;
 }
 
@@ -20,7 +20,7 @@ h2 span {
   padding-bottom: 0;
   font-size: 20px;
   font-weight: 400;
-  margin-bottom: -15px;
+  margin-bottom: 15px;
 }
 
 .teamSection {
@@ -31,7 +31,7 @@ h2 span {
 }
 
 .teamSection h3 {
-  font-size: 3em;
+  font-size: 40px;
   color: #FF8A00;
   margin-bottom: 60px;
 }
@@ -43,6 +43,7 @@ h2 span {
 
 strong {
   font-weight: 800;
+  
 }
 
 .teamTitle {
@@ -59,17 +60,26 @@ strong {
 }
 
 .directorGrid {
-  grid-template-columns: repeat(3, minmax(100px, 1fr));
-  padding-left: 13rem;
-  padding-right: 13rem;
+  grid-template-columns: repeat(4, minmax(100px, 1fr));
   padding-top: 0;
 }
+
+.lastRowCentered {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 32px;
+  margin-top: 1.5rem;
+  margin-bottom: 4rem;
+}
+
+
 
 
 .circle {
   height: 50vh;
   width: 30vh;
-  background-color: #FF8A00;
+  background-color: rgba(255, 92, 0, 0.19);
   position: absolute;
   top: 80%;
   left: -10%;
@@ -80,7 +90,7 @@ strong {
 .circle2 {
   height: 50vh;
   width: 30vh;
-  background-color: #FF8A00;
+  background-color: rgba(255, 92, 0, 0.19);
   position: absolute;
   bottom: -700%;
   right: -5%;
@@ -95,21 +105,47 @@ strong {
   margin-right: 60px;
   color: #FF8A00;
   font-size: 25px;
+  padding-bottom: 20px;
 
 }
 
 .alumniBut a{
-  margin-right: 10px;
-  font-weight: 700;
-  padding: 20px;
-  padding-right: 0;
-  font-size: 25px;
   color: #FF8A00;
+  text-decoration: none;
 }
 
-.alumniBut a:hover{
-  text-decoration: underline;
+
+.alumniBut .ulhover{
+  margin-right: 10px;
+  font-weight: 700;
+  padding: 5px;
+  padding-right: 0;
+  font-size: 25px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
 }
+
+
+.alumniBut .ulhover:after {    
+  background: none repeat scroll 0 0 transparent;
+  bottom: 0;
+  content: "";
+  display: block;
+  height: 2px;
+  left: 50%;
+  position: absolute;
+  background: #fff;
+  transition: width 0.3s ease 0s, left 0.3s ease 0s;
+  width: 0;
+}
+.alumniBut .ulhover:hover:after { 
+  width: 100%; 
+  left: 0; 
+}
+
 
 /* Responsive styles */
 
@@ -121,30 +157,18 @@ strong {
   .circle {
     left: -30%;
   }
-  .directorGrid {
-    grid-template-columns: repeat(3, minmax(100px, 1fr));
-    padding-left: 2rem;
-    padding-right: 2rem;
-    padding-top: 0;
-  }
 }
 
 @media (max-width: 768px) {
-  .teamGrid {
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    padding: 0px;
-  }
-  .directorGrid {
-    grid-template-columns: repeat(3, 1fr); 
-    padding: 0 2rem;
-  }
   .circle {
     left: -20%;
   }
   .circle2 {
     bottom: -500%;
     right: -20%;
+    display: none;
   }
+
 
   h2 {
     font-size: 2.5rem;
@@ -158,29 +182,43 @@ strong {
     margin-left: 5px;
   }
 
-  // .teamSection {
-  //   padding: 50px;
-  // }
   .para p{
     font-size: 13px;
   }
 }
+
+@media (max-width: 550px) {
+  .teamGrid {
+    gap: 5vw;
+  }
+}
+
 
 @media (max-width: 480px) {
   .teamGrid {
     grid-template-columns: repeat(2, 1fr);
     padding: 0;
   }
-  .directorGrid {
-    grid-template-columns: repeat(2, 1fr);
+
+  .lastRowCentered{
+    margin-top: 2.3rem;
+  }
+
+  h3{
+    text-align: center;
+    font-size: 1.5rem;
+  }
+
+  .para p{
+    margin-bottom: -20px;
   }
 
   h2 {
-    font-size: 2.5rem;
+    font-size: 40px;
   }
-
-  .teamSection h3 {
-    font-size: 1.7em;
+  .circle {
+    left: -30%;
+    background-color: rgba(255, 92, 0, 0.59);
   }
 
   .teamSection span {
@@ -189,11 +227,10 @@ strong {
 
   .circle2 {
     bottom: -500%;
-    right: -30%;
+    left: 30%;
+    background-color: rgba(255, 92, 0, 0.59);
   }
-  .circle {
-    left: -40%;
-  }
+  
 
   .alumniBut {
     margin-right: 10px;
@@ -201,5 +238,21 @@ strong {
   }
   .alumniBut a{
     font-size: 20px;
+  }
+}
+
+@media (max-width: 430px){
+  .lastRowCentered{
+    margin-bottom: 0;
+  }
+}
+
+@media (max-width: 415px) {
+  .teamGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6vw;
+  }
+  .lastRowCentered{
+    margin-bottom: 0;
   }
 }

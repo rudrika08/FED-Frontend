@@ -1,6 +1,11 @@
+import React, { useEffect } from 'react';
 import { SocialMedia } from "../../components";
 
-function Social() {
+const Social = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+  
   return (
     <>
       <SocialMedia />

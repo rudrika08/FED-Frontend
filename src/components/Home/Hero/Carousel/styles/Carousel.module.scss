@@ -89,10 +89,12 @@
 
 @media  screen and (max-width:400px) {
   .carousel {
-    height: 13rem;
-    width: 80vw;
-    margin-top: 5rem;
+    height: 15rem;
+    width: 85vw;
+    margin-top: 2rem;
+    margin-right: 1.5rem;
   }
+
 
   .carousel_card {
     border-radius: 40px;
@@ -102,10 +104,10 @@
 
 @media  screen and (min-width:400px) {
   .carousel {
-    height: 16rem;
-    width: 80vw;
+    height: 18rem;
+    width: 85vw;
     margin-top: 2rem;
-    margin-right: 3rem;
+    margin-right: 1.5rem;
   }
 
   .carousel_card {

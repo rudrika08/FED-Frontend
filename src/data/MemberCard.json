@@ -150,6 +150,61 @@
       "title": "Security Engineer"
     },
     {
+      "name": "Grace Hall",
+      "image": "https://img.freepik.com/free-psd/3d-illustration-human-avatar-profile_23-2150671122.jpg?size=338&ext=jpg&ga=GA1.1.1141335507.1718064000&semt=ais_user",
+      "social": {
+        "linkedin": "https://www.linkedin.com/in/gracehall",
+        "twitter": "https://twitter.com/gracehall",
+        "github": "https://github.com/gracehall"
+      },
+      "role": "Technical",
+      "title": "Software Engineer"
+    },
+    {
+      "name": "Hank King",
+      "image": "https://img.freepik.com/free-psd/3d-illustration-human-avatar-profile_23-2150671122.jpg?size=338&ext=jpg&ga=GA1.1.1141335507.1718064000&semt=ais_user",
+      "social": {
+        "linkedin": "https://www.linkedin.com/in/hankking",
+        "twitter": "https://twitter.com/hankking",
+        "github": "https://github.com/hankking"
+      },
+      "role": "Technical",
+      "title": "Backend Developer"
+    },
+    {
+      "name": "Ivy Lee",
+      "image": "https://img.freepik.com/free-psd/3d-illustration-human-avatar-profile_23-2150671122.jpg?size=338&ext=jpg&ga=GA1.1.1141335507.1718064000&semt=ais_user",
+      "social": {
+        "linkedin": "https://www.linkedin.com/in/ivylee",
+        "twitter": "https://twitter.com/ivylee",
+        "github": "https://github.com/ivylee"
+      },
+      "role": "Technical",
+      "title": "Frontend Developer"
+    },
+    {
+      "name": "Jack Martin",
+      "image": "https://via.placeholder.com/150",
+      "social": {
+        "linkedin": "https://www.linkedin.com/in/jackmartin",
+        "twitter": "https://twitter.com/jackmartin",
+        "github": "https://github.com/jackmartin"
+      },
+      "role": "Technical",
+      "title": "DevOps Engineer"
+    },
+    {
+      "name": "Kelly Nelson",
+      "image": "https://via.placeholder.com/150",
+      "social": {
+        "linkedin": "https://www.linkedin.com/in/kellynelson",
+        "twitter": "https://twitter.com/kellynelson",
+        "github": "https://github.com/kellynelson"
+      },
+      "role": "Technical",
+      "title": "Security Engineer"
+    },
+    {
       "name": "Leo Owens",
       "image": "https://via.placeholder.com/150",
       "social": {
