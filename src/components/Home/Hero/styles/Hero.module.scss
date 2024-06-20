@@ -9,10 +9,10 @@
     width: 100%;
     display: flex;
     flex-direction: row;
-    background-color: $page-color;
+    background-color: #1C1C1C;
     position: relative; 
+    margin-top:1rem;   
     padding-bottom: 4.5vw;
-    margin-top: 1rem;
     padding-left: 0px;
     z-index: 0;
   }
@@ -21,14 +21,14 @@
     height: 100%;
     width: 100%;    
     padding: 3vw;
-    padding-top: 4vw;
-
+    z-index: 1;
   }
   
   .heroone {
-    padding-top: 5vw;
+    padding-top: 2.5rem;
     padding-bottom: 1vw;
   }
+  
   
   .hero2 {
     width: 100%; 
