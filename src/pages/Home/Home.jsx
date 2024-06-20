@@ -1,14 +1,20 @@
-import React, { useState, useEffect } from 'react';
+import { useEffect } from 'react';
+
 import { Hero, About, Sponser, Feedback, Contact } from "../../components";
+
+import ChatBot from "../../features/ChatBot/ChatBot";
 import LiveEventPopup from "../../features/Modals/Event/LiveEventPopup/LiveEventPopup";
 
-function Home() {
+const Home = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   
-
   return (
     <>
       <LiveEventPopup />
       <Hero />
+      <ChatBot />
       <About />
       <Sponser />
       <Contact />

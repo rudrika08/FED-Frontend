@@ -16,12 +16,26 @@
 .formFieldContainer {
   display: flex;
   flex-direction: column;
-  width: 90%;
+  width: 86%;
+  padding: 1em;
+  border-radius: 8px;
+  border: 0.5px solid transparent;
+  background-color: rgba(128, 127, 126, 0.066);
+  margin-bottom: 1em;
 }
-
+.formFieldContainer:hover {
+  border: 0.5px solid #ff88008c;
+  transition: 0.5s ease-in-out;
+}
+.formFieldContainer:active {
+  border: 0.5px solid #ff88008c;
+  transition: 0.5s ease-in-out;
+}
 .mainFieldForm {
   display: flex;
   flex-direction: row;
+  align-items: center;
+  position: relative;
   width: 100%;
   margin-bottom: 8px;
 }
@@ -32,4 +46,33 @@
   display: flex;
   flex-direction: column;
   width: 30%;
+}
+
+.popField {
+  position: absolute;
+  bottom: -150%;
+  right: 0;
+  background-color: rgb(41, 41, 41);
+  border-radius: 4px;
+  width: 500px;
+  max-height: 424px;
+  z-index: 1500 !important;
+  padding: 1em;
+  border: 1px solid #b8b7b78c;
+  margin-bottom: 2.4em;
+  overflow-y: auto;
+}
+.popField::-webkit-scrollbar {
+  width: 0px;
+}
+.popFieldInpt {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  margin-bottom: 4px;
+}
+.popFieldInptContainer {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
 }

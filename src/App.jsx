@@ -1,6 +1,5 @@
-
-import { Suspense, lazy } from "react";
-import { Routes, Route ,Outlet} from "react-router-dom";
+import { Suspense, lazy, useContext } from "react";
+import { Routes, Route ,Outlet, Navigate} from "react-router-dom";
 
 // layouts
 import Navbar from "./layouts/Navbar/Navbar";
@@ -13,23 +12,24 @@ const Event = lazy(() => import("./pages/Event/Event"));
 const PastEvents = lazy(() => import("./pages/Event/pastPage"));
 const Social = lazy(() => import("./pages/Social/Social"));
 const Team = lazy(() => import("./pages/Team/Team"));
-const Login = lazy(() => import("./pages/Authentication/Login/Login"));
+const Login = lazy(() => import("./pages/Authentication/Login/LoginMain"));
 const Signup = lazy(()=>import("./pages/Authentication/Signup/SignupMain"))
 const Error = lazy(() => import("./pages/Error/Error"));
-const Admin = lazy(()=>import("./pages/Profile/Admin/Admin"))
+const Profile = lazy(()=>import("./pages/Profile/Profile"))
+const Alumni = lazy(()=>import("./pages/Alumni/Alumni"))
 
 // microInteraction
 import Loading from "./microInteraction/Load/Load";
-
+import OngoingEventModal from "./features/Modals/Event/EventModal/OngoingEventCardModal";
+import PastEventModal from "./features/Modals/Event/EventModal/PastEventCardModal";
 
 // import { Alert } from "./MicroInteraction/Alert";
 
-// // state
-// import AuthContext from "./context/auth-context";
+// state
+import AuthContext from "./store/AuthContext";
 
-// // axios
+// axios
 // import axios from "axios";
-
 
 
 const MainLayout = () => {
@@ -57,30 +57,37 @@ const AuthLayout = () => {
 
 function App() {
      
+  const authCtx = useContext(AuthContext);
 
   return (
-    <>
+    <div>
       
       <Suspense fallback={<Loading />}>
       <Routes>
         <Route element={<MainLayout />}>
           <Route path="/" element={<Home />} />
           <Route path="/Events" element={<Event />} />
-          <Route path="/pastEvents" element={<PastEvents />} />
+          <Route path="/Events/pastEvents" element={<PastEvents />} />
           <Route path="/Social" element={<Social />} />
           <Route path="/Team" element={<Team />} />
-          <Route path="/profile" element={<Admin />} />
+          <Route path="/Alumni" element={<Alumni />} />
+          <Route path="*" element={<Error />} />
+          {authCtx.isLoggedIn && (<Route path="/profile" element={<Profile />} />)}
+          <Route path="/Events/:eventId" element={[<Event />,<OngoingEventModal/>]}/>
+          <Route path="/Events/pastEvents/:eventId" element={[<Event />,<PastEventModal  isPastPage={false}/>]}/>
+          <Route path="/pastEvents/:eventId" element={[<PastEvents/>,<PastEventModal isPastPage={true}/>]}/>
         </Route>
         <Route element={<AuthLayout />}>
-          <Route path="/Login" element={<Login />} />
-          <Route path="/SignUp" element={<Signup />} />
+        
+          <Route path="/Login" element={authCtx.isLoggedIn?<Navigate to='/profile'></Navigate>:<Login />} />
+          <Route path="/SignUp" element={authCtx.isLoggedIn?<Navigate to='/profile'></Navigate>:<Signup />} />
         </Route>
       </Routes>
     </Suspense>
    
 
      
-    </>
+    </div>
   );
 }
 

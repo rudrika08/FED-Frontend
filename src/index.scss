@@ -20,6 +20,7 @@ html {
 }
 
 body {
+  // background-color: $page-color;
   background-color: $page-color;
   color: $text-color;
   overflow-x: hidden;
@@ -31,6 +32,7 @@ body {
   justify-content: center;
   align-items: center;
   background-color: $page-color;
+  overflow: hidden;
 }
 
 .pageExt {

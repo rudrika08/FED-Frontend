@@ -55,7 +55,7 @@
 .row1 h4,
 .row2 h4,
 .footerright h4 {
-  margin-bottom: 17px;
+  margin-bottom: 10px;
   color: #ffffff;
   font-family: "Rubik", sans-serif;
   font-weight: 500;
@@ -90,10 +90,23 @@
   margin-bottom: 10px;
 }
 
-.icon{
+.icon {
   margin-right: 10px;
   margin-bottom: -3px;
+  margin-top: 10px;
   font-size: 40px;
+}
+.icon:hover{
+  color: #FF8A00;
+}
+.link1 :hover{
+  color: #FF8A00;
+  transition: 0.3s ease-in-out;
+}
+
+.footerleftlink:hover{
+  color: #FF8A00;
+  transition: 0.3s ease-in-out;
 }
 
 .bottomdiv {
@@ -112,19 +125,26 @@
 
 .terms_and_policies {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   margin-top: 10px;
-  margin-bottom: 20px;
+} 
+
+.terms_and_policies a{
+  text-decoration: none;
+  color: #ffffff;
+}
+
+.terms_and_policies .Linkstyles:hover{
+  text-decoration: underline;
 }
 
 .tap1Div {
-  margin: 0 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  
 }
-
-.tnpMDiv {
-  margin-top: 20px;
-}
-
 .copyrightPTag {
   text-align: center;
 }
@@ -151,8 +171,10 @@
 
 @media screen and (max-width: 480px) {
   .logodiv {
-    flex-direction: column;
-    align-items: flex-start;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
   }
 
   .icon {
@@ -161,9 +183,9 @@
     
   }
 
+
   .fed {
     margin-left: 0;
-    margin-top: 10px;
     font-size: 25px;
   }
 
@@ -190,6 +212,19 @@
 
   .socialh4{
     visibility: hidden;
+  }
+  .bottomdiv{
+    font-size: 10px;
+  }
+}
+
+@media screen and (max-width: 400px){
+  .icondiv2{
+    margin-left: -0.8rem;
+  }
+
+  .row2{
+    margin-top: 10px;
   }
 }
 

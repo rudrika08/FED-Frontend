@@ -11,8 +11,8 @@
     flex-direction: row;
     background-color: #1C1C1C;
     position: relative; 
+    margin-top:1rem;   
     padding-bottom: 4.5vw;
-    margin-top: 1rem;
     padding-left: 0px;
     z-index: 0;
   }
@@ -21,14 +21,14 @@
     height: 100%;
     width: 100%;    
     padding: 3vw;
-    padding-top: 4vw;
     z-index: 1;
   }
   
   .heroone {
-    padding-top: 5vw;
+    padding-top: 2.5rem;
     padding-bottom: 1vw;
   }
+  
   
   .hero2 {
     width: 100%; 
@@ -53,26 +53,16 @@
   .circle {
     height: 52rem;
     width: 50rem;
-    background-color: rgba(255, 92, 0, 0.19);
+    background-color: rgba(255, 92, 0, 0.29);
     filter: blur(100px);
     position: absolute;
     top: 60%; 
     left: -35%;
     border-radius: 50%;
     overflow: hidden;
+    z-index: -1;
   }
   
-//   .hero1 h2 {
-//     color: #FFFFFF;
-//     font-size: 2.8vw;
-//     letter-spacing: 0.1vh;
-//     line-height: 3rem;
-//   }
-  
-//   .hero1 p {
-//     color: #FF8A00;
-//     margin-left: 0.5vw;
-//   }
   
   .maincontent {
     padding-top: 50px;
@@ -85,29 +75,12 @@
     align-items: center;
   }
   
-//   .hero1 h3 {
-//     margin-left: 0.5vw;
-//     color: #FF8A00;
-//     font-size: 3vw;
-//   }
   
   .herotwo {
     padding-top: 2vw;
     padding-bottom: 3vw;
   }
   
-//   h4 {
-//     font-size: 1.7vw;
-//     color: #FFFFFF;
-//     margin-left: 0.3vw;
-//     letter-spacing: 0.1vw;
-//   }
-  
-//   h5 {
-//     font-size: 1.7vw;
-//     color: #FF8A00;
-//     margin-left: 0.5vw;
-//   }
 
 @media (max-width: 1025px) {
 .heroone strong{
@@ -131,108 +104,48 @@
       margin-right: 0rem;
     }
   
-    // .hero1 h2 {
-    //   color: #FFFFFF;
-    //   font-size: 5vw;
-    //   line-height: 2rem;
-    // }
-  
-    // .hero1 h3 {
-    //   margin-left: 1.5vw;
-    //   color: #FF8A00;
-    //   font-size: 5vw;
-    // }
-  
-    // h4 {
-    //   font-size: 3vw;
-    //   color: #FFFFFF;
-    //   margin-left: 0.3vw;
-    // }
-  
-    // h5 {
-    //   font-size: 3vw;
-    //   color: #FF8A00;
-    //   margin-left: 1vw;
-    //   margin-right: 1vw;
-    // }
-  
     .smallcontent {
       padding-top: 1rem;
     }
   
     .hero1 {
-      margin-left: 7%;
-      margin-top: 21%;
-      padding: 2vw;
-      padding-top: 2vw;
       z-index: 1; 
+      padding-left: 25px;
     }
   }
 
-  @media (max-width: 500px) {
-    .heroone strong{
-        font-size: 1.35rem;
-    }
-    .hero1{
-        margin-left: 0.5rem;
-    }
-  }
 
   
-  @media screen and (max-width: 400px) {
+  @media screen and (max-width: 480px) {
+
+    .heroone strong{
+      font-size: 1.3rem;
+      text-align: center;
+    }
+  .hero1{
+      margin-left: 0.5rem;
+      margin-top: 2rem;
+  }
+  .smallcontent strong{
+    font-size: 1rem;
+  }
     .hero {
       width: 100%;
       display: flex;
       flex-direction: column-reverse;
       background-color: #1C1C1C;
       position: relative; 
-      margin-top: -3rem;
       align-items: center;
-      margin-left: -0.85rem;
-    }
-
-    .heroone strong{
-        font-size: 1.25rem;
-        text-align: center;
-    }
-  
-    // .hero1 h2 {
-    //   color: #FFFFFF;
-    //   font-size: 5vw;
-    // }
-  
-    // .hero1 h3 {
-    //   margin-left: 1.5vw;
-    //   color: #FF8A00;
-    //   font-size: 5vw;
-    // }
-  
-    // h4 {
-    //   font-size: 3vw;
-    //   color: #FFFFFF;
-    //   margin-left: 0.3vw;
-    // }
-  
-    // h5 {
-    //   font-size: 3vw;
-    //   color: #FF8A00;
-    //   margin-left: 1vw;
-    //   margin-right: 1vw;
-    // }
-  
-    .smallcontent strong{
-        font-size: .85rem;
     }
 
     .smallcontent {
-      padding-top: 3rem;
+      padding-top: 1rem;
     }
-  
-    .hero1 {
-      margin-left: 7%;
-      margin-top: 21%;
-      padding: 2vw;
-      padding-top: 2vw;
-      z-index: 1; 
+
+    .circle{
+      top: 20%;
+      left: -150%;
+      height: 100vw;
+      background-color: rgba(255, 92, 0, 0.49);
     }
   }

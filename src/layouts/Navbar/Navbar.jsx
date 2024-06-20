@@ -1,17 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { NavLink, Link, useLocation } from "react-router-dom";
 import style from "./styles/Navbar.module.scss";
 import Headroom from 'react-headroom';
 import logo from "../../assets/images/Logo/logo.svg";
-import defaultImg from "../../assets/images/defaultImg.jpg"; // Corrected import path
+import defaultImg from "../../assets/images/defaultImg.jpg"; 
 import AuthContext from '../../store/AuthContext';
-import { useContext } from 'react';
 
 function Navbar() {
   const [scroll, setScroll] = useState(false);
+  const [hoveredLink, setHoveredLink] = useState(null);
   const location = useLocation();
   const authCtx = useContext(AuthContext);
-  console.log(authCtx);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -24,14 +23,42 @@ function Navbar() {
     };
   }, []);
 
+  useEffect(() => {
+    const links = document.querySelectorAll(`.${style.navLink} a`);
+    
+    const handleMouseOver = (event) => {
+      setHoveredLink(event.target);
+    };
+
+    const handleMouseOut = () => {
+      setHoveredLink(null);
+    };
+
+    links.forEach(link => {
+      link.addEventListener('mouseover', handleMouseOver);
+      link.addEventListener('mouseout', handleMouseOut);
+    });
+
+    return () => {
+      links.forEach(link => {
+        link.removeEventListener('mouseover', handleMouseOver);
+        link.removeEventListener('mouseout', handleMouseOut);
+      });
+    };
+  }, []);
+
   const isActive = (path) => {
     return location.pathname === path;
+  };
+
+  const handleLogoClick = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
     <Headroom>
       <nav className={`${style.nav} ${scroll ? style.scrolled : ''}`}>
-        <Link to="/">
+        <Link to="/" onClick={handleLogoClick}>
           <div className={style.logo_div}>
             <img src={logo} alt="Logo" className={style.logo} />
             <div className={style.logo_text}></div>
@@ -40,26 +67,47 @@ function Navbar() {
 
         <ul className={style.navItems}>
           <li className={style.navLink}>
-            <NavLink to="/" isActive={() => isActive("/")} activeStyle={{ color: "#FF8A00" }}>Home</NavLink>
+            <NavLink 
+              to="/" 
+              style={{ 
+                color: isActive("/") ? "#FF8A00" : hoveredLink && hoveredLink.href.endsWith('/') ? "#FF8A00" : "white"
+              }}
+            >Home</NavLink>
           </li>
           <li className={style.navLink}>
-            <NavLink to="/Events" isActive={() => isActive("/Events")} activeStyle={{ color: "#FF8A00" }}>Events</NavLink>
+            <NavLink 
+              to="/Events" 
+              style={{ 
+                color: isActive("/Events") ? "#FF8A00" : hoveredLink && hoveredLink.href.endsWith('/Events') ? "#FF8A00" : "white"
+              }}
+            >Events</NavLink>
           </li>
           <li className={style.navLink}>
-            <NavLink to="/Social" isActive={() => isActive("/Social")} activeStyle={{ color: "#FF8A00" }}>Social</NavLink>
+            <NavLink 
+              to="/Social" 
+              style={{ 
+                color: isActive("/Social") ? "#FF8A00" : hoveredLink && hoveredLink.href.endsWith('/Social') ? "#FF8A00" : "white"
+              }}
+            >Social</NavLink>
           </li>
           <li className={style.navLink}>
-            <NavLink to="/Team" isActive={() => isActive("/Team")} activeStyle={{ color: "#FF8A00" }}>Team</NavLink>
+            <NavLink 
+              to="/Team" 
+              style={{ 
+                color: isActive("/Team") ? "#FF8A00" : hoveredLink && hoveredLink.href.endsWith('/Team') ? "#FF8A00" : "white"
+              }}
+            >Team</NavLink>
           </li>
         </ul>
 
         {authCtx.isLoggedIn ? (
           <NavLink to="/profile" className="LinkStyle">
-            <img
+            <div className={style.profileImgdiv}>   <img
               src={authCtx.user.pic || defaultImg}
               alt="Profile"
               className={style.profileImg}
-            />
+            /></div>
+         
           </NavLink>
         ) : (
           <a href="/Login">

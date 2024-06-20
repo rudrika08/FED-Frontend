@@ -14,11 +14,12 @@
 .previewContainer {
   display: flex;
   flex-direction: column;
+  align-items: start;
   background: #2e2e2e;
   border-radius: 10px;
-  width: 50%;
+  width: 70%;
   padding: 1.6em;
-  height: 50%;
+  height: 60%;
   margin: auto;
   z-index: 100;
   overflow-y: scroll;
@@ -33,4 +34,23 @@
 }
 .previewContainer::-webkit-scrollbar-thumb:hover {
   background: #555;
+}
+
+.formFieldContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 1em;
+  border-radius: 8px;
+  border: 0.5px solid transparent;
+  background-color: rgba(128, 127, 126, 0.066);
+  margin-bottom: 1em;
+}
+.formFieldContainer:hover {
+  border: 0.5px solid #ff88008c;
+  transition: 0.5s ease-in-out;
+}
+.formFieldContainer:active {
+  border: 0.5px solid #ff88008c;
+  transition: 0.5s ease-in-out;
 }
