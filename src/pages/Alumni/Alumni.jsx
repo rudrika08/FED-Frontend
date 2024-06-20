@@ -1,13 +1,34 @@
-import React, { useEffect } from "react";
-import styles from "./styles/Alumni.module.scss"; // Adjust the path to your styles
-import alumniData from "../../data/AlumniCard.json"; // Import the JSON data
-import AlumniCard from "../../components/Team/Alumni/AlumniCard";
+import React, { useState, useEffect } from "react";
+import styles from "./styles/Alumni.module.scss";
+import alumniData from "../../data/AlumniCard.json";
+import AlumniCard from "../../components/Team/Member/MemberCard";
+
+function useWindowWidth() {
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    function handleResize() {
+      setWindowWidth(window.innerWidth);
+    }
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  return windowWidth;
+}
 
 const AlumniSection = ({ alumni }) => {
+  const windowWidth = useWindowWidth();
+  const membersPerRow = windowWidth < 500 ? 2 : 4;
+  const remainderMembersCount = alumni.length % membersPerRow;
+  const lastRowMembers = remainderMembersCount > 0 ? alumni.slice(-remainderMembersCount) : [];
+  const otherMembers = remainderMembersCount > 0 ? alumni.slice(0, -remainderMembersCount) : alumni;
+
   return (
-    <div className={styles["alumni-section"]}>
-      <div className={styles["alumni-grid"]}>
-        {alumni.map((each, idx) => (
+    <div className={styles.alumniSection}>
+      <div className={styles.alumniGrid}>
+        {otherMembers.map((each, idx) => (
           <AlumniCard
             key={idx}
             name={each.name}
@@ -16,6 +37,19 @@ const AlumniSection = ({ alumni }) => {
           />
         ))}
       </div>
+
+      {lastRowMembers.length > 0 && (
+        <div className={styles.lastRowCentered}>
+          {lastRowMembers.map((member, idx) => (
+            <AlumniCard
+              key={idx}
+              name={member.name}
+              image={member.image}
+              social={member.social}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 };

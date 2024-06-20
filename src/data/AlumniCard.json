@@ -322,5 +322,32 @@
         "twitter": "https://twitter.com/hannahmoore",
         "github": "https://github.com/hannahmoore"
       }
+    },
+    {
+      "name": "George Lewis",
+      "image": "https://via.placeholder.com/150",
+      "social": {
+        "linkedin": "https://www.linkedin.com/in/georgelewis",
+        "twitter": "https://twitter.com/georgelewis",
+        "github": "https://github.com/georgelewis"
+      }
+    },
+    {
+      "name": "Hannah Moore",
+      "image": "https://via.placeholder.com/150",
+      "social": {
+        "linkedin": "https://www.linkedin.com/in/hannahmoore",
+        "twitter": "https://twitter.com/hannahmoore",
+        "github": "https://github.com/hannahmoore"
+      }
+    },
+    {
+      "name": "Hannah Moore",
+      "image": "https://via.placeholder.com/150",
+      "social": {
+        "linkedin": "https://www.linkedin.com/in/hannahmoore",
+        "twitter": "https://twitter.com/hannahmoore",
+        "github": "https://github.com/hannahmoore"
+      }
     }
   ]
