@@ -41,6 +41,7 @@
     "react-select": "^5.8.0",
     "react-share-social": "^0.1.60",
     "react-social-media-embed": "^2.5.13",
+    "react-switch": "^7.0.0",
     "sass": "^1.76.0",
     "sister": "^3.0.2"
   },
