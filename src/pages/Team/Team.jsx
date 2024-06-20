@@ -87,7 +87,7 @@ const Team = () => {
       {teamByRole.filter(section => section.role === 'Director').map((section, index) => (
         <TeamSection
           key={index}
-          title="Director"
+          // title="Director" //removed heading for director section
           members={section.members}
           isDirector={true}
         />
