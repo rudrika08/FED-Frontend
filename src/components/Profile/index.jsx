@@ -7,11 +7,6 @@ export { default as NewForm } from "./Admin/Form/NewForm/NewForm";
 export { default as ViewEvent } from "./Admin/View/ViewEvent/VIewEvent";
 export { default as ViewMember } from "./Admin/View/ViewMember/ViewMember";
 
-//Member
-export { default as MemberEvents } from "./Member/MemberEvents/MemberEvents";
-export { default as MemberProfile } from "./Member/MemberProfile/MemberProfile";
-
-//users
-export { default as UserEvents } from "./User/UserEvents/UserEvents";
-export { default as UserProfile } from "./User/UserProfile/UserProfile";
-
+//General
+export { default as ProfileView } from "./General/ProfileView/ProfileView";
+export { default as EventsView } from "./General/EventsView/EventsView";

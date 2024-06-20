@@ -2,6 +2,8 @@ import React, { useState, useEffect, useCallback, useMemo } from "react";
 
 let logoutTimer;
 
+
+
 const AuthContext = React.createContext({
   token: "",
   isLoggedIn: false,
@@ -69,7 +71,7 @@ export const AuthContextProvider = (props) => {
   const [user, setUser] = useState(initialuser);
   const [target, setTarget] = useState("");
   const [userIsLoggedIn, setUserIsLoggedIn] = useState(logedin);
-  const [isAdmin, setIsAdmin] = useState(initialuser.access === "admin");
+  const [isAdmin, setIsAdmin] = useState(initialuser.access === "0");
 
   const targetHandler = (t) => {
     setTarget(t);
@@ -81,7 +83,6 @@ export const AuthContextProvider = (props) => {
     localStorage.removeItem("token");
     localStorage.removeItem("expirationTime");
     localStorage.removeItem("user");
-    localStorage.removeItem("admin");
 
     if (logoutTimer) {
       clearTimeout(logoutTimer);
@@ -127,7 +128,7 @@ export const AuthContextProvider = (props) => {
     setUser(setuserdata);
     setToken(token);
     setUserIsLoggedIn(true);
-    setIsAdmin(access === "admin");
+    setIsAdmin(access === "0");
   };
 
   const updateHandler = (
@@ -157,7 +158,7 @@ export const AuthContextProvider = (props) => {
 
     localStorage.setItem("user", JSON.stringify(setuserdata));
     setUser(setuserdata);
-    setIsAdmin(access === "admin");
+    setIsAdmin(access === "0");
   };
 
   useEffect(() => {
@@ -183,11 +184,18 @@ export const AuthContextProvider = (props) => {
     [token, userIsLoggedIn, target, isAdmin]
   );
 
+
+  
+  
+
+  
+
   return (
     <AuthContext.Provider value={contextValue}>
       {props.children}
     </AuthContext.Provider>
   );
 };
+
 
 export default AuthContext;

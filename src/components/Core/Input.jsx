@@ -31,10 +31,25 @@ const customStyles = {
   }),
   menu: (provided) => ({
     ...provided,
-    width: "auto",
+    width: "100%",
     color: "#333",
     backgroundColor: "#fff",
-    zIndex: 9999,
+    // zIndex: 9999,
+    marginTop:0,
+    marginLeft:8
+  }),
+  menuList: (provided) => ({
+    ...provided,
+    padding: 0,
+  }),
+  option: (provided, state) => ({
+    ...provided,
+    color: state.isSelected ? "orange" : "#fff",
+    backgroundColor: "#333",
+    width:"100%",
+    "&:hover": {
+      backgroundColor: "#33333390",
+    },
   }),
   indicatorSeparator: (provided) => ({
     ...provided,

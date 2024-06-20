@@ -2,13 +2,13 @@ import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import style from "./style/Signup.module.scss";
 
-// OAuth
+
 import { useGoogleLogin } from "@react-oauth/google";
 
-// Axios for HTTP requests
+
 import axios from "axios";
 
-// State
+
 import AuthContext from "../../../store/AuthContext";
 
 import google from "../../../assets/images/google.png";
@@ -32,7 +32,7 @@ export default function GoogleSignup() {
     },[codeResponse])
   const handleLoginSuccess = async () => {
     try {
-      // Fetch user info from Google API using the access token with axios
+  
       const googleResponse = await axios.get(
         `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${codeResponse.access_token}`
       );

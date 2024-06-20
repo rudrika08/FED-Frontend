@@ -8,8 +8,34 @@
       "school": "School of Engineering",
       "college": "Kalinga Institute of Industrial Technology",
       "mobileNo": "1234567890",
-      "selected": "",
+      "year": "3",
       "access": "1",
+      "regForm": []
+    },
+    {
+      "email": "22053275@kiit.ac.in",
+      "password": "password123",
+      "name": "Ansh Raj",
+      "pic": "https://i.pinimg.com/736x/54/72/d1/5472d1b09d3d724228109d381d617326.jpg",
+      "rollNo": "12345",
+      "school": "School of Engineering",
+      "college": "Kalinga Institute of Industrial Technology",
+      "mobileNo": "1234567890",
+      "year": "3",
+      "access": "2",
+      "regForm": []
+    },
+    {
+      "email": "22053274@kiit.ac.in",
+      "password": "password123",
+      "name": "Mayank Kumar",
+      "pic": "https://i.pinimg.com/736x/54/72/d1/5472d1b09d3d724228109d381d617326.jpg",
+      "rollNo": "12345",
+      "school": "School of Engineering",
+      "college": "Kalinga Institute of Industrial Technology",
+      "mobileNo": "1234567890",
+      "year": "other",
+      "access": "3",
       "regForm": []
     },
     {
@@ -21,9 +47,9 @@
       "school": "School of Management",
       "college": "Kalinga Institute of Industrial Technology",
       "mobileNo": "0987654321",
-      "selected": "",
+      "year": "2",
       "access": "0",
       "regForm": []
     }
-  ]
+]
   
