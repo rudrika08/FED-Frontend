@@ -1,5 +1,8 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
+
 import { Hero, About, Sponser, Feedback, Contact } from "../../components";
+
+import ChatBot from "../../features/ChatBot/ChatBot";
 import LiveEventPopup from "../../features/Modals/Event/LiveEventPopup/LiveEventPopup";
 
 const Home = () => {
@@ -11,6 +14,7 @@ const Home = () => {
     <>
       <LiveEventPopup />
       <Hero />
+      <ChatBot />
       <About />
       <Sponser />
       <Contact />

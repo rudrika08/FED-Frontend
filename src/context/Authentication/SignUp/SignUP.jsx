@@ -1,21 +1,19 @@
-import  { useState } from "react";
+import { useState } from "react";
 import style from "./style/Signup.module.scss";
 import Input from "../../../components/Core/Input";
 import Button from "../../../components/Core/Button";
 import Text from "../../../components/Core/Text";
 import GoogleSignup from "./GoogleSignup";
-import bcrypt from "bcryptjs"
+import bcrypt from "bcryptjs";
 import { useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack"
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 // import Load from "../../../microInteraction/Load/Load"
 const SignUP = () => {
-
-  useEffect(()=>{
-    window.scrollTo(0,-20)
-  })
- 
+  useEffect(() => {
+    window.scrollTo(0, -20);
+  });
 
   // const [loadingEffect, setLoad] = useState(false);
 
@@ -28,15 +26,14 @@ const SignUP = () => {
     School: "",
     College: "",
     MobileNo: "+91",
-    year:""
-
+    year: "",
   });
 
   const DataInp = (name, value) => {
     setUser({ ...showUser, [name]: value });
   };
 
-  const handleSignup = async(e) => {
+  const handleSignup = async (e) => {
     e.preventDefault();
 
     const {
@@ -63,81 +60,78 @@ const SignUP = () => {
       MobileNo.length >= 10 &&
       email !== "" &&
       Password !== "" &&
-      year !== "" 
+      year !== ""
     ) {
-        // setLoad(true);
-        const password = bcrypt.hashSync(Password, import.meta.env.VITE_BCRYPT);
-        const userObject = {
-          name,
-          email,
-          password,
-          RollNumber,
-          School,
-          College,
-          MobileNo,
-          year,
-        };
+      // setLoad(true);
+      const password = bcrypt.hashSync(Password, import.meta.env.VITE_BCRYPT);
+      const userObject = {
+        name,
+        email,
+        password,
+        RollNumber,
+        School,
+        College,
+        MobileNo,
+        year,
+      };
 
-        try {
-           console.log(userObject);
-          const response = await axios.post(`/auth/register`, userObject);
-           console.log(response);  
-          if(response.status==200){
-            setLoad(false);
-            console.log("verifiatin Link has been sent");
-          }
+      try {
+        console.log(userObject);
+        const response = await axios.post(`/auth/register`, userObject);
+        console.log(response);
+        if (response.status == 200) {
+          setLoad(false);
+          console.log("verifiatin Link has been sent");
+        }
+      } catch (error) {
+        //  setLoad(false);
 
-
-    }
-    catch(error){
-      //  setLoad(false);
-
-       if(error.response.data.code===1){
-         console.log("user already axist");
-         return;
-       }
-       if(error.response.data.code===2){
+        if (error.response.data.code === 1) {
+          console.log("user already axist");
+          return;
+        }
+        if (error.response.data.code === 2) {
           console.log("invalid email format");
           return;
-       }else{
-        console.log("An unexpected error occured");
-        return;
-       }
-
+        } else {
+          console.log("An unexpected error occured");
+          return;
+        }
+      }
+    } else {
+      console.log("invalid details enter again");
     }
-
-  }else{
-    console.log("invalid details enter again");
-  }
-};
+  };
 
   return (
-    <div style={{width:"100vw" ,position:"relative"}}>
-      <div className={style.container} style={{
-        zIndex:"10",
-      }}>
-      <div className={style.circle}>
-              <div></div>
-             </div>
+    <div style={{ width: "100vw", position: "relative" }}>
+      <div
+        className={style.container}
+        style={{
+          zIndex: "10",
+        }}
+      >
+        <div className={style.circle}>
+          <div></div>
+        </div>
 
         <div className={style.circle1}></div>
-        <Link to={'/'}>
+        <Link to={"/"}>
           <div className={style.ArrowBackIcon}>
             <ArrowBackIcon />
           </div>
         </Link>
         <div className={style.signin}>
           <h2>Sign Up</h2>
-    
-       
-            <GoogleSignup />
-       
+
+          <GoogleSignup />
+
           <div
             style={{
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
-              margin: "15px 0 4px 0",
+              margin: "8 px 0 4px 0",
             }}
           >
             <div className={style.divider} />
@@ -145,8 +139,8 @@ const SignUP = () => {
             <div className={style.divider} />
           </div>
           <form onSubmit={handleSignup}>
-            <div  style={{ display: "flex" }}>
-              <div style={{ width: "50%" }}>
+            <div style={{ display: "flex", justifyContent: "space-between" }}>
+              <div style={{ width: "48%" }}>
                 <Input
                   type="text"
                   placeholder="First Name"
@@ -157,7 +151,7 @@ const SignUP = () => {
                   style={{ width: "96%" }}
                 />
               </div>
-              <div style={{ width: "50%" }}>
+              <div style={{ width: "48%" }}>
                 <Input
                   type="text"
                   placeholder="Last Name"
@@ -165,12 +159,12 @@ const SignUP = () => {
                   name="LastName"
                   onChange={(e) => DataInp(e.target.name, e.target.value)}
                   required
-                  style={{ width: "96%",height:"80%" }}
+                  style={{ width: "96%", height: "80%" }}
                 />
               </div>
             </div>
-            <div style={{ display: "flex" }}>
-              <div style={{ width: "50%" }}>
+            <div style={{ display: "flex", justifyContent: "space-between" }}>
+              <div style={{ width: "48%" }}>
                 <Input
                   type="email"
                   placeholder="eg.-myemail@gmail.com"
@@ -181,7 +175,7 @@ const SignUP = () => {
                   style={{ width: "96%" }}
                 />
               </div>
-              <div style={{ width: "50%" }}>
+              <div style={{ width: "48%" }}>
                 <Input
                   type="text"
                   placeholder="1234567890"
@@ -193,8 +187,15 @@ const SignUP = () => {
                 />
               </div>
             </div>
-            <div style={{ display: "flex", gap: "2%" }}>
-              <div style={{ width: "48%" }}>
+            <div
+              style={{
+                display: "flex",
+                gap: "2%",
+                alignItems: "center",
+                justifyContent: "space-between",
+              }}
+            >
+              <div style={{ width: "46%" }}>
                 <Input
                   type="select"
                   placeholder="College Name"
@@ -212,7 +213,7 @@ const SignUP = () => {
                   style={{ width: "96%" }}
                 />
               </div>
-              <div style={{ width: "50%" }}>
+              <div style={{ width: "48%" }}>
                 <Input
                   type="text"
                   placeholder="School"
@@ -224,19 +225,14 @@ const SignUP = () => {
                 />
               </div>
             </div>
-            <div style={{ display: "flex" }}>
-              <div style={{ width: "50%" }}>
-                <Input
-                  type="text"
-                  placeholder="Roll Number"
-                  label="Roll Number"
-                  name="RollNumber"
-                  onChange={(e) => DataInp(e.target.name, e.target.value)}
-                  required
-                  style={{ width: "96%" }}
-                />
-              </div>
-              <div style={{ width: "47%" }}>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              <div style={{ width: "46%" }}>
                 <Input
                   type="select"
                   placeholder="Select year"
@@ -251,6 +247,17 @@ const SignUP = () => {
                   ]}
                   value={showUser.year}
                   onChange={(value) => DataInp("year", value)}
+                  required
+                  style={{ width: "96%" }}
+                />
+              </div>
+              <div style={{ width: "48%" }}>
+                <Input
+                  type="text"
+                  placeholder="Roll Number"
+                  label="Roll Number"
+                  name="RollNumber"
+                  onChange={(e) => DataInp(e.target.name, e.target.value)}
                   required
                   style={{ width: "96%" }}
                 />
@@ -288,11 +295,7 @@ const SignUP = () => {
               }}
             >
               Already Have an account?{" "}
-              <a
-                href="/Login"
-                style={{ color: "#FF8A00" }}
-                
-              >
+              <a href="/Login" style={{ color: "#FF8A00" }}>
                 Login
               </a>
             </Text>

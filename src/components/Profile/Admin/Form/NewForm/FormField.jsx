@@ -1,21 +1,71 @@
-
 import styles from "./styles/NewForm.module.scss";
 import Input from "../../../../Core/Input";
 import { MdOutlineClose } from "react-icons/md";
+import { HiOutlineDotsVertical } from "react-icons/hi";
+import { useState } from "react";
+import PopField from "./PopField";
+import Switch from "react-switch";
 
-function FormField (props) {
-  const { field, formFields, setformFields, index, } = props;
+const hasOptions = ["radio", "checkbox", "select"];
+
+function FormField(props) {
+  const {
+    field,
+    lastField,
+    section,
+    setformFields,
+    onRemoveField,
+    sections,
+    onFieldValidationChange,
+    addNewValidation,
+    onRemoveValidation,
+  } = props;
+  const [showPopMenu, setshowPopMenu] = useState(false);
+  const showMenu =
+    field.type &&
+    field.value &&
+    hasOptions.includes(field.type) &&
+    lastField?._id === field?._id;
 
   const handleChangeValue = (value, property) => {
-    const newFields = [...formFields];
-    newFields[index][property] = value;
-    // console.log(value, newFields[index][property]);
-    setformFields(newFields);
-  };
+    const newFields = [...section.fields];
+    const fieldIndex = newFields.findIndex((fld) => fld._id === field?._id);
 
-  const handleDeleteItem = () => {
-    const removeItem = formFields.filter((item, i) => i !== index);
-    setformFields(removeItem);
+    if (fieldIndex === -1) {
+      console.error("Field not found");
+      return;
+    }
+
+    newFields[fieldIndex][property] = value;
+
+    if (property === "value") {
+      const values = value.split(",");
+      if (values.length > 1) {
+        newFields[fieldIndex].type = field.type || "select";
+        newFields[fieldIndex].validations = values.map((val, idx) => ({
+          _id: Date.now() + idx,
+          condition: val.trim(),
+          target: field.validations[0]?.target || "Submit",
+        }));
+      }
+    }
+
+    if (property === "type" && hasOptions.includes(value)) {
+      const values = property === "value" && value.split(",");
+      if (values.length > 0) {
+        newFields[fieldIndex].value = field.value || "";
+        newFields[fieldIndex].validations = values.map((val, idx) => ({
+          _id: Date.now() + idx,
+          condition: val.trim(),
+          target: field.validations[0]?.target || "Submit",
+        }));
+      }
+    } else if (property === "type" && !hasOptions.includes(value)) {
+      newFields[fieldIndex].value = "";
+      newFields[fieldIndex].validations = [];
+    }
+
+    setformFields(newFields);
   };
 
   const fieldTypes = [
@@ -36,12 +86,12 @@ function FormField (props) {
       value: "checkbox",
     },
     {
-      label: "Date",
-      value: "date",
+      label: "List",
+      value: "select",
     },
     {
-      label: "Time",
-      value: "time",
+      label: "Date",
+      value: "date",
     },
   ];
 
@@ -76,22 +126,65 @@ function FormField (props) {
         containerClassName={styles.containerInput}
         onChange={(e) => handleChangeValue(e.target.value, "value")}
       />
-
-      {formFields.length > 1 && (
+      <div
+        style={{
+          marginTop: "16px",
+          display: "flex",
+          marginRight: "auto",
+        }}
+      >
+        <Switch
+          checked={field.isRequired}
+          width={36}
+          height={18}
+          onColor="#FF8A00"
+          checkedIcon={false}
+          uncheckedIcon={false}
+          title="Is this field required?"
+          onChange={(value) => handleChangeValue(value, "isRequired")}
+        />
+      </div>
+      {section.fields?.length > 1 && (
         <MdOutlineClose
-          size={20}
-          onClick={handleDeleteItem}
+          size={22}
+          onClick={onRemoveField}
           color="#FF8A00"
           style={{
             cursor: "pointer",
-            marginTop: "32px",
-            marginLeft: "-12px",
+            marginTop: "12px",
             zIndex: 10,
           }}
         />
       )}
+      {showMenu && (
+        <HiOutlineDotsVertical
+          onClick={() => {
+            setshowPopMenu(!showPopMenu);
+          }}
+          size={20}
+          color="#FF8A00"
+          style={{
+            cursor: "pointer",
+            marginTop: "10px",
+            marginLeft: !["text", "number", "date"].includes(field.type)
+              ? "8px"
+              : "auto",
+            zIndex: 10,
+          }}
+        />
+      )}
+      {showPopMenu && (
+        <PopField
+          field={field}
+          onFieldValidationChange={onFieldValidationChange}
+          handleClose={() => setshowPopMenu(false)}
+          sections={sections.filter((sec) => sec._id !== section._id)}
+          onAddValidation={addNewValidation}
+          onRemoveValidation={onRemoveValidation}
+        />
+      )}
     </div>
   );
-};
+}
 
 export default FormField;
