@@ -1,7 +1,7 @@
 @import "/src/assets/styles/Global.scss";
 
 .card {
-  width: 25rem;
+  width: 28rem;
 
   position: absolute;
 
@@ -18,7 +18,7 @@
 border: 1.2px solid rgba(214, 214, 214, 0.81);
   
 
-  left: 38%;
+  left: 35%;
 
   z-index: 5;
 }
@@ -66,11 +66,11 @@ border: 1.2px solid rgba(214, 214, 214, 0.81);
   border-bottom-right-radius: 20px;
   border-top: none;
   text-align: start;
-  font-size: 0.8rem;
+  font-size: 0.7rem;
 
-  padding-bottom: 6%;
+  padding-bottom: 3%;
   margin-inline: auto;
-  margin-top: 1rem;
+  // margin-top: 1rem;
 }
 
 .backbtn {
@@ -134,10 +134,10 @@ border: 1.2px solid rgba(214, 214, 214, 0.81);
 
 @media (max-width: 500px) {
   .card {
-    width: 26rem;
+    width: 25rem;
     position: absolute;
     top: 4rem;
-    left: 5%;
+    left: 3%;
     z-index: 5;
   }
 
@@ -148,10 +148,10 @@ border: 1.2px solid rgba(214, 214, 214, 0.81);
 
 @media (min-width: 501px) and (max-width: 600px) {
   .card {
-    width: 28rem;
+    width: 26rem;
     position: absolute;
     top: 4rem;
-    left: 15%;
+    left: 9%;
     z-index: 5;
   }
 
@@ -161,10 +161,10 @@ border: 1.2px solid rgba(214, 214, 214, 0.81);
 }
 @media (min-width: 601px) and (max-width: 700px) {
   .card {
-    width: 28rem;
+    width: 26rem;
     position: absolute;
     top: 4rem;
-    left: 26%;
+    left: 17%;
     z-index: 5;
   }
 
@@ -189,8 +189,8 @@ border: 1.2px solid rgba(214, 214, 214, 0.81);
   .card {
     width: 29rem;
     position: absolute;
-    top: 4rem;
-    left: 34%;
+    // top: 4rem;
+    left: 26%;
     z-index: 5;
   }
 
@@ -202,8 +202,9 @@ border: 1.2px solid rgba(214, 214, 214, 0.81);
   .card {
     width: 29rem;
     position: absolute;
-    top: 4rem;
-    left: 35%;
+    // top: 4rem;
+    left: 29%;
+
     z-index: 5;
   }
 

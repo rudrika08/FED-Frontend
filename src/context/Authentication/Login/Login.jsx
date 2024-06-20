@@ -9,10 +9,10 @@ import users from "../../../data/user.json";
 import AuthContext from "../../../store/AuthContext";
 import { useContext } from "react";
 import { useEffect } from "react";
-// import { GoogleOAuthProvider } from "@react-oauth/google";
+
 import GoogleLogin from "./GoogleLogin";
 import { Link } from "react-router-dom";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack"
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -53,7 +53,6 @@ const Login = () => {
       navigate("/");
       alert("Login successful");
       console.log(authCtx);
-      // Redirect to profile or dashboard
     } else {
       alert("Invalid email or password");
     }
@@ -61,7 +60,7 @@ const Login = () => {
   return (
     <div>
       <div className={style.container}>
-        <Link to={'/'}>
+        <Link to={"/"}>
           <div className={style.ArrowBackIcon}>
             <ArrowBackIcon />
           </div>
@@ -117,7 +116,7 @@ const Login = () => {
               variant="secondary"
               style={{
                 fontSize: "0.7rem",
-                cursor:"pointer"
+                cursor: "pointer",
               }}
             >
               Forget Password?

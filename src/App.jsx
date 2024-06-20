@@ -1,5 +1,5 @@
 
-import { Suspense, lazy } from "react";
+import { Suspense, lazy, useContext } from "react";
 import { Routes, Route ,Outlet} from "react-router-dom";
 
 // layouts
@@ -13,7 +13,7 @@ const Event = lazy(() => import("./pages/Event/Event"));
 const PastEvents = lazy(() => import("./pages/Event/pastPage"));
 const Social = lazy(() => import("./pages/Social/Social"));
 const Team = lazy(() => import("./pages/Team/Team"));
-const Login = lazy(() => import("./pages/Authentication/Login/Login"));
+const Login = lazy(() => import("./pages/Authentication/Login/LoginMain"));
 const Signup = lazy(()=>import("./pages/Authentication/Signup/SignupMain"))
 const Error = lazy(() => import("./pages/Error/Error"));
 const Admin = lazy(()=>import("./pages/Profile/Admin/Admin"))
@@ -28,7 +28,9 @@ import PastEventModal from "./features/Modals/Event/EventModal/PastEventCardModa
 // import { Alert } from "./MicroInteraction/Alert";
 
 // // state
-// import AuthContext from "./context/auth-context";
+import AuthContext from "./store/AuthContext";
+// import { AuthIsSignedIn,AuthIsNotSignedIn } from "./store/AuthContext";
+// 
 
 // // axios
 // import axios from "axios";
@@ -60,6 +62,7 @@ const AuthLayout = () => {
 
 function App() {
      
+  const authCtx = useContext(AuthContext);
 
   return (
     <>
@@ -78,6 +81,7 @@ function App() {
           <Route path="pastEvents/:eventId" element={[<PastEvents/>,<PastEventModal isPastPage={true}/>]}/>
         </Route>
         <Route element={<AuthLayout />}>
+        
           <Route path="/Login" element={<Login />} />
           <Route path="/SignUp" element={<Signup />} />
         </Route>

@@ -27,14 +27,14 @@
   width: 100%;
   border-radius: 20px;
   margin-left: 5.5rem;
-  margin-top: 3.7rem;
+  margin-top: 0.7rem;
 }
 
 .line {
   width: 2px;
   background-color: white;
   margin-left: 6rem;
-  margin-top: 6rem;
+  margin-top: 3rem;
 }
 
 .ring1,
@@ -45,12 +45,12 @@
 
 .ring1 {
   left: -6.5rem;
-  top: 1.4rem;
+  top: 0.6rem;
 }
 
 .ring2 {
   left: -6.4rem;
-  top: 1rem;
+  top: 0.6rem;
 }
 
 .name {
@@ -86,7 +86,7 @@
 .cardsin {
   display: flex;
   flex-wrap: wrap;
-  margin-top: 4.3rem;
+  margin-top: 3rem;
 }
 
 .card {
@@ -118,13 +118,14 @@
 
 .cardone {
   margin-left: 0;
-  margin-top: 3.7rem;
+  margin-top: 3rem;
   display: flex;
   flex-wrap: wrap;
   // justify-content: space-around;
   // margin-left: -4rem;
-  margin-top: -5rem;
-  column-gap: 5rem;
+  // margin-top: -5rem;
+  column-gap:6rem;
+  row-gap: 6rem;
 }
 
 .ca {
@@ -260,7 +261,7 @@
   .cardone {
     display: flex;
     flex-wrap: wrap;
-    margin-top: -2rem;
+    // margin-top: -2rem;
   }
 
   .cardsin {
@@ -279,7 +280,7 @@
   .cardone {
     display: flex;
     flex-wrap: wrap;
-    margin-top: 0.1rem;
+    margin-top: 4rem;
     width: 100%;
     margin-inline: auto;
   }
@@ -291,7 +292,7 @@
     flex-wrap: wrap;
     // justify-content: space-around;
     // margin-left: -4rem;
-    margin-top: 0;
+    margin-top: 3rem;
   }
 }
 @media (min-width: 800px) {
@@ -314,4 +315,17 @@
 
   //   margin-top: 0rem;
   // }
+}
+
+@media  (min-width:600px) and (max-width:650px) {
+  .cardone{
+    margin-left: 2.9rem;
+  }
+  
+}
+@media  (min-width:560px) and (max-width:600px) {
+  .cardone{
+    margin-left: 2rem;
+  }
+  
 }

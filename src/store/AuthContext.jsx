@@ -2,6 +2,8 @@ import React, { useState, useEffect, useCallback, useMemo } from "react";
 
 let logoutTimer;
 
+
+
 const AuthContext = React.createContext({
   token: "",
   isLoggedIn: false,
@@ -183,11 +185,18 @@ export const AuthContextProvider = (props) => {
     [token, userIsLoggedIn, target, isAdmin]
   );
 
+
+  
+  
+
+  
+
   return (
     <AuthContext.Provider value={contextValue}>
       {props.children}
     </AuthContext.Provider>
   );
 };
+
 
 export default AuthContext;

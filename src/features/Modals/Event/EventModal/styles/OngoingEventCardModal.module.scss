@@ -1,14 +1,16 @@
 @import "/src/assets/styles/Global.scss";
 
+
+
 .card {
-    width: 25rem;
+    width: 28rem;
     background: linear-gradient(90deg, rgba(32, 32, 32, 0.95) -11.52%, rgba(37, 37, 37, 0.95) 106.29%);
     font-size: 0.75rem;
     color: white;
     text-align: center;
     position: absolute;
-    top:7rem;
-    left: 40%;
+    top:4rem;
+    left: 35%;
     z-index: 5;
     border-radius: 1.26863rem;
     border: 1.2px solid rgba(214, 214, 214, 0.81);
@@ -55,10 +57,11 @@
   border-bottom-left-radius: 20px;
   border-bottom-right-radius: 20px;
   text-align: start;
-  font-size: 0.8rem;
+  font-size: 0.7rem;
   padding-bottom: 6%;
   margin-inline: auto;
-  margin-top: 1rem;
+  // margin-top: 1rem;
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .backbtn {
@@ -157,11 +160,11 @@
 
 @media (max-width: 500px) {
   .card {
-    width: 26rem;
+    width: 25rem;
 
     position: absolute;
     top: 6rem;
-    left: 1rem;
+    left: 1.5rem;
     z-index: 5;
   }
 
@@ -200,7 +203,7 @@
 }
 @media (min-width: 701px) and (max-width: 800px) {
   .card {
-    width: 29rem;
+    width: 27rem;
 
     position: absolute;
     top: 7rem;
@@ -214,10 +217,10 @@
 }
 @media (min-width: 801px) and (max-width: 900px) {
   .card {
-    width: 29rem;
+    width: 28rem;
 
     position: absolute;
-    top: 8rem;
+    top: 5rem;
     left: 10.8rem;
     z-index: 5;
   }

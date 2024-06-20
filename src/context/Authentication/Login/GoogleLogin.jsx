@@ -153,20 +153,17 @@ import React, { useContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import style from "../../../context/Authentication/SignUp/style/Signup.module.scss";
 
-// OAuth
+
 import { useGoogleLogin } from "@react-oauth/google";
 
-// Axios for HTTP requests
 import axios from "axios";
 
-// Mock user data
 import users from "../../../data/user.json";
 
-// State
 import AuthContext from "../../../store/AuthContext";
 
 import google from "../../../assets/images/google.png";
-import CompleteProfile from "../../../context/Authentication/SignUp/CompleteProfile";
+import CompleteProfile from "../SignUp/CompleteProfile";
 
 export default function GoogleLogin() {
   const [passData, setGoogleData] = useState([]);
@@ -187,7 +184,7 @@ export default function GoogleLogin() {
 
   const handleLoginSuccess = async () => {
     try {
-      // Fetch user info from Google API using the access token with axios
+    
       const googleResponse = await axios.get(
         `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${codeResponse.access_token}`
       );
@@ -215,8 +212,8 @@ export default function GoogleLogin() {
           user.year,
           user.regForm,
           user.access,
-          "someToken", // Replace with actual token if available
-          3600000 // 1 hour expiration time
+          "someToken", 
+          3600000 
         );
 
         console.log("Auth Context after login:", authCtx);
