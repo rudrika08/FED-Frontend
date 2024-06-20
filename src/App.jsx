@@ -13,6 +13,7 @@ const Event = lazy(() => import("./pages/Event/Event"));
 const PastEvents = lazy(() => import("./pages/Event/pastPage"));
 const Social = lazy(() => import("./pages/Social/Social"));
 const Team = lazy(() => import("./pages/Team/Team"));
+const Alumni = lazy(() => import("./pages/Alumni/Alumni"));
 const Login = lazy(() => import("./pages/Authentication/Login/Login"));
 const Signup = lazy(()=>import("./pages/Authentication/Signup/SignupMain"))
 const Error = lazy(() => import("./pages/Error/Error"));
@@ -69,6 +70,7 @@ function App() {
           <Route path="/pastEvents" element={<PastEvents />} />
           <Route path="/Social" element={<Social />} />
           <Route path="/Team" element={<Team />} />
+          <Route path="/Alumni" element={<Alumni />} />
           <Route path="/profile" element={<Admin />} />
         </Route>
         <Route element={<AuthLayout />}>

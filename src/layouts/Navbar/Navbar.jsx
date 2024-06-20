@@ -51,10 +51,14 @@ function Navbar() {
     return location.pathname === path;
   };
 
+  const handleLogoClick = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   return (
     <Headroom>
       <nav className={`${style.nav} ${scroll ? style.scrolled : ''}`}>
-        <Link to="/">
+        <Link to="/" onClick={handleLogoClick}>
           <div className={style.logo_div}>
             <img src={logo} alt="Logo" className={style.logo} />
             <div className={style.logo_text}></div>

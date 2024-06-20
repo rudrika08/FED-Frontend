@@ -1,0 +1,75 @@
+.Alumni {
+    padding: 20px;
+    color: white;
+    overflow-y: hidden;
+  }
+  
+  h2 {
+    text-align: center;
+    font-size: 2.5em;
+  }
+  
+  h2 span {
+    color: #FF5C00;
+  }
+  
+  .alumni-section {
+    text-align: center;
+    padding: 20px;
+    color: white;
+    margin-top: 20px;
+    margin-bottom: 150px;
+  }
+  
+  .alumni-section h3 {
+    font-size: 2em;
+    color: #FF5C00;
+    padding-bottom: 10px;
+  }
+  
+  .alumni-grid {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(200px, 1fr));
+    gap: 20px;
+    justify-content: center;
+    padding: 10px 50px;
+    z-index: 0;
+  }
+  
+  
+  .circle {
+    height: 50vh;
+    width: 30vh;
+    background-color: #FF5C00;
+    position: absolute;
+    top: 15%;
+    left: -10%;
+    border-radius: 50%;
+    filter: blur(80px);
+  }
+  
+  .circle2 {
+    height: 50vh;
+    width: 30vh;
+    background-color: #FF5C00;
+    position: absolute;
+    bottom: -300%;
+    right: -10%;
+    border-radius: 50%;
+    filter: blur(80px);
+    z-index: 0;
+  }
+  
+  @media (max-width: 768px) {
+    .alumni-grid {
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      padding: 0px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .alumni-grid {
+      grid-template-columns: repeat(2, 1fr);
+      padding: 0;
+    }
+  }

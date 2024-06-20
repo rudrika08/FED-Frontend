@@ -40,12 +40,23 @@ function ContactForm() {
     );
   };
 
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const formData = new FormData(event.target);
+    const data = {
+      name: formData.get('name'),
+      email: formData.get('email'),
+      message: formData.get('message')
+    };
+    console.log(data);
+  };
+
   return (
     <div className={styles.contactFormContainer}>
       <h2>GET <span className={styles.highlight}>IN</span> TOUCH</h2>
       <div className={styles.bottomLine}></div>
       <div className={styles.formSection}>
-        <form>
+        <form onSubmit={handleSubmit}>
           <div className={styles.formGroup}>
             <input type="text" name="name" placeholder="Name" />
           </div>

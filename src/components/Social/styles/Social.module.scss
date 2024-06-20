@@ -736,7 +736,7 @@ background: linear-gradient(270deg, rgba(255,190,11,1) 0%, rgba(244,43,3,1) 100%
   
   .text .highlight {
     max-width: 350px;
-    font-size: 70.84px;
+    font-size: 60.84px;
     font-family: Poppins;
     font-weight: 700;
     background: rgb(255,190,11);
@@ -748,7 +748,7 @@ background: linear-gradient(270deg, rgba(255,190,11,1) 0%, rgba(244,43,3,1) 100%
   
   .text #faded::after {
     max-width: 350px;
-    font-size: 70.84px;
+    font-size: 60.84px;
     font-family: Poppins;
     font-weight: 700;
     background: rgb(255,190,11);;
@@ -756,7 +756,7 @@ background: linear-gradient(270deg, rgba(255,190,11,1) 0%, rgba(244,43,3,1) 100%
     content: "FED";
     display: flex;
     margin-right: -0.75rem;
-    margin-top: -3.8rem;
+    margin-top: -3rem;
     justify-content: center;
     align-content: center;
     transform: rotateX(180deg);

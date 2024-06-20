@@ -1,9 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
 .nav {
   display: flex;
   justify-content: space-between;
   gap: 12px;
   font-size: 19.83px;
-  background-color: $page-color;
+  background-color: #1c1c1c80;
+  // backdrop-filter: blur(5px);
+  // -webkit-backdrop-filter: blur(5px);
   color: #fff;
   text-align: center;
   padding: 20px 56px;
@@ -118,7 +122,9 @@
       margin-top: 1rem;
       padding-top: 0.75rem;
       padding-bottom: 0.5rem;
-      border-right: 1.652px solid rgba(214, 214, 214, 0.81);
+      border-top: 1.652px solid rgba(214, 214, 214, 0.81);
+    border-right: 1.652px solid rgba(214, 214, 214, 0.81);
+    border-bottom: 1.652px solid rgba(214, 214, 214, 0.81);
       background: linear-gradient(91deg, rgba(217, 217, 217, 0) -147.64%, rgba(217, 217, 217, 0) 143.9%);
       backdrop-filter: blur(50px); // Apply the blur effect
       -webkit-backdrop-filter: blur(50px); // Safari support
@@ -176,9 +182,9 @@
       height: 100vh;
       width: 100vw;
       position: absolute;
-      top: 5rem;
+      top: 6rem;
       left: 0;
-      backdrop-filter: blur(5px);
+      backdrop-filter: blur(10px);
       display: flex;
       justify-content: center;
       align-items: flex-start;

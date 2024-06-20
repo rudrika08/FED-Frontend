@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { NavLink, Link } from "react-router-dom";
 import styles from './styles/Team.module.scss'; 
 import teamMembers from '../../data/MemberCard.json'; 
 import MemberCard from '../../components/Team/Member/MemberCard';
 import { FaRegArrowAltCircleRight } from "react-icons/fa";
-
 
 function useWindowWidth() {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
@@ -21,13 +21,15 @@ function useWindowWidth() {
 }
 
 const Team = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const roles = ['Director', 'Technical', 'Creative', 'Marketing', 'Operations', 'Sponsorship & PR'];
   const teamByRole = roles.map(role => ({
     role,
     members: teamMembers.filter(member => member.role === role)
   }));
-
-  console.log('Team by role:', teamByRole);
 
   const TeamSection = ({ title, members, isDirector }) => {
     const windowWidth = useWindowWidth();
@@ -76,14 +78,16 @@ const Team = () => {
   return (
     <div>
       <h2>Meet Our <span>Team</span></h2>
-      <div className={styles.para}><p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Totam provident commodi consequatur neque magni, non tempore dolor corporis voluptate animi voluptatibus assumenda illo consectetur voluptatem quam, cum eligendi libero quos.</p></div>
+      <div className={styles.para}>
+        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Totam provident commodi consequatur neque magni, non tempore dolor corporis voluptate animi voluptatibus assumenda illo consectetur voluptatem quam, cum eligendi libero quos.</p>
+      </div>
       <div className={styles.circle}></div>
       <div className={styles.circle2}></div>
       
       {teamByRole.filter(section => section.role === 'Director').map((section, index) => (
         <TeamSection
           key={index}
-          // title="Director"
+          title="Director"
           members={section.members}
           isDirector={true}
         />
@@ -98,7 +102,14 @@ const Team = () => {
         />
       ))}
 
-      <div className={styles.alumniBut}><div className={styles.ulhover}><a href='#'><span style={{ color: '#fff' }}>Meet</span> Our Alumni</a><FaRegArrowAltCircleRight /></div></div>
+      <div className={styles.alumniBut}>
+        <div className={styles.ulhover}>
+          <Link to='/Alumni'>
+            <span style={{ color: '#fff' }}>Meet</span> Our Alumni
+          </Link>
+          <FaRegArrowAltCircleRight />
+        </div>
+      </div>
     </div>
   );
 };
