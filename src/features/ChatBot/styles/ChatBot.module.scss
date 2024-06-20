@@ -119,6 +119,7 @@
     margin-top: 10px;
     font-size: 0.95rem;
     padding: 0.5rem;
+    color:black;
     border-radius: 10px;
     max-width: 80%;
     position: relative;
@@ -148,6 +149,7 @@
   .botmessage {
     text-align: left;
     background-color: #FF8A00;
+    color:black;
   }
 
   .botmessage:after {
@@ -157,6 +159,7 @@
     left: 2%;
     width: 0px;
     height: 0px;
+    color:black;
     border-bottom: 20px solid #FF8A00;
     border-right: 20px solid transparent;
     transform: translateX(-50%) translateY(50%) rotate(315deg); 
@@ -167,6 +170,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    color:black;
     background-color: #1c1c1c98;
     border-radius: 0px 0px 25px 25px;
   }
@@ -177,6 +181,7 @@
     width: 290px;
     padding:0.5rem;
     padding-left: 1rem ;
+    color:black;
     border-top-left-radius: 20px;
     border-bottom-left-radius: 20px;
   }
@@ -191,13 +196,19 @@
     width: 50px;
     margin-top: 1rem;
     font-size: 1.15rem;
+    color:black;
     background-color: white;
     border-top-right-radius: 20px;
     border-bottom-right-radius: 20px;
     cursor: pointer;
   }
 
+    .sendIcon {
+        color: #FF8A00;
+        margin-top:.5rem;
+      }
 
+      
 .chatbox::-webkit-scrollbar {
   width: 0px; 
 }

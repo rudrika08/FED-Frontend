@@ -74,11 +74,11 @@ const handleClick = () =>{
 const botToggle = isactive ? styles.hidden: '';
 const chatBotOpen = isactive ? '': styles.hidden;
 
-  return (
+return (
     <>
     <button className={`${styles.chatbottoggle} ${botToggle}`} onClick={handleClick}>
-        <span><GiFox /></span>
-      </button>
+            <span><GiFox /></span>
+        </button>
     <div className={`${styles.chatcontainer} ${chatBotOpen}`}>
       <header>
           <div className={styles.logo}>
@@ -105,7 +105,7 @@ const chatBotOpen = isactive ? '': styles.hidden;
             placeholder="Ask something..."
             onKeyDown={onhandleKey}
         />
-        <button className={styles.sendMessage} onClick={sendMessage}><BsSend/></button>
+        <button className={styles.sendMessage} onClick={sendMessage}><BsSend className={styles.sendIcon} /></button>
       </div>
     </div>
     </>

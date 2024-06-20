@@ -50,10 +50,12 @@
   .name {
     // width: 100%;
     display: flex;
-    gap: 1rem;
+    gap:1rem;
     align-items: center;
     position: relative;
-    margin-left: 5rem;
+    margin-top:-2rem;
+    margin-left: 8rem;
+    margin-bottom:8rem;
   }
   
   .name .w1 {
@@ -241,8 +243,8 @@
 
   .ArrowBackIcon {
     position: absolute;
-    top: 3.3rem;
-    left: 3rem;
+    top: 1.5rem;
+    left: 3.5rem;
     color: #fff;
     cursor: pointer;
     z-index:5;
