@@ -451,6 +451,11 @@ span{
         height: 150px;
         padding-top: -3rem;
     }
+
+    
+    .boxinnertext p{
+        font-size: 1.18rem;
+    }
 }
 
 @media screen and (max-width: 443px){
@@ -521,6 +526,11 @@ span{
         bottom: 330px;
         padding: 1rem;
         padding-top: 4rem;
+    }
+
+    
+    .boxinnertext p{
+        font-size: 1.18rem;
     }
     
     .whatfedimg{
@@ -606,6 +616,10 @@ span{
         bottom: 250px;
         height: 253px;
     }
+
+    .boxinnertext p{
+        font-size: 1.15rem;
+    }
 }
 
 @media screen and (max-width: 306px){
@@ -641,6 +655,11 @@ span{
         right: 0px;
         bottom: 250px;
         height: 253px;
+    }
+
+    
+    .boxinnertext p{
+        font-size: 0.8rem;
     }
 }
 
