@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap');
 
 .nav {
   display: flex;
@@ -6,14 +6,10 @@
   gap: 12px;
   font-size: 19.83px;
   background-color: #1c1c1c80;
-  // backdrop-filter: blur(5px);
-  // -webkit-backdrop-filter: blur(5px);
   color: #fff;
   text-align: center;
   padding: 20px 56px;
-
   position: relative;
-
 
   .logo {
     aspect-ratio: 2.38;
@@ -39,9 +35,6 @@
 
   .navItems {
     border-radius: 1.65rem;
-    border-top: 1.652px solid rgba(214, 214, 214, 0.81);
-    border-right: 1.652px solid rgba(214, 214, 214, 0.81);
-    border-bottom: 1.652px solid rgba(214, 214, 214, 0.81);
     background: linear-gradient(91deg, rgba(217, 217, 217, 0) -147.64%, rgba(217, 217, 217, 0.00) 143.9%);
     display: flex;
     justify-content: space-between;
@@ -71,7 +64,7 @@
     }
   }
 
-  .navItems a{
+  .navItems a {
     text-decoration: none;
   }
 
@@ -101,31 +94,28 @@
 
   @media (max-width: 601px) {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
     padding: 0.5rem;
     height: 78px;
     z-index: 2;
     width: 100%;
 
-    .navLink a{
+    .navLink a {
       font-family: Poppins;
       font-weight: 500;
-
     }
 
     .icon {
       display: block;
-      position: relative;
-      height: 50px;
-      width: 54.85px;
+      position: absolute;
+      left: 10px;
+      top: 50%;
+      margin-top: 1.6rem;
+      height: 40px;
+      width: 44.85px;
       color: #fff;
       cursor: pointer;
-      margin-top: 1rem;
-      padding-top: 0.75rem;
-      padding-bottom: 0.5rem;
-      border-top: 1.652px solid rgba(214, 214, 214, 0.81);
-    border-right: 1.652px solid rgba(214, 214, 214, 0.81);
-    border-bottom: 1.652px solid rgba(214, 214, 214, 0.81);
+      padding-top: 0.5rem;
       background: linear-gradient(91deg, rgba(217, 217, 217, 0) -147.64%, rgba(217, 217, 217, 0) 143.9%);
       backdrop-filter: blur(50px); // Apply the blur effect
       -webkit-backdrop-filter: blur(50px); // Safari support
@@ -143,23 +133,20 @@
       background-color: white;
       border-radius: 50%;
     }
-     
+
     .logo {
-      height: 65%;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
       margin-top: 1rem;
-      margin-right: 1rem;
     }
 
     .mobile {
       width: 100%;
-      // background-color: pink;
       display: flex;
-      justify-content: space-between;
-      flex-direction: row-reverse;
-    }
-
-    .icon {
-      margin-left: 2vw;
+      justify-content: center;
+      align-items: center;
+      position: relative;
     }
 
     .mobilesignup {
@@ -179,7 +166,7 @@
       margin-top: 20px;
     }
 
-    .listbody{
+    .listbody {
       height: 100vh;
       width: 100vw;
       position: absolute;
@@ -192,7 +179,7 @@
     }
 
     .blur {
-      filter: blur(5px);
+      backdrop-filter: blur(10px);
     }
 
     .navItems {
@@ -205,8 +192,6 @@
       justify-content: center;
       display: none;
       background-color: #202020;
-      border-right: 1.652px solid rgba(214, 214, 214, 0.81);
-
 
       &.open {
         display: flex;
@@ -226,12 +211,6 @@
     -webkit-backdrop-filter: blur(90px); // Safari support
   }
 }
-
-// .blur {
-//   backdrop-filter: blur(90px); // Apply the blur effect
-//   -webkit-backdrop-filter: blur(90px); // Safari support
-// }
-  
 
 @media screen and (min-width: 601px) {
   .navItems {

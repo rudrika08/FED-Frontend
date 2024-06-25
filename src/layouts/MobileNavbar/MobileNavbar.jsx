@@ -1,5 +1,5 @@
 import { useState, useContext, useEffect } from "react";
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { NavLink, Link, useLocation, useNavigate } from "react-router-dom";
 import style from "./styles/MobileNavbar.module.scss";
 import Headroom from "react-headroom";
@@ -56,19 +56,22 @@ export default function Navbar() {
   const listVariants = {
     hidden: { opacity: 0, x: -100 },
     visible: { opacity: 1, x: 0 },
-    exit: { opacity: 0, x: -100 }
+    exit: { opacity: 0, x: -100 } // Adjusted for exit animation
   };
 
   const containerVariants = {
     hidden: { opacity: 0, scale: 0.8 },
     visible: { opacity: 1, scale: 1 },
-    exit: { opacity: 0, scale: 0.8 }
+    exit: { opacity: 0, scale: 0.8, y: 50 } // Adjusted for exit animation
   };
 
   return (
     <Headroom>
       <nav className={style.nav}>
         <div className={style.mobile}>
+          <div className={style.icon} onClick={toggleMenu}>
+            {isOpen ? <RxCross2 size={20} /> : <FiMenu size={20} />}
+          </div>
           <div className={`${style.logoContainer} ${isOpen ? style.blur : ""}`}>
             <Link to="/" onClick={handleLogoClick}>
               <img
@@ -79,129 +82,124 @@ export default function Navbar() {
               />
             </Link>
           </div>
-          <div className={style.icon} onClick={toggleMenu}>
-            {isOpen ? <RxCross2 size={25} /> : <FiMenu size={25} />}
-          </div>
         </div>
 
-        <AnimatePresence>
-          {isOpen && (
-            <motion.div
-              className={style.listbody}
-              initial="hidden"
-              animate="visible"
-              exit="exit"
-              variants={containerVariants}
-              transition={{ duration: 0.5 }}
-            >
-              <ul className={`${style.navItems} ${isOpen ? style.open : ""}`}>
-                {authCtx.isLoggedIn && (
-                  <>
-                    <NavLink to="/profile" className="LinkStyle" onClick={handleLinkClick}>
-                      <img
-                        src={authCtx.user.pic || defaultImg}
-                        alt="Profile"
-                        className={style.profileImg}
-                      />
-                    </NavLink>
-                    <div className={style.name}>{authCtx.user.name}</div>
-                  </>
-                )}
-                <motion.li
-                  className={style.navLink}
+        {isOpen && (
+          <motion.div
+            className={style.listbody}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+            variants={containerVariants}
+            transition={{ duration: 0.5, ease: "easeInOut" }} // Added easing function
+          >
+            <ul className={`${style.navItems} ${isOpen ? style.open : ""}`}>
+              {authCtx.isLoggedIn && (
+                <>
+                  <NavLink to="/profile" className="LinkStyle" onClick={toggleMenu}>
+                    <img
+                      src={authCtx.user.pic || defaultImg}
+                      alt="Profile"
+                      className={style.profileImg}
+                    />
+                  </NavLink>
+                  <div className={style.name}>{authCtx.user.name}</div>
+                </>
+              )}
+              <motion.li
+                className={style.navLink}
+                initial="hidden"
+                animate="visible"
+                exit="exit"
+                variants={listVariants}
+                transition={{ duration: 0.5, ease: "easeInOut", delay: 0.1 }} // Added easing function and exit duration
+              >
+                <Link
+                  to="/"
+                  style={{ color: isActive("/") ? "#FF8A00" : "white" }}
+                  onClick={toggleMenu}
+                >
+                  Home
+                </Link>
+              </motion.li>
+              <motion.li
+                className={style.navLink}
+                initial="hidden"
+                animate="visible"
+                exit="exit"
+                variants={listVariants}
+                transition={{ duration: 0.5, ease: "easeInOut", delay: 0.2 }} // Added easing function and exit duration
+              >
+                <Link
+                  to="/Events"
+                  style={{ color: isActive("/Events") ? "#FF8A00" : "white" }}
+                  onClick={toggleMenu}
+                >
+                  Events
+                </Link>
+              </motion.li>
+              <motion.li
+                className={style.navLink}
+                initial="hidden"
+                animate="visible"
+                exit="exit"
+                variants={listVariants}
+                transition={{ duration: 0.5, ease: "easeInOut", delay: 0.3 }} // Added easing function and exit duration
+              >
+                <Link
+                  to="/Social"
+                  style={{ color: isActive("/Social") ? "#FF8A00" : "white" }}
+                  onClick={toggleMenu}
+                >
+                  Social
+                </Link>
+              </motion.li>
+              <motion.li
+                className={style.navLink}
+                initial="hidden"
+                animate="visible"
+                exit="exit"
+                variants={listVariants}
+                transition={{ duration: 0.5, ease: "easeInOut", delay: 0.4 }} // Added easing function and exit duration
+              >
+                <Link
+                  to="/Team"
+                  style={{ color: isActive("/Team") ? "#FF8A00" : "white" }}
+                  onClick={toggleMenu}
+                >
+                  Team
+                </Link>
+              </motion.li>
+              {authCtx.isLoggedIn ? (
+                <motion.button
+                  className={style.mobilesignup}
+                  onClick={handleLogout}
                   initial="hidden"
                   animate="visible"
                   exit="exit"
                   variants={listVariants}
-                  transition={{ duration: 0.5, delay: 0.1 }}
+                  transition={{ duration: 0.5, ease: "easeInOut", delay: 0.5 }} // Added easing function and exit duration
                 >
-                  <Link
-                    to="/"
-                    style={{ color: isActive("/") ? "#FF8A00" : "white" }}
-                    onClick={handleLinkClick}
-                  >
-                    Home
-                  </Link>
-                </motion.li>
-                <motion.li
-                  className={style.navLink}
+                  <MdOutlineLogout size={25} /> Logout
+                </motion.button>
+              ) : (
+                <motion.a
+                  href="/Login"
                   initial="hidden"
                   animate="visible"
                   exit="exit"
                   variants={listVariants}
-                  transition={{ duration: 0.5, delay: 0.2 }}
+                  transition={{ duration: 0.5, ease: "easeInOut", delay: 0.5 }} // Added easing function and exit duration
+                  onClick={toggleMenu}
                 >
-                  <Link
-                    to="/Events"
-                    style={{ color: isActive("/Events") ? "#FF8A00" : "white" }}
-                    onClick={handleLinkClick}
-                  >
-                    Events
-                  </Link>
-                </motion.li>
-                <motion.li
-                  className={style.navLink}
-                  initial="hidden"
-                  animate="visible"
-                  exit="exit"
-                  variants={listVariants}
-                  transition={{ duration: 0.5, delay: 0.3 }}
-                >
-                  <Link
-                    to="/Social"
-                    style={{ color: isActive("/Social") ? "#FF8A00" : "white" }}
-                    onClick={handleLinkClick}
-                  >
-                    Social
-                  </Link>
-                </motion.li>
-                <motion.li
-                  className={style.navLink}
-                  initial="hidden"
-                  animate="visible"
-                  exit="exit"
-                  variants={listVariants}
-                  transition={{ duration: 0.5, delay: 0.4 }}
-                >
-                  <Link
-                    to="/Team"
-                    style={{ color: isActive("/Team") ? "#FF8A00" : "white" }}
-                    onClick={handleLinkClick}
-                  >
-                    Team
-                  </Link>
-                </motion.li>
-                {authCtx.isLoggedIn ? (
-                  <motion.button
-                    className={style.mobilesignup}
-                    onClick={handleLogout}
-                    initial="hidden"
-                    animate="visible"
-                    exit="exit"
-                    variants={listVariants}
-                    transition={{ duration: 0.5, delay: 0.5 }}
-                  >
-                    <MdOutlineLogout size={25} /> Logout
-                  </motion.button>
-                ) : (
-                  <motion.a
-                    href="/Login"
-                    initial="hidden"
-                    animate="visible"
-                    exit="exit"
-                    variants={listVariants}
-                    transition={{ duration: 0.5, delay: 0.5 }}
-                    onClick={handleLinkClick}
-                  >
-                    <button className={style.mobilesignup}>
-                      Login/Sign up
-                    </button>
-                  </motion.a>
-                )}
-              </ul>
-            </motion.div>
-          )}
-        </AnimatePresence>
+                  <button className={style.mobilesignup}>
+                    Login/Sign up
+                  </button>
+                </motion.a>
+              )}
+            </ul>
+          </motion.div>
+        )}
       </nav>
     </Headroom>
   );
