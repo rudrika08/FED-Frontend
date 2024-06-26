@@ -1,15 +1,15 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
 import PropTypes from "prop-types";
 import { Link, useNavigate } from "react-router-dom";
-import Input from "../../../components/Core/Input";
-import Button from "../../../components/Core/Button";
+import Input from "../../components/Core/Input";
+import Button from "../../components/Core/Button";
 // import bcrypt from "bcryptjs-react";
 
-import Load from "../../../microInteraction/Load/Load";
+import Load from "../../microInteraction/Load/Load";
 import axios from "axios";
 import CPCss from "./style/CompleteProfile.module.scss";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import AuthContext from "../../../store/AuthContext";
+import AuthContext from "../../context/AuthContext";
 
 function CompleteProfile(props) {
   const [loadingEffect, setLoad] = useState(false);

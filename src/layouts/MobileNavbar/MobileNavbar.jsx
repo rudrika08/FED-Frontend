@@ -7,7 +7,7 @@ import { FiMenu } from "react-icons/fi";
 import { RxCross2 } from "react-icons/rx";
 import { MdOutlineLogout } from "react-icons/md";
 import defaultImg from '../../assets/images/defaultImg.jpg';
-import AuthContext from '../../store/AuthContext';
+import AuthContext from '../../context/AuthContext';
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);

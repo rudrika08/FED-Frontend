@@ -20,13 +20,12 @@ const Alumni = lazy(()=>import("./pages/Alumni/Alumni"))
 
 // microInteraction
 import Loading from "./microInteraction/Load/Load";
-import OngoingEventModal from "./features/Modals/Event/EventModal/OngoingEventCardModal";
-import PastEventModal from "./features/Modals/Event/EventModal/PastEventCardModal";
+import EventModal from "./features/Modals/Event/EventModal/EventModal";
+// import PastEventModal from "./features/Modals/Event/EventModal/PastEventCardModal";
 
-// import { Alert } from "./MicroInteraction/Alert";
 
 // state
-import AuthContext from "./store/AuthContext";
+import AuthContext from "./context/AuthContext";
 
 // axios
 // import axios from "axios";
@@ -73,12 +72,11 @@ function App() {
           <Route path="/Alumni" element={<Alumni />} />
           <Route path="*" element={<Error />} />
           {authCtx.isLoggedIn && (<Route path="/profile" element={<Profile />} />)}
-          <Route path="/Events/:eventId" element={[<Event />,<OngoingEventModal/>]}/>
-          <Route path="/Events/pastEvents/:eventId" element={[<Event />,<PastEventModal  isPastPage={false}/>]}/>
-          <Route path="/pastEvents/:eventId" element={[<PastEvents/>,<PastEventModal isPastPage={true}/>]}/>
+          <Route path="/Events/:eventId" element={[<Event />,<EventModal onClosePath='/Events'/>]}/>
+          <Route path="/Events/pastEvents/:eventId" element={[<Event />,<EventModal onClosePath='/Events'/>]}/>
+          <Route path="/pastEvents/:eventId" element={[<PastEvents/>,<EventModal onClosePath='/Events/pastEvents'/> ]}/>
         </Route>
         <Route element={<AuthLayout />}>
-        
           <Route path="/Login" element={authCtx.isLoggedIn?<Navigate to='/profile'></Navigate>:<Login />} />
           <Route path="/SignUp" element={authCtx.isLoggedIn?<Navigate to='/profile'></Navigate>:<Signup />} />
         </Route>

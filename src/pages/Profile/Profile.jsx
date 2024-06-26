@@ -1,7 +1,7 @@
 import { useState, useContext, useEffect } from 'react';
 import Layout from '../../layouts/Profile/ProfileLayout/ProfileLayout';
 import Sidebar from '../../layouts/Profile/Sidebar/Sidebar';
-import AuthContext from '../../store/AuthContext';
+import AuthContext from '../../context/AuthContext';
 
 import {ProfileView, EventsView, NewForm, ViewMember, ViewEvent} from '../../components/Profile';
 

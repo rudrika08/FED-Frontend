@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import style from "./styles/Login.module.scss";
-import Input from "../../../components/Core/Input";
-import Button from "../../../components/Core/Button";
-import Text from "../../../components/Core/Text";
-import google from "../../../assets/images/google.png";
-import users from "../../../data/user.json";
-import AuthContext from "../../../store/AuthContext";
+import Input from "../../components/Core/Input";
+import Button from "../../components/Core/Button";
+import Text from "../../components/Core/Text";
+// import google from "../../assets/images/google.png";
+import users from "../../data/user.json";
+import AuthContext from "../../context/AuthContext";
 import { useContext } from "react";
 import { useEffect } from "react";
 

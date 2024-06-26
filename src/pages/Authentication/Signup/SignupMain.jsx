@@ -1,5 +1,5 @@
 import React from 'react'
-import SignUP from '../../../context/Authentication/SignUp/SignUP'
+import SignUP from '../../../Authentication/SignUp/SignUP'
 
 const SignupMain = () => {
   return (

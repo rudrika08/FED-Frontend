@@ -1,9 +1,9 @@
-import PastEvents from '../../components/Event/EventCards/PastEventCard/PastEventCard';
 import style from './styles/pastPage.module.scss';
 import eventData from '../../data/eventData.json';
 import { useEffect,useState } from 'react';
 import { Link } from 'react-router-dom';
 import ArrowBackIcon from "@mui/icons-material/ArrowBack"
+import EventCard from '../../components/Event/EventCards/EventCard';
 
 
 
@@ -46,12 +46,21 @@ const PastPage = () => {
             <div className={style.Outcard}>
               <div className={style.cardone}>
                 {pastEvents.map((event, index) => (
-                  <div key={index}>
-                     <PastEvents 
+                  <div style={{height: "auto", width: "22rem"}} key={index}>
+                     {/* <PastEvents 
                       data={event}
                       scrollPosition={200}
                       isPastpage={true}
-                    />
+                    /> */}
+                    
+                    <EventCard
+                    data={event}
+                    type="past"
+                    // customStyles={customStyles}
+                    modalpath='/pastEvents/'
+                  />
+
+                  
                   </div>
                 ))}
               </div>

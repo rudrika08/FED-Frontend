@@ -6,12 +6,14 @@
   width: 38vw;
   display: flex;
   flex-direction: row;
-  margin: 3% auto;
+  margin: 0% auto;
+  scale: 0.90;
 }
 
-.signupForm {
-  height: 25rem;
-}
+// .signupForm {
+//   height: 25rem;
+// }
+
 
 .container:hover {
   border: 1px solid #ffffff70;
