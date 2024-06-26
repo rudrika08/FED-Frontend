@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import styles from "./styles/EventsView.module.scss";
-import AuthContext from "../../../../store/AuthContext";
+import AuthContext from "../../../../context/AuthContext";
 import eventsData from "../../../../data/eventData.json";
 
 const Events = () => {

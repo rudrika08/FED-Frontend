@@ -4,12 +4,24 @@ import Button from "../../../../Core/Button";
 
 import AddEventForm from "../../Form/EventForm/AddEventForm";
 import eventData from "../../../../../data/eventData.json"
-import PastEvents from "../../../../Event/EventCards/PastEventCard/PastEventCard";
+import PastEvents from "../../../../../components/Event/EventCards/EventCard";
 
 function ViewEvent () {
 
   const [activepage, setactivepage] = useState("View Events");
   const pastEvents = eventData.filter(event => !event.ongoingEvent);
+
+  const customStyles = {
+    eventname: {
+      fontSize: "1rem",
+    },
+    registerbtn: {
+      width: "auto",
+    },
+    eventnamep: {
+      fontSize: "0.6rem",
+    },
+  };
   return (
     <>
       <div className={styles.container}>
@@ -44,9 +56,12 @@ function ViewEvent () {
           ) : (
             <div className={styles.eventList}>
                    {pastEvents.map((event, index) => (
-                  <div key={index}>
+                  <div style={{width:"18rem", height:'auto'}} key={index}>
                      <PastEvents 
                       data={event}
+                      customStyles={customStyles}
+                      type="past"
+                      modalpath='/Events/pastEvents/'
                       isPastpage={true}
                     />
                   </div>

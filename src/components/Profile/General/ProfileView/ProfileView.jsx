@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import styles from "./styles/ProfileView.module.scss";
 import { useContext } from "react";
-import AuthContext from "../../../../store/AuthContext";
+import AuthContext from "../../../../context/AuthContext";
 
 const Profile = () => {
 

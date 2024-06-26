@@ -4,7 +4,7 @@ import { MdLogout } from 'react-icons/md';
 import { TbUserEdit } from 'react-icons/tb';
 import { SlCalender } from 'react-icons/sl';
 import { SiReacthookform } from 'react-icons/si';
-import AuthContext from '../../../store/AuthContext';
+import AuthContext from '../../../context/AuthContext';
 import styles from './styles/Sidebar.module.scss';
 import defaultImg from '../../../assets/images/defaultImg.jpg';
 

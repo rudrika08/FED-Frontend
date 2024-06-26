@@ -1,8 +1,8 @@
 import { useState } from "react";
 import style from "./style/Signup.module.scss";
-import Input from "../../../components/Core/Input";
-import Button from "../../../components/Core/Button";
-import Text from "../../../components/Core/Text";
+import Input from "../../components/Core/Input";
+import Button from "../../components/Core/Button";
+import Text from "../../components/Core/Text";
 import GoogleSignup from "./GoogleSignup";
 import bcrypt from "bcryptjs";
 import { useEffect } from "react";
@@ -77,7 +77,7 @@ const SignUP = () => {
 
       try {
         console.log(userObject);
-        const response = await axios.post(`/auth/register`, userObject);
+        const response = await axios.post(`/api/auth/register`, userObject);
         console.log(response);
         if (response.status == 200) {
           setLoad(false);
@@ -105,27 +105,28 @@ const SignUP = () => {
 
   return (
     <div style={{ width: "100vw", position: "relative" }}>
+         <Link to={"/"}>
+          <div className={style.ArrowBackIcon}>
+            <ArrowBackIcon />
+          </div>
+        </Link>
+
+        <div className={style.circle}>
+          <div></div>
+        </div>
+
+        <div className={style.circle1}></div>
       <div
         className={style.container}
         style={{
           zIndex: "10",
         }}
       >
-        <div className={style.circle}>
-          <div></div>
-        </div>
-
-        <div className={style.circle1}></div>
-        <Link to={"/"}>
-          <div className={style.ArrowBackIcon}>
-            <ArrowBackIcon />
-          </div>
-        </Link>
+     
+     
         <div className={style.signin}>
           <h2>Sign Up</h2>
-
           <GoogleSignup />
-
           <div
             style={{
               display: "flex",
@@ -148,7 +149,8 @@ const SignUP = () => {
                   name="FirstName"
                   onChange={(e) => DataInp(e.target.name, e.target.value)}
                   required
-                  style={{ width: "96%" }}
+                  style={{ width: "96%", }}
+                  className={style.input}
                 />
               </div>
               <div style={{ width: "48%" }}>
@@ -159,7 +161,8 @@ const SignUP = () => {
                   name="LastName"
                   onChange={(e) => DataInp(e.target.name, e.target.value)}
                   required
-                  style={{ width: "96%", height: "80%" }}
+                  style={{ width: "96%" }}
+                  className={style.input}
                 />
               </div>
             </div>
@@ -170,9 +173,11 @@ const SignUP = () => {
                   placeholder="eg.-myemail@gmail.com"
                   label="Email"
                   name="email"
+                  className={style.input}
                   onChange={(e) => DataInp(e.target.name, e.target.value)}
                   required
                   style={{ width: "96%" }}
+                 
                 />
               </div>
               <div style={{ width: "48%" }}>
@@ -184,6 +189,7 @@ const SignUP = () => {
                   onChange={(e) => DataInp(e.target.name, e.target.value)}
                   required
                   style={{ width: "96%" }}
+                  className={style.input}
                 />
               </div>
             </div>
@@ -201,6 +207,7 @@ const SignUP = () => {
                   placeholder="College Name"
                   label="College"
                   name="College"
+                  className={style.input}
                   options={[
                     {
                       label: "Kalinga Institute of Industrial Technology",
@@ -219,6 +226,7 @@ const SignUP = () => {
                   placeholder="School"
                   label="School"
                   name="School"
+                  className={style.input}
                   onChange={(e) => DataInp(e.target.name, e.target.value)}
                   required
                   style={{ width: "96%" }}
@@ -249,6 +257,7 @@ const SignUP = () => {
                   onChange={(value) => DataInp("year", value)}
                   required
                   style={{ width: "96%" }}
+                  className={style.input}
                 />
               </div>
               <div style={{ width: "48%" }}>
@@ -260,6 +269,7 @@ const SignUP = () => {
                   onChange={(e) => DataInp(e.target.name, e.target.value)}
                   required
                   style={{ width: "96%" }}
+                  className={style.input}
                 />
               </div>
             </div>
@@ -271,6 +281,8 @@ const SignUP = () => {
               onChange={(e) => DataInp(e.target.name, e.target.value)}
               required
               style={{ width: "98%" }}
+              className={style.input}
+              
             />
             <Button
               style={{

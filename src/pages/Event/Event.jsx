@@ -1,35 +1,30 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import style from "./styles/Event.module.scss";
 import eventData from "../../data/eventData.json";
-import PastEvents from "../../components/Event/EventCards/PastEventCard/PastEventCard";
-import OngoingEvent from "../../components/Event/EventCards/OngoingEventCard/OngoingEventCard";
+import EventCard from"../../components/Event/EventCards/EventCard"
 import ring from "../../assets/images/ring.svg";
 import { MdKeyboardArrowRight } from "react-icons/md";
-
 
 const Event = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-  // const [activeEventId, setActiveEventId] = useState(null);
 
   const ongoingEvents = eventData.filter((event) => event.ongoingEvent);
   const pastEvents = eventData.filter((event) => !event.ongoingEvent);
 
-  // const handleModalOpen = (eventId) => {
-  //   setActiveEventId(eventId);
-  //   document.body.style.overflow = 'hidden';
-
-  // };
-
-  // const handleModalClose = () => {
-  //   setActiveEventId(null);
-  //   document.body.style.overflow = 'unset';
-  //   // document.body.style.backdropFilter='unset'
-  // };
-
-
+  const customStyles = {
+    eventname: {
+      fontSize: "1.2rem",
+    },
+    registerbtn: {
+      width: "auto",
+    },
+    eventnamep: {
+      fontSize: "0.7rem",
+    },
+  };
 
   return (
     <div className={style.main}>
@@ -38,43 +33,49 @@ const Event = () => {
         <div className={style.eventwhole}>
           <div className={style.eventcard}>
             <div className={style.name}>
-              <img className={style.ring1} src={ring}></img>
+              <img className={style.ring1} src={ring} alt="ring" />
               <span className={style.w1}>Ongoing</span>
               <span className={style.w2}>Events</span>
             </div>
-            {/* <div className={style.cardsout}> */}
             <div className={style.cardsin}>
-             
               {ongoingEvents.map((event, index) => (
-                <div key={index}>
-                  <OngoingEvent data={event} />
+                <div style={{ height: "auto", width: "22rem" }} key={index}>
+                  <EventCard
+                    data={event}
+                    onOpen={() => console.log("Event opened")}
+                    type="ongoing"
+                    customStyles={customStyles}
+                    modalpath='/Events/'
+                  />
                 </div>
               ))}
             </div>
-            {/* </div>  */}
           </div>
 
           <div className={style.pasteventcard}>
             <div className={style.name}>
-              <img className={style.ring2} src={ring}></img>
+              <img className={style.ring2} src={ring} alt="ring" />
               <span className={style.w1}>Past</span>
               <span className={style.w2}>Events</span>
             </div>
-            {/* <div className={style.outcard}> */}
-              <div className={style.cardone}>
-                {pastEvents.map((event, index) => (
-                  <div key={index}>
-                    <PastEvents data={event} isPastpage={false} />
-                  </div>
-                ))}
-              </div>
-            {/* </div> */}
+            <div className={style.cardone}>
+              {pastEvents.map((event, index) => (
+                <div style={{ height: "auto", width: "22rem" }} key={index}>
+                  <EventCard
+                    data={event}
+                    type="past"
+                    customStyles={customStyles}
+                    modalpath='/Events/pastEvents/'
+                  />
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>
 
       <div className={style.bottom}>
-        <Link to={"/Events/pastEvents"}>
+        <Link to="/Events/pastEvents">
           <button className={style.seeall}>
             See all <MdKeyboardArrowRight />
           </button>
@@ -91,5 +92,3 @@ const Event = () => {
 };
 
 export default Event;
-
-  

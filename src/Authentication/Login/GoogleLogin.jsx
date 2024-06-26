@@ -151,18 +151,18 @@
 
 import React, { useContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import style from "../../../context/Authentication/SignUp/style/Signup.module.scss";
+import style from "../SignUp/style/Signup.module.scss";
 
 
 import { useGoogleLogin } from "@react-oauth/google";
 
 import axios from "axios";
 
-import users from "../../../data/user.json";
+import users from "../../data/user.json";
 
-import AuthContext from "../../../store/AuthContext";
+import AuthContext from "../../context/AuthContext";
 
-import google from "../../../assets/images/google.png";
+import google from "../../assets/images/google.png";
 import CompleteProfile from "../SignUp/CompleteProfile";
 
 export default function GoogleLogin() {

@@ -1,29 +1,27 @@
 import React, { useState, useEffect } from "react";
-import EventCardModal from "./styles/OngoingEventCardModal.module.scss";
+import EventCardModal from "./styles/EventModal.module.scss";
 import groupIcon from "../../../../assets/images/groups.svg";
 import rupeeIcon from "../../../../assets/images/rupeeIcon.svg";
 import { X } from "lucide-react";
 import { useNavigate, useParams } from "react-router-dom";
 import eventData from "../../../../data/eventData.json";
 import shareOutline from "../../../../assets/images/shareOutline.svg";
-import Share from "../../../../components/Event/ShareContainer/Share";
+import Share from "../../../../components/ShareContainer/Share";
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
-const OngoingEventModal = ({ onClose }) => {
+const EventModal = (props) => {
+    const{onClosePath}=props;
   const navigate = useNavigate();
   const { eventId } = useParams();
   const data = eventData.find((event) => event.id === eventId);
+  const buttonText=data.ongoingEvent?'Register Now':'Registration closed';
 
-  useEffect(() => {
-    window.scrollTo(0, 24);
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.body.style.overflow = "unset";
-    };
-  }, []);
+
 
   const handleModalClose = () => {
-    document.body.style.overflow = "unset";
-    navigate("/Events");
+
+    navigate(onClosePath);
   };
 
   const [isOpen, setOpen] = useState(false);
@@ -37,29 +35,44 @@ const OngoingEventModal = ({ onClose }) => {
   return (
     <div
       style={{
-        position: "absolute",
-        width: "100vw",
-        height: "100rem",
-        display: "flex",
-        justifyContent: "center",
+        position: "fixed",
+        width: "100%",
+        height: "100%",
+
         zIndex: "10",
-        alignItems: "center",
+    
         left: "0",
         top: "0",
       }}
     >
       <div
         style={{
+         position:'absolute',
+         top:'0',
+         left:'0',
           width: "100%",
           height: "100%",
-          position: "relative",
+          background: 'rgba(0, 0, 0, 0.5)',
           backdropFilter: "blur(4px)",
+          zIndex:'5',
+     
         }}
       >
-        <div className={EventCardModal.modalOverlay}>
+
+        <div style={{
+          zIndex:'10',
+          borderRadius:'10px',
+          padding:"2rem",
+          position:"relative",
+          display:'flex',
+          justifyContent:"center",
+          alignItems:"center",
+          marginTop:"3rem",
+        }}>
+
           {data && (
             <>
-              <div className={EventCardModal.card}>
+              <div className={EventCardModal.card}   data-aos="zoom-in-up" data-aos-duration="500">
                 <div
                   style={{
                     position: "relative",
@@ -78,13 +91,14 @@ const OngoingEventModal = ({ onClose }) => {
                       alt="Event"
                     />
                     <div className={EventCardModal.date}>{data.eventDate}</div>
-                    <div className={EventCardModal.share} onClick={handleShare}>
+                    {data.ongoingEvent && <div className={EventCardModal.share} onClick={handleShare}>
                       <img
                         className={EventCardModal.shareIcon}
                         src={shareOutline}
                         alt="Share"
                       />
                     </div>
+}
                   </div>
                   <div className={EventCardModal.backbtn}>
                     <div className={EventCardModal.eventname}>
@@ -106,7 +120,7 @@ const OngoingEventModal = ({ onClose }) => {
                     </div>
                     <div className={EventCardModal.registerbtn}>
                       <button className={EventCardModal.regbtn}>
-                        Register Now
+                       {buttonText}
                       </button>
                     </div>
                   </div>
@@ -118,10 +132,11 @@ const OngoingEventModal = ({ onClose }) => {
               {isOpen && <Share onClose={handleShare} urlpath={url} />}
             </>
           )}
-        </div>
+          </div>
+        {/* </div> */}
       </div>
     </div>
   );
 };
 
-export default OngoingEventModal;
+export default EventModal;

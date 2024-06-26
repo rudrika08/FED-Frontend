@@ -4,7 +4,7 @@ import style from "./styles/Navbar.module.scss";
 import Headroom from 'react-headroom';
 import logo from "../../assets/images/Logo/logo.svg";
 import defaultImg from "../../assets/images/defaultImg.jpg"; 
-import AuthContext from '../../store/AuthContext';
+import AuthContext from '../../context/AuthContext';
 
 function Navbar() {
   const [scroll, setScroll] = useState(false);
@@ -111,7 +111,7 @@ function Navbar() {
           </NavLink>
         ) : (
           <a href="/Login">
-            <button className={style.authButton}>Login/Sign up</button>
+            <button className={style.authButton}>Login</button>
           </a>
         )}
 

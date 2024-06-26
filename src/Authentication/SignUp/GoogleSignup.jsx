@@ -9,9 +9,9 @@ import { useGoogleLogin } from "@react-oauth/google";
 import axios from "axios";
 
 
-import AuthContext from "../../../store/AuthContext";
+import AuthContext from "../../context/AuthContext";
 
-import google from "../../../assets/images/google.png";
+import google from "../../assets/images/google.png";
 import CompleteProfile from "./CompleteProfile";
 import { useEffect } from "react";
 
