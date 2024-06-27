@@ -13,11 +13,15 @@
     font-size: 38px;
     letter-spacing: 0.02em;
     line-height: 40px;
-    padding-bottom: 99px;
+    padding-bottom: 50px;
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+
+  .headInnerText{
+    margin-inline: auto;
   }
   
   .headInnerText span{
