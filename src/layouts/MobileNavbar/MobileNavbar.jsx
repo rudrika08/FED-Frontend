@@ -56,13 +56,13 @@ export default function Navbar() {
   const listVariants = {
     hidden: { opacity: 0, x: -100 },
     visible: { opacity: 1, x: 0 },
-    exit: { opacity: 0, x: -100 } // Adjusted for exit animation
+    exit: { opacity: 0, x: -100 }
   };
 
   const containerVariants = {
     hidden: { opacity: 0, scale: 0.8 },
     visible: { opacity: 1, scale: 1 },
-    exit: { opacity: 0, scale: 0.8, y: 50 } // Adjusted for exit animation
+    exit: { opacity: 0, scale: 0.8, y: 50 }
   };
 
   return (
@@ -70,16 +70,11 @@ export default function Navbar() {
       <nav className={style.nav}>
         <div className={style.mobile}>
           <div className={style.icon} onClick={toggleMenu}>
-            {isOpen ? <RxCross2 size={20} /> : <FiMenu size={20} />}
+            {isOpen ? <RxCross2 size={23} /> : <FiMenu size={23} />}
           </div>
           <div className={`${style.logoContainer} ${isOpen ? style.blur : ""}`}>
             <Link to="/" onClick={handleLogoClick}>
-              <img
-                loading="lazy"
-                src="https://cdn.builder.io/api/v1/image/assets/TEMP/8a723ff2a5558303e924c50f292f82cb2d54f7fbdbc1f67d588b9a73daaf2c16?apiKey=e259011a0b7e4d6e8e6cd8c4440eea14&"
-                alt="Logo"
-                className={style.logo}
-              />
+              <h1 className={`${style.fedtitle} ${isOpen ? style.blur : ""}`}>FED</h1>
             </Link>
           </div>
         </div>
@@ -91,7 +86,7 @@ export default function Navbar() {
             animate="visible"
             exit="exit"
             variants={containerVariants}
-            transition={{ duration: 0.5, ease: "easeInOut" }} // Added easing function
+            transition={{ duration: 0.5, ease: "easeInOut" }}
           >
             <ul className={`${style.navItems} ${isOpen ? style.open : ""}`}>
               {authCtx.isLoggedIn && (
@@ -112,7 +107,7 @@ export default function Navbar() {
                 animate="visible"
                 exit="exit"
                 variants={listVariants}
-                transition={{ duration: 0.5, ease: "easeInOut", delay: 0.1 }} // Added easing function and exit duration
+                transition={{ duration: 0.5, ease: "easeInOut", delay: 0.1 }}
               >
                 <Link
                   to="/"
@@ -128,7 +123,7 @@ export default function Navbar() {
                 animate="visible"
                 exit="exit"
                 variants={listVariants}
-                transition={{ duration: 0.5, ease: "easeInOut", delay: 0.2 }} // Added easing function and exit duration
+                transition={{ duration: 0.5, ease: "easeInOut", delay: 0.2 }}
               >
                 <Link
                   to="/Events"
@@ -144,7 +139,7 @@ export default function Navbar() {
                 animate="visible"
                 exit="exit"
                 variants={listVariants}
-                transition={{ duration: 0.5, ease: "easeInOut", delay: 0.3 }} // Added easing function and exit duration
+                transition={{ duration: 0.5, ease: "easeInOut", delay: 0.3 }}
               >
                 <Link
                   to="/Social"
@@ -160,7 +155,7 @@ export default function Navbar() {
                 animate="visible"
                 exit="exit"
                 variants={listVariants}
-                transition={{ duration: 0.5, ease: "easeInOut", delay: 0.4 }} // Added easing function and exit duration
+                transition={{ duration: 0.5, ease: "easeInOut", delay: 0.4 }}
               >
                 <Link
                   to="/Team"
@@ -178,7 +173,7 @@ export default function Navbar() {
                   animate="visible"
                   exit="exit"
                   variants={listVariants}
-                  transition={{ duration: 0.5, ease: "easeInOut", delay: 0.5 }} // Added easing function and exit duration
+                  transition={{ duration: 0.5, ease: "easeInOut", delay: 0.5 }}
                 >
                   <MdOutlineLogout size={25} /> Logout
                 </motion.button>
@@ -189,7 +184,7 @@ export default function Navbar() {
                   animate="visible"
                   exit="exit"
                   variants={listVariants}
-                  transition={{ duration: 0.5, ease: "easeInOut", delay: 0.5 }} // Added easing function and exit duration
+                  transition={{ duration: 0.5, ease: "easeInOut", delay: 0.5 }}
                   onClick={toggleMenu}
                 >
                   <button className={style.mobilesignup}>
