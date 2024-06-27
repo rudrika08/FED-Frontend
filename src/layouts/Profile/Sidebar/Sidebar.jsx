@@ -6,12 +6,16 @@ import { SlCalender } from 'react-icons/sl';
 import { SiReacthookform } from 'react-icons/si';
 import AuthContext from '../../../context/AuthContext';
 import styles from './styles/Sidebar.module.scss';
+import Share from '../../../components/ShareContainer/Share'
+
 import defaultImg from '../../../assets/images/defaultImg.jpg';
+import camera from "../../../assets/images/camera.svg"
 
 const Sidebar = ({ activepage, handleChange }) => {
   const [designation, setDesignation] = useState("");
   const authCtx = useContext(AuthContext);
   const navigate = useNavigate();
+  const [openModal,setOpen]=useState(false);
 
   useEffect(() => {
     if (authCtx.user.access === "0") {
@@ -29,6 +33,10 @@ const Sidebar = ({ activepage, handleChange }) => {
     navigate('/Login');
     authCtx.logout(); 
   };
+
+  const handleModal=()=>{
+    setOpen(!openModal);
+  }
 
   const handleName = () => {
     const maxLength = 15;
@@ -60,14 +68,18 @@ const Sidebar = ({ activepage, handleChange }) => {
   );
 
   return (
+    <>
     <div className={styles.sidebar}>
       <div className={styles.profile}>
         <a href='/profile'>
+        <div style={{width:"auto",position:"relative"}}>
           <img
             src={authCtx.user.pic || defaultImg}
             alt="Profile"
             className={styles.profilePhoto}
           />
+          <div style={{position:"absolute" ,bottom:"5px",right:"5px",}}><img onClick={handleChange}  src={camera}></img></div>
+          </div>
         </a>
         <div className={styles.profileInfo}>
           <p className={styles.name}>{handleName()}</p>
@@ -93,6 +105,9 @@ const Sidebar = ({ activepage, handleChange }) => {
       </div>
       <div className={styles.divider} />
     </div>
+
+        {openModal && <Share/>}
+    </>
   );
 };
 

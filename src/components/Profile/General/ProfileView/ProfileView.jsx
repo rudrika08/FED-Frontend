@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import styles from "./styles/ProfileView.module.scss";
 import { useContext } from "react";
 import AuthContext from "../../../../context/AuthContext";
+import { FiEdit } from "react-icons/fi";
 
 const Profile = () => {
 
@@ -28,6 +29,9 @@ const Profile = () => {
   return (
 
     <div id={styles.profile}>
+      <div style={{width:"85%",position:"relative"}}>
+        <div style={{position:"absolute",right:'0',top:"0",cursor:"pointer"}}> <FiEdit/></div>
+       </div>
         <div className={styles.proHeading}>
           <h3 className={styles.headInnerText}><span>Profile</span> Details</h3>
         </div>
@@ -68,6 +72,7 @@ const Profile = () => {
       </div>
        )}
     </div>
+    
 
   );
 };
