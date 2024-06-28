@@ -15,9 +15,9 @@ const SocialMedia = () => {
         <p className={styles.content}>
           Welcome to the social media page of <br />
           <div className={styles.fed}>
-            <span className={styles.highlight} id={styles.faded}>
-              <img className={instalogo} src={instalogo} alt="Profile" /> FED <img className={linkedinlogo} src={linkedinlogo} alt="Profile" />
-            </span>
+            <div className={styles.box} id={styles.box1}>
+              <img className={styles.instalogo} src={instalogo} alt="Instagram Logo" /> FED <img className={styles.linkedinlogo} src={linkedinlogo} alt="LinkedIn Logo" />
+            </div>
           </div>
           <br />
         </p>

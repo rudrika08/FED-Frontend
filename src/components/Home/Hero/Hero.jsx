@@ -3,6 +3,7 @@ import CarouselImg from "../../../data/carouselImages";
 import Carousel from "./Carousel/Carousel";
 import { AnimatedBox } from "../../../assets/animations/AnimatedBox";
 
+
 function Hero() {
   return (
     <div className={styles.main}>
@@ -10,11 +11,11 @@ function Hero() {
         <div className={styles.hero1}>
           <AnimatedBox direction="left">
             <div className={styles.heroone}>
-              <strong>Nurturing <span style={{ color: '#FF8A00' }}>entrepreneurship</span> through creative, authentic, and efficient techniques.</strong> 
+              <strong>Nurturing <span style={{ background: "var(--primary)", WebkitBackgroundClip: "text", color: "transparent" }}>entrepreneurship</span> through creative, authentic, and efficient techniques.</strong> 
             </div>
             <div className={styles.herotwo}>
               <div className={styles.smallcontent}>
-                <strong>Nurturing <span style={{ color: '#FF8A00' }}>entrepreneurship</span> through creative, authentic, and efficient techniques.</strong>
+                <strong>Nurturing <span style={{ background: "var(--primary)", WebkitBackgroundClip: "text", color: "transparent" }}>entrepreneurship</span> through creative, authentic, and efficient techniques.</strong>
               </div>
             </div>
           </AnimatedBox>

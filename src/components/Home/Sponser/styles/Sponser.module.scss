@@ -53,14 +53,17 @@
 }
 
 .sponser_title2 {
-  color: var(--Tab-Color, #FF8A00);
+  background: var(--primary);
+  background-clip: text;
+  color: transparent;
 }
 
 .bottom_line {
   width: 14rem;
   margin-right: 0rem;
   height: 0.3125rem;
-  background: #d87b0c;
+  background: var(--primary);
+  color: transparent;
   border-radius: 5px;
 }
 

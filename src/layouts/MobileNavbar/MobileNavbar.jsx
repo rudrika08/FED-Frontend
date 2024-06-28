@@ -11,6 +11,7 @@ import AuthContext from '../../context/AuthContext';
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [hoveredLink, setHoveredLink] = useState(null);
   const location = useLocation();
   const authCtx = useContext(AuthContext);
   const navigate = useNavigate();
@@ -19,6 +20,30 @@ export default function Navbar() {
     navigate('/Login');
     authCtx.logout();
   };
+
+  useEffect(() => {
+    const links = document.querySelectorAll(`.${style.navLink} a`);
+    
+    const handleMouseOver = (event) => {
+      setHoveredLink(event.target);
+    };
+
+    const handleMouseOut = () => {
+      setHoveredLink(null);
+    };
+
+    links.forEach(link => {
+      link.addEventListener('mouseover', handleMouseOver);
+      link.addEventListener('mouseout', handleMouseOut);
+    });
+
+    return () => {
+      links.forEach(link => {
+        link.removeEventListener('mouseover', handleMouseOver);
+        link.removeEventListener('mouseout', handleMouseOut);
+      });
+    };
+  }, []);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -70,7 +95,7 @@ export default function Navbar() {
       <nav className={style.nav}>
         <div className={style.mobile}>
           <div className={style.icon} onClick={toggleMenu}>
-            {isOpen ? <RxCross2 size={23} /> : <FiMenu size={23} />}
+            {isOpen ? <RxCross2 size={24} /> : <FiMenu size={24} />}
           </div>
           <div className={`${style.logoContainer} ${isOpen ? style.blur : ""}`}>
             <Link to="/" onClick={handleLogoClick}>
@@ -111,7 +136,11 @@ export default function Navbar() {
               >
                 <Link
                   to="/"
-                  style={{ color: isActive("/") ? "#FF8A00" : "white" }}
+                  style={{ 
+                    background: isActive("/") ? "var(--primary)" : (hoveredLink && hoveredLink.href.endsWith('/')) ? "var(--primary)" : "transparent",
+                    WebkitBackgroundClip: isActive("/") ? "text" : (hoveredLink && hoveredLink.href.endsWith('/')) ? "text" : "initial",
+                    color: isActive("/") ? "transparent" :(hoveredLink && hoveredLink.href.endsWith('/')) ? "transparent" : "inherit"
+                  }}
                   onClick={toggleMenu}
                 >
                   Home
@@ -127,7 +156,11 @@ export default function Navbar() {
               >
                 <Link
                   to="/Events"
-                  style={{ color: isActive("/Events") ? "#FF8A00" : "white" }}
+                  style={{ 
+                    background: isActive("/Events") ? "var(--primary)" : (hoveredLink && hoveredLink.href.endsWith('/Events')) ? "var(--primary)" : "transparent",
+                    WebkitBackgroundClip: isActive("/Events") ? "text" : (hoveredLink && hoveredLink.href.endsWith('/Events')) ? "text" : "initial",
+                    color: isActive("/Events") ? "transparent" :(hoveredLink && hoveredLink.href.endsWith('/Events')) ? "transparent" : "inherit"
+                  }}
                   onClick={toggleMenu}
                 >
                   Events
@@ -143,7 +176,11 @@ export default function Navbar() {
               >
                 <Link
                   to="/Social"
-                  style={{ color: isActive("/Social") ? "#FF8A00" : "white" }}
+                  style={{ 
+                    background: isActive("/Social") ? "var(--primary)" : (hoveredLink && hoveredLink.href.endsWith('/Social')) ? "var(--primary)" : "transparent",
+                    WebkitBackgroundClip: isActive("/Social") ? "text" : (hoveredLink && hoveredLink.href.endsWith('/Social')) ? "text" : "initial",
+                    color: isActive("/Social") ? "transparent" :(hoveredLink && hoveredLink.href.endsWith('/Social')) ? "transparent" : "inherit"
+                  }}
                   onClick={toggleMenu}
                 >
                   Social
@@ -159,7 +196,11 @@ export default function Navbar() {
               >
                 <Link
                   to="/Team"
-                  style={{ color: isActive("/Team") ? "#FF8A00" : "white" }}
+                  style={{ 
+                    background: isActive("/Team") ? "var(--primary)" : (hoveredLink && hoveredLink.href.endsWith('/Team')) ? "var(--primary)" : "transparent",
+                    WebkitBackgroundClip: isActive("/Team") ? "text" : (hoveredLink && hoveredLink.href.endsWith('/Team')) ? "text" : "initial",
+                    color: isActive("/Team") ? "transparent" :(hoveredLink && hoveredLink.href.endsWith('/Team')) ? "transparent" : "inherit"
+                  }}
                   onClick={toggleMenu}
                 >
                   Team
