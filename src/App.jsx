@@ -5,6 +5,7 @@ import { Routes, Route ,Outlet, Navigate} from "react-router-dom";
 import Navbar from "./layouts/Navbar/Navbar";
 import MobileNavbar from "./layouts/MobileNavbar/MobileNavbar";
 import Footer from "./layouts/Footer/Footer";
+import EditProfile from "./features/Modals/EditProfile/EditProfile";
 
 // pages
 const Home = lazy(() => import("./pages/Home/Home"));
@@ -83,7 +84,7 @@ function App() {
       </Routes>
     </Suspense>
    
-
+  {/* <EditProfile/> */}
      
     </div>
   );
