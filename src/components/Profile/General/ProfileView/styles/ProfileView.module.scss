@@ -75,7 +75,7 @@
     }
   }
   
-  @media screen and (max-width:400px) {
+  @media screen and (max-width:480px) {
     #profile {
       padding-left: 15px;
       padding-right: 15px;
@@ -84,6 +84,13 @@
     .dets {
       padding-right: 50px;
     }
+  }
+
+  @media screen and (max-width:430px) {
+  .dets,
+  .vals {
+    font-size: 20px;
+  }
   }
   
   

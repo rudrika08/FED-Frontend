@@ -59,7 +59,7 @@
     top: 2rem;
     right: 0;
     margin-right: 30px;
-    height: 90vh;
+    height: auto;
     animation: fade-in 1s;
     backdrop-filter: blur(20px);
   }
@@ -106,7 +106,7 @@
   
   .chatbox {
     padding: 10px;
-    height: 390px;
+    height: 490px;
     overflow-y: auto;
     color: black;
     background-color: #1c1c1c98;
@@ -195,6 +195,7 @@
     height: 2.5rem;
     width: 50px;
     margin-top: 0rem;
+    margin-bottom: 0px;
     font-size: 1.15rem;
     color:black;
     background-color: white;
@@ -235,7 +236,7 @@
         right:-20px;
     }
     .chatbox {
-        height: 50vh;
+        height: 70vh;
     }
 }
 
@@ -246,6 +247,6 @@
         right:-20px;
     }
     .chatbox {
-        height: 50vh;
+        height: 60vh;
     }
 }
