@@ -1,7 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
-
-
 @keyframes bounce {
     0%, 100% {
       transform: translateY(-25%);
@@ -57,7 +55,6 @@
     animation: bounce 1s infinite;
 }
 
-
 .chatbottoggle span{
   margin-top: 5px;
   font-size: 3rem;
@@ -69,8 +66,7 @@
   display: none;
 }
 
-
- .chatcontainer {
+.chatcontainer {
     width: 340px;
     height: fit-content;
     margin: 0;
@@ -82,49 +78,49 @@
     margin: 0 20px;
     animation: fade-in 1s;
     backdrop-filter: blur(20px);
-  }
+}
 
-  header{
+header{
     height: 4rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
     background-color: #1c1c1c98;
     border-radius: 25px 25px 0px 0px;
-  }
+}
 
-  .logo{
+.logo{
     display: flex;
     align-items: center;
     justify-content: center;
     margin-left: 15px;
-  }
+}
 
-  .logo img{
+.logo img{
     height: 2.35rem;
     margin-right: 0.5rem;
-  }
+}
 
-  .close{
+.close{
     margin-right: 15px;
     margin-top: 5px;
     font-size: 2rem;
     cursor: pointer;
-  }
+}
 
-  .fed{
+.fed{
     font-weight: 650;
     text-align: center;
     font-size: 1.5rem;
     line-height: 36px;
-  }
+}
 
-  hr{
+hr{
     margin-bottom: 5px;
     border: 1px solid #6e6c6a;
-  }
-  
-  .chatbox {
+}
+
+.chatbox {
     padding: 10px;
     padding-bottom: 0;
     height: 70vh;
@@ -136,22 +132,23 @@
     gap: 0;
     align-items: center;
     flex-direction: column;
-  }
+    overflow-x: hidden;
+}
 
-
-  .messageBox{
+.messageBox{
     display: flex;
     align-items: flex-start;
     justify-content: flex-start;
     flex-direction: column;
-  }
+    width: 100%;
+}
 
-  .lockScroll {
-    overflow: hidden;
-  }
-  
-  .usermessage,
-  .botmessage {
+// .lockScroll {
+//     overflow: hidden;
+// }
+
+.usermessage,
+.botmessage {
     margin-top: 10px;
     font-size: 0.95rem;
     padding: 0.5rem;
@@ -162,15 +159,17 @@
     animation: fade-in 2s;
     padding-left: 1rem;
     padding-right: 1rem;
-  }
-  
-  .usermessage {
-    text-align: right;
-    background-color: #e0e0e0;
-    left: 80%;
-  }
+    word-wrap: break-word;
+    white-space: pre-wrap;
+}
 
-  .usermessage:after {
+.usermessage {
+    text-align: left;
+    background-color: #e0e0e0;
+    align-self: flex-end;
+}
+
+.usermessage:after {
     content: "";
     position: absolute;
     top: -10px;
@@ -180,15 +179,15 @@
     border-bottom: 20px solid #e0e0e0;
     border-right: 20px solid transparent;
     transform: translateX(-50%) translateY(50%) rotate(87deg); 
-  }
-  
-  .botmessage {
-    text-align: left;
-    background-color: #FF8A00;
-    color:black;
-  }
+}
 
-  .botmessage:after {
+.botmessage {
+    text-align: left;
+    background: linear-gradient(260deg, rgba(255, 190, 11, 0.84) -29.7%, rgba(244, 43, 3, 0.84) 128.34%);
+    color:black;
+}
+
+.botmessage:after {
     content: "";
     position: absolute;
     top: -20px;
@@ -196,12 +195,12 @@
     width: 0px;
     height: 0px;
     color:black;
-    border-bottom: 20px solid #FF8A00;
+    border-bottom: 20px solid rgba(244, 43, 3, 1);
     border-right: 20px solid transparent;
     transform: translateX(-50%) translateY(50%) rotate(315deg); 
-  }
-  
-  .inputArea{
+}
+
+.inputArea{
     height: 3rem;
     display: flex;
     align-items: center;
@@ -209,9 +208,9 @@
     color:black;
     border-radius: 0px 0px 25px 25px;
     margin-bottom: 10px;
-  }
+}
 
-  input{
+input{
     border: none;
     height: 2.5rem;
     width: 270px;
@@ -220,32 +219,29 @@
     color:black;
     border-top-left-radius: 20px;
     border-bottom-left-radius: 20px;
-  }
+}
 
-  input:focus{
+input:focus{
     outline: none;
-  }
+}
 
-  .sendMessage{
+.sendMessage{
     border: none;
     height: 2.5rem;
     width: 50px;
-    margin-top: 0.95rem;
     font-size: 1.15rem;
     color:black;
     background-color: white;
     border-top-right-radius: 20px;
     border-bottom-right-radius: 20px;
     cursor: pointer;
-  }
+}
 
+.sendIcon {
+    color: #FF8A00;
+    margin-top:.3rem;
+}
 
-    .sendIcon {
-        color: #FF8A00;
-        margin-top:.3rem;
-      }
-
-      
 .chatbox::-webkit-scrollbar {
   width: 0px; 
 }
@@ -254,6 +250,7 @@
   height: 25px;
   padding-bottom: 20px;
 }
+
 .typingIndicator {
   font-style: italic;
   color: #fff;
