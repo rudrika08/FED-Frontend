@@ -22,7 +22,9 @@
   box-shadow: 2px 3px #94949470;
 }
 .container h1 {
-  color: #ff6b00;
+  background: var(--primary);
+  background-clip: text;
+  color: transparent;
   font-size: 1.3rem;
   margin-top: -1rem;
 }

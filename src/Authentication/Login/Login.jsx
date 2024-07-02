@@ -115,6 +115,9 @@ const Login = () => {
             <Text
               variant="secondary"
               style={{
+                background: "var(--primary)",
+                WebkitBackgroundClip: "text",
+                color: "transparent",
                 fontSize: "0.7rem",
                 cursor: "pointer",
               }}
@@ -124,7 +127,7 @@ const Login = () => {
             <Button
               style={{
                 width: "100%",
-                backgroundColor: "#ff6b00",
+                background: "var(--primary)",
                 color: "#fff",
                 height: "40px",
                 marginTop: "20px",
@@ -149,7 +152,9 @@ const Login = () => {
               <a
                 href="/signup"
                 style={{
-                  color: "#FF8A00",
+                  background: "var(--primary)",
+                  WebkitBackgroundClip: "text",
+                  color: "transparent"
                 }}
               >
                 Sign Up

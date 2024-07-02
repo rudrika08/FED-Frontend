@@ -1,8 +1,5 @@
 import React from 'react';
-import InstagramTopPostEmbed from './InstagramTopPostEmbed';
-import InstagramBottomPostEmbed from './InstagramBottomPostEmbed';
-import InstagramReelEmbed from './InstagramReelEmbed';
-import LinkedInEmbedComponent from './LinkedInEmbedComponent';
+import Embed from './Embed';
 import linkedinlogo from '../../assets/images/SocialMedia/linkedinLogo.svg';
 import instalogo from '../../assets/images/SocialMedia/instaLogo.svg';
 import styles from './styles/Social.module.scss';
@@ -28,23 +25,23 @@ const SocialMedia = () => {
           <div className={styles.leftColumn}>
             <div className={styles.sidebyside}>
               <div className={styles.instagramfeed}>
-                <InstagramTopPostEmbed />
+                <Embed type="instagramTopPost" />
               </div>
               <div className={styles.instagramfeed2}>
-                <InstagramBottomPostEmbed />
+                <Embed type="instagramBottomPost" />
                 <div className={styles.circle}></div>
               </div>
             </div>
           </div>
           <div className={styles.centerColumn}>
             <div className={styles.instagramreel}>
-              <InstagramReelEmbed />
+              <Embed type="instagramReel" />
             </div>
           </div>
           <div className={styles.rightColumn}>
             <div className={styles.linkedinfeed}>
               <div className={styles.circle1}></div>
-              <LinkedInEmbedComponent />
+              <Embed type="linkedInPost" />
             </div>
           </div>
         </div>
