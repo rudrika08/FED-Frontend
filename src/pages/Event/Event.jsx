@@ -5,6 +5,7 @@ import eventData from "../../data/eventData.json";
 import EventCard from"../../components/Event/EventCards/EventCard"
 import ring from "../../assets/images/ring.svg";
 import { MdKeyboardArrowRight } from "react-icons/md";
+import { Padding } from "@mui/icons-material";
 
 const Event = () => {
   useEffect(() => {
@@ -19,7 +20,9 @@ const Event = () => {
       fontSize: "1.2rem",
     },
     registerbtn: {
-      width: "auto",
+      width: "8rem",
+      fontSize:".721rem"
+
     },
     eventnamep: {
       fontSize: "0.7rem",
@@ -31,6 +34,7 @@ const Event = () => {
       <div style={{ display: "flex" }}>
         <div className={style.line}></div>
         <div className={style.eventwhole}>
+          {ongoingEvents.length>0 &&
           <div className={style.eventcard}>
             <div className={style.name}>
               <img className={style.ring1} src={ring} alt="ring" />
@@ -51,8 +55,9 @@ const Event = () => {
               ))}
             </div>
           </div>
+}
 
-          <div className={style.pasteventcard}>
+          <div className={style.pasteventcard} style={{marginTop:ongoingEvents.length>0?"6rem":"1rem"}}>
             <div className={style.name}>
               <img className={style.ring2} src={ring} alt="ring" />
               <span className={style.w1}>Past</span>

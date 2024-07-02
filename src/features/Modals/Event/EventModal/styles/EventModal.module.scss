@@ -1,7 +1,7 @@
 @import "/src/assets/styles/Global.scss";
 
 .card {
-  width: 28rem;
+  width: 30rem;
   background: linear-gradient(
     90deg,
     rgba(32, 32, 32, 0.95) -11.52%,
@@ -20,7 +20,8 @@
 
 .img {
   height: 100%;
-  width: 100%;
+  width: 98%;
+ 
   object-fit: cover;
   object-position: center;
   border-radius: 20px;
@@ -29,9 +30,12 @@
 }
 
 .backimg {
-  width: 87%;
+  width: 92%;
+  // overflow: hidden;
   margin-inline: auto;
-  margin-top: 8%;
+  margin-top: 6%;
+  height: auto;
+  
 }
 
 .date {
@@ -41,7 +45,7 @@
   border: 1px solid rgb(143, 139, 139);
   color: white;
   position: absolute;
-  left: 3rem;
+  left: 2.4rem;
   border-radius: 10px;
   text-align: center;
   font-size: 1rem;
@@ -57,8 +61,8 @@
   border-bottom-left-radius: 20px;
   border-bottom-right-radius: 20px;
   text-align: start;
-  font-size: 0.7rem;
-  padding-bottom: 6%;
+  font-size: 0.73rem;
+  padding-bottom: 4%;
   margin-inline: auto;
   // margin-top: 1rem;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
@@ -124,8 +128,8 @@
   font-size: 30px;
   position: absolute;
   cursor: pointer;
-  top: -8.8%;
-  right: 2%;
+  top: -6.5%;
+  right: 1.8%;
 }
 
 .card button {
@@ -138,7 +142,7 @@
   color: #f97507;
   position: absolute;
   top: 0.8rem;
-  right: 2.5rem;
+  right: 2.8rem;
   text-align: center;
   border-radius: 7px;
   font-size: 0.75rem;

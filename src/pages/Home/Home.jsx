@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-import { Hero, About, Sponser, Feedback, Contact } from "../../components";
+import { Hero, About, Sponser, Feedback, Contact } from "../../sections";
 
 import ChatBot from "../../features/ChatBot/ChatBot";
 import LiveEventPopup from "../../features/Modals/Event/LiveEventPopup/LiveEventPopup";
