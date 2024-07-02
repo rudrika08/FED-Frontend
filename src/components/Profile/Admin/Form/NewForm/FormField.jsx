@@ -133,23 +133,26 @@ function FormField(props) {
           marginRight: "auto",
         }}
       >
-        <Switch
-          checked={field.isRequired}
-          width={36}
-          height={18}
-          onColor="#FF8A00"
-          checkedIcon={false}
-          uncheckedIcon={false}
-          title="Is this field required?"
-          onChange={(value) => handleChangeValue(value, "isRequired")}
-        />
+       <Switch
+        checked={field.isRequired}
+        width={36}
+        height={18}
+        style={{ backgroundColor: "var(--primary)", WebkitBackgroundClip: "text", color: "transparent" }}
+        checkedIcon={false}
+        uncheckedIcon={false}
+        title="Is this field required?"
+        onChange={(value) => handleChangeValue(value, "isRequired")}
+      />
+
       </div>
       {section.fields?.length > 1 && (
         <MdOutlineClose
           size={22}
           onClick={onRemoveField}
-          color="#FF8A00"
           style={{
+            backgroundColor: "var(--primary)", 
+            WebkitBackgroundClip: "text", 
+            color: "transparent",
             cursor: "pointer",
             marginTop: "12px",
             zIndex: 10,
@@ -162,8 +165,10 @@ function FormField(props) {
             setshowPopMenu(!showPopMenu);
           }}
           size={20}
-          color="#FF8A00"
           style={{
+            backgroundColor: "var(--primary)", 
+            WebkitBackgroundClip: "text", 
+            color: "transparent",
             cursor: "pointer",
             marginTop: "10px",
             marginLeft: !["text", "number", "date"].includes(field.type)

@@ -1,11 +1,23 @@
 import { useEffect, useState } from "react";
 import styles from "./styles/ProfileView.module.scss";
 import { useContext } from "react";
+import PropTypes from "prop-types";
 import AuthContext from "../../../../context/AuthContext";
+import { FiEdit } from "react-icons/fi";
+import EditProfile from "../../../../features/Modals/EditProfile/EditProfile";
 
-const Profile = () => {
+const Profile = (props) => {
 
   const authCtx = useContext(AuthContext);
+  const [isOpen, setisOpen] = useState(false)
+
+  const handleOpen=()=>{
+    setisOpen(true)
+  }
+
+  const handleClose=()=>{
+    setisOpen(false)
+  }
 
 
   console.log("User data:", authCtx.user);
@@ -24,10 +36,14 @@ const Profile = () => {
   //   // const data = await response.json();
   //   // return data;
   // };
+  const {editmodal} = props
 
   return (
 
     <div id={styles.profile}>
+      <div style={{width:"85%",position:"relative"}}>
+        <div style={{position:"absolute",right:'0',top:"0",cursor:"pointer"}} onClick={handleOpen}> <FiEdit/></div>
+       </div>
         <div className={styles.proHeading}>
           <h3 className={styles.headInnerText}><span>Profile</span> Details</h3>
         </div>
@@ -67,9 +83,15 @@ const Profile = () => {
         </table>
       </div>
        )}
+       {isOpen && <EditProfile handleModalClose={handleClose}/>}
     </div>
+    
 
   );
 };
+
+Profile.propTypes = {
+  editmodal: PropTypes.string.isRequired,
+}
 
 export default Profile;

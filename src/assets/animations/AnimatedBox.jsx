@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 
 const getBoxVariant = (direction) => {
   return {
-    visible: { opacity: 1, x: 0, transition: { duration: 0.1 } },
+    visible: { opacity: 1, x: 0, transition: { duration: 0.5 } },
     hidden: { opacity: 0, x: direction === 'left' ? -100 : 100 }
   };
 };
