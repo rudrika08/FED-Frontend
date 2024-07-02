@@ -200,7 +200,7 @@
   }
 
   .row1, .row2 {
-    margin: 0;
+    margin-top: 10px;
   }
 
   .icondiv2 {
@@ -221,10 +221,6 @@
 @media screen and (max-width: 400px){
   .icondiv2{
     margin-left: -0.8rem;
-  }
-
-  .row2{
-    margin-top: 10px;
   }
 }
 
