@@ -62,7 +62,7 @@ const Alumni = () => {
   return (
     <div className={styles.Alumni}>
       <h2>
-        Meet Our <span>Alumni</span>
+        Meet Our <span style={{ background: "var(--primary)", WebkitBackgroundClip: "text", color: "transparent" }}>Alumni</span>
       </h2>
       <div className={styles.circle}></div>
 

@@ -27,7 +27,7 @@
     align-items: center;
     justify-content: center;
     border-radius: 50%;
-    background: #FF8A00;
+    background: var(--primary);
     box-shadow: 0 3px 4px 2px #06060690;
     transition: all 0.2s ease;
     animation: fade-in 2s;

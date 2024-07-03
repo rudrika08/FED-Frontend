@@ -110,7 +110,10 @@ strong {
 }
 
 .alumniBut a{
-  color: #FF8A00;
+  // color: #FF8A00;
+  background: var(--primary);
+  background-clip: text;
+  color: transparent;
   text-decoration: none;
 }
 

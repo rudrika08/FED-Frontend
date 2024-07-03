@@ -13,6 +13,7 @@ import { useEffect } from "react";
 import GoogleLogin from "./GoogleLogin";
 import { Link } from "react-router-dom";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { color } from "framer-motion";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -71,7 +72,8 @@ const Login = () => {
 
         <div className={style.circle1}></div>
         <div className={style.login}>
-          <h1>Login</h1>
+        <h1>  Login</h1>
+
 
           <GoogleLogin />
 
@@ -112,25 +114,24 @@ const Login = () => {
                 width: "98%",
               }}
             />
-            <Text
-              variant="secondary"
-              style={{
-                fontSize: "0.7rem",
-                cursor: "pointer",
-              }}
-            >
-              Forget Password?
-            </Text>
+               <Text
+                    variant="secondary"
+                    style={{
+                      fontSize: "0.7rem",
+                      cursor: "pointer",
+                    }}
+                  >
+                    Forget Password?
+                </Text>
             <Button
               style={{
                 width: "100%",
-                backgroundColor: "#ff6b00",
+                background: "var(--primary)",
                 color: "#fff",
                 height: "40px",
                 marginTop: "20px",
                 fontSize: "1rem",
                 cursor: "pointer",
-                border: "1px solid #fff",
               }}
               onClick={(e) => {
                 handleLogin();
@@ -149,7 +150,9 @@ const Login = () => {
               <a
                 href="/signup"
                 style={{
-                  color: "#FF8A00",
+                  background: "var(--primary)",
+                  WebkitBackgroundClip: "text",
+                  color: "transparent"
                 }}
               >
                 Sign Up
