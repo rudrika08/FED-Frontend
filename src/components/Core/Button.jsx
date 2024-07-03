@@ -12,7 +12,11 @@ const Button = (props) => {
   } = props;
 
   const combinedStyle = {
-    color: variant === "primary" ? "#FF8A00" : "#fff",
+    // color: variant === "primary" ? "#FF8A00" : "#fff",
+    background: variant === "primary" ? "var(--primary)" : "transparent",
+    WebkitBackgroundClip: variant === "primary" ? "text" : "initial",
+    color: variant === "primary" ? "transparent" : "inherit",
+    cursor: isLoading? "not-allowed" : "pointer",
     backgroundColor: variant === "primary" ? "#2D2D2D" : "transparent",
     borderColor: variant === "primary" ? "#2D2D2D" : "#fff",
     ...style,

@@ -6,6 +6,7 @@ import PreviewEvent from "../../../../../features/Modals/Profile/Admin/PreviewEv
 import styles from "./styles/NewForm.module.scss";
 import Section from "./Section";
 import Events from "../../../../../data/eventData.json";
+import { color } from "framer-motion";
 function NewForm() {
   const scrollRef = useRef(null);
   const [data, setdata] = useState({
@@ -257,6 +258,9 @@ function NewForm() {
         <Text
           variant="secondary"
           style={{
+            background: "var(--primary)",
+            WebkitBackgroundClip: "text",
+            color: "transparent",
             fontSize: "16px",
             margin: "auto 0",
           }}
