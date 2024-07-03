@@ -2,9 +2,7 @@
 
 @import "../../../../assets/styles/Global.scss";
 
-span{
-    color:#FF8A00;
-}
+
 
 .container{
     overflow: hidden;
@@ -20,14 +18,13 @@ span{
     // margin-bottom: -3rem;
 }
 
-.head span{
-    color: #FF8A00;
-}
+
 
 .bottomLine {
     width: 12rem;
     height: 0.3125rem;
-    background: #FF8A00;
+    background: var(--primary);
+    color: transparent;
     border-radius: 5px;
     margin-bottom: 1rem;
   }
@@ -65,9 +62,6 @@ span{
     margin-bottom: 10px;
 }
 
-.boxhead span{
-    color: #FF8A00;
-}
 
 .boxinnertext {
     font-size: 1.6rem;

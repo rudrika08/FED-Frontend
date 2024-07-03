@@ -77,7 +77,7 @@ const Team = () => {
 
   return (
     <div>
-      <h2>Meet Our <span>Team</span></h2>
+      <h2>Meet Our <span style={{ background: "var(--primary)", WebkitBackgroundClip: "text", color: "transparent" }}>Team</span></h2>
       <div className={styles.para}>
         <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Totam provident commodi consequatur neque magni, non tempore dolor corporis voluptate animi voluptatibus assumenda illo consectetur voluptatem quam, cum eligendi libero quos.</p>
       </div>
@@ -96,7 +96,7 @@ const Team = () => {
       {teamByRole.filter(section => section.role !== 'Director').map((section, index) => (
         <TeamSection
           key={index}
-          title={<span><span style={{ color: '#fff' }}>Team </span><strong style={{ color: '#FF8A00' }}>{section.role}</strong></span>}
+          title={<span><span style={{ color: '#fff' }}>Team </span><strong style={{ background: "var(--primary)", WebkitBackgroundClip: "text", color: "transparent" }}>{section.role}</strong></span>}
           members={section.members}
           isDirector={false}
         />

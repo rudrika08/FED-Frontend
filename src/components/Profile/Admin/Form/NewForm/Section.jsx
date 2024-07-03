@@ -253,8 +253,9 @@ const Section = (props) => {
           <MdDelete
             size={20}
             onClick={onRemove}
-            color="#FF8A00"
-            style={{ cursor: "pointer", margin: "auto .7em" }}
+            style={{backgroundColor: "var(--primary)", 
+              WebkitBackgroundClip: "text", 
+              color: "transparent", cursor: "pointer", margin: "auto .7em" }}
           />
         )}
         <p
