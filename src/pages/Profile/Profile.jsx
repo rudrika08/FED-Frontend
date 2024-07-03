@@ -34,7 +34,7 @@ const Profile = () => {
         case "Members":
           return <ViewMember />;
         default:
-          return <ProfileView />;
+          return <ProfileView editmodal='/profile/'/>;
       }
     } 
     else if (designation !== "Admin") {
@@ -42,7 +42,7 @@ const Profile = () => {
         case "Event":
           return <EventsView />;
         default:
-          return <ProfileView />;
+          return <ProfileView editmodal='/profile/'/>;
       }
     }
   };

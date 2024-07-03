@@ -4,11 +4,14 @@ import { Hero, About, Sponser, Feedback, Contact } from "../../components";
 
 import ChatBot from "../../features/ChatBot/ChatBot";
 import LiveEventPopup from "../../features/Modals/Event/LiveEventPopup/LiveEventPopup";
+import axios from 'axios'
 
 const Home = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+
   
   return (
     <>

@@ -230,6 +230,8 @@ input:focus{
     border: none;
     height: 2.5rem;
     width: 50px;
+    margin-top: 0rem;
+    margin-bottom: 0px;
     font-size: 1.15rem;
     color:black;
     background-color: white;
@@ -288,7 +290,7 @@ input:focus{
         margin-top: 30vw;
     }
     .chatbox {
-        height: 50vh;
+        height: 70vh;
     }
 }
 
@@ -299,6 +301,6 @@ input:focus{
         margin-right: 15px;
     }
     .chatbox {
-        height: 50vh;
+        height: 60vh;
     }
 }
