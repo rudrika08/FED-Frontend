@@ -96,7 +96,10 @@
   padding: 0.8125rem 2.25rem;
   height: 3.5rem;
   list-style: none;
-  margin-left: -0.4rem; 
+  margin-left: -1.25rem; 
+  &:hover{
+    color: var(--Tab-Color, #ff8a00);
+  }
 }
 
 .navItems:hover {
