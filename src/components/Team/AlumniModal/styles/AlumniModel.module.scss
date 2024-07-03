@@ -97,7 +97,9 @@
   }
   
   button {
-    color: #FF5C00;
+    background: var(--primary);
+    background-clip: text;
+    color: transparent;
     background-color: transparent;
     border: none;
     cursor: pointer;

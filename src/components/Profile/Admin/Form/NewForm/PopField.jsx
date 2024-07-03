@@ -90,8 +90,10 @@ const PopField = ({
               onClick={() => {
                 onRemoveValidation(field, valid._id);
               }}
-              color="#FF8A00"
               style={{
+                backgroundColor: "var(--primary)", 
+            WebkitBackgroundClip: "text", 
+            color: "transparent",
                 cursor: "pointer",
                 marginTop: "12px",
                 zIndex: 10,

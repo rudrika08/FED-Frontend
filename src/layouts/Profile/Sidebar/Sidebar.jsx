@@ -46,23 +46,48 @@ const Sidebar = ({ activepage, handleChange }) => {
 
   const renderAdminMenu = () => (
     <>
-      <div
-        onClick={() => handleChange('Event')}
-        style={{ color: activepage === 'Event' ? '#FF8A00' : 'white' }}
-      >
-        <SlCalender size={17} /> Event
-      </div>
+     <div
+  onClick={() => handleChange('Event')}
+  style={{
+    background: activepage === 'Event' ? 'var(--primary)' : 'transparent',
+    WebkitBackgroundClip: activepage === 'Event' ? 'text' : 'initial',
+    backgroundClip: activepage === 'Event' ? 'text' : 'initial',
+    color: activepage === 'Event' ? 'transparent' : 'inherit'
+  }}
+>
+<SlCalender 
+      size={17} 
+      style={{ 
+        color: activepage === 'Event' ? '#FF8A00' : 'white' 
+      }} 
+    /> Event
+</div>
+
       <div
         onClick={() => handleChange('Form')}
-        style={{ color: activepage === 'Form' ? '#FF8A00' : 'white' }}
+        style={{ background: activepage === 'Form' ? 'var(--primary)' : 'transparent',
+          WebkitBackgroundClip: activepage === 'Form' ? 'text' : 'initial',
+          backgroundClip: activepage === 'Form' ? 'text' : 'initial',
+          color: activepage === 'Form' ? 'transparent' : 'inherit' }}
       >
-        <SiReacthookform size={17} /> Form
+        <SiReacthookform
+        size={17} 
+        style={{ 
+        color: activepage === 'Form' ? '#FF8A00' : 'white' 
+      }}  /> Form
       </div>
       <div
         onClick={() => handleChange('Members')}
-        style={{ color: activepage === 'Members' ? '#FF8A00' : 'white' }}
+        style={{ background: activepage === 'Members' ? 'var(--primary)' : 'transparent',
+          WebkitBackgroundClip: activepage === 'Members' ? 'text' : 'initial',
+          backgroundClip: activepage === 'Members' ? 'text' : 'initial',
+          color: activepage === 'Members' ? 'transparent' : 'inherit' }}
       >
-        <TbUserEdit size={17} /> Members
+        <TbUserEdit 
+        size={17} 
+        style={{ 
+        color: activepage === 'Members' ? '#FF8A00' : 'white' 
+      }} /> Members
       </div>
     </>
   );

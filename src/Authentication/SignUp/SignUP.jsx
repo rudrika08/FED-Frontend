@@ -287,7 +287,7 @@ const SignUP = () => {
             <Button
               style={{
                 width: "100%",
-                backgroundColor: "#ff6b00",
+                background: "var(--primary)",
                 color: "#fff",
                 height: "40px",
                 marginTop: "20px",
@@ -307,7 +307,9 @@ const SignUP = () => {
               }}
             >
               Already Have an account?{" "}
-              <a href="/Login" style={{ color: "#FF8A00" }}>
+              <a href="/Login" style={{ background: "var(--primary)",
+                  WebkitBackgroundClip: "text",
+                  color: "transparent" }}>
                 Login
               </a>
             </Text>
