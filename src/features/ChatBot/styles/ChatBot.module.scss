@@ -106,6 +106,7 @@ header{
     margin-top: 5px;
     font-size: 2rem;
     cursor: pointer;
+    color: #D14206;
 }
 
 .fed{
@@ -195,7 +196,7 @@ hr{
     width: 0px;
     height: 0px;
     color:black;
-    border-bottom: 20px solid rgb(240, 53, 15);
+    border-bottom: 20px solid #D14206;
     border-right: 20px solid transparent;
     transform: translateX(-50%) translateY(50%) rotate(315deg); 
 }
@@ -238,7 +239,7 @@ input:focus{
 }
 
 .sendIcon {
-    color: #FF8A00;
+    color: #D14206;
     margin-top:.3rem;
 }
 
