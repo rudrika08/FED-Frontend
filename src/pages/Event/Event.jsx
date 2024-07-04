@@ -20,15 +20,16 @@ const Event = () => {
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const response = await axios.get('/api/form/getAllForms');
-        setEvents(response.data);
+        // const response = await axios.get('/api/form/getAllForms');
+        // setEvents(response.data);
+
+        // using local JSON data
+        const localEventData = EventData;
+        setEvents(localEventData);
         setLoading(false);
 
       } catch (error) {
         console.error('Error fetching events:', error);
-        // using local JSON data as fallback
-        const localEventData = EventData;
-        setEvents(localEventData);
         setLoading(false);
       }
     };

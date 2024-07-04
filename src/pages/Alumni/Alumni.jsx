@@ -16,12 +16,14 @@ const Alumni = () => {
   useEffect(() => {
     const fetchAlumni = async () => {
       try {
-        const response = await axios.get('/api/user/fetchAlumni');
-        setAlumni(response.data);
+        // const response = await axios.get('/api/user/fetchAlumni');
+        // setAlumni(response.data);
+
+        setAlumni(AlumniData);
         setLoading(false);
       } catch (error) {
         console.error('Error fetching alumni members:', error);
-        setAlumni(AlumniData); // Fallback to local data in case of error
+        setAlumni(AlumniData);
         setLoading(false);
       }
     };

@@ -17,14 +17,16 @@ const PastEvent = () => {
 
     const fetchPastEvents = async () => {
       try {
-        const response = await axios.get('/api/form/getAllForms');
-        setPastEvents(response.data.filter(event => !event.ongoingEvent));
+        // const response = await axios.get('/api/form/getAllForms');
+        // setPastEvents(response.data.filter(event => !event.ongoingEvent));
+
+        // using local JSON data
+        const localEventData = EventData.filter(event => !event.ongoingEvent);
+        setPastEvents(localEventData);
         setLoading(false);
 
       } catch (error) {
         console.error('Error fetching past events:', error);
-        const localEventData = EventData.filter(event => !event.ongoingEvent);
-        setPastEvents(localEventData);
         setLoading(false);
       }
     };

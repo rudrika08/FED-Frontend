@@ -19,6 +19,7 @@ function ViewEvent() {
         const fetchedEvents = response.data;
         const testEvents = eventData;
         setPastEvents(fetchedEvents.length > 0 ? fetchedEvents : testEvents);
+        
       } catch (error) {
         console.error("Error fetching event data:", error);
       }

@@ -20,14 +20,16 @@ const Team = () => {
   useEffect(() => {
     const fetchTeamMembers = async () => {
       try {
-        const response = await axios.get('/api/user/fetchTeam');
-        setTeamMembers(response.data);
+        // const response = await axios.get('/api/user/fetchTeam');
+        // setTeamMembers(response.data);
+
+        // using local JSON data
+        const testMembers = MemberData;
+        setTeamMembers(testMembers);
         setLoading(false);
 
       } catch (error) {
         console.error('Error fetching team members:', error);
-        const testMembers = MemberData;
-        setTeamMembers(testMembers);
         setLoading(false);
       }
     };
