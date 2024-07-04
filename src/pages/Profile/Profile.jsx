@@ -1,7 +1,7 @@
 import { useState, useContext, useEffect } from 'react';
 
 import { ProfileLayout, Sidebar } from '../../layouts';
-import {ProfileView, EventsView, NewForm, ViewMember, ViewEvent} from '../../sections';
+import { ProfileView, EventsView, NewForm, ViewMember, ViewEvent } from '../../sections';
 
 import AuthContext from '../../context/AuthContext';
 
@@ -13,14 +13,15 @@ const Profile = () => {
   const [designation, setDesignation] = useState("");
 
   useEffect(() => {
-    if (authCtx.user.access === "0") {
+    const access = authCtx.user.access;
+    if (access === "ADMIN") {
       setDesignation("Admin");
-    } else if (authCtx.user.access === "1") {
-      setDesignation("Member");
-    } else if (authCtx.user.access === "2") {
-      setDesignation("User");
-    } else if (authCtx.user.access === "3") {
+    } else if (access === "ALUMNI") {
       setDesignation("Alumni");
+    } else if (access === "USER") {
+      setDesignation("User");
+    } else {
+      setDesignation("Member");
     }
   }, [authCtx.user.access]);
 
@@ -34,15 +35,14 @@ const Profile = () => {
         case "Members":
           return <ViewMember />;
         default:
-          return <ProfileView editmodal='/profile/'/>;
+          return <ProfileView editmodal='/profile/' />;
       }
-    } 
-    else if (designation !== "Admin") {
+    } else {
       switch (activePage) {
         case "Event":
           return <EventsView />;
         default:
-          return <ProfileView editmodal='/profile/'/>;
+          return <ProfileView editmodal='/profile/' />;
       }
     }
   };

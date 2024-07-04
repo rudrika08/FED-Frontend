@@ -9,7 +9,7 @@
       "college": "Kalinga Institute of Industrial Technology",
       "mobileNo": "1234567890",
       "year": "3",
-      "access": "1",
+      "access": "DIRECTOR_TECHNICAL",
       "regForm": []
     },
     {
@@ -22,7 +22,7 @@
       "college": "Kalinga Institute of Industrial Technology",
       "mobileNo": "1234567890",
       "year": "3",
-      "access": "2",
+      "access": "USER",
       "regForm": []
     },
     {
@@ -35,7 +35,7 @@
       "college": "Kalinga Institute of Industrial Technology",
       "mobileNo": "1234567890",
       "year": "other",
-      "access": "3",
+      "access": "ALUMNI",
       "regForm": []
     },
     {
@@ -48,7 +48,7 @@
       "college": "Kalinga Institute of Industrial Technology",
       "mobileNo": "0987654321",
       "year": "2",
-      "access": "0",
+      "access": "ADMIN",
       "regForm": []
     }
 ]

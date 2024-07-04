@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
 import axios from 'axios';
-
 import styles from './styles/Team.module.scss';
 import { TeamCard } from '../../components';
 import { FaRegArrowAltCircleRight } from "react-icons/fa";
-import useWindowWidth from '../../hooks/useWindowWidth'; 
-import MemberData from '../../data/Team.json'
+import useWindowWidth from '../../hooks/useWindowWidth';
+import MemberData from '../../data/Team.json';
+import AccessTypes from '../../data/Access.json';
 
 const Team = () => {
   useEffect(() => {
@@ -15,6 +15,7 @@ const Team = () => {
 
   const [teamMembers, setTeamMembers] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [access, setAccess] = useState([]);
   const windowWidth = useWindowWidth(); // Use the custom hook here
 
   useEffect(() => {
@@ -34,13 +35,44 @@ const Team = () => {
       }
     };
 
+    const fetchAccessTypes = async () => {
+      try {
+        // const response = await axios.get("/api/user/fetchAccessTypes");
+        // const fetchedAccess = response.data;
+        // setAccess(fetchedAccess);
+        const testAccess = AccessTypes.data;
+        const filteredAccess = testAccess.filter(accessType => (
+          !["ADMIN", "USER", "ALUMNI"].includes(accessType)
+        ));
+
+        setAccess(filteredAccess);
+      } catch (error) {
+        console.error("Error fetching Access Types:", error);
+        setAccess(AccessTypes.data); // Fallback to test data
+      }
+    };
+
+    fetchAccessTypes();
     fetchTeamMembers();
   }, []);
 
-  const roles = ['Director', 'Technical', 'Creative', 'Marketing', 'Operations', 'Sponsorship & PR'];
-  const teamByRole = roles.map(role => ({
+  console.log(access);
+
+  const directorAccessCodes = access.filter(code => code.startsWith('PRESIDENT') || code.startsWith('VICEPRESIDENT') || code.startsWith('DIRECTOR_'));
+  const roleMap = access.reduce((map, code) => {
+    if (!directorAccessCodes.includes(code)) {
+      let role = code.split('_').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ');
+      if (role === 'Operation') role = 'Operations'; // Special case for Operations
+      if (role === 'Sponsorship') role = 'Sponsorship & PR'; // Special case for Sponsorship & PR
+      map[role] = code;
+    }
+    return map;
+  }, {});
+
+  const directorsAndAbove = teamMembers.filter(member => directorAccessCodes.includes(member.access));
+  const teamByRole = Object.keys(roleMap).map(role => ({
     role,
-    members: teamMembers.filter(member => member.role === role)
+    members: teamMembers.filter(member => member.access === roleMap[role])
   }));
 
   const TeamSection = ({ title, members, isDirector }) => {
@@ -51,18 +83,18 @@ const Team = () => {
 
     return (
       <div className={`${styles.teamSection} ${isDirector ? styles.directorSection : ''}`}>
-        <h3>{title}</h3>
+        {title && <h3>{title}</h3>}
         <div className={`${styles.teamGrid} ${isDirector ? styles.directorGrid : ''}`}>
           {otherMembers.map((member, idx) => (
             <TeamCard
               key={idx}
               className="teamMember"
               name={member.name}
-              image={member.image}
-              social={member.social}
-              title={member.title}
-              role={member.role}
-              know={member.know}
+              image={member.img}
+              social={member.extra}
+              title={member.extra.title}
+              role={member.access}
+              know={member.extra.know}
             />
           ))}
         </div>
@@ -73,11 +105,11 @@ const Team = () => {
                 key={idx}
                 className="teamMember"
                 name={member.name}
-                image={member.image}
-                social={member.social}
-                title={member.title}
-                role={member.role}
-                know={member.know}
+                image={member.img}
+                social={member.extra}
+                title={member.extra.title}
+                role={member.access}
+                know={member.extra.know}
               />
             ))}
           </div>
@@ -95,16 +127,12 @@ const Team = () => {
       <div className={styles.circle}></div>
       <div className={styles.circle2}></div>
 
-      {teamByRole.filter(section => section.role === 'Director').map((section, index) => (
-        <TeamSection
-          key={index}
-          // title="Director" //removed heading for director section
-          members={section.members}
-          isDirector={true}
-        />
-      ))}
+      <TeamSection
+        members={directorsAndAbove}
+        isDirector={true}
+      />
 
-      {teamByRole.filter(section => section.role !== 'Director').map((section, index) => (
+      {teamByRole.map((section, index) => (
         <TeamSection
           key={index}
           title={<span><span style={{ color: '#fff' }}>Team </span><strong style={{ background: "var(--primary)", WebkitBackgroundClip: "text", color: "transparent" }}>{section.role}</strong></span>}

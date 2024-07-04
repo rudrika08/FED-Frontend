@@ -13,6 +13,8 @@ const TeamCard = ({
 }) => {
   const [showMore, setShowMore] = useState(false);
 
+  const isDirectorRole = ['PRESIDENT', 'VICEPRESIDENT'].includes(role) || role.startsWith('DIRECTOR_');
+
   return (
     <div className={`${styles.teamMember} ${customStyles.teamMember}`}>
       <div className={`${styles.teamMemberInner} ${customStyles.teamMemberInner}`}>
@@ -42,7 +44,7 @@ const TeamCard = ({
                   </a>
                 )}
               </div>
-              {role === 'Director' && (
+              {isDirectorRole && (
                 <button
                   onClick={() => setShowMore(true)}
                   aria-expanded={showMore}

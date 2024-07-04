@@ -1,90 +1,79 @@
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import styles from "./styles/AddMemberForm.module.scss";
-import {Button, Input} from "../../../../../components";
+import { Button, Input } from "../../../../../components";
+import AccessTypes from "../../../../../data/Access.json";
 
 function AddMemberForm() {
-  const [data, setdata] = useState({
+  const [data, setData] = useState({
     name: "",
     email: "",
-    department: "",
-    photo: "",
+    access: "",
+    image: "",
     linkedin: "",
     github: "",
+    title: "",
+    know: "",
   });
-  const memberDesignation = [
-    {
-      value: "Alumini",
-      label: "Alumini",
-    },
-    {
-      value: "Technical",
-      label: "Technical",
-    },
-    {
-      value: "Creative",
-      label: "Creative",
-    },
-    {
-      value: "Marketing",
-      label: "Marketing",
-    },
-    {
-      value: "Sponsorship & PR",
-      label: "Sponsorship & PR",
-    },
-    {
-      value: "Operations",
-      label: "Operations",
-    },
-    {
-      value: "Directors",
-      label: "Directors",
-    },
-  ];
 
-  const isFormValid = () => {
-    if (
-      data.name === "" ||
-      data.email === "" ||
-      data.department === "" ||
-      data.photo === "" ||
-      data.linkedin === "" ||
-      data.github === ""
-    ) {
-      return false;
+  const [accessTypes, setAccessTypes] = useState([]);
+
+  useEffect(() => {
+    fetchAccessTypes();
+  }, []);
+
+  const fetchAccessTypes = async () => {
+    try {
+      // const response = await axios.get("/api/access/types"); // Adjust the endpoint URL as per your backend setup
+      // const fetchedAccessTypes = response.data.data;
+      // setAccessTypes(fetchedAccessTypes);
+      setAccessTypes(AccessTypes.data);
+    } catch (error) {
+      console.error("Error fetching access types:", error);
+      setAccessTypes([]);
     }
-    return true;
   };
 
-  const onAddMember = () => {
-    if (isFormValid()) {
-      const validEmail = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-      const validLink = /^(ftp|http|https):\/\/[^ "]+$/;
-      const validPhoto = /(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|gif|png)/g;
+  const isFormFilled = () => {
+    const { name, email, access, image, linkedin, github, title, know } = data;
+    return (
+      name.trim() !== "" &&
+      email.trim() !== "" &&
+      access.trim() !== "" &&
+      image.trim() !== "" &&
+      linkedin.trim() !== "" &&
+      github.trim() !== "" &&
+      title.trim() !== "" &&
+      know.trim() !== ""
+    );
+  };
 
-      const isValidEmail = validEmail.test(data.email);
-      const isValidLinkedin = validLink.test(data.linkedin);
-      const isValidGithub = validLink.test(data.github);
-      const isValidPhoto = validPhoto.test(data.photo);
-
-      if (isValidEmail && isValidLinkedin && isValidGithub && isValidPhoto) {
-        console.log(data);
-        setdata({
+  const onAddMember = async () => {
+    if (isFormFilled()) {
+      try {
+        console.log("Member Data", data);
+        // const response = await axios.post("/api/members/add", data);
+        // console.log("Member added successfully:", response.data);
+        setData({
           name: "",
           email: "",
-          department: "",
-          photo: "",
+          access: "",
+          image: "",
           linkedin: "",
           github: "",
+          title: "",
+          know: "",
         });
         alert("Member Added Successfully");
-      } else {
-        alert("Please enter valid data");
+      } catch (error) {
+        console.error("Error adding member:", error);
+        alert("Failed to add member. Please try again.");
       }
     } else {
       alert("Please fill all the fields");
     }
   };
+
   return (
     <div className={styles.main}>
       <div className={styles.formHead}>
@@ -95,7 +84,7 @@ function AddMemberForm() {
           className={styles.memberInput}
           containerStyle={{ width: "100%" }}
           value={data.name}
-          onChange={(e) => setdata({ ...data, name: e.target.value })}
+          onChange={(e) => setData({ ...data, name: e.target.value })}
         />
         <Input
           placeholder="Enter Member Email"
@@ -104,28 +93,28 @@ function AddMemberForm() {
           className={styles.memberInput}
           containerStyle={{ width: "100%" }}
           value={data.email}
-          onChange={(e) => setdata({ ...data, email: e.target.value })}
+          onChange={(e) => setData({ ...data, email: e.target.value })}
         />
       </div>
       <div className={styles.formHead}>
         <Input
-          placeholder="Enter Member Department"
+          placeholder="Select Access"
           type="select"
-          label="Department"
-          options={memberDesignation}
+          label="Access"
+          options={accessTypes.map((type) => ({ value: type, label: type }))}
           className={styles.memberInput}
           containerStyle={{ width: "100%" }}
-          value={data.department}
-          onChange={(value) => setdata({ ...data, department: value })}
+          value={data.access}
+          onChange={(value) => setData({ ...data, access: value })}
         />
         <Input
-          placeholder="Enter Member Photo Link"
+          placeholder="Enter Member Image Link"
           type="text"
-          label="Photo"
+          label="Image"
           className={styles.memberInput}
           containerStyle={{ width: "100%" }}
-          value={data.photo}
-          onChange={(e) => setdata({ ...data, photo: e.target.value })}
+          value={data.image}
+          onChange={(e) => setData({ ...data, image: e.target.value })}
         />
       </div>
       <div className={styles.formHead}>
@@ -135,7 +124,7 @@ function AddMemberForm() {
           label="LinkedIn"
           className={styles.memberInput}
           value={data.linkedin}
-          onChange={(e) => setdata({ ...data, linkedin: e.target.value })}
+          onChange={(e) => setData({ ...data, linkedin: e.target.value })}
           containerStyle={{ width: "100%" }}
         />
         <Input
@@ -143,12 +132,32 @@ function AddMemberForm() {
           type="text"
           label="Github"
           value={data.github}
-          onChange={(e) => setdata({ ...data, github: e.target.value })}
+          onChange={(e) => setData({ ...data, github: e.target.value })}
           className={styles.memberInput}
           containerStyle={{ width: "100%" }}
         />
       </div>
-      <Button onClick={onAddMember} disabled={!isFormValid()}>
+      <div className={styles.formHead}>
+        <Input
+          placeholder="Enter Title"
+          type="text"
+          label="Title"
+          value={data.title}
+          onChange={(e) => setData({ ...data, title: e.target.value })}
+          className={styles.memberInput}
+          containerStyle={{ width: "100%" }}
+        />
+        <Input
+          placeholder="Enter Know"
+          type="text"
+          label="Know"
+          value={data.know}
+          onChange={(e) => setData({ ...data, know: e.target.value })}
+          className={styles.memberInput}
+          containerStyle={{ width: "100%" }}
+        />
+      </div>
+      <Button onClick={onAddMember}>
         Add Member
       </Button>
     </div>

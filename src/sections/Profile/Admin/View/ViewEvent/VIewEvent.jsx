@@ -15,11 +15,13 @@ function ViewEvent() {
     // Fetch event data using axios
     const fetchEventData = async () => {
       try {
-        const response = await axios.get("/api/form/getAllForms");
-        const fetchedEvents = response.data;
+        // const response = await axios.get("/api/form/getAllForms");
+        // const fetchedEvents = response.data;
+        // setPastEvents(fetchedEvents);
+
         const testEvents = eventData;
-        setPastEvents(fetchedEvents.length > 0 ? fetchedEvents : testEvents);
-        
+        setPastEvents(testEvents);
+
       } catch (error) {
         console.error("Error fetching event data:", error);
       }

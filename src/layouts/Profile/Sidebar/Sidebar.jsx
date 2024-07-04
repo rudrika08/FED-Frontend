@@ -17,14 +17,15 @@ const Sidebar = ({ activepage, handleChange }) => {
   const [openModal,setOpen]=useState(false);
 
   useEffect(() => {
-    if (authCtx.user.access === "0") {
+    const access = authCtx.user.access;
+    if (access === "ADMIN") {
       setDesignation("Admin");
-    } else if (authCtx.user.access === "1") {
-      setDesignation("Member");
-    } else if (authCtx.user.access === "2") {
-      setDesignation("User");
-    } else if (authCtx.user.access === "3") {
+    } else if (access === "ALUMNI") {
       setDesignation("Alumni");
+    } else if (access === "USER") {
+      setDesignation("User");
+    } else {
+      setDesignation("Member");
     }
   }, [authCtx.user.access]);
 

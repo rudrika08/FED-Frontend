@@ -11,24 +11,19 @@ const Events = () => {
   useEffect(() => {
     const fetchEventsData = async () => {
       try {
-        const response = await axios.get("/api/form/getAllForms");
-        const fetchedEvents = response.data;
+        // const response = await axios.get("/api/form/getAllForms");
+        // const fetchedEvents = response.data;
+        // const allEvents = fetchedEvents
         const testEvents = eventsData;
-        const allEvents = fetchedEvents.length > 0 ? fetchedEvents : testEvents;
+        const allEvents = testEvents;
 
         const filteredEvents = allEvents.filter((event) =>
-          event.registeredUsers && event.registeredUsers.includes(authCtx.user.email)
+          event.registeredUsers && event.registeredUsers.some(user => user.email === authCtx.user.email)
         );
 
         setUserEvents(filteredEvents);
       } catch (error) {
         console.error("Error fetching event data:", error);
-
-        // const filteredEvents = eventsData.filter((event) =>
-        //   event.registeredUsers && event.registeredUsers.includes(authCtx.user.email)
-        // );
-
-        // setUserEvents(filteredEvents); // Fallback to test data
       }
     };
 

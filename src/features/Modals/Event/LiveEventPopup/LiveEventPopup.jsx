@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import styles from './styles/LiveEventPopup.module.scss';
 import eventData from '../../../../data/eventData.json';
@@ -13,11 +13,11 @@ const LiveEventPopup = () => {
   useEffect(() => {
     const fetchEventData = async () => {
       try {
-        const response = await axios.get('/api/event/getLiveEvents');
-        const fetchedEvents = response.data;
-        const events = fetchedEvents.length > 0 ? fetchedEvents : eventData;
+        // const response = await axios.get('/api/form/getAllForms');
+        // const fetchedEvents = response.data;
+        const events = eventData;
 
-        const currentEvent = events.find(event => event.IsEventOngoing === "true");
+        const currentEvent = events.find(event => event.ongoingEvent);
         if (currentEvent && popupCount === 0) {
           setIsEventOngoing(true);
           setEventImage(currentEvent.imageURL);
