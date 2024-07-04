@@ -1,4 +1,4 @@
-import SignUP from '../../../authentication/SignUp/SignUP';
+import SignUP from '../../../authenticationcheck/SignUp/SignUP';
 
 const SignupMain = () => {
   return (

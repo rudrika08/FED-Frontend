@@ -1,4 +1,4 @@
-import Login from '../../../authentication/Login/Login';
+import Login from '../../../authenticationcheck/Login/Login';
 
 const LoginMain = () => {
   return (
