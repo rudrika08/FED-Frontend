@@ -1,6 +1,6 @@
 import { useRef, useEffect } from 'react';
 import styles from './styles/Feedback.module.scss';
-import feedbackData from '../../../data/Feedback2.json';
+import feedbackData from '../../../data/Feedback.json';
 import quoteImg from "../../../assets/images/quote.png";
 
 const Feedback = () => {
