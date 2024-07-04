@@ -1,6 +1,6 @@
-import React, { useRef, useEffect } from 'react';
+import { useRef, useEffect } from 'react';
 import styles from './styles/Feedback.module.scss';
-import feedbackData from '../../../data/feedback.json';
+import feedbackData from '../../../data/Feedback.json';
 import quoteImg from "../../../assets/images/quote.png";
 
 const Feedback = () => {
@@ -21,7 +21,7 @@ const Feedback = () => {
   useEffect(() => {
     const feedbacksContainer = feedbacksRef.current;
     const handleMouseEnter = () => {
-      feedbacksContainer.style.animationPlayState = 'paused'; // Stop on hovering
+      feedbacksContainer.style.animationPlayState = 'paused'; 
     };
     const handleMouseLeave = () => {
       feedbacksContainer.style.animationPlayState = 'running';

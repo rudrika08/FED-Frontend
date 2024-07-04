@@ -1,63 +1,69 @@
 import { useState, useEffect } from "react";
+import axios from "axios";
 import styles from "./styles/Alumni.module.scss";
-import alumniData from "../../data/AlumniCard.json";
 import { TeamCard } from "../../components";
-
-function useWindowWidth() {
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-
-  useEffect(() => {
-    function handleResize() {
-      setWindowWidth(window.innerWidth);
-    }
-
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-  return windowWidth;
-}
-
-const AlumniSection = ({ alumni }) => {
-  const windowWidth = useWindowWidth();
-  const membersPerRow = windowWidth < 500 ? 2 : 4;
-  const remainderMembersCount = alumni.length % membersPerRow;
-  const lastRowMembers = remainderMembersCount > 0 ? alumni.slice(-remainderMembersCount) : [];
-  const otherMembers = remainderMembersCount > 0 ? alumni.slice(0, -remainderMembersCount) : alumni;
-
-  return (
-    <div className={styles.alumniSection}>
-      <div className={styles.alumniGrid}>
-        {otherMembers.map((each, idx) => (
-          <TeamCard
-            key={idx}
-            name={each.name}
-            image={each.image}
-            social={each.social}
-          />
-        ))}
-      </div>
-
-      {lastRowMembers.length > 0 && (
-        <div className={styles.lastRowCentered}>
-          {lastRowMembers.map((member, idx) => (
-            <TeamCard
-              key={idx}
-              name={member.name}
-              image={member.image}
-              social={member.social}
-            />
-          ))}
-        </div>
-      )}
-    </div>
-  );
-};
+import useWindowWidth from "../../hooks/useWindowWidth"; // Import useWindowWidth hook
+import AlumniData from "../../data/Alumni.json"; // Local fallback data
 
 const Alumni = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  const [alumni, setAlumni] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchAlumni = async () => {
+      try {
+        const response = await axios.get('/api/user/fetchAlumni');
+        setAlumni(response.data);
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching alumni members:', error);
+        setAlumni(AlumniData); // Fallback to local data in case of error
+        setLoading(false);
+      }
+    };
+
+    fetchAlumni();
+  }, []);
+
+  const AlumniSection = ({ alumni }) => {
+    const windowWidth = useWindowWidth();
+    const membersPerRow = windowWidth < 500 ? 2 : 4;
+    const remainderMembersCount = alumni.length % membersPerRow;
+    const lastRowMembers = remainderMembersCount > 0 ? alumni.slice(-remainderMembersCount) : [];
+    const otherMembers = remainderMembersCount > 0 ? alumni.slice(0, -remainderMembersCount) : alumni;
+  
+    return (
+      <div className={styles.alumniSection}>
+        <div className={styles.alumniGrid}>
+          {otherMembers.map((each, idx) => (
+            <TeamCard
+              key={idx}
+              name={each.name}
+              image={each.image}
+              social={each.social}
+            />
+          ))}
+        </div>
+  
+        {lastRowMembers.length > 0 && (
+          <div className={styles.lastRowCentered}>
+            {lastRowMembers.map((member, idx) => (
+              <TeamCard
+                key={idx}
+                name={member.name}
+                image={member.image}
+                social={member.social}
+              />
+            ))}
+          </div>
+        )}
+      </div>
+    );
+  };
 
   return (
     <div className={styles.Alumni}>
@@ -66,7 +72,7 @@ const Alumni = () => {
       </h2>
       <div className={styles.circle}></div>
 
-      <AlumniSection alumni={alumniData} />
+      {!loading && <AlumniSection alumni={alumni} />}
 
       <div className={styles.circle2}></div>
     </div>

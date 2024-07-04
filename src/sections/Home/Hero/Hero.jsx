@@ -1,5 +1,5 @@
 import styles from "./styles/Hero.module.scss";
-import CarouselImg from "../../../data/carouselImages";
+import CarouselImg from "../../../data/Carousel.json";
 import { Carousel } from "../../../components";
 import { AnimatedBox } from "../../../assets/animations/AnimatedBox";
 

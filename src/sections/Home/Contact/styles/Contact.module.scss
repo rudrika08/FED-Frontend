@@ -60,6 +60,25 @@ form {
   border: 1px solid rgba(255, 255, 255, 0.40);
   background: rgba(255, 255, 255, 0.10);
   backdrop-filter: blur(7.5px);
+  color: white;
+}
+
+.formGroup textarea::-webkit-scrollbar {
+  width: 10px;
+  height: 0px;
+  transition: .2s linear;
+  background-color: transparent;
+}
+
+.formGroup textarea::-webkit-scrollbar-thumb {
+  border-radius: 22px;
+  background: var(--primary);
+  // border: 1.5px solid hwb(0 11% 89%);
+}
+
+.formGroup textarea::-webkit-scrollbar-track {
+  padding: 0px 20px;
+  background-color: transparent;
 }
 
 .formGroup input {

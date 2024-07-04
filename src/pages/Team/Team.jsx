@@ -5,7 +5,8 @@ import axios from 'axios';
 import styles from './styles/Team.module.scss';
 import { TeamCard } from '../../components';
 import { FaRegArrowAltCircleRight } from "react-icons/fa";
-import useWindowWidth from '../../hooks/useWindowWidth'; // Import useWindowWidth hook
+import useWindowWidth from '../../hooks/useWindowWidth'; 
+import MemberData from '../../data/Team.json'
 
 const Team = () => {
   useEffect(() => {
@@ -19,11 +20,14 @@ const Team = () => {
   useEffect(() => {
     const fetchTeamMembers = async () => {
       try {
-        const response = await axios.get('/api/team/getTeamMembers');
+        const response = await axios.get('/api/user/fetchTeam');
         setTeamMembers(response.data);
         setLoading(false);
+
       } catch (error) {
         console.error('Error fetching team members:', error);
+        const testMembers = MemberData;
+        setTeamMembers(testMembers);
         setLoading(false);
       }
     };

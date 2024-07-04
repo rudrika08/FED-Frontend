@@ -1,7 +1,7 @@
 import { InstagramEmbed, LinkedInEmbed } from 'react-social-media-embed';
 import useDimensions from '../../hooks/useDimensions';
 import AnimatedBox from '../../assets/animations/socialPageAnimation';
-import socialLinks from '../../data/socialLinks.json';
+import socialLinks from '../../data/SocialLink.json';
 
 const SocialEmbed = ({ type }) => {
   const {

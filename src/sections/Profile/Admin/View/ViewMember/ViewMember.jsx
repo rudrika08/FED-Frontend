@@ -5,7 +5,7 @@ import styles from "./styles/ViewMember.module.scss";
 import {Button, TeamCard} from "../../../../../components";
 
 import AddMemberForm from "../../Form/MemberForm/AddMemberForm";
-import teamMembers from "../../../../../data/MemberCard.json";
+import teamMembers from "../../../../../data/Team.json";
 
 function ViewMember() {
   const [memberActivePage, setMemberActivePage] = useState("Alumini");

@@ -1,4 +1,4 @@
-import { SponserImg } from '../../../data/SponserImages';
+import SponserImg from '../../../data/Sponser.json';
 import styles from './styles/Sponser.module.scss';
 
 const Sponser = () => {

@@ -1,9 +1,10 @@
+import axios from 'axios';
 import styles from './styles/Contact.module.scss';
 import contactImg from "../../../assets/images/contact.png";
 import { AnimatedBox } from "../../../assets/animations/AnimatedBox";
 
-function ContactForm() {
-  const handleSubmit = (event) => {
+const ContactForm = () => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const formData = new FormData(event.target);
     const data = {
@@ -11,7 +12,15 @@ function ContactForm() {
       email: formData.get('email'),
       message: formData.get('message')
     };
-    console.log(data);
+
+    try {
+      const response = await axios.post('/api/contact', data);
+      console.log('Form submitted successfully:', response.data);
+      // Handle success (e.g., show a success message)
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      // Handle error (e.g., show an error message)
+    }
   };
 
   return (
@@ -21,26 +30,39 @@ function ContactForm() {
       <div className={styles.formSection}>
         <form onSubmit={handleSubmit}>
           <div className={styles.formGroup}>
-            <input type="text" name="name" placeholder="Name" />
+            <input 
+              type="text" 
+              name="name" 
+              placeholder="Name" required 
+            />
           </div>
           <div className={styles.formGroup}>
-            <input type="email" name="email" placeholder="Email" />
+            <input 
+              type="email" 
+              name="email" 
+              placeholder="Email" required 
+            />
           </div>
           <div className={styles.formGroup}>
-            <textarea name="message" placeholder="Message"></textarea>
+            <textarea 
+              name="message" 
+              placeholder="Message" required>
+            </textarea>
           </div>
           <button type="submit">Submit</button>
         </form>
+
         <div className={styles.imageSection}>
           <div className={styles.backCircle}></div>
           <AnimatedBox direction="right">
-            <img src={contactImg} alt="To Fed" />
+            <img src={contactImg} alt="Contact" />
           </AnimatedBox>
           <div className={styles.circle}></div>
         </div>
+
       </div>
     </div>
   );
-}
+};
 
 export default ContactForm;

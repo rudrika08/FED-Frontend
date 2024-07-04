@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import styles from './styles/LiveEventPopup.module.scss';
-import eventData from '../../../../data/EventCards.json';
+import eventData from '../../../../data/eventData.json';
 
 let popupCount = 0;
 
