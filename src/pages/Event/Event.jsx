@@ -2,7 +2,9 @@ import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import style from "./styles/Event.module.scss";
 import eventData from "../../data/eventData.json";
-import EventCard from"../../components/Event/EventCards/EventCard"
+
+import { EventCard } from "../../components";
+
 import ring from "../../assets/images/ring.svg";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import { Padding } from "@mui/icons-material";

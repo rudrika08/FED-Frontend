@@ -6,7 +6,7 @@ import { X } from "lucide-react";
 import { useNavigate, useParams } from "react-router-dom";
 import eventData from "../../../../data/eventData.json";
 import shareOutline from "../../../../assets/images/shareOutline.svg";
-import Share from "../../../../components/ShareContainer/Share";
+import Share from "../ShareModal/ShareModal";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { CiLock } from "react-icons/ci";

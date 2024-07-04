@@ -1,9 +1,9 @@
 import { useState, useContext, useEffect } from 'react';
-import Layout from '../../layouts/Profile/ProfileLayout/ProfileLayout';
-import Sidebar from '../../layouts/Profile/Sidebar/Sidebar';
-import AuthContext from '../../context/AuthContext';
 
-import {ProfileView, EventsView, NewForm, ViewMember, ViewEvent} from '../../components/Profile';
+import { ProfileLayout, Sidebar } from '../../layouts';
+import {ProfileView, EventsView, NewForm, ViewMember, ViewEvent} from '../../sections';
+
+import AuthContext from '../../context/AuthContext';
 
 import style from "./styles/Profile.module.scss";
 
@@ -48,7 +48,7 @@ const Profile = () => {
   };
 
   return (
-    <Layout>
+    <ProfileLayout>
       <div className={style.profile}>
         <Sidebar
           activepage={activePage}
@@ -56,7 +56,7 @@ const Profile = () => {
         />
         <div className={style.profile__content}>{getActivePage()}</div>
       </div>
-    </Layout>
+    </ProfileLayout>
   );
 };
 

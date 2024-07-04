@@ -1,12 +1,31 @@
-import React, { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 import styles from "./styles/ViewMember.module.scss";
-import Button from "../../../../Core/Button";
+import Button from "../../../../../components/Core/Button";
 import AddMemberForm from "../../Form/MemberForm/AddMemberForm";
-import MemberCard from "../../../../Team/Member/MemberCard";
+import MemberCard from "../../../../TeamCard/TeamCard";
 import teamMembers from "../../../../../data/MemberCard.json";
 
 function ViewMember() {
   const [memberActivePage, setMemberActivePage] = useState("Alumini");
+  const [members, setMembers] = useState([]);
+
+  useEffect(() => {
+    // Fetch member data using axios
+    const fetchMemberData = async () => {
+      try {
+        const response = await axios.get("/api/user/fetchTeam");
+        const fetchedMembers = response.data;
+        const testMembers = teamMembers;
+        setMembers(fetchedMembers.length > 0 ? fetchedMembers : testMembers);
+      } catch (error) {
+        console.error("Error fetching member data:", error);
+        setMembers(teamMembers); // Fallback to test data
+      }
+    };
+
+    fetchMemberData();
+  }, []);
 
   const headerMenu = [
     "Alumini",
@@ -37,7 +56,7 @@ function ViewMember() {
 
   const getMembersByPage = () => {
     if (memberActivePage === "Add Member") return null;
-    return teamMembers.filter(
+    return members.filter(
       (member) =>
         member.role.toLowerCase() === memberActivePage.toLowerCase()
     );

@@ -3,7 +3,7 @@ import eventData from '../../data/eventData.json';
 import { useEffect,useState } from 'react';
 import { Link } from 'react-router-dom';
 import ArrowBackIcon from "@mui/icons-material/ArrowBack"
-import EventCard from '../../components/Event/EventCards/EventCard';
+import { EventCard } from '../../components';
 
 
 

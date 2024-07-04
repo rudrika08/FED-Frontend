@@ -1,5 +1,9 @@
+// Component Index
+
 export * from './Core';
-export * from './Event';
-export * from './Profile';
-export * from './Social';
-export * from './Team';
+export * from './Form';
+
+export {default as Carousel} from './Carousel/Carousel';
+export {default as EventCard} from './EventCard/EventCard';
+export {default as SocialEmbed} from './SocialEmbed/SocialEmbed';
+export {default as TeamCard} from './TeamCard/TeamCard';

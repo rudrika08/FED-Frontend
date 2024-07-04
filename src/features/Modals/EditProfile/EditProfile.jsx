@@ -2,8 +2,8 @@ import React,{useState,useEffect} from 'react'
 import { useContext } from "react";
 import AuthContext from "../../../context/AuthContext";
 import styles from './styles/EditProfile.module.scss'
-import Button from "../../../components/Core/Button";
-import Input from "../../../components/Core/Input";
+
+import { Button, Input } from "../../../components";
 import { useNavigate, useParams } from "react-router-dom";
 import { X } from "lucide-react";
 import AOS from 'aos';

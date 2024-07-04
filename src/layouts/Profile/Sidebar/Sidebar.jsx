@@ -6,7 +6,6 @@ import { SlCalender } from 'react-icons/sl';
 import { SiReacthookform } from 'react-icons/si';
 import AuthContext from '../../../context/AuthContext';
 import styles from './styles/Sidebar.module.scss';
-import Share from '../../../components/ShareContainer/Share'
 
 import defaultImg from '../../../assets/images/defaultImg.jpg';
 import camera from "../../../assets/images/camera.svg"
@@ -33,10 +32,6 @@ const Sidebar = ({ activepage, handleChange }) => {
     navigate('/Login');
     authCtx.logout(); 
   };
-
-  const handleModal=()=>{
-    setOpen(!openModal);
-  }
 
   const handleName = () => {
     const maxLength = 15;
@@ -130,8 +125,6 @@ const Sidebar = ({ activepage, handleChange }) => {
       </div>
       <div className={styles.divider} />
     </div>
-
-        {openModal && <Share/>}
     </>
   );
 };

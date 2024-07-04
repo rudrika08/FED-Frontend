@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import styles from "./styles/Alumni.module.scss";
 import alumniData from "../../data/AlumniCard.json";
-import AlumniCard from "../../components/Team/Member/MemberCard";
+import { TeamCard } from "../../components";
 
 function useWindowWidth() {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
@@ -29,7 +29,7 @@ const AlumniSection = ({ alumni }) => {
     <div className={styles.alumniSection}>
       <div className={styles.alumniGrid}>
         {otherMembers.map((each, idx) => (
-          <AlumniCard
+          <TeamCard
             key={idx}
             name={each.name}
             image={each.image}
@@ -41,7 +41,7 @@ const AlumniSection = ({ alumni }) => {
       {lastRowMembers.length > 0 && (
         <div className={styles.lastRowCentered}>
           {lastRowMembers.map((member, idx) => (
-            <AlumniCard
+            <TeamCard
               key={idx}
               name={member.name}
               image={member.image}

@@ -1,18 +1,14 @@
 import { useEffect } from 'react';
 
 import { Hero, About, Sponser, Feedback, Contact } from "../../sections";
-
-import ChatBot from "../../features/ChatBot/ChatBot";
-import LiveEventPopup from "../../features/Modals/Event/LiveEventPopup/LiveEventPopup";
-import axios from 'axios'
+import { ChatBot, LiveEventPopup } from "../../features";
 
 const Home = () => {
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
-
-  
   return (
     <>
       <LiveEventPopup />

@@ -1,5 +1,4 @@
-import React from 'react'
-import Login from '../../../Authentication/Login/Login'
+import Login from '../../../authentication/Login/Login';
 
 const LoginMain = () => {
   return (

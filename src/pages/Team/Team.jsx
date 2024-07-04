@@ -1,28 +1,34 @@
-import React, { useState, useEffect } from 'react';
-import { NavLink, Link } from "react-router-dom";
-import styles from './styles/Team.module.scss'; 
-import teamMembers from '../../data/MemberCard.json'; 
-import MemberCard from '../../components/Team/Member/MemberCard';
+import { useState, useEffect } from 'react';
+import { Link } from "react-router-dom";
+import axios from 'axios';
+
+import styles from './styles/Team.module.scss';
+import { TeamCard } from '../../components';
 import { FaRegArrowAltCircleRight } from "react-icons/fa";
-
-function useWindowWidth() {
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-
-  useEffect(() => {
-    function handleResize() {
-      setWindowWidth(window.innerWidth);
-    }
-
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
-  return windowWidth;
-}
+import useWindowWidth from '../../hooks/useWindowWidth'; // Import useWindowWidth hook
 
 const Team = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
+  }, []);
+
+  const [teamMembers, setTeamMembers] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const windowWidth = useWindowWidth(); // Use the custom hook here
+
+  useEffect(() => {
+    const fetchTeamMembers = async () => {
+      try {
+        const response = await axios.get('/api/team/getTeamMembers');
+        setTeamMembers(response.data);
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching team members:', error);
+        setLoading(false);
+      }
+    };
+
+    fetchTeamMembers();
   }, []);
 
   const roles = ['Director', 'Technical', 'Creative', 'Marketing', 'Operations', 'Sponsorship & PR'];
@@ -32,7 +38,6 @@ const Team = () => {
   }));
 
   const TeamSection = ({ title, members, isDirector }) => {
-    const windowWidth = useWindowWidth();
     const membersPerRow = windowWidth < 500 ? 2 : 4;
     const remainderMembersCount = members.length % membersPerRow;
     const lastRowMembers = remainderMembersCount > 0 ? members.slice(-remainderMembersCount) : [];
@@ -43,7 +48,7 @@ const Team = () => {
         <h3>{title}</h3>
         <div className={`${styles.teamGrid} ${isDirector ? styles.directorGrid : ''}`}>
           {otherMembers.map((member, idx) => (
-            <MemberCard
+            <TeamCard
               key={idx}
               className="teamMember"
               name={member.name}
@@ -58,7 +63,7 @@ const Team = () => {
         {lastRowMembers.length > 0 && (
           <div className={styles.lastRowCentered}>
             {lastRowMembers.map((member, idx) => (
-              <MemberCard
+              <TeamCard
                 key={idx}
                 className="teamMember"
                 name={member.name}
@@ -83,7 +88,7 @@ const Team = () => {
       </div>
       <div className={styles.circle}></div>
       <div className={styles.circle2}></div>
-      
+
       {teamByRole.filter(section => section.role === 'Director').map((section, index) => (
         <TeamSection
           key={index}
@@ -92,7 +97,7 @@ const Team = () => {
           isDirector={true}
         />
       ))}
-      
+
       {teamByRole.filter(section => section.role !== 'Director').map((section, index) => (
         <TeamSection
           key={index}
