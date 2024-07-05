@@ -17,6 +17,7 @@ import AuthContext from "./context/AuthContext";
 const Home = lazy(() => import("./pages/Home/Home"));
 const Event = lazy(() => import("./pages/Event/Event"));
 const PastEvent = lazy(() => import("./pages/Event/PastEvent"));
+const EventForm = lazy(() => import("./pages/Event/EventForm"));
 const Social = lazy(() => import("./pages/Social/Social"));
 const Team = lazy(() => import("./pages/Team/Team"));
 const Alumni = lazy(() => import("./pages/Alumni/Alumni"));
@@ -60,10 +61,21 @@ function App() {
             <Route path="/Social" element={<Social />} />
             <Route path="/Team" element={<Team />} />
             <Route path="/Alumni" element={<Alumni />} />
-            {authCtx.isLoggedIn && (<Route path="/profile" element={<Profile />} />)}
+            {authCtx.isLoggedIn && [
+              <Route path="/profile" element={<Profile />} />,
+              <Route
+                path="/profile/Events/:eventId"
+                element={[<Profile />, <EventModal onClosePath="/profile" />]}
+              />,
+            ]}
             <Route path="/Events/:eventId" element={[<Event />, <EventModal onClosePath='/Events' />]} />
             <Route path="/Events/pastEvents/:eventId" element={[<Event />, <EventModal onClosePath='/Events' />]} />
             <Route path="/pastEvents/:eventId" element={[<PastEvent />, <EventModal onClosePath='/Events/pastEvents' />]} />
+            
+            <Route
+              path="/Events/:eventId/Form"
+              element={[<Event />, <EventForm />]}
+            />
             <Route path="/PrivacyPolicy" element={<PrivacyPolicy />} />
             <Route path="/TermsAndConditions" element={<TermsAndConditions />} />
             <Route path="*" element={<Error />} />

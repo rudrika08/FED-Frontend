@@ -28,6 +28,11 @@ const Share = ({ onClose, urlpath }) => {
       padding: '0.5rem',
       margin: '0.5rem 0',
     },
+    copyUrl: {
+      overflowY: 'scroll',
+      scrollbarWidth: 'none',
+      msOverflowStyle: 'none', 
+    },
     title: {
       color: 'aquamarine',
       fontStyle: 'italic',

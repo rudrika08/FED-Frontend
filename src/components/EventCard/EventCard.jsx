@@ -1,14 +1,14 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import style from "./styles/EventCard.module.scss";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { Link } from "react-router-dom";
-import Share from "../../features/Modals/Event/ShareModal/ShareModal";
+import Share from '../../features/Modals/Event/ShareModal/ShareModal';
 import shareOutline from "../../assets/images/shareOutline.svg";
 import groupIcon from "../../assets/images/groups.svg";
 import rupeeIcon from "../../assets/images/rupeeIcon.svg";
-import { CiLock } from "react-icons/ci";
+import ciLock from '../../assets/images/lock.svg'
 import { PiClockCountdownDuotone } from "react-icons/pi";
 
 const EventCard = (props) => {
@@ -23,27 +23,50 @@ const EventCard = (props) => {
     additionalContent,
   } = props;
 
+  const { info } = data;
+
   const [isOpen, setOpen] = useState(false);
   const [remainingTime, setRemainingTime] = useState("");
   const [btnTxt, setBtnTxt] = useState("Register Now");
 
-  // Initialize AOS
   useEffect(() => {
     AOS.init({ duration: 2000 });
   }, []);
 
-  // Calculate remaining time until registration starts
   useEffect(() => {
-    if (data.regDateAndTime) {
-      calculateRemainingTime(); // Initial calculation
+    if (info.regDateAndTime) {
+      calculateRemainingTime();
       const intervalId = setInterval(calculateRemainingTime, 1000);
       return () => clearInterval(intervalId);
     }
-  }, [data.regDateAndTime]);
+  }, [info.regDateAndTime]);
 
-  // Function to calculate remaining time until registration starts
+  const dateStr = info.eventDate;
+  const date = new Date(dateStr);
+
+  const day = date.getDate();
+
+  const getOrdinalSuffix = (day) => {
+    if (day > 3 && day < 21) return "th"; // Handles 4-20
+    switch (day % 10) {
+      case 1:
+        return "st";
+      case 2:
+        return "nd";
+      case 3:
+        return "rd";
+      default:
+        return "th";
+    }
+  };
+
+  const dayWithSuffix = day + getOrdinalSuffix(day);
+  const month = date.toLocaleDateString("en-GB", { month: "long" });
+
+  const formattedDate = `${dayWithSuffix} ${month}`;
+
   const calculateRemainingTime = () => {
-    const regStartDate = new Date(data.regDateAndTime);
+    const regStartDate = new Date(info.regDateAndTime);
     const now = new Date();
     const timeDifference = regStartDate - now;
 
@@ -67,25 +90,20 @@ const EventCard = (props) => {
     setRemainingTime(remaining.trim());
   };
 
-  // Update button text based on registration status and remaining time
   useEffect(() => {
-    if (!remainingTime) {
-      if (data.registrationClosed) {
-        setBtnTxt("Closed");
-      } else {
-        setBtnTxt("Register Now");
-      }
+    if (info.registrationClosed) {
+      setBtnTxt("Closed");
+    } else if (!remainingTime) {
+      setBtnTxt("Register Now");
     } else {
       setBtnTxt(remainingTime);
     }
-  }, [data.registrationClosed, remainingTime]);
+  }, [info.registrationClosed, remainingTime]);
 
-  // Toggle share modal
   const handleShare = () => {
     setOpen(!isOpen);
   };
 
-  // Close share modal
   const handleCloseShare = () => {
     setOpen(false);
   };
@@ -96,8 +114,8 @@ const EventCard = (props) => {
     <>
       <div className={style.card} style={customStyles.card} data-aos="fade-up">
         <div className={style.backimg} style={customStyles.backimg} onClick={onOpen}>
-          <img srcSet={data.imageURL} className={style.img} style={customStyles.img} alt="Event" />
-          <div className={style.date} style={customStyles.date}>{data.eventDate}</div>
+          <img srcSet={info.imageURL} className={style.img} style={customStyles.img} alt="Event" />
+          <div className={style.date} style={customStyles.date}>{formattedDate}</div>
           {type === "ongoing" && showShareButton && (
             <div className={style.share} style={customStyles.share} onClick={handleShare}>
               <img className={style.shareIcon} style={customStyles.shareIcon} src={shareOutline} alt="Share" />
@@ -106,16 +124,16 @@ const EventCard = (props) => {
         </div>
         <div className={style.backbtn} style={customStyles.backbtn}>
           <div className={style.eventname} style={customStyles.eventname}>
-            {data.eventName}
+            {info.eventName}
             {type === "ongoing" && (
               <p>
                 <img src={groupIcon} alt="Group" />
-                Team size: {data.teamSize} {" || "}
+                Team size: {info.minSize}{"-"}{info.maxSize} {" || "}
                 <div className={style.price} style={customStyles.price}>
-                  {data.eventPrice ? (
+                  {info.eventPrice ? (
                     <p style={customStyles.eventnamep}>
                       <img src={rupeeIcon} alt="Rupee" />
-                      {data.eventPrice}
+                      {info.eventPrice}
                     </p>
                   ) : (
                     <p style={{ color: "inherit" }}>Free</p>
@@ -136,7 +154,7 @@ const EventCard = (props) => {
               >
                 {btnTxt === "Closed" ? (
                   <>
-                    Closed <CiLock style={{ marginLeft: "5px" }} />
+                    <div style={{fontSize:"0.8rem"}}>Closed</div> <img src={ciLock} alt="" style={{marginLeft:"0px"}} />
                   </>
                 ) : (
                   <>
@@ -145,7 +163,8 @@ const EventCard = (props) => {
                         <PiClockCountdownDuotone /> {btnTxt}
                       </>
                     ) : (
-                      btnTxt
+                      <Link to={'/Events/'+data.id+"/Form"}><div style={{fontSize:"0.8rem"}}>{btnTxt}</div></Link>
+                   
                     )}
                   </>
                 )}
@@ -155,7 +174,7 @@ const EventCard = (props) => {
         </div>
         <div className={style.backtxt} style={customStyles.backtxt}>
           <div style={{ display: "flex", alignItems: "center" }}>
-            <div className={style.EventDesc} style={customStyles.EventDesc}>{data.eventDescription}</div>
+            <div className={style.EventDesc} style={customStyles.EventDesc}>{info.description}</div>
             <Link to={modalpath + data.id}>
               <span onClick={handleCloseShare} className={style.seeMore} style={{
                 ...customStyles.seeMore,
