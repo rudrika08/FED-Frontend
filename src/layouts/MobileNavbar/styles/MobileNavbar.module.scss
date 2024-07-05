@@ -189,11 +189,13 @@
       width: 100vw;
       position: absolute;
       top: 6rem;
+      background-color: pink;
       left: 0;
       backdrop-filter: blur(10px);
       display: flex;
       justify-content: center;
       align-items: flex-start;
+      z-index: 10000;
     }
 
     .blur {
@@ -228,6 +230,7 @@
   .blur {
     backdrop-filter: blur(90px); // Apply the blur effect
     -webkit-backdrop-filter: blur(90px); // Safari support
+    z-index: 1;
   }
 }
 

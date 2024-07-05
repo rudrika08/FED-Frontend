@@ -14,8 +14,9 @@ const ContactForm = () => {
     };
 
     try {
-      const response = await axios.post('/api/contact', data);
-      console.log('Form submitted successfully:', response.data);
+      // const response = await axios.post('/api/contact', data);
+      // console.log('Form submitted successfully:', response.data);
+      console.log('Form submitted successfully:', data);
       alert('Your message has been submitted!');
       event.target.reset(); // Clear the form fields
     } catch (error) {
