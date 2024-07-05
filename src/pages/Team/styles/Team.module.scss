@@ -92,7 +92,7 @@ strong {
   width: 30vh;
   background-color: rgba(255, 92, 0, 0.19);
   position: absolute;
-  // bottom: -700%;
+  bottom: -700%;
   right: -5%;
   border-radius: 50%;
   filter: blur(150px);
@@ -154,7 +154,7 @@ strong {
 
 @media (max-width: 1024px) {
   .circle2 {
-    // bottom: -200%;
+    bottom: -200%;
     right: -25%;
   }
   .circle {
