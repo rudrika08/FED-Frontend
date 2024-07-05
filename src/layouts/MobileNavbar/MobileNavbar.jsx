@@ -229,7 +229,7 @@ export default function Navbar() {
                   onClick={toggleMenu}
                 >
                   <button className={style.mobilesignup}>
-                    Login/Sign up
+                    Login
                   </button>
                 </motion.a>
               )}
