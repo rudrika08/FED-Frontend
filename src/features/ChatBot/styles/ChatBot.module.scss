@@ -300,6 +300,10 @@ input:focus{
         height: auto;
         margin-right: 15px;
     }
+    .chatbottoggle {
+      z-index: 1;
+  }
+  
     .chatbox {
         height: 60vh;
     }
