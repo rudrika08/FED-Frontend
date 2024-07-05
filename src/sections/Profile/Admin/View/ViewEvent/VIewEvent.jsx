@@ -3,14 +3,14 @@ import axios from "axios";
 import styles from "./styles/ViewEvent.module.scss";
 
 import {Button, EventCard} from "../../../../../components";
+import FormData from "../../../../../data/FormData.json"
 
-import eventData from "../../../../../data/eventData.json"
 
 
 function ViewEvent() {
   const [activePage, setActivePage] = useState("View Events");
   const [pastEvents, setPastEvents] = useState([]);
-
+  const{events}=FormData;
   useEffect(() => {
     // Fetch event data using axios
     const fetchEventData = async () => {
@@ -18,8 +18,7 @@ function ViewEvent() {
         // const response = await axios.get("/api/form/getAllForms");
         // const fetchedEvents = response.data;
         // setPastEvents(fetchedEvents);
-
-        const testEvents = eventData;
+        const testEvents=events.filter((event)=>!event.info.ongoingEvent)
         setPastEvents(testEvents);
 
       } catch (error) {
@@ -33,6 +32,9 @@ function ViewEvent() {
   const customStyles = {
     eventname: {
       fontSize: "1rem",
+    },
+    date:{
+        fontSize:"1rem",
     },
     registerbtn: {
       width: "auto",
@@ -57,12 +59,12 @@ function ViewEvent() {
         {activePage === "View Events" && (
           <div className={styles.eventList}>
             {pastEvents.map((event, index) => (
-              <div style={{ width: "18rem", height: "auto" }} key={index}>
+              <div style={{ width: "23rem", height: "auto" }} key={index}>
                 <EventCard
                   data={event}
                   customStyles={customStyles}
                   type="past"
-                  modalpath="/Events/pastEvents/"
+                   modalpath='/profile/Events/'
                   isPastpage={true}
                 />
               </div>
