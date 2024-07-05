@@ -14,12 +14,14 @@ const ContactForm = () => {
     };
 
     try {
-      const response = await axios.post('/api/contact', data);
-      console.log('Form submitted successfully:', response.data);
-      // Handle success (e.g., show a success message)
+      // const response = await axios.post('/api/contact', data);
+      // console.log('Form submitted successfully:', response.data);
+      console.log('Form submitted successfully:', data);
+      alert('Your message has been submitted!');
+      event.target.reset(); // Clear the form fields
     } catch (error) {
       console.error('Error submitting form:', error);
-      // Handle error (e.g., show an error message)
+      alert('There was an error submitting your message. Please try again.');
     }
   };
 
@@ -59,7 +61,6 @@ const ContactForm = () => {
           </AnimatedBox>
           <div className={styles.circle}></div>
         </div>
-
       </div>
     </div>
   );
