@@ -78,11 +78,9 @@ const Alumni = () => {
       <h2>
         Meet Our <span style={{ background: "var(--primary)", WebkitBackgroundClip: "text", color: "transparent" }}>Alumni</span>
       </h2>
-      <div className={styles.circle}></div>
-
+      {/* <div className={styles.circle}></div> */}
       {!loading && <AlumniSection alumni={alumni} />}
-
-      <div className={styles.circle2}></div>
+      {/* <div className={styles.circle2}></div> */}
     </div>
   );
 };
