@@ -51,7 +51,7 @@ body::-webkit-scrollbar {
 
 body::-webkit-scrollbar-thumb {
   border-radius: 22px;
-  background-color: #FF8A00;
+  background: var(--primary);
   // border: 1.5px solid hwb(0 11% 89%);
 }
 

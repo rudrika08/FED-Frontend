@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 import styles from './styles/LiveEventPopup.module.scss';
-import eventData from '../../../../data/EventCards.json';
+import eventData from '../../../../data/eventData.json';
 
 let popupCount = 0;
 
@@ -10,20 +11,32 @@ const LiveEventPopup = () => {
   const [eventImage, setEventImage] = useState('');
 
   useEffect(() => {
-    const currentEvent = eventData.find(event => event.IsEventOngoing === "true");
-    if (currentEvent && popupCount === 0) {
-      setIsEventOngoing(true);
-      setEventImage(currentEvent.imageURL);
+    const fetchEventData = async () => {
+      try {
+        // const response = await axios.get('/api/form/getAllForms');
+        // const fetchedEvents = response.data;
+        const events = eventData;
 
-      const timer = setTimeout(() => {
-        setIsVisible(true);
-        popupCount++;
-      }, 100);
+        const currentEvent = events.find(event => event.ongoingEvent);
+        if (currentEvent && popupCount === 0) {
+          setIsEventOngoing(true);
+          setEventImage(currentEvent.imageURL);
 
-      return () => clearTimeout(timer);
-    } else {
-      setIsEventOngoing(false);
-    }
+          const timer = setTimeout(() => {
+            setIsVisible(true);
+            popupCount++;
+          }, 100);
+
+          return () => clearTimeout(timer);
+        } else {
+          setIsEventOngoing(false);
+        }
+      } catch (error) {
+        console.error("Error fetching event data:", error);
+      }
+    };
+
+    fetchEventData();
   }, []);
 
   useEffect(() => {

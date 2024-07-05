@@ -18,6 +18,7 @@ const customStyles = {
     borderRadius: "4px",
     color: "#fff",
     marginBottom: "8px",
+    maxHeight:"2rem",
     marginLeft: "8px",
     marginRight: "8px",
     marginTop: "4px",
@@ -34,7 +35,6 @@ const customStyles = {
     width: "100%",
     color: "#333",
     backgroundColor: "#fff",
-    // zIndex: 9999,
     marginTop:0,
     marginLeft:8
   }),
@@ -293,7 +293,7 @@ const Input = (props) => {
         return (
           <input
             name={name}
-            className={styles.input}
+            className={`${styles.input}  ${className}`}
             type={type}
             style={style || {}}
             placeholder={placeholder}

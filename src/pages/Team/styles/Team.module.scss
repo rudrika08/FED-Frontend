@@ -76,27 +76,27 @@ strong {
 
 
 
-.circle {
-  height: 50vh;
-  width: 30vh;
-  background-color: rgba(255, 92, 0, 0.19);
-  position: absolute;
-  top: 80%;
-  left: -10%;
-  border-radius: 50%;
-  filter: blur(150px);
-}
+// .circle {
+//   height: 50vh;
+//   width: 30vh;
+//   background-color: rgba(255, 92, 0, 0.19);
+//   position: absolute;
+//   top: 80%;
+//   left: -10%;
+//   border-radius: 50%;
+//   filter: blur(150px);
+// }
 
-.circle2 {
-  height: 50vh;
-  width: 30vh;
-  background-color: rgba(255, 92, 0, 0.19);
-  position: absolute;
-  bottom: -700%;
-  right: -5%;
-  border-radius: 50%;
-  filter: blur(150px);
-}
+// .circle2 {
+//   height: 50vh;
+//   width: 30vh;
+//   background-color: rgba(255, 92, 0, 0.19);
+//   position: absolute;
+//   // bottom: -700%;
+//   right: -5%;
+//   border-radius: 50%;
+//   filter: blur(150px);
+// }
 
 .alumniBut{
   display: flex;
@@ -110,7 +110,10 @@ strong {
 }
 
 .alumniBut a{
-  color: #FF8A00;
+  // color: #FF8A00;
+  background: var(--primary);
+  background-clip: text;
+  color: transparent;
   text-decoration: none;
 }
 
@@ -150,24 +153,24 @@ strong {
 /* Responsive styles */
 
 @media (max-width: 1024px) {
-  .circle2 {
-    bottom: -200%;
-    right: -25%;
-  }
-  .circle {
-    left: -30%;
-  }
+  // .circle2 {
+  //   // bottom: -200%;
+  //   right: -25%;
+  // }
+  // .circle {
+  //   left: -30%;
+  // }
 }
 
 @media (max-width: 768px) {
-  .circle {
-    left: -20%;
-  }
-  .circle2 {
-    bottom: -500%;
-    right: -20%;
-    display: none;
-  }
+  // .circle {
+  //   left: -20%;
+  // }
+  // .circle2 {
+  //   bottom: -500%;
+  //   right: -20%;
+  //   display: none;
+  // }
 
 
   h2 {
@@ -216,20 +219,20 @@ strong {
   h2 {
     font-size: 40px;
   }
-  .circle {
-    left: -30%;
-    background-color: rgba(255, 92, 0, 0.59);
-  }
+  // .circle {
+  //   left: -30%;
+  //   background-color: rgba(255, 92, 0, 0.59);
+  // }
 
   .teamSection span {
     margin-left: 5px;
   }
 
-  .circle2 {
-    bottom: -500%;
-    left: 30%;
-    background-color: rgba(255, 92, 0, 0.59);
-  }
+  // .circle2 {
+  //   bottom: -500%;
+  //   left: 30%;
+  //   background-color: rgba(255, 92, 0, 0.59);
+  // }
   
 
   .alumniBut {

@@ -1,9 +1,9 @@
 import { useState, useContext, useEffect } from 'react';
-import Layout from '../../layouts/Profile/ProfileLayout/ProfileLayout';
-import Sidebar from '../../layouts/Profile/Sidebar/Sidebar';
-import AuthContext from '../../store/AuthContext';
 
-import {ProfileView, EventsView, NewForm, ViewMember, ViewEvent} from '../../components/Profile';
+import { ProfileLayout, Sidebar } from '../../layouts';
+import { ProfileView, EventsView, NewForm, ViewMember, ViewEvent } from '../../sections';
+
+import AuthContext from '../../context/AuthContext';
 
 import style from "./styles/Profile.module.scss";
 
@@ -13,14 +13,15 @@ const Profile = () => {
   const [designation, setDesignation] = useState("");
 
   useEffect(() => {
-    if (authCtx.user.access === "0") {
+    const access = authCtx.user.access;
+    if (access === "ADMIN") {
       setDesignation("Admin");
-    } else if (authCtx.user.access === "1") {
-      setDesignation("Member");
-    } else if (authCtx.user.access === "2") {
-      setDesignation("User");
-    } else if (authCtx.user.access === "3") {
+    } else if (access === "ALUMNI") {
       setDesignation("Alumni");
+    } else if (access === "USER") {
+      setDesignation("User");
+    } else {
+      setDesignation("Member");
     }
   }, [authCtx.user.access]);
 
@@ -34,21 +35,20 @@ const Profile = () => {
         case "Members":
           return <ViewMember />;
         default:
-          return <ProfileView />;
+          return <ProfileView editmodal='/profile/' />;
       }
-    } 
-    else if (designation !== "Admin") {
+    } else {
       switch (activePage) {
         case "Event":
           return <EventsView />;
         default:
-          return <ProfileView />;
+          return <ProfileView editmodal='/profile/' />;
       }
     }
   };
 
   return (
-    <Layout>
+    <ProfileLayout>
       <div className={style.profile}>
         <Sidebar
           activepage={activePage}
@@ -56,7 +56,7 @@ const Profile = () => {
         />
         <div className={style.profile__content}>{getActivePage()}</div>
       </div>
-    </Layout>
+    </ProfileLayout>
   );
 };
 

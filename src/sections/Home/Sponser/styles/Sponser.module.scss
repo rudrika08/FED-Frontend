@@ -1,0 +1,147 @@
+.sponser_container {
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 3rem;
+}
+
+.sponser_all {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  border-radius: 2.77rem; //border radius of outer container holding every card
+  border: 0.88px solid rgba(255, 255, 255, 0.40);
+  background: rgba(255, 255, 255, 0.10);
+  backdrop-filter: blur(6.7px);
+  padding: 3rem 2rem;
+  margin-top: 2rem;
+  width: 65rem;
+  gap: 3rem 3rem;
+  margin-bottom: 2rem;
+}
+
+.sponser_card {
+  height: 7rem;
+  width: 7rem;
+  border-radius: 1.2rem; //border radius of each card
+  border: 2px solid white;
+  overflow: hidden;
+}
+
+.SponserCard_image {
+  height: 100%;
+  width: 110%;
+  margin-left: -2px;
+  object-fit: cover;
+}
+
+.sponser_title {
+  text-align: center;
+  font-size: 50px;
+  color: white;
+  font-weight: 700;
+  /* font-family: Poppins; */
+  line-height: 149.415%;
+  letter-spacing: 0.035rem;
+  text-transform: uppercase;
+  margin-top: 3rem;
+  margin-bottom: 10px;
+  margin-right: 10px;
+}
+
+.sponser_title2 {
+  background: var(--primary);
+  background-clip: text;
+  color: transparent;
+}
+
+.bottom_line {
+  width: 14rem;
+  margin-right: 0rem;
+  height: 0.3125rem;
+  background: var(--primary);
+  color: transparent;
+  border-radius: 5px;
+}
+
+/* Media Queries */
+
+@media (max-width: 1024px) {
+  .sponser_all {
+    width: 90%;
+    padding: 4rem 0;
+    gap: 2rem;
+    margin-left: 2.2rem;
+  }
+
+  .sponser_card {
+    height: 6rem;
+    width: 6rem;
+  }
+
+  .sponser_title {
+    font-size: 60.8px;
+  }
+
+  .bottom_line {
+    margin-left: 10%;
+  }
+}
+
+@media (max-width: 768px) {
+
+
+  .sponser_container
+  {
+    padding-top: 1rem;
+    align-items: center;
+    margin-right: 20px;
+  }
+  .sponser_all {
+    width: 90%;
+    padding: 3rem 0;
+    gap: 1.5rem;
+    // z-index: 1;
+  }
+
+  .sponser_card {
+    height: 5rem;
+    width: 5rem;
+    border-radius: 20px;
+  }
+
+  .sponser_title {
+    font-size: 45px;
+    // margin-top: -15rem;
+  }
+
+  .bottom_line {
+    margin-left: 35%;
+    width: 8rem;
+  }
+}
+
+@media (max-width: 480px) {
+
+
+  .sponser_title {
+    font-size: 30px;
+    margin-top: -15rem;
+    margin-right: 0;
+   }
+
+
+  .bottom_line{
+    margin-right: 7rem;
+  }
+
+  .sponser_container{
+    padding-top: 1rem;
+    align-items: center;
+    margin-right: 30px;
+  }
+
+}

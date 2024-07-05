@@ -87,6 +87,8 @@
   display: flex;
   flex-wrap: wrap;
   margin-top: 3rem;
+  column-gap: 5rem;
+  row-gap: 4rem;
 }
 
 .card {
@@ -106,7 +108,7 @@
   padding-right: 7rem;
   position: relative;
   margin-left: 5.5rem;
-  margin-top: 6rem;
+  // margin-top: 1rem;
 }
 
 // .outcard {
@@ -124,8 +126,8 @@
   // justify-content: space-around;
   // margin-left: -4rem;
   // margin-top: -5rem;
-  column-gap:6rem;
-  row-gap: 6rem;
+  column-gap:5.5rem;
+  row-gap: 5.5rem;
 }
 
 .ca {
@@ -143,6 +145,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-block: 0.5rem;
 }
 
 .seeall {
@@ -162,6 +165,9 @@
   color: transparent;
   background-clip: text;
   cursor: pointer;
+  // margin-right: 1rem;
+  // margin-top: 1rem;
+  // margin-bottom: 1rem;
 }
 
 .seeall {
@@ -261,6 +267,8 @@
   .cardone {
     display: flex;
     flex-wrap: wrap;
+    column-gap: 0;
+    row-gap: 3rem;
     // margin-top: -2rem;
   }
 
