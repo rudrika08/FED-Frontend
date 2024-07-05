@@ -46,22 +46,22 @@ h2 span {
 }
 
 .circle {
-  height: 35vh;
+  height: 50vh;
   width: 30vh;
   background-color: rgba(255, 92, 0, 0.29);
   position: absolute;
-  top: 70%;
+  top: 80%;
   left: -10%;
   border-radius: 50%;
   filter: blur(150px);
 }
 
 .circle2 {
-  height: 35vh;
+  height: 50vh;
   width: 30vh;
   background-color: rgba(255, 92, 0, 0.29);
   position: absolute;
-  // bottom: -500%;
+  bottom: -500%;
   right: -5%;
   border-radius: 50%;
   filter: blur(150px);
@@ -71,26 +71,26 @@ h2 span {
 /* Responsive styles */
 
 @media (max-width: 1024px) {
-  // .circle2 {
-  //   // bottom: -200%;
-  //   right: -25%;
-  // }
-  // .circle {
-  //   left: -30%;
-  //   // bottom: -350%;
-  // }
+  .circle2 {
+    bottom: -200%;
+    right: -25%;
+  }
+  .circle {
+    left: -30%;
+    bottom: -350%;
+  }
   .alumniGrid{
     gap: 3rem;
   }
 }
 
 @media (max-width: 768px) {
-  // .circle {
-  //   left: -20%;
-  // }
-  // .circle2 {
-  //   display: none;
-  // }
+  .circle {
+    left: -20%;
+  }
+  .circle2 {
+    display: none;
+  }
 
 
   h2 {
@@ -130,22 +130,20 @@ h2 span {
   h2 {
     font-size: 2rem;
   }
-  // .circle {
-  //   left: -30%;
-  //   background-color: rgba(255, 92, 0, 0.59);
-  //   overflow: hidden;
-  // }
+  .circle {
+    left: -30%;
+    background-color: rgba(255, 92, 0, 0.59);
+  }
 
   .alumniSection span {
     margin-left: 5px;
   }
 
-  // .circle2 {
-  //   bottom: -300%;
-  //   left: 30%;
-  //   background-color: rgba(255, 92, 0, 0.59);
-  //   overflow: hidden;
-  // }
+  .circle2 {
+    bottom: -300%;
+    left: 30%;
+    background-color: rgba(255, 92, 0, 0.59);
+  }
   
 }
 
