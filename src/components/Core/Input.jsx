@@ -1,11 +1,13 @@
 import { forwardRef, useRef, useState } from "react";
-import styles from "./styles/Core.module.scss";
+import PropTypes from "prop-types";
 import { FaRegCalendarAlt } from "react-icons/fa";
 import Select, { components } from "react-select";
 import DatePicker from "react-date-picker";
 import { AiOutlineDown } from "react-icons/ai";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import DatePickerWithTime from "react-datepicker";
+
+import styles from "./styles/Core.module.scss";
 
 const CustomInput = forwardRef(
   ({ value, onClick, placeholder = "Select Date & Time" }, ref) => (
@@ -42,22 +44,31 @@ const CustomInput = forwardRef(
   )
 );
 
+CustomInput.displayName = "CustomInput";
+
+CustomInput.propTypes = {
+  value: PropTypes.string,
+  onClick: PropTypes.func.isRequired,
+  placeholder: PropTypes.string,
+};
+
 const customStyles = {
   control: (provided) => ({
     ...provided,
     display: "flex",
     outline: "none",
-    width: "99%",
+    width: "100%",
     fontSize: "12px",
     backgroundColor: "transparent",
     borderRadius: "4px",
     color: "#fff",
-    marginBottom: "0",
+    marginBottom: "8px",
+    maxHeight:"2rem",
     marginLeft: "8px",
     marginRight: "8px",
     marginTop: "4px",
     position: "relative",
-    padding: "6px",
+    paddingBottom: "10px",
     border: "1px solid rgba(211, 211, 211, 0.5)",
     boxShadow: "none",
     "&:hover": {
@@ -66,13 +77,24 @@ const customStyles = {
   }),
   menu: (provided) => ({
     ...provided,
-    width: "auto",
+    width: "100%",
     color: "#333",
     backgroundColor: "#fff",
+    marginTop:0,
   }),
-  placeholder: (provided) => ({
+  menuList: (provided) => ({
     ...provided,
-    marginLeft: "-4px",
+    padding: 0,
+  }),
+  option: (provided, state) => ({
+    ...provided,
+    color: state.isSelected ? "orange" : "#fff",
+    backgroundColor: "#333",
+    cursor: "pointer",
+    width:"100%",
+    "&:hover": {
+      backgroundColor: "#33333390",
+    },
   }),
   indicatorSeparator: (provided) => ({
     ...provided,
@@ -92,7 +114,7 @@ const DropdownIndicator = (props) => {
         size={20}
         style={{
           position: "absolute",
-          right: "10px",
+          right: "16px",
           top: "25%",
         }}
       />
@@ -172,7 +194,7 @@ const Input = (props) => {
 
       case "select":
         return (
-          <>
+          <div>
             <Select
               name={name}
               placeholder={placeholder}
@@ -186,12 +208,12 @@ const Input = (props) => {
               menuPosition="fixed"
               {...rest}
             />
-          </>
+          </div>
         );
 
       case "date":
         return (
-          <>
+          <div>
             <DatePicker
               name={name}
               className={`${styles.input} ${styles.inputDate} ${className}`}
@@ -215,7 +237,7 @@ const Input = (props) => {
               }
               {...rest}
             />
-          </>
+          </div>
         );
       case "datetime-local":
         return (
@@ -305,7 +327,7 @@ const Input = (props) => {
 
       case "password":
         return (
-          <>
+          <div>
             <div
               style={{
                 position: "relative",
@@ -349,7 +371,7 @@ const Input = (props) => {
                 />
               )}
             </div>
-          </>
+          </div>
         );
 
       default:
@@ -389,6 +411,36 @@ const Input = (props) => {
       {getInputTypes()}
     </div>
   );
+};
+
+Input.propTypes = {
+  type: PropTypes.oneOf([
+    "text",
+    "number",
+    "textarea",
+    "select",
+    "date",
+    "datetime-local",
+    "radio",
+    "checkbox",
+    "password",
+  ]),
+  containerStyle: PropTypes.object,
+  style: PropTypes.object,
+  placeholder: PropTypes.string,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool]),
+  onChange: PropTypes.func.isRequired,
+  label: PropTypes.string,
+  options: PropTypes.arrayOf(
+    PropTypes.shape({
+      value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+      label: PropTypes.string,
+    })
+  ),
+  name: PropTypes.string,
+  showLabel: PropTypes.bool,
+  className: PropTypes.string,
+  containerClassName: PropTypes.string,
 };
 
 export default Input;

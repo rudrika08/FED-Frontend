@@ -1,7 +1,8 @@
 import { useState, useRef } from "react";
+import PropTypes from "prop-types";
 import FormField from "./FormField";
 import styles from "./styles/Form.module.scss";
-import Button from "../Core/Button"
+import Button from "../Core/Button";
 import { FaAngleDown, FaAngleUp } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 
@@ -82,7 +83,7 @@ const Section = (props) => {
       return sec;
     });
 
-    const isConfirm = confirm("Are you sure you want to delete this field?");
+    const isConfirm = window.confirm("Are you sure you want to delete this field?");
     if (isConfirm) {
       setsections(newSections);
     }
@@ -91,7 +92,7 @@ const Section = (props) => {
   const onRemove = () => {
     const newSections = sections.filter((sec) => sec._id !== section._id);
 
-    const isConfirm = confirm("Are you sure you want to delete this section?");
+    const isConfirm = window.confirm("Are you sure you want to delete this section?");
 
     if (isConfirm) {
       if (newSections.length > 0) {
@@ -288,6 +289,31 @@ const Section = (props) => {
       </div>
     </div>
   );
+};
+
+Section.propTypes = {
+  section: PropTypes.shape({
+    _id: PropTypes.number.isRequired,
+    name: PropTypes.string.isRequired,
+    fields: PropTypes.arrayOf(
+      PropTypes.shape({
+        _id: PropTypes.number.isRequired,
+        name: PropTypes.string.isRequired,
+        type: PropTypes.string.isRequired,
+        value: PropTypes.string.isRequired,
+        isRequired: PropTypes.bool.isRequired,
+        validations: PropTypes.arrayOf(
+          PropTypes.shape({
+            _id: PropTypes.number.isRequired,
+            condition: PropTypes.string.isRequired,
+            target: PropTypes.string.isRequired,
+          })
+        ).isRequired,
+      })
+    ).isRequired,
+  }).isRequired,
+  sections: PropTypes.array.isRequired,
+  setsections: PropTypes.func.isRequired,
 };
 
 export default Section;
