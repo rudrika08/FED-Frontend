@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 import styles from "./styles/Preview.module.scss";
-import {Button} from "../../../../components";
+import {Button, Text} from "../../../../components";
 import Section from "./SectionModal";
 import { Link } from 'react-router-dom';
 import ArrowBackIcon from "@mui/icons-material/ArrowBack"
 import { X } from "lucide-react";
 
-const PreviewForm = ({ sections, open, handleClose,showCloseBtn }) => {
+const PreviewForm = ({ eventData, sections, open, handleClose,showCloseBtn }) => {
   const [data, setdata] = useState(sections);
   const [activeSection, setactiveSection] = useState(
     data !== undefined ? data[0] : ""
@@ -285,12 +285,26 @@ const PreviewForm = ({ sections, open, handleClose,showCloseBtn }) => {
     open && (
       <div className={styles.mainPreview}>
         <div ref={wrapperRef} className={styles.previewContainer}>
-       {showCloseBtn && <Link onClick={handleClose} to={'/Events'}>
-          <div className={styles.closeBtn}>
-            <X/>
-          </div>
-        </Link>
-        }
+          {showCloseBtn && <Link onClick={handleClose} to={'/Events'}>
+            <div className={styles.closeBtn}>
+              <X/>
+             </div>
+            </Link>
+          }
+          <Text style={{ marginBottom: "20px" }}>
+            {eventData?.title || "Preview Event"}
+          </Text>
+          {!isCompleted.includes(currentSection._id) && (
+            <Text
+              style={{
+                alignSelf: "center",
+                marginBottom: "20px",
+              }}
+              variant="secondary"
+            >
+              {currentSection.name}
+            </Text>
+          )}
           {!isCompleted.includes(currentSection._id) ? (
             <Section section={currentSection} handleChange={handleChange} />
           ) : (

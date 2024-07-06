@@ -18,7 +18,7 @@ function ViewEvent() {
         // const response = await axios.get("/api/form/getAllForms");
         // const fetchedEvents = response.data;
         // setPastEvents(fetchedEvents);
-        const testEvents=events.filter((event)=>!event.info.ongoingEvent)
+        const testEvents=events;
         setPastEvents(testEvents);
 
       } catch (error) {

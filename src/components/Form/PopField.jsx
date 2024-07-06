@@ -71,7 +71,7 @@ const PopField = ({
             options={[
               ...sections.map((section) => {
                 return {
-                  label: `Section_${section._id}`,
+                  label: `${section.name}_${section._id}`,
                   value: section._id,
                 };
               }),
@@ -90,10 +90,8 @@ const PopField = ({
               onClick={() => {
                 onRemoveValidation(field, valid._id);
               }}
+              color="#FF8A00"
               style={{
-                backgroundColor: "var(--primary)", 
-            WebkitBackgroundClip: "text", 
-            color: "transparent",
                 cursor: "pointer",
                 marginTop: "12px",
                 zIndex: 10,

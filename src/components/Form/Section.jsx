@@ -253,12 +253,12 @@ const Section = (props) => {
           <MdDelete
             size={20}
             onClick={onRemove}
-            style={{backgroundColor: "var(--primary)", 
-              WebkitBackgroundClip: "text", 
-              color: "transparent", cursor: "pointer", margin: "auto .7em" }}
+            color="#FF8A00"
+            style={{ cursor: "pointer", margin: "auto .7em" }}
           />
         )}
         <p
+          title={`Section_${section.name}_${section._id}`}
           style={{
             color: "#fff",
             opacity: "0.4",
@@ -267,7 +267,7 @@ const Section = (props) => {
             marginLeft: sections.length > 1 ? 0 : "8px",
           }}
         >
-          Section_{section._id} ({section.fields.length} fields)
+          {section.name} (total {section.fields.length} fields)
         </p>
 
         {hideSection ? (

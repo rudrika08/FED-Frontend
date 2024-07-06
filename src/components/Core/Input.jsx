@@ -1,24 +1,58 @@
-import React, { useRef, useState } from "react";
+import { forwardRef, useRef, useState } from "react";
 import styles from "./styles/Core.module.scss";
-import { FaRegCalendarAlt, FaZhihu } from "react-icons/fa";
+import { FaRegCalendarAlt } from "react-icons/fa";
 import Select, { components } from "react-select";
 import DatePicker from "react-date-picker";
 import { AiOutlineDown } from "react-icons/ai";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import DatePickerWithTime from "react-datepicker";
+
+const CustomInput = forwardRef(
+  ({ value, onClick, placeholder = "Select Date & Time" }, ref) => (
+    <div
+      onClick={onClick}
+      ref={ref}
+      style={{
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between",
+      }}
+    >
+      <p
+        style={{
+          margin: "4px",
+          fontSize: "12px !important",
+          opacity: value ? 1 : 0.5,
+          fontWeight: "100 !important",
+        }}
+      >
+        {value || placeholder}
+      </p>
+      <FaRegCalendarAlt
+        color="#fff"
+        size={18}
+        style={{
+          position: "absolute",
+          top: "20%",
+          right: '8px',
+        }}
+      />
+    </div>
+  )
+);
 
 const customStyles = {
   control: (provided) => ({
     ...provided,
     display: "flex",
     outline: "none",
-    border: "none",
-    width: "100%",
+    width: "99%",
     fontSize: "12px",
     backgroundColor: "transparent",
     borderRadius: "4px",
     color: "#fff",
-    marginBottom: "8px",
-    maxHeight:"2rem",
+    marginBottom: "0",
     marginLeft: "8px",
     marginRight: "8px",
     marginTop: "4px",
@@ -32,24 +66,13 @@ const customStyles = {
   }),
   menu: (provided) => ({
     ...provided,
-    width: "100%",
+    width: "auto",
     color: "#333",
     backgroundColor: "#fff",
-    marginTop:0,
-    marginLeft:8
   }),
-  menuList: (provided) => ({
+  placeholder: (provided) => ({
     ...provided,
-    padding: 0,
-  }),
-  option: (provided, state) => ({
-    ...provided,
-    color: state.isSelected ? "orange" : "#fff",
-    backgroundColor: "#333",
-    width:"100%",
-    "&:hover": {
-      backgroundColor: "#33333390",
-    },
+    marginLeft: "-4px",
   }),
   indicatorSeparator: (provided) => ({
     ...provided,
@@ -69,7 +92,7 @@ const DropdownIndicator = (props) => {
         size={20}
         style={{
           position: "absolute",
-          right: "16px",
+          right: "10px",
           top: "25%",
         }}
       />
@@ -96,6 +119,13 @@ const Input = (props) => {
   const dateRef = useRef(null);
   const [showPassword, setshowPassword] = useState(false);
 
+  const filterPassedTime = (time) => {
+    const currentDate = new Date();
+    const selectedDate = new Date(time);
+
+    return currentDate.getTime() < selectedDate.getTime();
+  };
+
   const getInputTypes = () => {
     switch (type) {
       case "text":
@@ -116,7 +146,7 @@ const Input = (props) => {
         return (
           <input
             name={name}
-            className={styles.input}
+            className={`${styles.input} ${className}`}
             type={type}
             style={style || {}}
             placeholder={placeholder}
@@ -153,6 +183,7 @@ const Input = (props) => {
               components={{ DropdownIndicator }}
               isSearchable={false}
               className={className}
+              menuPosition="fixed"
               {...rest}
             />
           </>
@@ -170,10 +201,42 @@ const Input = (props) => {
               onChange={onChange}
               clearIcon={null}
               style={style || {}}
-              calendarIcon={<FaRegCalendarAlt color="#fff" size={20} />}
+              minDate={new Date()}
+              calendarIcon={
+                <FaRegCalendarAlt
+                  color="#fff"
+                  size={18}
+                  style={{
+                    position: "absolute",
+                    top: "25%",
+                    right: '12px',
+                  }}
+                />
+              }
               {...rest}
             />
           </>
+        );
+      case "datetime-local":
+        return (
+          <div className={`${styles.input} ${styles.inputDate} ${className}`}>
+            <DatePickerWithTime
+              name={name}
+              ref={dateRef}
+              value={value}
+              onChange={onChange}
+              clearIcon={null}
+              minDate={new Date()}
+              showTimeSelect
+              filterTime={filterPassedTime}
+              timeFormat="HH:mm"
+              timeIntervals={15}
+              timeCaption="time"
+              dateFormat="MMMM d, yyyy h:mm"
+              customInput={<CustomInput placeholder={placeholder} />}
+              {...rest}
+            />
+          </div>
         );
       case "radio":
         return (
@@ -293,7 +356,7 @@ const Input = (props) => {
         return (
           <input
             name={name}
-            className={`${styles.input}  ${className}`}
+            className={styles.input}
             type={type}
             style={style || {}}
             placeholder={placeholder}
