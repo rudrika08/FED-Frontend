@@ -229,6 +229,54 @@
                 "value": "Enter Roll Number",
                 "isRequired": true,
                 "validations": []
+              },
+              {
+                "_id": 1719947922844,
+                "name": "Enter 3rd Member Name",
+                "type": "text",
+                "value": "Enter Member Name",
+                "isRequired": true,
+                "validations": []
+              },
+              {
+                "_id": 1719947922845,
+                "name": "Enter 3rd Member Email",
+                "type": "text",
+                "value": "Enter Email",
+                "isRequired": true,
+                "validations": []
+              },
+              {
+                "_id": 1719947922846,
+                "name": "Enter 3rd Member Roll Number",
+                "type": "number",
+                "value": "Enter Roll Number",
+                "isRequired": true,
+                "validations": []
+              },
+              {
+                "_id": 1719947922847,
+                "name": "Enter 4th Member Name",
+                "type": "text",
+                "value": "Enter Member Name",
+                "isRequired": true,
+                "validations": []
+              },
+              {
+                "_id": 1719947922848,
+                "name": "Enter 4th Member Email",
+                "type": "text",
+                "value": "Enter Email",
+                "isRequired": true,
+                "validations": []
+              },
+              {
+                "_id": 1719947922849,
+                "name": "Enter 4th Member Roll Number",
+                "type": "number",
+                "value": "Enter Roll Number",
+                "isRequired": true,
+                "validations": []
               }
             ]
           },
