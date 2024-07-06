@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import styles from "./styles/Form.module.scss";
 import Input from "../Core/Input";
 import { MdOutlineClose } from "react-icons/md";
@@ -96,6 +97,7 @@ function FormField(props) {
   ];
 
   return (
+    <>
     <div className={styles.mainFieldForm}>
       <Input
         value={field.name}
@@ -184,7 +186,41 @@ function FormField(props) {
         />
       )}
     </div>
+    </>
   );
 }
+
+FormField.propTypes = {
+  field: PropTypes.shape({
+    _id: PropTypes.number.isRequired,
+    name: PropTypes.string.isRequired,
+    type: PropTypes.oneOf([
+      'text',
+      'number',
+      'radio',
+      'checkbox',
+      'select',
+      'date',
+    ]).isRequired,
+    value: PropTypes.string.isRequired,
+    isRequired: PropTypes.bool.isRequired,
+    validations: PropTypes.arrayOf(PropTypes.shape({
+      _id: PropTypes.number.isRequired,
+      condition: PropTypes.string.isRequired,
+      target: PropTypes.string.isRequired,
+    })).isRequired,
+  }).isRequired,
+  lastField: PropTypes.object,
+  section: PropTypes.shape({
+    _id: PropTypes.number.isRequired,
+    fields: PropTypes.array.isRequired,
+  }).isRequired,
+  setformFields: PropTypes.func.isRequired,
+  onRemoveField: PropTypes.func.isRequired,
+  sections: PropTypes.array.isRequired,
+  onFieldValidationChange: PropTypes.func.isRequired,
+  addNewValidation: PropTypes.func.isRequired,
+  onRemoveValidation: PropTypes.func.isRequired,
+};
 
 export default FormField;

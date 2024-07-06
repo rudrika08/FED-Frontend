@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import PropTypes from 'prop-types';
 import styles from './styles/TeamCard.module.scss';
 import { FaLinkedin, FaGithub } from 'react-icons/fa';
 
@@ -72,6 +73,19 @@ const TeamCard = ({
       </div>
     </div>
   );
+};
+
+TeamCard.propTypes = {
+  name: PropTypes.string.isRequired,
+  image: PropTypes.string.isRequired,
+  social: PropTypes.shape({
+    linkedin: PropTypes.string,
+    github: PropTypes.string,
+  }).isRequired,
+  title: PropTypes.string.isRequired,
+  role: PropTypes.string.isRequired,
+  know: PropTypes.string.isRequired,
+  customStyles: PropTypes.object,
 };
 
 export default TeamCard;
