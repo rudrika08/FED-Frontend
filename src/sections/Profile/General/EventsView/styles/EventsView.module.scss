@@ -4,20 +4,20 @@
   font-weight: 300;
   display: flex;
   flex-direction: column;
-  padding-left: 33px;
-  padding-top: 81px;
+  padding-left: 0px;
+  padding-top: 35px;
   padding-bottom: 27px;
-  
+
    
 .proHeading {
-    font-size: 38px;
-    letter-spacing: 0.02em;
-    line-height: 40px;
-    margin-bottom: 99px;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  font-size: 30px;
+  letter-spacing: 0.02em;
+  line-height: 40px;
+  padding-bottom: 50px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   }
 
   .headInnerText span{
@@ -28,24 +28,33 @@
    
    }
 
-   .tables{
-    width: 100%;
+   .headInnerText{
+    margin-left: 10.5rem;
+  }
+
+  .tables{
     display: flex;
-    justify-content: center;
-   }
+    justify-content: start;
+    align-items: center;
+    width: 100%;
+    margin-left: 10.5rem;
+  
+  }
   
     .eventsTable {
-      width: 70%;
+      width: 60%;
       border-collapse: collapse;
-      font-size: 25px;
 
       th{
         border-bottom: 2px solid grey;
         padding-bottom: 10px;
+        font-size: 20px;
+        width: 34%;
       }
 
       td{
-        padding-top: 30px;
+        // padding-top: 30px;
+        font-size: 15px;
       }
   
       th, td {
@@ -60,25 +69,68 @@
       color: grey;
     }
   }
+
+  @media screen and (max-width:989px) {
+    .participatedEvents .tables{
+      width: 100%;
+      margin-left: 5rem;
+    }
+
+    .participatedEvents .eventsTable{
+      width: 70%;
+    }
+
+    .participatedEvents .headInnerText{
+      margin-left: 5rem;
+    }
+  }
+  
+  @media screen and (max-width:867px) {
+    .participatedEvents .tables{
+      width: 100%;
+      margin-left: 2rem;
+    }
+
+    .participatedEvents .eventsTable{
+      width: 80%;
+    }
+
+    .participatedEvents .headInnerText{
+      margin-left: 2rem;
+    }
+  }
   
 
   @media screen and (max-width:768px) {
-    .participatedEvents {      
-      padding-left: 0px;
-  }
+    .participatedEvents .headInnerText{
+      text-align: center;
+      width: 100%;
+      margin-left: 10vw;
+      margin-right: 10vw;
+    }
+
+    .participatedEvents .eventsTable{
+      width: 100%;
+      margin-left: 10vw;
+      margin-right: 10vw;
+    }
+
+    .participatedEvents .tables{
+      width: 100%;
+      margin-left: 0rem;
+    }
 }
 
 @media screen and (max-width:515px) {
 
-   .headInnerText{
-    font-size: 30px;
-   }
+  .participatedEvents .headInnerText{
+    margin-left: 5vw;
+    margin-right: 5vw;
+  }
 
-   .eventsTable td {
-    font-size: 20px;
-   }
+  .participatedEvents .eventsTable{
+    margin-left: 5vw;
+    margin-right: 5vw;
+  }
 
-   .eventsTable{
-    margin-top: -30px;
-   }
 }

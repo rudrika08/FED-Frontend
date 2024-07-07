@@ -294,6 +294,7 @@ function NewForm() {
     <div
       style={{
         width: "100%",
+        marginLeft:"70px"
       }}
     >
       <div className={styles.formHeader}>
