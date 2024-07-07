@@ -1,59 +1,91 @@
-import React,{useState,useEffect} from 'react'
-import { useContext } from "react";
-import AuthContext from "../../../context/AuthContext";
-import styles from './styles/EditProfile.module.scss'
-import { Button, Input } from "../../../components";
-import { useNavigate, useParams } from "react-router-dom";
-import { X } from "lucide-react";
+import { useState, useEffect, useContext } from 'react';
+import AuthContext from '../../../context/AuthContext';
+import styles from './styles/EditProfile.module.scss';
+import { Button, Input } from '../../../components';
+import { X } from 'lucide-react';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import axios from 'axios';
 
-const EditProfile = ({handleModalClose}) => {
-    const authCtx = useContext(AuthContext);
-    const [data, setdata] = useState({
-        name: authCtx.user.name,
-        email: authCtx.user.email,
-        rollNo: authCtx.user.rollNo,
-        year: authCtx.user.year,
-        school: authCtx.user.school,
-        college: authCtx.user.college,
-        mobileNo: authCtx.user.mobileNo,
+const EditProfile = ({ handleModalClose }) => {
+  const authCtx = useContext(AuthContext);
+
+  const [data, setData] = useState({
+    name: authCtx.user.name,
+    email: authCtx.user.email,
+    rollNo: authCtx.user.rollNo,
+    year: authCtx.user.year,
+    school: authCtx.user.school,
+    college: authCtx.user.college,
+    mobileNo: authCtx.user.mobileNo,
+  });
+
+  useEffect(() => {
+    AOS.init({ duration: 2000 });
+  }, []);
+
+  const handleSave = () => {
+    axios
+      .post('/api/user/editDetails', data)
+      .then((response) => {
+        console.log('Profile updated successfully!', response.data);
+        // Assuming your API returns updated user data, update the context or handle accordingly
+        authCtx.update(
+          data.name,
+          data.email,
+          authCtx.user.pic, // Assuming pic remains unchanged in this form
+          data.rollNo,
+          data.school,
+          data.college,
+          data.mobileNo,
+          data.year,
+          authCtx.user.access,
+          authCtx.user.regForm
+        );
+        handleModalClose(); // Close modal or navigate away after successful update
+        window.location.reload();
+      })
+      .catch((error) => {
+        // authCtx.update(
+        //   data.name,
+        //   data.email,
+        //   authCtx.user.pic, // Assuming pic remains unchanged in this form
+        //   data.rollNo,
+        //   data.school,
+        //   data.college,
+        //   data.mobileNo,
+        //   data.year,
+        //   authCtx.user.access,
+        //   authCtx.user.regForm
+        // );
+        // handleModalClose();
+        // window.location.reload();
+        console.error('Error updating profile:', error);
+        // Handle error scenario, e.g., show error message to the user
       });
-
-
-    const handleSave=()=>{
-        console.log(data)
-    }
-
-    useEffect(() => {
-        AOS.init({ duration: 2000 });
-      }, []);
+  };
 
   return (
-    
     <div
       style={{
-        position: "fixed",
-        width: "100%",
-        height: "100%",
-
-        zIndex: "20",
-    
-        left: "0",
-        top: "0",
+        position: 'fixed',
+        width: '100%',
+        height: '100%',
+        zIndex: '20',
+        left: '0',
+        top: '0',
       }}
     >
       <div
         style={{
-         position:'absolute',
-         top:'0',
-         left:'0',
-          width: "100%",
-          height: "100%",
+          position: 'absolute',
+          top: '0',
+          left: '0',
+          width: '100%',
+          height: '100%',
           background: 'rgba(0, 0, 0, 0.5)',
-          backdropFilter: "blur(4px)",
-          zIndex:'15',
-     
+          backdropFilter: 'blur(4px)',
+          zIndex: '15',
         }}
       >
 
@@ -89,7 +121,7 @@ const EditProfile = ({handleModalClose}) => {
                         type="text" 
                         value={data.name} 
                         className={styles.vals}
-                        onChange={(e) => setdata({ ...data, name: e.target.value })}
+                        onChange={(e) => setData({ ...data, name: e.target.value })}
                         />
                         </div>
                         <div className={styles.table}>
@@ -101,7 +133,7 @@ const EditProfile = ({handleModalClose}) => {
                         value={data.email} 
                         className={`${styles.vals} ${styles.email}`}
                         disabled={true}
-                        onChange={(e) => setdata({ ...data, email: e.target.value })}
+                        onChange={(e) => setData({ ...data, email: e.target.value })}
                         />
                         </div>
                         <div className={styles.table}>
@@ -112,7 +144,7 @@ const EditProfile = ({handleModalClose}) => {
                         type="number" 
                         value={data.rollNo} 
                         className={styles.vals}
-                        onChange={(e) => setdata({ ...data, rollNo: e.target.value })}
+                        onChange={(e) => setData({ ...data, rollNo: e.target.value })}
                         />
                         </div>
                         <div className={styles.table}>
@@ -130,7 +162,7 @@ const EditProfile = ({handleModalClose}) => {
                             { label: "5th Year", value: "5" },
                         ]}
                         value={data.year}
-                        onChange={(value) => setdata({ ...data, year: value })}
+                        onChange={(value) => setData({ ...data, year: value })}
                         />
 
                         </div>
@@ -142,7 +174,7 @@ const EditProfile = ({handleModalClose}) => {
                         type='text' 
                         value={data.school} 
                         className={styles.vals}
-                        onChange={(e) => setdata({ ...data, school: e.target.value })}/>
+                        onChange={(e) => setData({ ...data, school: e.target.value })}/>
                         </div>
                         <div className={styles.table}>
                         <h6 className={styles.dets}>College</h6>
@@ -152,7 +184,7 @@ const EditProfile = ({handleModalClose}) => {
                         type='text' 
                         value={data.college} 
                         className={styles.vals}
-                        onChange={(e) => setdata({ ...data, college: e.target.value })}
+                        onChange={(e) => setData({ ...data, college: e.target.value })}
                         />
                         </div>
                         <div className={styles.table}>
@@ -162,7 +194,7 @@ const EditProfile = ({handleModalClose}) => {
                         placeholder="Enter Phone number" 
                         type='number' 
                         value={data.mobileNo}
-                        onChange={(e) => setdata({ ...data, mobileNo: e.target.value })} 
+                        onChange={(e) => setData({ ...data, mobileNo: e.target.value })} 
                         className={styles.vals}/>
                         </div>
                         <div style={{display:"flex",justifyContent:"center"}}>
@@ -175,11 +207,10 @@ const EditProfile = ({handleModalClose}) => {
             </div>
             </div>
             </>
-            </div>
-        </div>
+         </div>
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default EditProfile
-
+export default EditProfile;

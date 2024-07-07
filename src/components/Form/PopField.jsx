@@ -3,6 +3,7 @@ import { MdOutlineClose } from "react-icons/md";
 import styles from "./styles/Form.module.scss";
 import Input from "../Core/Input";
 import Button from "../Core/Button";
+import PropTypes from 'prop-types';
 
 const PopField = ({
   field,
@@ -127,6 +128,23 @@ const PopField = ({
       </div>
     </div>
   );
+};
+
+PopField.propTypes = {
+  field: PropTypes.shape({
+    _id: PropTypes.number.isRequired,
+    validations: PropTypes.arrayOf(PropTypes.shape({
+      _id: PropTypes.number.isRequired,
+      condition: PropTypes.string.isRequired,
+      target: PropTypes.string.isRequired,
+    })).isRequired,
+    type: PropTypes.oneOf(['text', 'number', 'radio', 'checkbox', 'select', 'date']).isRequired,
+  }).isRequired,
+  sections: PropTypes.array.isRequired,
+  handleClose: PropTypes.func.isRequired,
+  onFieldValidationChange: PropTypes.func.isRequired,
+  onAddValidation: PropTypes.func.isRequired,
+  onRemoveValidation: PropTypes.func.isRequired,
 };
 
 export default PopField;

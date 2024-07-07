@@ -26,43 +26,45 @@ const ContactForm = () => {
   };
 
   return (
-    <div className={styles.contactFormContainer}>
-      <h2>GET <span className={styles.highlight}>IN</span> TOUCH</h2>
-      <div className={styles.bottomLine}></div>
-      <div className={styles.formSection}>
-        <form onSubmit={handleSubmit}>
-          <div className={styles.formGroup}>
-            <input 
-              type="text" 
-              name="name" 
-              placeholder="Name" required 
-            />
-          </div>
-          <div className={styles.formGroup}>
-            <input 
-              type="email" 
-              name="email" 
-              placeholder="Email" required 
-            />
-          </div>
-          <div className={styles.formGroup}>
-            <textarea 
-              name="message" 
-              placeholder="Message" required>
-            </textarea>
-          </div>
-          <button type="submit">Submit</button>
-        </form>
+    <section id="Contact Us">
+      <div className={styles.contactFormContainer}>
+        <h2>GET <span className={styles.highlight}>IN</span> TOUCH</h2>
+        <div className={styles.bottomLine}></div>
+        <div className={styles.formSection}>
+          <form onSubmit={handleSubmit}>
+            <div className={styles.formGroup}>
+              <input 
+                type="text" 
+                name="name" 
+                placeholder="Name" required 
+              />
+            </div>
+            <div className={styles.formGroup}>
+              <input 
+                type="email" 
+                name="email" 
+                placeholder="Email" required 
+              />
+            </div>
+            <div className={styles.formGroup}>
+              <textarea 
+                name="message" 
+                placeholder="Message" required>
+              </textarea>
+            </div>
+            <button type="submit">Submit</button>
+          </form>
 
-        <div className={styles.imageSection}>
-          <div className={styles.backCircle}></div>
-          <AnimatedBox direction="right">
-            <img src={contactImg} alt="Contact" />
-          </AnimatedBox>
-          <div className={styles.circle}></div>
+          <div className={styles.imageSection}>
+            <div className={styles.backCircle}></div>
+            <AnimatedBox direction="right">
+              <img src={contactImg} alt="Contact" />
+            </AnimatedBox>
+            <div className={styles.circle}></div>
+          </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 
