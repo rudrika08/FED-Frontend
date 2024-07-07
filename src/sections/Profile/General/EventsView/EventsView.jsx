@@ -3,6 +3,7 @@ import axios from "axios";
 import styles from "./styles/EventsView.module.scss";
 import AuthContext from "../../../../context/AuthContext";
 import eventsData from "../../../../data/eventData.json";
+import { EventModal } from "../../../../features/Modals";
 
 const Events = () => {
   const authCtx = useContext(AuthContext);
@@ -30,6 +31,10 @@ const Events = () => {
     fetchEventsData();
   }, [authCtx.user.email]);
 
+  const handleView =()=>{
+    <EventModal/>
+  }
+
   return (
     <div className={styles.participatedEvents}>
       <div className={styles.proHeading}>
@@ -45,6 +50,7 @@ const Events = () => {
               <tr>
                 <th>Event Name</th>
                 <th>Event Date</th>
+                <th>View</th>
                 {/* Add more headers */}
               </tr>
             </thead>
@@ -53,6 +59,7 @@ const Events = () => {
                 <tr key={event.id}>
                   <td>{event.eventName}</td>
                   <td>{event.eventDate}</td>
+                  <td><button onClick={handleView}>View</button></td>
                   {/* Add more table cells */}
                 </tr>
               ))}

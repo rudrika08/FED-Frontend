@@ -35,7 +35,7 @@ const Sidebar = ({ activepage, handleChange }) => {
   };
 
   const handleName = () => {
-    const maxLength = 15;
+    const maxLength = 20;
     const name = authCtx.user.name || ''; 
     return name.length > maxLength ? `${name.slice(0, maxLength)}...` : name;
   };
@@ -54,7 +54,8 @@ const Sidebar = ({ activepage, handleChange }) => {
 <SlCalender 
       size={17} 
       style={{ 
-        color: activepage === 'Event' ? '#FF8A00' : 'white' 
+        color: activepage === 'Event' ? '#FF8A00' : 'white' ,
+        marginRight: "10px"
       }} 
     /> Event
 </div>
@@ -69,7 +70,8 @@ const Sidebar = ({ activepage, handleChange }) => {
         <SiReacthookform
         size={17} 
         style={{ 
-        color: activepage === 'Form' ? '#FF8A00' : 'white' 
+        color: activepage === 'Form' ? '#FF8A00' : 'white' ,
+        marginRight: "10px"
       }}  /> Form
       </div>
       <div
@@ -77,12 +79,14 @@ const Sidebar = ({ activepage, handleChange }) => {
         style={{ background: activepage === 'Members' ? 'var(--primary)' : 'transparent',
           WebkitBackgroundClip: activepage === 'Members' ? 'text' : 'initial',
           backgroundClip: activepage === 'Members' ? 'text' : 'initial',
-          color: activepage === 'Members' ? 'transparent' : 'inherit' }}
+          color: activepage === 'Members' ? 'transparent' : 'inherit' ,
+          marginLeft:"-6px"}}
       >
         <TbUserEdit 
         size={17} 
         style={{ 
-        color: activepage === 'Members' ? '#FF8A00' : 'white' 
+        color: activepage === 'Members' ? '#FF8A00' : 'white'  ,
+        marginRight: "10px"
       }} /> Members
       </div>
     </>
@@ -114,14 +118,14 @@ const Sidebar = ({ activepage, handleChange }) => {
             onClick={() => handleChange('Event')}
             style={{ color: activepage === 'Event' ? '#FF8A00' : 'white' }}
           >
-            <SlCalender size={17} /> Event
+            <SlCalender size={17} style={{marginRight: "10px"}}/> Event
           </div>
         )}
         <div
           onClick={handleLogout}
           style={{ color: activepage === 'Logout' ? '#FF8A00' : 'white' }}
         >
-          <MdLogout size={17} /> Logout
+          <MdLogout size={17} style={{marginRight: "9px"}}/> Logout
         </div>
       </div>
       <div className={styles.divider} />

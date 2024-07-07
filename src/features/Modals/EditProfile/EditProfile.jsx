@@ -88,124 +88,126 @@ const EditProfile = ({ handleModalClose }) => {
           zIndex: '15',
         }}
       >
-        <div
-          style={{
-            zIndex: '10',
-            borderRadius: '10px',
-            position: 'relative',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            scale: '0.9',
-          }}
-        >
-          <div id={styles.profile} data-aos="zoom-in-up" data-aos-duration="500">
-            <div className={styles.proHeading}>
-              <h3 className={styles.headInnerText}>
-                <span>Edit</span> Profile
-              </h3>
-            </div>
-            <button className={styles.closeModal} onClick={handleModalClose}>
-              <X />
-            </button>
-            {authCtx.user && (
-              <div className={styles.details}>
-                <div className={styles.profileTable}>
-                  <div className={styles.table}>
-                    <h6 className={styles.dets}>Full Name</h6>
-                    <Input
-                      style={{ width: '15rem' }}
-                      placeholder="Enter your name"
-                      type="text"
-                      value={data.name}
-                      className={styles.vals}
-                      onChange={(e) => setData({ ...data, name: e.target.value })}
-                    />
-                  </div>
-                  <div className={styles.table}>
-                    <h6 className={styles.dets}>Email</h6>
-                    <Input
-                      style={{ width: '15rem' }}
-                      placeholder="Enter your email"
-                      type="email"
-                      value={data.email}
-                      className={`${styles.vals} ${styles.email}`}
-                      disabled={true}
-                      onChange={(e) => setData({ ...data, email: e.target.value })}
-                    />
-                  </div>
-                  <div className={styles.table}>
-                    <h6 className={styles.dets}>Roll Number</h6>
-                    <Input
-                      style={{ width: '15rem' }}
-                      placeholder="Enter your roll"
-                      type="number"
-                      value={data.rollNo}
-                      className={styles.vals}
-                      onChange={(e) => setData({ ...data, rollNo: e.target.value })}
-                    />
-                  </div>
-                  <div className={styles.table}>
-                    <h6 className={styles.dets}>Year</h6>
-                    <Input
-                      style={{ width: '15rem' }}
-                      type="select"
-                      name="select"
-                      className={styles.vals}
-                      options={[
-                        { label: '1st Year', value: '1' },
-                        { label: '2nd Year', value: '2' },
-                        { label: '3rd Year', value: '3' },
-                        { label: '4th Year', value: '4' },
-                        { label: '5th Year', value: '5' },
-                      ]}
-                      value={data.year}
-                      onChange={(value) => setData({ ...data, year: value })}
-                    />
-                  </div>
-                  <div className={styles.table}>
-                    <h6 className={styles.dets}>School</h6>
-                    <Input
-                      style={{ width: '15rem' }}
-                      placeholder="Enter your school"
-                      type="text"
-                      value={data.school}
-                      className={styles.vals}
-                      onChange={(e) => setData({ ...data, school: e.target.value })}
-                    />
-                  </div>
-                  <div className={styles.table}>
-                    <h6 className={styles.dets}>College</h6>
-                    <Input
-                      style={{ width: '15rem' }}
-                      placeholder="Enter your college"
-                      type="text"
-                      value={data.college}
-                      className={styles.vals}
-                      onChange={(e) => setData({ ...data, college: e.target.value })}
-                    />
-                  </div>
-                  <div className={styles.table}>
-                    <h6 className={styles.dets}>Mobile No</h6>
-                    <Input
-                      style={{ width: '15rem' }}
-                      placeholder="Enter Phone number"
-                      type="number"
-                      value={data.mobileNo}
-                      onChange={(e) => setData({ ...data, mobileNo: e.target.value })}
-                      className={styles.vals}
-                    />
-                  </div>
-                  <div>
-                    <Button type="submit" onClick={handleSave} className={styles.submit}>
-                      Update Changes
-                    </Button>
-                  </div>
+
+        <div style={{
+          zIndex:'10',
+          borderRadius:'10px',
+          position:"relative",
+          display:'flex',
+          justifyContent:"center",
+          alignItems:"center",
+          scale:"0.8",
+        }}>
+            <>
+            <div className={styles.flex}>
+            <div id={styles.profile} data-aos="zoom-in-up" data-aos-duration="500">
+                    <div className={styles.proHeading}>
+                    <h3 className={styles.headInnerText}><span>Edit</span> Profile</h3>
+                    </div>
+                    <button
+                    className={styles.closeModal}
+                    onClick={handleModalClose}
+                  >
+                    <X />
+                  </button>
+                {authCtx.user && (
+                <div className={styles.details}>
+                    <div className={styles.profileTable}>
+                        <div className={styles.table}>
+                        <h6 className={styles.dets}>Full Name</h6>
+                        <Input 
+                        style={{width:"17rem",margin:"0px",fontSize:"15px"}}
+                        placeholder="Enter your name" 
+                        type="text" 
+                        value={data.name} 
+                        className={styles.vals}
+                        onChange={(e) => setData({ ...data, name: e.target.value })}
+                        />
+                        </div>
+                        <div className={styles.table}>
+                        <h6 className={styles.dets}>Email</h6>
+                        <Input 
+                        style={{width:"17rem",margin:"0px",fontSize:"15px"}}
+                        placeholder="Enter your email" 
+                        type="email" 
+                        value={data.email} 
+                        className={`${styles.vals} ${styles.email}`}
+                        disabled={true}
+                        onChange={(e) => setData({ ...data, email: e.target.value })}
+                        />
+                        </div>
+                        <div className={styles.table}>
+                        <h6 className={styles.dets}>Roll Number</h6>
+                        <Input 
+                        style={{width:"17rem",margin:"0px",fontSize:"15px"}}
+                        placeholder="Enter your roll" 
+                        type="number" 
+                        value={data.rollNo} 
+                        className={styles.vals}
+                        onChange={(e) => setData({ ...data, rollNo: e.target.value })}
+                        />
+                        </div>
+                        <div className={styles.table}>
+                        <h6 className={styles.dets}>Year</h6>
+                        <Input 
+                        style={{width:"17rem",margin:"0px",fontSize:"15px"}}
+                        type="select" 
+                        name="select" 
+                        className={styles.vals}
+                        options={[
+                            { label: "1st Year", value: "1" },
+                            { label: "2nd Year", value: "2" },
+                            { label: "3rd Year", value: "3" },
+                            { label: "4th Year", value: "4" },
+                            { label: "5th Year", value: "5" },
+                        ]}
+                        value={data.year}
+                        onChange={(value) => setData({ ...data, year: value })}
+                        />
+
+                        </div>
+                        <div className={styles.table}>
+                        <h6 className={styles.dets}>School</h6>
+                        <Input 
+                        style={{width:"17rem",margin:"0px",fontSize:"15px"}}
+                        placeholder="Enter your school" 
+                        type='text' 
+                        value={data.school} 
+                        className={styles.vals}
+                        onChange={(e) => setData({ ...data, school: e.target.value })}/>
+                        </div>
+                        <div className={styles.table}>
+                        <h6 className={styles.dets}>College</h6>
+                        <Input 
+                        style={{width:"17rem",margin:"0px",fontSize:"15px"}}
+                        placeholder="Enter your college" 
+                        type='text' 
+                        value={data.college} 
+                        className={styles.vals}
+                        onChange={(e) => setData({ ...data, college: e.target.value })}
+                        />
+                        </div>
+                        <div className={styles.table}>
+                        <h6 className={styles.dets}>Mobile No</h6>
+                        <Input 
+                        style={{width:"17rem",margin:"0px",fontSize:"15px"}}
+                        placeholder="Enter Phone number" 
+                        type='number' 
+                        value={data.mobileNo}
+                        onChange={(e) => setData({ ...data, mobileNo: e.target.value })} 
+                        className={styles.vals}/>
+                        </div>
+                        <div style={{display:"flex",justifyContent:"center"}}>
+                            <Button type='submit' onClick={handleSave} className={styles.submit}>Update Changes</Button>
+                        </div>
+                    </div>
                 </div>
-              </div>
-            )}
-          </div>
-        </div>
+                    
+                )}
+            </div>
+            </div>
+            </>
+         </div>
       </div>
     </div>
   );
