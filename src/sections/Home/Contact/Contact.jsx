@@ -1,9 +1,13 @@
+import React, { useState } from 'react';
 import axios from 'axios';
 import styles from './styles/Contact.module.scss';
-import contactImg from "../../../assets/images/contact.png";
-import { AnimatedBox } from "../../../assets/animations/AnimatedBox";
+import contactImg from '../../../assets/images/contact.png';
+import { AnimatedBox } from '../../../assets/animations/AnimatedBox';
+import { Alert } from '../../../microInteraction';
 
 const ContactForm = () => {
+  const [alert, setAlert] = useState(null);
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     const formData = new FormData(event.target);
@@ -14,14 +18,26 @@ const ContactForm = () => {
     };
 
     try {
-      // const response = await axios.post('/api/contact', data);
-      // console.log('Form submitted successfully:', response.data);
+      const response = await axios.post('/api/contact', data);
+      console.log('Form submitted successfully:', response.data);
       console.log('Form submitted successfully:', data);
-      alert('Your message has been submitted!');
+      setAlert({ 
+        type: 'success', 
+        message: 'Your message has been submitted!', 
+        position: 'bottom-right', 
+        duration: 5000, 
+        style: { backgroundColor: 'white', color: '#198754' } 
+      });
       event.target.reset(); // Clear the form fields
     } catch (error) {
       console.error('Error submitting form:', error);
-      alert('There was an error submitting your message. Please try again.');
+      setAlert({ 
+        type: 'error', 
+        message: 'There was an error submitting your message. Please try again.', 
+        position: 'bottom-right', 
+        duration: 4000, 
+        style: { color: '#dc3545' } 
+      });
     }
   };
 
@@ -64,6 +80,7 @@ const ContactForm = () => {
           </div>
         </div>
       </div>
+      {alert && <Alert {...alert} />}
     </section>
   );
 };
