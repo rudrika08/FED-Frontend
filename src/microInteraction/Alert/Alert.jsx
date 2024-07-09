@@ -1,5 +1,5 @@
 import React from 'react';
-import { ToastContainer, toast } from 'react-toastify';
+import { Slide, ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import PropTypes from 'prop-types';
 
@@ -9,7 +9,7 @@ const Alert = ({ type, message, position, duration, style }) => {
       position: position || 'top-right',
       autoClose: duration || 5000,
       style: style || {},
-      hideProgressBar: false,
+      hideProgressBar: true,
       closeOnClick: true,
       pauseOnHover: true,
       draggable: true,
@@ -24,10 +24,24 @@ const Alert = ({ type, message, position, duration, style }) => {
     if (!toast.isActive(toastId)) {
       switch (type) {
         case 'success':
-          toast.success(message, { ...options, toastId });
+          toast.success(message, { 
+            ...options, 
+            style : { 
+              border: '1.5px solid green',
+              backgroundColor: '#d3f9d3', 
+              color: '#198754' 
+            },  
+            toastId });
           break;
         case 'error':
-          toast.error(message, { ...options, toastId });
+          toast.error(message, { 
+            ...options, 
+            style: { 
+              border: '1.5px solid red',
+              backgroundColor: '#FADADD', 
+              color: 'red' 
+            },
+            toastId });
           break;
         case 'info':
           toast.info(message, { ...options, toastId });
@@ -46,7 +60,7 @@ const Alert = ({ type, message, position, duration, style }) => {
     notify();
   }
 
-  return <ToastContainer />;
+  return <ToastContainer transition={Slide}/>;
 };
 
 Alert.propTypes = {

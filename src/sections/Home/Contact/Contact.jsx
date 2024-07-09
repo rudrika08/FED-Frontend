@@ -4,6 +4,8 @@ import styles from './styles/Contact.module.scss';
 import contactImg from '../../../assets/images/contact.png';
 import { AnimatedBox } from '../../../assets/animations/AnimatedBox';
 import { Alert } from '../../../microInteraction';
+import { BorderColor } from '@mui/icons-material';
+import { BorderBottom } from '@mui/icons-material';
 
 const ContactForm = () => {
   const [alert, setAlert] = useState(null);
@@ -26,18 +28,19 @@ const ContactForm = () => {
         message: 'Your message has been submitted!', 
         position: 'bottom-right', 
         duration: 5000, 
-        style: { backgroundColor: 'white', color: '#198754' } 
+        
       });
       event.target.reset(); // Clear the form fields
     } catch (error) {
       console.error('Error submitting form:', error);
-      setAlert({ 
-        type: 'error', 
-        message: 'There was an error submitting your message. Please try again.', 
-        position: 'bottom-right', 
-        duration: 4000, 
-        style: { color: '#dc3545' } 
+      setAlert({
+        type: 'error',
+        message: 'There was an error submitting your message. Please try again.',
+        position: 'bottom-right',
+        duration: 4000,
+
       });
+      
     }
   };
 
