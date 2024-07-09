@@ -20,6 +20,7 @@
 
 .headInnerText{
   margin-left: 3.5rem;
+  margin-top: 12px;
 }
   
 .headInnerText span{
@@ -41,6 +42,9 @@
   flex-wrap: wrap;
   justify-content: space-around;
   row-gap: 2rem;
+  height: 300px;
+  overflow: hidden scroll;
+  scrollbar-width: none;
 }
 .topSection {
   display: flex;

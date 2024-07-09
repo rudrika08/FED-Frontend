@@ -7,13 +7,14 @@
   padding-left: 0px;
   padding-top: 35px;
   padding-bottom: 27px;
+  height: auto;
 
    
 .proHeading {
   font-size: 30px;
   letter-spacing: 0.02em;
   line-height: 40px;
-  padding-bottom: 50px;
+  margin-bottom: 50px;
   width: 100%;
   display: flex;
   align-items: center;
@@ -36,20 +37,20 @@
     display: flex;
     justify-content: start;
     align-items: center;
-    width: 100%;
+    width: 60%;
     margin-left: 10.5rem;
-  
   }
   
     .eventsTable {
-      width: 60%;
+      width: 100%;
       border-collapse: collapse;
 
       th{
         border-bottom: 2px solid grey;
         padding-bottom: 10px;
+        padding-top: 5px;
         font-size: 20px;
-        width: 34%;
+        // height: 39px;
       }
 
       td{
@@ -59,9 +60,26 @@
   
       th, td {
         text-align: center;
+        width: 34%;
       }
+
     }
-  
+
+    .eventsTable thead,
+    .eventsTable tbody tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+    }
+
+    .eventsTable tbody {
+      display: block;
+      max-height: 200px;
+      overflow-y: scroll;
+      scrollbar-width: none;
+      width: 100%;
+  }
+
     .noEvents {
       text-align: center;
       font-size: 25px;
@@ -70,14 +88,14 @@
     }
   }
 
+
   @media screen and (max-width:989px) {
     .participatedEvents .tables{
-      width: 100%;
       margin-left: 5rem;
     }
 
-    .participatedEvents .eventsTable{
-      width: 70%;
+    .eventscroll{
+      height: 250px;
     }
 
     .participatedEvents .headInnerText{
@@ -87,12 +105,7 @@
   
   @media screen and (max-width:867px) {
     .participatedEvents .tables{
-      width: 100%;
       margin-left: 2rem;
-    }
-
-    .participatedEvents .eventsTable{
-      width: 80%;
     }
 
     .participatedEvents .headInnerText{
@@ -109,10 +122,16 @@
       margin-right: 10vw;
     }
 
-    .participatedEvents .eventsTable{
+    .eventscroll{
       width: 100%;
+      height: 250px;
+      padding-top: 50px;
       margin-left: 10vw;
       margin-right: 10vw;
+      overflow-x: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .participatedEvents .tables{
@@ -128,9 +147,22 @@
     margin-right: 5vw;
   }
 
-  .participatedEvents .eventsTable{
+  .eventscroll{
     margin-left: 5vw;
     margin-right: 5vw;
   }
 
+
+}
+
+
+@media screen and (max-width:480px) {
+
+  .participatedEvents .headInnerText{
+    font-size: 30px;
+  }
+
+  .participatedEvents .eventsTable th{
+    font-size: 17px;
+  }
 }

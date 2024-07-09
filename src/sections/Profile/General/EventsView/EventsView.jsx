@@ -45,6 +45,7 @@ const Events = () => {
 
       <div className={styles.tables}>
         {userEvents.length > 0 ? (
+          <div className={styles.eventscroll}>
           <table className={styles.eventsTable}>
             <thead>
               <tr>
@@ -54,7 +55,8 @@ const Events = () => {
                 {/* Add more headers */}
               </tr>
             </thead>
-            <tbody>
+
+            <tbody >
               {userEvents.map((event) => (
                 <tr key={event.id}>
                   <td>{event.eventName}</td>
@@ -64,7 +66,9 @@ const Events = () => {
                 </tr>
               ))}
             </tbody>
+            
           </table>
+          </div>
         ) : (
           <p className={styles.noEvents}>Not participated in any Events</p>
         )}
