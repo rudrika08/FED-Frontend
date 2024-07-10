@@ -21,7 +21,6 @@ const EventCard = (props) => {
     showShareButton = true,
     showRegisterButton = true,
     additionalContent,
-    aosDisable,
   } = props;
 
   const { info } = data;
@@ -31,12 +30,8 @@ const EventCard = (props) => {
   const [btnTxt, setBtnTxt] = useState("Register Now");
 
   useEffect(() => {
-    if (aosDisable) {
-      AOS.init({ disable: true });
-    } else {
       AOS.init({ duration: 2000 });
-    }
-  }, [aosDisable]);
+  }, []);
 
   useEffect(() => {
     if (info.regDateAndTime) {
@@ -117,7 +112,7 @@ const EventCard = (props) => {
 
   return (
     <>
-      <div className={style.card} style={customStyles.card} data-aos={aosDisable ? "" : "fade-up"}>
+      <div className={style.card} style={customStyles.card} data-aos="fade-up">
         <div className={style.backimg} style={customStyles.backimg} onClick={onOpen}>
           <img srcSet={info.imageURL} className={style.img} style={customStyles.img} alt="Event" />
           <div className={style.date} style={customStyles.date}>{formattedDate}</div>
