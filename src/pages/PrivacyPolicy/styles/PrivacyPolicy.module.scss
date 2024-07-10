@@ -1,0 +1,36 @@
+.background{
+    height: 100%;
+    width: 100%;
+    background-color:#000000;
+    position: relative;
+  }
+  
+  .main{
+    min-height: 100vh;
+    width: 100%;
+    margin-top:5vh;
+    padding: 7vw;
+  }
+  
+  .heading{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .privacy{
+    padding-right: 1vw;
+    color: #ff5e00;
+  }
+  
+  .main h1{
+    text-align: center;
+  }
+
+  .main p{
+    width: 100%;
+    min-height: 10vh;
+    padding-top: 4vh;
+    font-size: 1.2vw;
+    font-weight: 300;
+  }

@@ -16,6 +16,10 @@
   width: 100%;
   height: 100%;
   box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-direction: column;
 }
 
 .carousel_card {
@@ -63,9 +67,10 @@
 
 .carousel_pagination {
   position: absolute;
-  bottom: 5px;
+  // bottom: 5px;
   left: 50%;
   transform: translate(-50%, 0);
+  margin-bottom: 10px;
 }
 
 .pagination_dot {

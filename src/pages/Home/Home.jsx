@@ -16,7 +16,9 @@ const Home = () => {
       <ChatBot />
       <About />
       <Sponser />
-      <Contact />
+      <section id="Contact">
+        <Contact />
+      </section>
       <Feedback />
     </>
   );

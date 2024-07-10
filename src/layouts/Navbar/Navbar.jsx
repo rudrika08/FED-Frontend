@@ -18,6 +18,10 @@ function Navbar() {
     };
 
     window.addEventListener('scroll', handleScroll);
+
+    // Initial check for scroll position
+    handleScroll();
+
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
@@ -57,14 +61,13 @@ function Navbar() {
 
   return (
     <Headroom>
-      <nav className={`${style.nav} ${scroll ? style.scrolled : ''}`}>
+      <nav className={`${style.nav}`}>
         <Link to="/" onClick={handleLogoClick}>
           <div className={style.logo_div}>
             <img src={logo} alt="Logo" className={style.logo} />
             <div className={style.logo_text}></div>
           </div>
         </Link>
-        {/* ///Social */}
         <ul className={style.navItems}> 
           <li className={style.navLink}>
             <NavLink 
@@ -118,19 +121,19 @@ function Navbar() {
 
         {authCtx.isLoggedIn ? (
           <NavLink to="/profile" className="LinkStyle">
-            <div className={style.profileImgdiv}>   <img
-              src={authCtx.user.pic || defaultImg}
-              alt="Profile"
-              className={style.profileImg}
-            /></div>
-         
+            <div className={style.profileImgdiv}>   
+              <img
+                src={authCtx.user.pic || defaultImg}
+                alt="Profile"
+                className={style.profileImg}
+              />
+            </div>
           </NavLink>
         ) : (
           <a href="/Login">
             <button className={style.authButton}>Login</button>
           </a>
         )}
-
       </nav>
     </Headroom>
   );

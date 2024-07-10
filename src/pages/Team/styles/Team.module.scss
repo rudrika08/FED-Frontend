@@ -2,13 +2,12 @@
 //   padding: 20px;
 // }
 
-h2 {
+.Team h2 {
   text-align: center;
   font-size: 50px;
-  margin-top: 20px;
 }
 
-h2 span {
+.Team h2 span {
   color: #FF8A00;
 }
 
@@ -34,10 +33,10 @@ h2 span {
   font-size: 40px;
   color: #FF8A00;
   margin-bottom: 60px;
+  margin-left: 50px;
 }
 
 .teamSection span {
-  margin-left: 25px;
   font-weight: 800;
 }
 
@@ -181,9 +180,6 @@ strong {
     font-size: 2em;
   }
 
-  .teamSection span {
-    margin-left: 5px;
-  }
 
   .para p{
     font-size: 13px;
@@ -203,17 +199,13 @@ strong {
     padding: 0;
   }
 
-  .lastRowCentered{
-    margin-top: 2.3rem;
-  }
-
   h3{
     text-align: center;
     font-size: 1.5rem;
   }
 
   .para p{
-    margin-bottom: -20px;
+    margin-bottom: 20px;
   }
 
   h2 {
@@ -224,8 +216,8 @@ strong {
     background-color: rgba(255, 92, 0, 0.59);
   }
 
-  .teamSection span {
-    margin-left: 5px;
+  .teamSection h3 {
+    margin-left: 0px;
   }
 
   // .circle2 {
