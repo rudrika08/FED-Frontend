@@ -30,7 +30,7 @@ const EventCard = (props) => {
   const [btnTxt, setBtnTxt] = useState("Register Now");
 
   useEffect(() => {
-      AOS.init({ duration: 2000 });
+    AOS.init({ duration: 2000 });
   }, []);
 
   useEffect(() => {
