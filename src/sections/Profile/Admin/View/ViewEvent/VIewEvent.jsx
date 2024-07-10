@@ -1,12 +1,15 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import styles from "./styles/ViewEvent.module.scss";
-
+import AOS from "aos";
+import 'aos/dist/aos.css';
 import {Button, EventCard} from "../../../../../components";
 import FormData from "../../../../../data/FormData.json"
 
 
-
+// AOS.init({
+//   disable:true
+// })
 function ViewEvent() {
   const [activePage, setActivePage] = useState("View Events");
   const [pastEvents, setPastEvents] = useState([]);
@@ -27,6 +30,11 @@ function ViewEvent() {
     };
 
     fetchEventData();
+  }, []);
+
+   // Initialize AOS
+   useEffect(() => {
+    AOS.init();
   }, []);
 
   const customStyles = {
@@ -63,8 +71,9 @@ function ViewEvent() {
                   type="past"
                    modalpath='/profile/Events/'
                   isPastpage={true}
+                  aosDisable={true}
                 />
-              </div>
+                </div>
             ))}
           </div>
         )}
