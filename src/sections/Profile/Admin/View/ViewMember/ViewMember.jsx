@@ -117,7 +117,12 @@ function ViewMember() {
   return (
     <div className={styles.mainMember}>
       <div className={styles.eventmember}>
-        <div className={styles.right}>    
+        <div className={styles.right}> 
+            <div className={styles.buttonContainer}>
+              <h3 className={styles.headInnerText}>
+                <span>View</span> Member
+              </h3>
+            </div>   
           <div className={styles.buttons}>{renderButtons()}</div>
           {memberActivePage.toLowerCase() === "add member" ? (
             <AddMemberForm />

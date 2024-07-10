@@ -42,10 +42,28 @@
   flex-wrap: wrap;
   justify-content: space-around;
   row-gap: 2rem;
-  height: 300px;
+  height: 420px;
   overflow: hidden scroll;
-  scrollbar-width: none;
 }
+
+.eventList::-webkit-scrollbar {
+  width: 10px;
+  height: 0px;
+  transition: .2s linear;
+  background-color: #292929;
+}
+
+.eventList::-webkit-scrollbar-thumb {
+  border-radius: 22px;
+  background: var(--primary);
+  // border: 1.5px solid hwb(0 11% 89%);
+}
+
+.eventList::-webkit-scrollbar-track {
+  padding: 0px 20px;
+  background-color: transparent;
+}
+
 .topSection {
   display: flex;
   flex-direction: row;

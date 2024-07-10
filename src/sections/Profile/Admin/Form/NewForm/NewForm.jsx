@@ -472,9 +472,10 @@ function NewForm() {
       )}
     <div 
       style={{
-        height: "380px",
+        height: "420px",
         overflow:"hidden scroll",
-        scrollbarWidth:"none"
+        scrollbarWidth:"none",
+        marginBottom: "50px"
       }}
     >
       <div

@@ -74,7 +74,7 @@
 
     .eventsTable tbody {
       display: block;
-      max-height: 200px;
+      max-height: 360px;
       overflow-y: scroll;
       scrollbar-width: none;
       width: 100%;
@@ -92,10 +92,6 @@
   @media screen and (max-width:989px) {
     .participatedEvents .tables{
       margin-left: 5rem;
-    }
-
-    .eventscroll{
-      height: 250px;
     }
 
     .participatedEvents .headInnerText{
@@ -122,16 +118,17 @@
       margin-right: 10vw;
     }
 
-    .eventscroll{
-      width: 100%;
-      height: 250px;
-      padding-top: 50px;
-      margin-left: 10vw;
-      margin-right: 10vw;
-      overflow-x: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    .participatedEvents .eventsTable tbody {
+      max-height: 250px;
+  }
+
+    .participatedEvents .proHeading{
+      margin-bottom: 20px;
+    }
+
+    .eventsTable{
+      margin-left: 3vw;
+      margin-right: 3vw;
     }
 
     .participatedEvents .tables{
@@ -143,11 +140,6 @@
 @media screen and (max-width:515px) {
 
   .participatedEvents .headInnerText{
-    margin-left: 5vw;
-    margin-right: 5vw;
-  }
-
-  .eventscroll{
     margin-left: 5vw;
     margin-right: 5vw;
   }

@@ -45,13 +45,12 @@ const Events = () => {
 
       <div className={styles.tables}>
         {userEvents.length > 0 ? (
-          <div className={styles.eventscroll}>
           <table className={styles.eventsTable}>
             <thead>
               <tr>
                 <th>Event Name</th>
                 <th>Event Date</th>
-                <th>View</th>
+                <th className={styles.mobilewidth}>View</th>
                 {/* Add more headers */}
               </tr>
             </thead>
@@ -61,14 +60,13 @@ const Events = () => {
                 <tr key={event.id}>
                   <td>{event.eventName}</td>
                   <td>{event.eventDate}</td>
-                  <td><button onClick={handleView}>View</button></td>
+                  <td className={styles.mobilewidthtd}><button onClick={handleView}>View</button></td>
                   {/* Add more table cells */}
                 </tr>
               ))}
             </tbody>
             
           </table>
-          </div>
         ) : (
           <p className={styles.noEvents}>Not participated in any Events</p>
         )}
