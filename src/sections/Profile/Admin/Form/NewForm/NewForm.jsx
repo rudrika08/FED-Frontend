@@ -294,19 +294,15 @@ function NewForm() {
     <div
       style={{
         width: "100%",
-        marginLeft:"70px"
+        marginLeft:"70px",
       }}
     >
       <div className={styles.formHeader}>
-        <Text
-          variant="secondary"
-          style={{
-            fontSize: "16px",
-            margin: "auto 0",
-          }}
-        >
-          New Form
-        </Text>
+        <div className={styles.buttonContainer}>
+          <h3 className={styles.headInnerText}>
+            <span>New</span> Form
+          </h3>
+        </div>
         <div
           style={{
             display: "flex",
@@ -324,13 +320,13 @@ function NewForm() {
               <IoSettingsSharp
                 size={20}
                 color="#FF8A00"
-                style={{ cursor: "pointer" }}
+                style={{ cursor: "pointer" ,marginTop:"10px"}}
                 onClick={() => setisVisibility(!isVisibility)}
               />
             ) : (
               <IoSettingsOutline
                 size={20}
-                style={{ cursor: "pointer" }}
+                style={{ cursor: "pointer",marginTop:"10px"}}
                 color="#fff"
                 onClick={() => setisVisibility(!isVisibility)}
               />
@@ -474,6 +470,14 @@ function NewForm() {
           </div>
         </div>
       )}
+    <div 
+      style={{
+        height: "420px",
+        overflow:"hidden scroll",
+        scrollbarWidth:"none",
+        marginBottom: "50px"
+      }}
+    >
       <div
         style={{
           display: "flex",
@@ -671,6 +675,7 @@ function NewForm() {
           eventData={data}
         />
       )}
+    </div>
     </div>
   );
 }

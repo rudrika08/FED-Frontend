@@ -55,7 +55,7 @@
 
   .editbtn{
     font-size: 1.6rem;
-    margin-right: 10rem;
+    margin-right: 13rem;
     cursor: pointer;
     display: flex;
     align-items: end;
@@ -127,12 +127,24 @@
       padding-right: 15px;
     }
 
+    .proHeading{
+      display: grid;
+      grid-template-columns: 12.5% 65% 10% 12.5%;
+    }
+
     .headInnerText{
       font-size: 30px;
+      text-align: start;
+      grid-column-start: 2;
+      grid-column-end: 3;
     }
 
     .editbtn{
       font-size: 20px;
+      text-align: end;
+      justify-content: end;
+      grid-column-start: 3;
+      grid-column-end: 4;
     }
   
     .dets {
@@ -144,6 +156,11 @@
   .dets,
   .vals {
     font-size: 20px;
+  }
+
+  .proHeading{
+    display: grid;
+    grid-template-columns: 7.5% 70% 15% 7.5%;
   }
   }
 
