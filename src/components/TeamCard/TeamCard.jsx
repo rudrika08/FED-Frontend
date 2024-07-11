@@ -27,15 +27,21 @@ const TeamCard = (props) => {
   };
 
   return (
-    <div className={`${styles.teamMember} ${customStyles.teamMember}`}>
-      <div className={`${styles.teamMemberInner} ${customStyles.teamMemberInner}`}>
-        <div className={`${styles.teamMemberFront} ${customStyles.teamMemberFront}`}>
+    <div className={styles.teamMember} style={customStyles.teamMember}>
+      <div className={styles.teamMemberInner} style={customStyles.teamMemberInner}>
+        <div className={styles.teamMemberFront} style={customStyles.teamMemberFront}>
+        <div className={styles.ImgDiv}>
+          {!imageLoaded && <Skeleton className={skeletonStyles.skeleton} style={customStyles.skeleton} />}
           <img
             src={image}
             alt={`Profile of ${name}`}
-            className={`${styles.teamMemberImg} ${customStyles.teamMemberImg}`}
+            className={styles.teamMemberImg}
+            style={{ ...customStyles.teamMemberImg, display: imageLoaded ? 'block' : 'none' }}
+            onLoad={handleImageLoad}
           />
-          <div className={`${styles.teamMemberInfo} ${customStyles.teamMemberInfo}`}>
+        </div>
+
+          <div className={styles.teamMemberInfo} style={customStyles.teamMemberInfo}>
             <h4 style={{ color: '#000' }}>{name}</h4>
           </div>
         </div>
