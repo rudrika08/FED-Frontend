@@ -1,46 +1,42 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
-import Skeleton from 'react-loading-skeleton';
 import { FaLinkedin, FaGithub } from 'react-icons/fa';
-import 'react-loading-skeleton/dist/skeleton.css';
 import styles from './styles/TeamCard.module.scss';
-import skeletonStyles from './styles/SkeletonStyles.module.scss';
+import TeamCardSkeleton from '../../layouts/Skeleton/TeamCard/TeamCard';
 
-const TeamCard = (props) => {
-  const {
-    name,
-    image,
-    social,
-    title,
-    role,
-    know,
-    customStyles = {},
-  } = props;
-
+const TeamCard = ({
+  name,
+  image,
+  social,
+  title,
+  role,
+  know,
+  customStyles = {},
+}) => {
   const [showMore, setShowMore] = useState(false);
-  const [imageLoaded, setImageLoaded] = useState(false);
+  const [contentLoaded, setContentLoaded] = useState(false);
 
-  const isDirectorRole = ['PRESIDENT', 'VICEPRESIDENT'].includes(role) || role.startsWith('DIRECTOR_');
+  const isDirectorRole =
+    ['PRESIDENT', 'VICEPRESIDENT'].includes(role) || role.startsWith('DIRECTOR_');
 
   const handleImageLoad = () => {
-    setImageLoaded(true);
+    setContentLoaded(true);
   };
 
   return (
-    <div className={styles.teamMember} style={customStyles.teamMember}>
-      <div className={styles.teamMemberInner} style={customStyles.teamMemberInner}>
+    <div className={styles.teamMember}>
+      {!contentLoaded && <TeamCardSkeleton customStyles={customStyles} />}
+      <div className={styles.teamMemberInner} style={{ display: contentLoaded ? 'block' : 'none' }}>
         <div className={styles.teamMemberFront} style={customStyles.teamMemberFront}>
-        <div className={styles.ImgDiv}>
-          {!imageLoaded && <Skeleton className={skeletonStyles.skeleton} style={customStyles.skeleton} />}
-          <img
-            src={image}
-            alt={`Profile of ${name}`}
-            className={styles.teamMemberImg}
-            style={{ ...customStyles.teamMemberImg, display: imageLoaded ? 'block' : 'none' }}
-            onLoad={handleImageLoad}
-          />
-        </div>
-
+          <div className={styles.ImgDiv}>
+            <img
+              src={image}
+              alt={`Profile of ${name}`}
+              className={styles.teamMemberImg}
+              onLoad={handleImageLoad}
+              style={{ display: 'block' }}
+            />
+          </div>
           <div className={styles.teamMemberInfo} style={customStyles.teamMemberInfo}>
             <h4 style={{ color: '#000' }}>{name}</h4>
           </div>
@@ -48,15 +44,15 @@ const TeamCard = (props) => {
         <div className={styles.teamMemberBack} style={customStyles.teamMemberBack}>
           {!showMore ? (
             <>
-              <h5 style={customStyles.teamMemberBackh5}>{title}</h5>
+              <h5 style={{ color: '#fff', ...customStyles.teamMemberBackh5 }}>{title}</h5>
               <div className={styles.socialLinks} style={customStyles.socialLinks}>
                 {social.linkedin && (
-                  <a href={social.linkedin} style={customStyles.socialLinksa} target="_blank" rel="noopener noreferrer">
+                  <a href={social.linkedin} target="_blank" rel="noopener noreferrer" style={customStyles.socialLinksa}>
                     <FaLinkedin />
                   </a>
                 )}
                 {social.github && (
-                  <a href={social.github} style={customStyles.socialLinksa} target="_blank" rel="noopener noreferrer">
+                  <a href={social.github} target="_blank" rel="noopener noreferrer" style={customStyles.socialLinksa}>
                     <FaGithub />
                   </a>
                 )}
@@ -102,10 +98,6 @@ TeamCard.propTypes = {
   role: PropTypes.string.isRequired,
   know: PropTypes.string.isRequired,
   customStyles: PropTypes.object,
-};
-
-TeamCard.defaultProps = {
-  customStyles: {},
 };
 
 export default TeamCard;

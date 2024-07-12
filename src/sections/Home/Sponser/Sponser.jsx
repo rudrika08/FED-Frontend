@@ -2,9 +2,12 @@ import React, { useState, useEffect } from 'react';
 import SponserImg from '../../../data/Sponser.json';
 import styles from './styles/Sponser.module.scss';
 import Carousel from '../../../components/Carousel/Carousel';
+import SkeletonCard from '../../../layouts/Skeleton/Sponser/Sponser';
+import { Blurhash } from 'react-blurhash';
 
 const Sponser = () => {
   const [itemsPerPage, setItemsPerPage] = useState(12);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const updateItemsPerPage = () => {
@@ -17,6 +20,9 @@ const Sponser = () => {
 
     updateItemsPerPage();
     window.addEventListener('resize', updateItemsPerPage);
+
+    // Simulate loading time
+    setTimeout(() => setLoading(false), 2000);
 
     return () => {
       window.removeEventListener('resize', updateItemsPerPage);
@@ -31,11 +37,32 @@ const Sponser = () => {
     return groupedSponsers;
   };
 
-  const SponserCard = ({ image }) => (
-    <div className={styles.sponser_card}>
-      <img src={image.image} className={styles.SponserCard_image} alt={image.title} />
-    </div>
-  );
+  const SponserCard = ({ image }) => {
+    const [isImageLoaded, setIsImageLoaded] = useState(false);
+
+    return (
+      <div className={styles.sponser_card}>
+        {!isImageLoaded && (
+          <Blurhash
+            hash="L7C}Yb0JDz~D0J^8XpnO1m}8=y5R"
+            width={'100%'}
+            height={'100%'}
+            resolutionX={32}
+            resolutionY={32}
+            punch={1}
+            className={styles.SponserCard_blurhash}
+          />
+        )}
+        <img
+          src={image.image}
+          className={styles.SponserCard_image}
+          alt={image.title}
+          onLoad={() => setIsImageLoaded(true)}
+          style={{ display: isImageLoaded ? 'block' : 'none' }}
+        />
+      </div>
+    );
+  };
 
   const groupedSponserCards = groupSponserCards();
 
@@ -51,7 +78,7 @@ const Sponser = () => {
             {groupedSponserCards.map((group, index) => (
               <div key={index} className={styles.sponser_all}>
                 {group.map((image, idx) => (
-                  <SponserCard key={idx} image={image} />
+                  loading ? <SkeletonCard key={idx} /> : <SponserCard key={idx} image={image} />
                 ))}
               </div>
             ))}

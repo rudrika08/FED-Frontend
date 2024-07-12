@@ -13,7 +13,7 @@ function Error() {
     <div className={styles.errorImage}>
       <div className={styles.box}>
       <img src={errorImage} alt="Error Page" />
-      <p>The webpage you are looking for is currently under maintainence. Please try again later. If the problem continues, mail us at
+      <p>The webpage you are looking for is currently under maintainence. Please try again later. If the problem continues, mail us at fedkiit@gmail.com
       </p>
       <button onClick={handleReturnToHome}>Return To Home</button>
       </div>
