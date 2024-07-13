@@ -189,7 +189,6 @@ function NewForm() {
         return false;
       }
     }
-
     return true;
   };
 
@@ -357,6 +356,12 @@ function NewForm() {
           }
         }
       }
+      setTimeout(() => {
+        scrollRef.current.scrollIntoView({
+          behavior: "smooth",
+          block: "nearest",
+        });
+      }, 100);
     }
   };
 

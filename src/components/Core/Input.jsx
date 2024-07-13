@@ -162,6 +162,13 @@ const Input = (props) => {
     return currentDate.getTime() < selectedDate.getTime();
   };
 
+  const filterPassedTime = (time) => {
+    const currentDate = new Date();
+    const selectedDate = new Date(time);
+
+    return currentDate.getTime() < selectedDate.getTime();
+  };
+
   const getInputTypes = () => {
     switch (type) {
       case "text":
