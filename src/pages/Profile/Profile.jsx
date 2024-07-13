@@ -14,15 +14,15 @@ const Profile = () => {
 
   useEffect(() => {
     const access = authCtx.user.access;
-    // if (access === "ADMIN") {
-    //   setDesignation("Admin");
-    // } else if (access === "ALUMNI") {
-    //   setDesignation("Alumni");
-    // } else if (access === "USER") {
-    //   setDesignation("User");
-    // } else {
-    //   setDesignation("Member");
-    // }
+    if (access === "ADMIN") {
+      setDesignation("Admin");
+    } else if (access === "ALUMNI") {
+      setDesignation("Alumni");
+    } else if (access === "USER") {
+      setDesignation("User");
+    } else {
+      setDesignation("Member");
+    }
   }, [authCtx.user.access]);
 
   const getActivePage = () => {

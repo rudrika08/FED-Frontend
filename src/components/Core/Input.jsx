@@ -415,7 +415,7 @@ const Input = (props) => {
                     value: fileRef.current.files[0],
                   },
                 };
-                setpreviewFile(URL.createObjectURL(imgRef.current.files[0]));
+                setpreviewFile(URL.createObjectURL(fileRef.current.files[0]));
                 onChange(e);
               }}
               {...rest}

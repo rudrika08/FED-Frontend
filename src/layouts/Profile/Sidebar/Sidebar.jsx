@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { MdLogout } from "react-icons/md";
 import { TbUserEdit } from "react-icons/tb";
@@ -13,20 +13,22 @@ import camera from "../../../assets/images/camera.svg";
 const Sidebar = ({ activepage, handleChange }) => {
   const [designation, setDesignation] = useState("");
   const authCtx = useContext(AuthContext);
+  const [imagePrv, setimagePrv] = useState(null);
+  const imgRef = useRef(null);
   const navigate = useNavigate();
   const [openModal, setOpen] = useState(false);
 
   useEffect(() => {
     const access = authCtx.user.access;
-    // if (access === "ADMIN") {
-    //   setDesignation("Admin");
-    // } else if (access === "ALUMNI") {
-    //   setDesignation("Alumni");
-    // } else if (access === "USER") {
-    //   setDesignation("User");
-    // } else {
-    //   setDesignation("Member");
-    // }
+    if (access === "ADMIN") {
+      setDesignation("Admin");
+    } else if (access === "ALUMNI") {
+      setDesignation("Alumni");
+    } else if (access === "USER") {
+      setDesignation("User");
+    } else {
+      setDesignation("Member");
+    }
   }, [authCtx.user.access]);
 
   const handleLogout = () => {
@@ -106,17 +108,31 @@ const Sidebar = ({ activepage, handleChange }) => {
     <>
       <div className={styles.sidebar}>
         <div className={styles.profile}>
-          <a href="/profile">
+          <a
+            onClick={() => {
+              imgRef.current?.click();
+            }}
+          >
             <div style={{ width: "auto", position: "relative" }}>
               <img
-                src={authCtx.user.pic || defaultImg}
+                src={imagePrv || authCtx.user.pic || defaultImg}
                 alt="Profile"
                 className={styles.profilePhoto}
+              />
+              <input
+                style={{
+                  display: "none",
+                }}
+                type="file"
+                ref={imgRef}
+                onChange={(e) => {
+                  setimagePrv(URL.createObjectURL(imgRef.current?.files[0]));
+                }}
               />
               <div
                 style={{ position: "absolute", bottom: "5px", right: "5px" }}
               >
-                <img onClick={handleChange} src={camera}></img>
+                <img onClick={handleChange} src={camera} />
               </div>
             </div>
           </a>
