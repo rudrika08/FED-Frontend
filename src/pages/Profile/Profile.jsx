@@ -8,21 +8,21 @@ import AuthContext from '../../context/AuthContext';
 import style from "./styles/Profile.module.scss";
 
 const Profile = () => {
-  const [activePage, setActivePage] = useState("Profile");
+  const [activePage, setActivePage] = useState("Form");
   const authCtx = useContext(AuthContext);
-  const [designation, setDesignation] = useState("");
+  const [designation, setDesignation] = useState("Admin");
 
   useEffect(() => {
     const access = authCtx.user.access;
-    if (access === "ADMIN") {
-      setDesignation("Admin");
-    } else if (access === "ALUMNI") {
-      setDesignation("Alumni");
-    } else if (access === "USER") {
-      setDesignation("User");
-    } else {
-      setDesignation("Member");
-    }
+    // if (access === "ADMIN") {
+    //   setDesignation("Admin");
+    // } else if (access === "ALUMNI") {
+    //   setDesignation("Alumni");
+    // } else if (access === "USER") {
+    //   setDesignation("User");
+    // } else {
+    //   setDesignation("Member");
+    // }
   }, [authCtx.user.access]);
 
   const getActivePage = () => {

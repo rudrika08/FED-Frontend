@@ -61,13 +61,13 @@ function App() {
             <Route path="/Social" element={<Social />} />
             <Route path="/Team" element={<Team />} />
             <Route path="/Alumni" element={<Alumni />} />
-            {authCtx.isLoggedIn && [
+            {/* {authCtx.isLoggedIn && [ */}
               <Route path="/profile" element={<Profile />} />,
               <Route
                 path="/profile/Events/:eventId"
                 element={[<Profile />, <EventModal onClosePath="/profile" />]}
               />,
-            ]}
+            {/* // ]} */}
             <Route path="/Events/:eventId" element={[<Event />, <EventModal onClosePath='/Events' />]} />
             <Route path="/Events/pastEvents/:eventId" element={[<Event />, <EventModal onClosePath='/Events' />]} />
             <Route path="/pastEvents/:eventId" element={[<PastEvent />, <EventModal onClosePath='/Events/pastEvents' />]} />
