@@ -72,7 +72,6 @@ const Sidebar = ({ activepage, handleChange }) => {
         }}
       >
         <SiReacthookform
-<<<<<<< HEAD
           size={17}
           style={{
             color: activepage === "Form" ? "#FF8A00" : "white",
@@ -100,28 +99,6 @@ const Sidebar = ({ activepage, handleChange }) => {
           }}
         />{" "}
         Members
-=======
-        size={17} 
-        style={{ 
-        color: activepage === 'Form' ? '#FF8A00' : 'white' ,
-        marginRight: "10px"
-      }}  /> Form
-      </div>
-      <div
-        onClick={() => handleChange('Members')}
-        style={{ background: activepage === 'Members' ? 'var(--primary)' : 'transparent',
-          WebkitBackgroundClip: activepage === 'Members' ? 'text' : 'initial',
-          backgroundClip: activepage === 'Members' ? 'text' : 'initial',
-          color: activepage === 'Members' ? 'transparent' : 'inherit' ,
-          marginLeft:"-6px"}}
-      >
-        <TbUserEdit 
-        size={17} 
-        style={{ 
-        color: activepage === 'Members' ? '#FF8A00' : 'white'  ,
-        marginRight: "10px"
-      }} /> Members
->>>>>>> af85c93a0a25fe712692c64abee352b8e3c4d8f9
       </div>
     </>
   );
@@ -135,7 +112,6 @@ const Sidebar = ({ activepage, handleChange }) => {
               imgRef.current?.click();
             }}
           >
-<<<<<<< HEAD
             <div style={{ width: "auto", position: "relative" }}>
               <img
                 src={imagePrv || authCtx.user.pic || defaultImg}
@@ -163,16 +139,6 @@ const Sidebar = ({ activepage, handleChange }) => {
             <p className={styles.name}>{handleName()}</p>
             <p className={styles.role}>{designation}</p>
           </div>
-=======
-            <SlCalender size={17} style={{marginRight: "10px"}}/> Event
-          </div>
-        )}
-        <div
-          onClick={handleLogout}
-          style={{ color: activepage === 'Logout' ? '#FF8A00' : 'white' }}
-        >
-          <MdLogout size={17} style={{marginRight: "9px"}}/> Logout
->>>>>>> af85c93a0a25fe712692c64abee352b8e3c4d8f9
         </div>
         <div className={styles.menu}>
           {designation === "Admin" && renderAdminMenu()}
