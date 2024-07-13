@@ -12,6 +12,8 @@ const TeamCard = ({
   role,
   know,
   customStyles = {},
+  onUpdate,
+  onDelete,
 }) => {
   const [showMore, setShowMore] = useState(false);
   const [contentLoaded, setContentLoaded] = useState(false);
@@ -78,6 +80,10 @@ const TeamCard = ({
                   Know More
                 </button>
               )}
+              <div className={`${styles.updatebtn} ${customStyles.updatebtn || ''}`}>
+                <button onClick={onUpdate}>Update</button>
+                <button onClick={onDelete}>Remove</button>
+              </div>
             </>
           ) : (
             <div className={`${styles.knowMoreContent} ${customStyles.knowMoreContent || ''}`}>
@@ -110,6 +116,8 @@ TeamCard.propTypes = {
   role: PropTypes.string.isRequired,
   know: PropTypes.string.isRequired,
   customStyles: PropTypes.object,
+  onUpdate: PropTypes.func.isRequired,
+  onDelete: PropTypes.func.isRequired,
 };
 
 export default TeamCard;

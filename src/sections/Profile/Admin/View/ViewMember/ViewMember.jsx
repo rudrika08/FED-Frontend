@@ -96,6 +96,16 @@ function ViewMember() {
     socialLinksa: styles.socialLinksaCustom,
     button: styles.buttonCustom,
     knowPara: styles.knowParaCustom,
+    updatebtn: styles.updatebtnCustom,
+    teamMemberBack: styles.teamMemberBackCustom,
+  };
+
+  const handleUpdate = (name, role, title) => {
+    console.log(`Update member: ${name}, ${role}, ${title}`);
+  };
+
+  const handleRemove = (name, role, title) => {
+    console.log(`Remove member: ${name}, ${role}, ${title}`);
   };
 
   const membersToDisplay = getMembersByPage();
@@ -124,6 +134,8 @@ function ViewMember() {
                   role={member.access}
                   know={member.extra.know}
                   customStyles={customStyles}
+                  onUpdate={handleUpdate}
+                  onRemove={handleRemove}
                 />
               ))}
             </div>

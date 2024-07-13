@@ -61,7 +61,7 @@
 .teamGrid {
   display: grid;
   grid-template-columns: repeat(4, minmax(100px, 1fr));
-  gap: 32px;
+  
   justify-content: center;
   padding: 10px 20px;
   padding-right: 0;
@@ -93,16 +93,15 @@
 
 /* Custom styles for TeamCard component */
 .teamMemberCustom {
-  height: 14rem;
-  width: 12rem;
+  height: 16rem;
+  width: 13rem;
 }
-
 .teamMemberBackh5Custom {
-  font-size: 1.1rem;
+  font-size: smaller;
 }
 
-.socialLinksasocialLinksaCustom {
-  font-size: 2rem;
+.socialLinksaCustom {
+  font-size: 1rem;
 }
 
 .buttonCustom {
@@ -111,4 +110,9 @@
 
 .knowParaCustom {
   height: 10rem;
+}
+
+.updatebtnCustom{
+  display: flex;
+  width: 70%;
 }

@@ -158,6 +158,27 @@ button {
   margin-bottom: 15px;
 }
 
+.updatebtn{
+  display: none;
+  align-items: center;
+  justify-content: space-between;
+  width: 55%;
+}
+
+.updatebtn button{
+  border: 1px solid #fff;
+  padding: 5px;
+  border-radius: 5px;
+  font-size: small;
+  background-color: #313131;
+}
+
+.updatebtn button:hover{
+  background-color: rgba(244, 128, 3, 0.84);
+  color: #fff;
+  transition: 0.2s ease-in-out;
+}
+
 
 
 /* Responsive styles */
