@@ -1,6 +1,5 @@
 import React, { useState, useEffect, Children } from "react";
 import PropTypes from "prop-types";
-import classNames from "classnames";
 import { Blurhash } from "react-blurhash";
 import styles from "./styles/Carousel.module.scss";
 import CarouselSkeleton from "../../layouts/Skeleton/Carousel/Carousel";
@@ -47,27 +46,22 @@ function Carousel({ children, images, customStyles = {} }) {
   }
 
   return (
-    <div className={classNames(styles.carousel_outer, customStyles.carousel_outer)}>
+    <div className={`${styles.carousel_outer} ${customStyles.carousel_outer}`}>
       <div
-        className={classNames(styles.carousel, customStyles.carousel)}
+        className={`${styles.carousel} ${customStyles.carousel}`}
         onMouseEnter={() => {
           setAutoPlay(false);
-          clearTimeout(timeOut);
         }}
         onMouseLeave={() => {
           setAutoPlay(true);
         }}
       >
-        <div className={classNames(styles.carousel_wrapper, customStyles.carousel_wrapper)}>
+        <div className={`${styles.carousel_wrapper} ${customStyles.carousel_wrapper}`}>
           {images
             ? images.map((image, index) => (
                 <div
                   key={index}
-                  className={classNames(styles.carousel_card, {
-                    [styles.carousel_card_active]: index === current,
-                    [customStyles.carousel_card]: true,
-                    [customStyles.carousel_card_active]: index === current,
-                  })}
+                  className={`${styles.carousel_card} ${index === current ? styles.carousel_card_active : ""} ${customStyles.carousel_card} ${index === current ? customStyles.carousel_card_active : ""}`}
                 >
                   <div className={styles.image_container}>
                     {!isImageLoaded && (
@@ -82,40 +76,30 @@ function Carousel({ children, images, customStyles = {} }) {
                       />
                     )}
                     <img
-                      className={classNames(styles.card_image, customStyles.card_image, {
-                        [styles.loaded]: isImageLoaded,
-                      })}
+                      className={`${styles.card_image} ${customStyles.card_image} ${isImageLoaded ? styles.loaded : ""}`}
                       src={image.image}
                       alt={image.title}
                       onLoad={handleImageLoad}
                     />
                   </div>
-                  <div className={classNames(styles.card_overlay, customStyles.card_overlay)}>
-                    <h2 className={classNames(styles.card_title, customStyles.card_title)}>{image.title}</h2>
+                  <div className={`${styles.card_overlay} ${customStyles.card_overlay}`}>
+                    <h2 className={`${styles.card_title} ${customStyles.card_title}`}>{image.title}</h2>
                   </div>
                 </div>
               ))
             : Children.map(children, (child, index) => (
                 <div
                   key={index}
-                  className={classNames(styles.carousel_card, {
-                    [styles.carousel_card_active]: index === current,
-                    [customStyles.carousel_card]: true,
-                    [customStyles.carousel_card_active]: index === current,
-                  })}
+                  className={`${styles.carousel_card} ${index === current ? styles.carousel_card_active : ""} ${customStyles.carousel_card} ${index === current ? customStyles.carousel_card_active : ""}`}
                 >
                   {child}
                 </div>
               ))}
-          <div className={classNames(styles.carousel_pagination, customStyles.carousel_pagination)}>
+          <div className={`${styles.carousel_pagination} ${customStyles.carousel_pagination}`}>
             {Array.from({ length: contentCount }).map((_, index) => (
               <div
                 key={index}
-                className={classNames(styles.pagination_dot, {
-                  [styles.pagination_dot_active]: index === current,
-                  [customStyles.pagination_dot]: true,
-                  [customStyles.pagination_dot_active]: index === current,
-                })}
+                className={`${styles.pagination_dot} ${index === current ? styles.pagination_dot_active : ""} ${customStyles.pagination_dot} ${index === current ? customStyles.pagination_dot_active : ""}`}
                 onClick={() => setCurrent(index)}
               ></div>
             ))}
