@@ -91,26 +91,12 @@ function ViewMember() {
   };
 
   const customStyles = {
-    teamMember:{
-      height: "10rem",
-      width: "10rem",
-    },
-
-    teamMemberBackh5:{
-      fontSize: "1.1rem",
-    },
-
-    socialLinksa:{
-      fontSize: "2rem",
-    },
-    button:{
-      fontSize:"1rem"
-    },
-    knowPara:{
-      height:"10rem",
-    }
-    // Any other custom styles
-};
+    teamMember: styles.teamMemberCustom,
+    teamMemberBackh5: styles.teamMemberBackh5Custom,
+    socialLinksa: styles.socialLinksaCustom,
+    button: styles.buttonCustom,
+    knowPara: styles.knowParaCustom,
+  };
 
   const membersToDisplay = getMembersByPage();
 

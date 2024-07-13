@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { FaLinkedin, FaGithub } from 'react-icons/fa';
 import styles from './styles/TeamCard.module.scss';
@@ -24,10 +24,10 @@ const TeamCard = ({
   };
 
   return (
-    <div className={styles.teamMember}>
+    <div className={`${styles.teamMember} ${customStyles.teamMember || ''}`}>
       {!contentLoaded && <TeamCardSkeleton customStyles={customStyles} />}
       <div className={styles.teamMemberInner} style={{ display: contentLoaded ? 'block' : 'none' }}>
-        <div className={styles.teamMemberFront} style={customStyles.teamMemberFront}>
+        <div className={`${styles.teamMemberFront} ${customStyles.teamMemberFront || ''}`}>
           <div className={styles.ImgDiv}>
             <img
               src={image}
@@ -37,22 +37,34 @@ const TeamCard = ({
               style={{ display: 'block' }}
             />
           </div>
-          <div className={styles.teamMemberInfo} style={customStyles.teamMemberInfo}>
+          <div className={`${styles.teamMemberInfo} ${customStyles.teamMemberInfo || ''}`}>
             <h4 style={{ color: '#000' }}>{name}</h4>
           </div>
         </div>
-        <div className={styles.teamMemberBack} style={customStyles.teamMemberBack}>
+        <div className={`${styles.teamMemberBack} ${customStyles.teamMemberBack || ''}`}>
           {!showMore ? (
             <>
-              <h5 style={{ color: '#fff', ...customStyles.teamMemberBackh5 }}>{title}</h5>
-              <div className={styles.socialLinks} style={customStyles.socialLinks}>
+              <h5 className={`${styles.teamMemberBackh5} ${customStyles.teamMemberBackh5 || ''}`} style={{ color: '#fff' }}>
+                {title}
+              </h5>
+              <div className={`${styles.socialLinks} ${customStyles.socialLinks || ''}`}>
                 {social.linkedin && (
-                  <a href={social.linkedin} target="_blank" rel="noopener noreferrer" style={customStyles.socialLinksa}>
+                  <a
+                    href={social.linkedin}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`${styles.socialLinksa} ${customStyles.socialLinksa || ''}`}
+                  >
                     <FaLinkedin />
                   </a>
                 )}
                 {social.github && (
-                  <a href={social.github} target="_blank" rel="noopener noreferrer" style={customStyles.socialLinksa}>
+                  <a
+                    href={social.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`${styles.socialLinksa} ${customStyles.socialLinksa || ''}`}
+                  >
                     <FaGithub />
                   </a>
                 )}
@@ -61,21 +73,21 @@ const TeamCard = ({
                 <button
                   onClick={() => setShowMore(true)}
                   aria-expanded={showMore}
-                  style={customStyles.button}
+                  className={`${styles.button} ${customStyles.button || ''}`}
                 >
                   Know More
                 </button>
               )}
             </>
           ) : (
-            <div className={styles.knowMoreContent} style={customStyles.knowMoreContent}>
-              <div className={styles.knowPara} style={customStyles.knowPara}>
+            <div className={`${styles.knowMoreContent} ${customStyles.knowMoreContent || ''}`}>
+              <div className={`${styles.knowPara} ${customStyles.knowPara || ''}`}>
                 <p>{know}</p>
               </div>
               <button
                 onClick={() => setShowMore(false)}
                 aria-expanded={showMore}
-                style={customStyles.button}
+                className={`${styles.button} ${customStyles.button || ''}`}
               >
                 Back
               </button>

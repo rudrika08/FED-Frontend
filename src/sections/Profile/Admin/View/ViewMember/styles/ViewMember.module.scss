@@ -1,4 +1,3 @@
-
 .right {
   width: 100%;
 }
@@ -6,7 +5,7 @@
 .mainMember {
   height: 100%;
   width: 100%;
-  position:relative;
+  position: relative;
   padding: 2em 0;
 }
 
@@ -14,24 +13,23 @@
   font-size: 30px;
   letter-spacing: 0.02em;
   line-height: 40px;
-  padding-bottom:10px;
+  padding-bottom: 10px;
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
-.headInnerText{
-  margin-left: 3.5rem;
+.headInnerText {
+  margin-left: 1.2rem;
   margin-top: 12px;
 }
-  
-.headInnerText span{
+
+.headInnerText span {
   margin-right: 3px;
-  background: linear-gradient(to right , #d03e21 40%, #FF8A00 );
+  background: linear-gradient(to right, #d03e21 40%, #FF8A00);
   -webkit-background-clip: text;
   color: transparent;
-  
 }
 
 .eventmember {
@@ -41,16 +39,14 @@
 }
 
 .buttons {
-  margin-top: -5px;
   display: flex;
   justify-content: space-around;
   height: auto;
   flex-wrap: wrap;
-  margin-left: 3rem;
+  margin: 0 1rem;
 }
 
 .buttons button {
-  // padding: 0.5rem;
   border-radius: 10px;
   border: 0.3px #969393 solid;
   color: #ffff;
@@ -58,7 +54,6 @@
   height: 3rem;
   width: 6.5rem;
   font-size: 1rem;
-  // margin-right: 5px;
   margin-left: 10px;
   cursor: pointer;
 }
@@ -68,13 +63,11 @@
   grid-template-columns: repeat(4, minmax(100px, 1fr));
   gap: 32px;
   justify-content: center;
-  padding: 10px 50px;
+  padding: 10px 20px;
+  padding-right: 0;
   height: 360px;
-  margin-left: 2vw;
-  margin-right: 2vw;
   overflow: hidden scroll;
   scrollbar-width: none;
-  // background-color: pink;
 }
 
 @media (max-width: 1024px) {
@@ -96,4 +89,26 @@
     grid-template-columns: repeat(2, 1fr);
     padding: 0;
   }
+}
+
+/* Custom styles for TeamCard component */
+.teamMemberCustom {
+  height: 14rem;
+  width: 12rem;
+}
+
+.teamMemberBackh5Custom {
+  font-size: 1.1rem;
+}
+
+.socialLinksasocialLinksaCustom {
+  font-size: 2rem;
+}
+
+.buttonCustom {
+  font-size: 1rem;
+}
+
+.knowParaCustom {
+  height: 10rem;
 }
