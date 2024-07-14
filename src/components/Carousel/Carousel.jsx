@@ -2,7 +2,7 @@ import React, { useState, useEffect, Children } from "react";
 import PropTypes from "prop-types";
 import { Blurhash } from "react-blurhash";
 import styles from "./styles/Carousel.module.scss";
-import CarouselSkeleton from "../../layouts/Skeleton/Carousel/Carousel";
+import CarouselSkeleton from "../../layouts/skeleton/Carousel/Carousel";
 
 function Carousel({ children, images, customStyles = {} }) {
   const [current, setCurrent] = useState(0);

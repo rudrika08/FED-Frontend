@@ -11,7 +11,7 @@ const EventForm = () => {
 
   const { eventId } = useParams();
   const {events}=FormData;
-  const data = events.find((event) => event.id === eventId);
+  const data = events.find((event) => event.id === parseInt(eventId));
   console.log(eventId);
   return (
     <div>

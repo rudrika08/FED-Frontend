@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { FaLinkedin, FaGithub } from 'react-icons/fa';
 import styles from './styles/TeamCard.module.scss';
-import TeamCardSkeleton from '../../layouts/Skeleton/TeamCard/TeamCard';
+import TeamCardSkeleton from '../../layouts/skeleton/TeamCard/TeamCard';
 
 const TeamCard = ({
   name,

@@ -22,7 +22,7 @@ const Social = lazy(() => import("./pages/Social/Social"));
 const Team = lazy(() => import("./pages/Team/Team"));
 const Alumni = lazy(() => import("./pages/Alumni/Alumni"));
 const Profile = lazy(() => import("./pages/Profile/Profile"));
-const Login = lazy(() => import("./pages/Authentication/Login/Login"));
+// const Login = lazy(() => import("./pages/Authentication/Login/Login"));
 const Signup = lazy(() => import("./pages/Authentication/Signup/Signup"));
 const ForgotPassword = lazy(() =>
   import("./pages/Authentication/ForgotPassword/ForgotPassword")
@@ -30,6 +30,9 @@ const ForgotPassword = lazy(() =>
 const Error = lazy(() => import("./pages/Error/Error"));
 const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy/PrivacyPolicy"));
 const TermsAndConditions = lazy(() => import("./pages/TermsAndConditions/T&C"));
+const PageRenderer = lazy(()=>import("./authentication/Login/ForgotPassword/PageRender"))
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const MainLayout = () => (
   <div>
@@ -44,6 +47,7 @@ const MainLayout = () => (
 
 const AuthLayout = () => (
   <div className="page">
+     <ToastContainer />
     <Outlet />
   </div>
 );
@@ -68,6 +72,10 @@ function App() {
                 path="/profile/Events/:eventId"
                 element={[<Profile />, <EventModal onClosePath="/profile" />]}
               />,
+              <Route
+              path="/Events/:eventId/Form"
+              element={[<Event />, <EventForm />]}
+            />
             ]}
             <Route
               path="/Events/:eventId"
@@ -96,30 +104,11 @@ function App() {
             />
             <Route path="*" element={<Error />} />
           </Route>
-
+       
           <Route element={<AuthLayout />}>
-            <Route
-              path="/Login"
-              element={
-                authCtx.isLoggedIn ? <Navigate to="/profile" /> : <Login />
-              }
-            />
-            <Route
-              path="/SignUp"
-              element={
-                authCtx.isLoggedIn ? <Navigate to="/profile" /> : <Signup />
-              }
-            />
-            <Route
-              path="/ForgotPassword"
-              element={
-                authCtx.isLoggedIn ? (
-                  <Navigate to="/profile" />
-                ) : (
-                  <ForgotPassword />
-                )
-              }
-            />
+            <Route path="/Login" element={authCtx.isLoggedIn ? <Navigate to='/profile' /> : <PageRenderer />} />
+            <Route path="/SignUp" element={authCtx.isLoggedIn ? <Navigate to='/profile' /> : <Signup />} />
+            <Route path="/ForgotPassword" element={authCtx.isLoggedIn ? <Navigate to='/profile' /> : <ForgotPassword />} />
           </Route>
         </Routes>
       </Suspense>

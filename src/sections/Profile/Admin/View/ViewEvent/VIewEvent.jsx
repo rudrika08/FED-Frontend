@@ -13,6 +13,7 @@ import FormData from "../../../../../data/FormData.json"
 function ViewEvent() {
   const [activePage, setActivePage] = useState("View Events");
   const [pastEvents, setPastEvents] = useState([]);
+  const[ongoingEvent,setOngoingEvent]=useState([]);
   const{events}=FormData;
   useEffect(() => {
     // Fetch event data using axios
@@ -21,8 +22,12 @@ function ViewEvent() {
         // const response = await axios.get("/api/form/getAllForms");
         // const fetchedEvents = response.data;
         // setPastEvents(fetchedEvents);
-        const testEvents=events;
-        setPastEvents(testEvents);
+        const ongoingEvents=events.filter((event)=>!event.info.isEventPast)
+        const pastEvent=events.filter((event)=>event.info.isEventPast)
+        setOngoingEvent(ongoingEvents);
+        setPastEvents(pastEvent);
+        console.log(ongoingEvent);
+        console.log(pastEvents)
 
       } catch (error) {
         console.error("Error fetching event data:", error);
@@ -63,6 +68,17 @@ function ViewEvent() {
       <form className={styles.form}>
         {activePage === "View Events" && (
           <div className={styles.eventList}>
+            {ongoingEvent.map((event, index) => (
+              <div style={{ width: "23rem", height: "auto" }} key={index}>
+                <EventCard
+                  data={event}
+                  customStyles={customStyles}
+                  type="ongoing"
+                   modalpath='/profile/Events/'
+                  isPastpage={true}
+                />
+              </div>
+            ))}
             {pastEvents.map((event, index) => (
               <div style={{ width: "23rem", height: "auto" }} key={index}>
                 <EventCard

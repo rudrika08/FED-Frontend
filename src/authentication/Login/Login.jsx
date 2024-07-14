@@ -14,9 +14,11 @@ import GoogleLogin from "./GoogleLogin";
 import { Link } from "react-router-dom";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { color } from "framer-motion";
+import { RecoveryContext } from "../../context/RecoveryContext";
 
 const Login = () => {
   const navigate = useNavigate();
+  const {  setPage } = useContext(RecoveryContext);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -58,6 +60,10 @@ const Login = () => {
       alert("Invalid email or password");
     }
   };
+
+  const handleForgot=()=>{
+    setPage("SendOtp")
+  }
   return (
     <div>
       <div className={style.container}>
@@ -114,8 +120,10 @@ const Login = () => {
                 width: "98%",
               }}
             />
-               <Text
+                  <Text
+                    onClick={handleForgot}
                     variant="secondary"
+                   
                     style={{
                       fontSize: "0.7rem",
                       cursor: "pointer",
