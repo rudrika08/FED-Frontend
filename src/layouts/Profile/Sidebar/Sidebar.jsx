@@ -57,8 +57,10 @@ const Sidebar = ({ activepage, handleChange }) => {
 
 
   const closeModal = () => {
+    
+    setSelectedFile(null); 
     setOpenModal(false); // Close the modal without saving
-    setSelectedFile(null); // Clear selected file state
+   // Clear selected file state
   };
 
  const setImage=(url)=>{

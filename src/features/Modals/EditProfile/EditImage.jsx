@@ -6,6 +6,7 @@ import { useRef } from 'react';
 import AuthContext from '../../../context/AuthContext';
 import axios from 'axios';
 import { Button } from '../../../components';
+import { X } from 'lucide-react';
 
 const EditImage = ({ selectedFile, closeModal, setimage }) => {
   const [scale, setScale] = useState(1);
@@ -89,6 +90,12 @@ const EditImage = ({ selectedFile, closeModal, setimage }) => {
           marginTop: ".3rem",
         }}>
           <div className={style.container}>
+          <button
+                    className={style.closeModal} 
+                    onClick={()=>closeModal()}
+                  >
+                    <X />
+                  </button>
             <AvatarEditor
               ref={editorRef}
               image={selectedFile}
