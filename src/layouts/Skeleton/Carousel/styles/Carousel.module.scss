@@ -12,17 +12,17 @@
     align-items: center;
     justify-content: center;
     overflow: hidden;
-    border-radius: 10px;
+    border-radius: 50px;
   }
 
   .carousel_skeleton{
     width: 580px;
-    height: 350px;
+    height: 370px;
     background-color: #313131;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 20px;
+    border-radius: 60px;
     margin-right: 20px;
   }
   
@@ -40,16 +40,13 @@
 
   @media (max-width: 768px){
     .carousel_skeleton{
-       margin-right: 0;
-    }
-  }
-
-  @media (max-width: 768px){
-    .carousel_skeleton{
-      height: 270px;
+      margin-right: 0;
+      height: 290px;
       margin-top: 25px;
     }
   }
+
+  
   
 
   

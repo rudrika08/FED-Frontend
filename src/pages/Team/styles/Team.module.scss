@@ -1,10 +1,8 @@
-// .Teams {
-//   padding: 20px;
-// }
 
 .Team h2 {
   text-align: center;
   font-size: 50px;
+  margin-top: 20px;
 }
 
 .Team h2 span {
@@ -12,7 +10,7 @@
 }
 
 .para p{
-  padding: 30px;
+  padding: 30px 70px;
   z-index: 1;
   text-align: center;
   margin-top: 10px;
@@ -172,7 +170,7 @@ strong {
   // }
 
 
-  h2 {
+  .Team h2 {
     font-size: 2.5rem;
   }
 
@@ -183,6 +181,7 @@ strong {
 
   .para p{
     font-size: 13px;
+    padding: 30px 30px;
   }
 }
 
@@ -208,7 +207,7 @@ strong {
     margin-bottom: 20px;
   }
 
-  h2 {
+  .Team h2 {
     font-size: 40px;
   }
   .circle {

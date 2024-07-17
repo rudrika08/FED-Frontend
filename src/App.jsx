@@ -2,7 +2,7 @@ import { Suspense, lazy, useContext } from "react";
 import { Routes, Route, Outlet, Navigate } from "react-router-dom";
 
 // layouts
-import { Navbar, MobileNavbar, Footer } from "./layouts";
+import {Footer, Navbar } from "./layouts";
 
 // microInteraction
 import { Loading, Alert } from "./microInteraction";
@@ -33,8 +33,7 @@ const TermsAndConditions = lazy(() => import("./pages/TermsAndConditions/T&C"));
 
 const MainLayout = () => (
   <div>
-    <Navbar />
-    <MobileNavbar />
+    <Navbar/>
     <div className="page">
       <Outlet />
     </div>

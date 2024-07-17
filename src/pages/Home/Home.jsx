@@ -1,5 +1,4 @@
 import { useEffect } from 'react';
-
 import { Hero, About, Sponser, Feedback, Contact } from "../../sections";
 import { ChatBot, LiveEventPopup } from "../../features";
 

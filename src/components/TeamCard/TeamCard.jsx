@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { FaLinkedin, FaGithub } from 'react-icons/fa';
 import styles from './styles/TeamCard.module.scss';
 import TeamCardSkeleton from '../../layouts/Skeleton/TeamCard/TeamCard';
+import { Button } from '../Core';
 
 const TeamCard = ({
   name,
@@ -81,8 +82,8 @@ const TeamCard = ({
                 </button>
               )}
               <div className={`${styles.updatebtn} ${customStyles.updatebtn || ''}`}>
-                <button onClick={() => onUpdate(name, role, title)}>Update</button>
-                <button onClick={() => onRemove(name, role, title)}>Remove</button>
+                <Button onClick={() => onUpdate(name, role, title)}>Update</Button>
+                <Button onClick={() => onRemove(name, role, title)}>Remove</Button>
               </div>
             </>
           ) : (

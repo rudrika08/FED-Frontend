@@ -23,7 +23,7 @@ function Carousel({ children, images, customStyles = {} }) {
     if (autoPlay && !isLoading) {
       timeOut = setTimeout(() => {
         slideRight();
-      }, 2500);
+      }, 1000);
     }
     return () => clearTimeout(timeOut);
   }, [current, autoPlay, isLoading]);
@@ -42,7 +42,7 @@ function Carousel({ children, images, customStyles = {} }) {
   };
 
   if (isLoading) {
-    return <CarouselSkeleton customStyles={customStyles} />;
+    return <CarouselSkeleton className="hide_skeleton" />;
   }
 
   return (

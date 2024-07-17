@@ -1,142 +1,182 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { NavLink, Link, useLocation } from "react-router-dom";
-import style from "./styles/Navbar.module.scss";
-import Headroom from 'react-headroom';
+import React, { useState, useEffect, useRef, useContext } from "react";
+import styles from "./styles/Navbar.module.scss";
 import logo from "../../assets/images/Logo/logo.svg";
 import defaultImg from "../../assets/images/defaultImg.jpg"; 
 import AuthContext from '../../context/AuthContext';
+import { useLocation, NavLink } from "react-router-dom";
+import { MdOutlineLogout } from "react-icons/md";
 
-function Navbar() {
-  const [scroll, setScroll] = useState(false);
+const Navbar = () => {
   const [hoveredLink, setHoveredLink] = useState(null);
   const location = useLocation();
   const authCtx = useContext(AuthContext);
+  const [isMobile, setIsMobile] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
+  const lastScrollY = useRef(0);
+  const [navbarHeight, setNavbarHeight] = useState("80px");
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setScroll(window.scrollY > 0);
-    };
+  const handleScroll = () => {
+    if (window.scrollY > lastScrollY.current) {
+      setIsVisible(false);
+    } else {
+      setIsVisible(true);
+    }
 
-    window.addEventListener('scroll', handleScroll);
+    if (isMobile) {
+      setIsMobile(false);
+      setNavbarHeight("80px");
+    }
 
-    // Initial check for scroll position
-    handleScroll();
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
-
-  useEffect(() => {
-    const links = document.querySelectorAll(`.${style.navLink} a`);
-    
-    const handleMouseOver = (event) => {
-      setHoveredLink(event.target);
-    };
-
-    const handleMouseOut = () => {
-      setHoveredLink(null);
-    };
-
-    links.forEach(link => {
-      link.addEventListener('mouseover', handleMouseOver);
-      link.addEventListener('mouseout', handleMouseOut);
-    });
-
-    return () => {
-      links.forEach(link => {
-        link.removeEventListener('mouseover', handleMouseOver);
-        link.removeEventListener('mouseout', handleMouseOut);
-      });
-    };
-  }, []);
-
-  const isActive = (path) => {
-    return location.pathname === path;
+    lastScrollY.current = window.scrollY;
   };
 
-  const handleLogoClick = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+  const handleResize = () => {
+    setWindowWidth(window.innerWidth);
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [isMobile]);
+
+  const toggleMobileMenu = () => {
+    setIsMobile(!isMobile);
+    setNavbarHeight(!isMobile ? "500vw" : "80px");
+  };
+
+  const closeMobileMenu = () => {
+    setIsMobile(false);
+    setNavbarHeight("80px");
+  };
+
+  const handleLogout = () => {
+    authCtx.logout();
+    closeMobileMenu();
   };
 
   return (
-    <Headroom>
-      <nav className={`${style.nav}`}>
-        <Link to="/" onClick={handleLogoClick}>
-          <div className={style.logo_div}>
-            <img src={logo} alt="Logo" className={style.logo} />
-            <div className={style.logo_text}></div>
+    <nav className={`${styles.navbar} ${isVisible ? styles.visible : styles.hidden}`}>
+      <div className={styles.navbarContent} style={{ height: navbarHeight }}>
+        <div className={styles.mobNav}>
+          <div className={`${styles.menuToggle} ${isMobile ? styles.active : ""}`} onClick={toggleMobileMenu}>
+            {isMobile ? (
+              <div className={styles.cross}>
+                <div className={styles.crossBar}></div>
+                <div className={styles.crossBar}></div>
+              </div>
+            ) : (
+              <>
+                <div className={styles.bar}></div>
+                <div className={styles.bar}></div>
+                <div className={styles.bar}></div>
+              </>
+            )}
           </div>
-        </Link>
-        <ul className={style.navItems}> 
-          <li className={style.navLink}>
-            <NavLink 
-              to="/" 
-              style={{ 
-                background: isActive("/") ? "var(--primary)" : (hoveredLink && hoveredLink.href.endsWith('/')) ? "var(--primary)" : "transparent",
-                WebkitBackgroundClip: isActive("/") ? "text" : (hoveredLink && hoveredLink.href.endsWith('/')) ? "text" : "initial",
-                color: isActive("/") ? "transparent" :(hoveredLink && hoveredLink.href.endsWith('/')) ? "transparent" : "inherit"
-              }}
-            >
-              Home
-            </NavLink>
-          </li>
-          <li className={style.navLink}>
-            <NavLink 
-              to="/Events" 
-              style={{ 
-                background: isActive("/Events") ? "var(--primary)" : (hoveredLink && hoveredLink.href.endsWith('/Events')) ? "var(--primary)" : "transparent",
-                WebkitBackgroundClip: isActive("/Events") ? "text" : (hoveredLink && hoveredLink.href.endsWith('/Events')) ? "text" : "initial",
-                color: isActive("/Events") ? "transparent" :(hoveredLink && hoveredLink.href.endsWith('/Events')) ? "transparent" : "inherit"
-              }}
-            >
-              Events
-            </NavLink>
-          </li>
-          <li className={style.navLink}>
-            <NavLink 
-              to="/Social" 
-              style={{ 
-                background: isActive("/Social") ? "var(--primary)" : (hoveredLink && hoveredLink.href.endsWith('/Social')) ? "var(--primary)" : "transparent",
-                WebkitBackgroundClip: isActive("/Social") ? "text" : (hoveredLink && hoveredLink.href.endsWith('/Social')) ? "text" : "initial",
-                color: isActive("/Social") ? "transparent" :(hoveredLink && hoveredLink.href.endsWith('/Social')) ? "transparent" : "inherit"
-              }}
-            >
-              Social
-            </NavLink>
-          </li>
-          <li className={style.navLink}>
-            <NavLink 
-              to="/Team" 
-              style={{ 
-                background: isActive("/Team") ? "var(--primary)" : (hoveredLink && hoveredLink.href.endsWith('/Team')) ? "var(--primary)" : "transparent",
-                WebkitBackgroundClip: isActive("/Team") ? "text" : (hoveredLink && hoveredLink.href.endsWith('/Team')) ? "text" : "initial",
-                color: isActive("/Team") ? "transparent" :(hoveredLink && hoveredLink.href.endsWith('/Team')) ? "transparent" : "inherit"
-              }}
-            >
-              Team
-            </NavLink>
-          </li>
-        </ul>
 
-        {authCtx.isLoggedIn ? (
-          <NavLink to="/profile" className="LinkStyle">
-            <div className={style.profileImgdiv}>   
-              <img
-                src={authCtx.user.pic || defaultImg}
-                alt="Profile"
-                className={style.profileImg}
-              />
-            </div>
-          </NavLink>
-        ) : (
-          <a href="/Login">
-            <button className={style.authButton}>Login</button>
-          </a>
-        )}
-      </nav>
-    </Headroom>
+          <div className={styles.logo_text}></div>
+        </div>
+
+        <ul className={`${styles.navLinks} ${isMobile ? styles.active : ""} ${authCtx.isLoggedIn ? styles.loggedIn : ""}`}>
+          {authCtx.isLoggedIn && windowWidth <= 768 && (
+            <NavLink to="/profile" className="LinkStyle" onClick={closeMobileMenu}>
+              <div className={styles.profileImgdiv}>   
+                <img
+                  src={authCtx.user.pic || defaultImg}
+                  alt="Profile"
+                  className={styles.profileImg}
+                />
+              </div>
+            </NavLink>
+          )}
+
+          <div className={styles.logo_div}>
+            <img src={logo} alt="Logo" className={styles.logo} />
+            <div className={styles.logo_text}></div>
+          </div>
+
+          <div className={styles.navItems}>
+            <li>
+              <NavLink
+                to="/"
+                className={({ isActive }) =>
+                  isActive ? styles.activeLink : ""
+                }
+                onMouseEnter={() => setHoveredLink("/")}
+                onMouseLeave={() => setHoveredLink(null)}
+                onClick={closeMobileMenu}
+              >
+                Home
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to="/Events"
+                className={({ isActive }) =>
+                  isActive ? styles.activeLink : ""
+                }
+                onMouseEnter={() => setHoveredLink("/Events")}
+                onMouseLeave={() => setHoveredLink(null)}
+                onClick={closeMobileMenu}
+              >
+                Event
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to="/Social"
+                className={({ isActive }) =>
+                  isActive ? styles.activeLink : ""
+                }
+                onMouseEnter={() => setHoveredLink("/Social")}
+                onMouseLeave={() => setHoveredLink(null)}
+                onClick={closeMobileMenu}
+              >
+                Social
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to="/Team"
+                className={({ isActive }) =>
+                  isActive ? styles.activeLink : ""
+                }
+                onMouseEnter={() => setHoveredLink("/Team")}
+                onMouseLeave={() => setHoveredLink(null)}
+                onClick={closeMobileMenu}
+              >
+                Team
+              </NavLink>
+            </li>
+          </div>
+
+          {authCtx.isLoggedIn ? (
+            windowWidth <= 768 ? (
+              <button className={styles.authButton} onClick={handleLogout}>Logout <MdOutlineLogout size={25} /></button>
+            ) : (
+              <NavLink to="/profile" className="LinkStyle">
+                <div className={styles.profileImgdiv}>   
+                  <img
+                    src={authCtx.user.pic || defaultImg}
+                    alt="Profile"
+                    className={styles.profileImg}
+                  />
+                </div>
+              </NavLink>
+            )
+          ) : (
+            <NavLink to="/Login" onClick={closeMobileMenu}>
+              <button className={styles.authButton}>Login</button>
+            </NavLink>
+          )}
+        </ul>
+      </div>
+    </nav>
   );
-}
+};
 
 export default Navbar;
