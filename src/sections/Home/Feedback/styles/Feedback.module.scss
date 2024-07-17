@@ -53,7 +53,6 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  margin-bottom: s0px;
   margin-top: 3rem;
   font-size: 1.7rem;
 }
@@ -197,7 +196,7 @@
   .feedbacks {
     display: flex;
     animation: scroll 17s linear infinite;
-    margin-left: -1700px;
+    margin-left: -1500px;
     margin-right: -2000px;
   
   }

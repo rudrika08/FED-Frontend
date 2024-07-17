@@ -6,7 +6,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 1000;
+  z-index: 50;
   top: 0;
   border-radius: 50px;
   margin-top: 10px;
@@ -51,7 +51,7 @@
   align-items: center;
   list-style: none;
   border-radius: 26px;
-  transition: opacity 0.3s ease, visibility 0.3s ease;
+  transition: opacity 0.3s ease, visibility 0.8s ease;
   opacity: 1;
   visibility: visible;
   width: 100%;
@@ -247,7 +247,7 @@
     left: 20px;
     opacity: 0;
     visibility: hidden;
-    transition: opacity 0.3s ease, visibility 0.3s ease;
+    transition: opacity 0.8s ease, visibility 0.8s ease;
   }
 
   .profileImgdiv {

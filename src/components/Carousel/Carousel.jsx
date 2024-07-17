@@ -13,7 +13,7 @@ function Carousel({ children, images, customStyles = {} }) {
   useEffect(() => {
     const loadingTimeout = setTimeout(() => {
       setIsLoading(false);
-    }, 2000);
+    }, 1000);
 
     return () => clearTimeout(loadingTimeout);
   }, []);
@@ -23,7 +23,7 @@ function Carousel({ children, images, customStyles = {} }) {
     if (autoPlay && !isLoading) {
       timeOut = setTimeout(() => {
         slideRight();
-      }, 1000);
+      }, 2500);
     }
     return () => clearTimeout(timeOut);
   }, [current, autoPlay, isLoading]);
