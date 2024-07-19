@@ -8,7 +8,7 @@ import { EventCard } from "../../components";
 import FormData from "../../data/FormData.json"
 import ring from "../../assets/images/ring.svg";
 import { MdKeyboardArrowRight } from "react-icons/md";
-import EventCardSkeleton from "../../layouts/skeleton/EventCardSkeleton";
+import EventCardSkeleton from "../../layouts/Skeleton/EventCard/EventCardSkeleton";
 import { SkeletonTheme } from "react-loading-skeleton";
 
 const Event = () => {

@@ -156,7 +156,8 @@ const{info}=data;
           background: 'rgba(0, 0, 0, 0.5)',
           backdropFilter: "blur(4px)",
           zIndex:'5',
-     
+          display: 'flex',
+          justifyContent: 'center',
         }}
       >
 

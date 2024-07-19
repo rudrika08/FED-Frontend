@@ -94,10 +94,12 @@ const Navbar = () => {
             </NavLink>
           )}
 
-          <div className={styles.logo_div}>
-            <img src={logo} alt="Logo" className={styles.logo} />
-            <div className={styles.logo_text}></div>
-          </div>
+          <NavLink to="/" className={styles.logoLink}>
+            <div className={styles.logo_div}>
+              <img src={logo} alt="Logo" className={styles.logo} />
+              <div className={styles.logo_text}></div>
+            </div>
+          </NavLink>
 
           <div className={styles.navItems}>
             <li>

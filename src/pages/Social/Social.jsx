@@ -1,9 +1,14 @@
-import {SocialEmbed} from '../../components';
+import React, { useEffect } from 'react';
+import { SocialEmbed } from '../../components';
 import linkedinlogo from '../../assets/images/SocialMedia/linkedinLogo.svg';
 import instalogo from '../../assets/images/SocialMedia/instaLogo.svg';
 import styles from './styles/Social.module.scss';
 
 const Social = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <div className={styles.socialMcontainer}>
       <div className={styles.text}>

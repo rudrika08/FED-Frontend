@@ -1,7 +1,7 @@
 @import "/src/assets/styles/Global.scss";
 
 .card {
-  width: 30rem;
+  width: 32rem;
   background: linear-gradient(
     90deg,
     rgba(32, 32, 32, 0.95) -11.52%,
@@ -35,7 +35,7 @@
 }
 
 .backimg {
-  width: 92%;
+  width: 90%;
   // overflow: hidden;
   margin-inline: auto;
   margin-top: 6%;
@@ -87,9 +87,10 @@
   width: 87%;
   display: flex;
   justify-content: space-between;
-  margin-top: 0.4rem;
+  margin-top: 0.5rem;
   align-items: center;
   margin-inline: auto;
+  margin-bottom: 0.5rem;
 }
 
 .eventname {

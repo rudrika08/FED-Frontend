@@ -6,24 +6,24 @@
 
   .inner_skeleton{
     background-color: #525252;
-    height: 95%;
-    width: 97%;
+    height: 97%;
+    width: 98%;
     display: flex;
     align-items: center;
     justify-content: center;
     overflow: hidden;
-    border-radius: 50px;
+    border-radius: 60px;
   }
 
   .carousel_skeleton{
-    width: 590px;
-    height: 370px;
+    width: 582px;
+    height: 360px;
     background-color: #313131;
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 60px;
-    margin-right: 20px;
+    margin-right: 30px;
   }
   
   .carousel {
@@ -41,8 +41,9 @@
   @media (max-width: 768px){
     .carousel_skeleton{
       margin-right: 0;
-      height: 290px;
-      margin-top: 25px;
+      height: 270px;
+      margin-top: 30px;
+      border-radius: 50px;
     }
   }
 

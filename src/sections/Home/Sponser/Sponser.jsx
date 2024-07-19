@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import SponserImg from '../../../data/Sponser.json';
 import styles from './styles/Sponser.module.scss';
 import Carousel from '../../../components/Carousel/Carousel';
-import SkeletonCard from '../../../layouts/skeleton/Sponser/Sponser';
+import SkeletonCard from '../../../layouts/Skeleton/Sponser/Sponser';
 import { Blurhash } from 'react-blurhash';
 
 const Sponser = () => {

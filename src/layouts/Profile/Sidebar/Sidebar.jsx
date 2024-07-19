@@ -11,15 +11,12 @@ import defaultImg from "../../../assets/images/defaultImg.jpg";
 import camera from "../../../assets/images/camera.svg";
 import { EditImage } from "../../../features";
 
-
 const Sidebar = ({ activepage, handleChange }) => {
   const [designation, setDesignation] = useState("");
   const authCtx = useContext(AuthContext);
   const [imagePrv, setimagePrv] = useState(null);
   const [selectedFile, setSelectedFile] = useState(null);
-  
 
-  
   const imgRef = useRef(null);
   const navigate = useNavigate();
   const [openModal, setOpenModal] = useState(false);
@@ -44,7 +41,7 @@ const Sidebar = ({ activepage, handleChange }) => {
 
   const handleName = () => {
     const maxLength = 20;
-    const name = authCtx.user.name || ''; 
+    const name = authCtx.user.name || '';
     return name.length > maxLength ? `${name.slice(0, maxLength)}...` : name;
   };
 
@@ -53,42 +50,34 @@ const Sidebar = ({ activepage, handleChange }) => {
     setOpenModal(true);
   };
 
- 
-
-
   const closeModal = () => {
-    
-    setSelectedFile(null); 
-    setOpenModal(false); // Close the modal without saving
-   // Clear selected file state
+    setSelectedFile(null);
+    setOpenModal(false);
   };
 
- const setImage=(url)=>{
-  setimagePrv(url);
-
- }
-
-
+  const setImage = (url) => {
+    setimagePrv(url);
+  };
 
   const renderAdminMenu = () => (
     <>
-     <div
-  onClick={() => handleChange('Event')}
-  style={{
-    background: activepage === 'Event' ? 'var(--primary)' : 'transparent',
-    WebkitBackgroundClip: activepage === 'Event' ? 'text' : 'initial',
-    backgroundClip: activepage === 'Event' ? 'text' : 'initial',
-    color: activepage === 'Event' ? 'transparent' : 'inherit'
-  }}
->
-<SlCalender 
-      size={17} 
-      style={{ 
-        color: activepage === 'Event' ? '#FF8A00' : 'white' ,
-        marginRight: "10px"
-      }} 
-    /> Event
-</div>
+      <div
+        onClick={() => handleChange('Event')}
+        style={{
+          background: activepage === 'Event' ? 'var(--primary)' : 'transparent',
+          WebkitBackgroundClip: activepage === 'Event' ? 'text' : 'initial',
+          backgroundClip: activepage === 'Event' ? 'text' : 'initial',
+          color: activepage === 'Event' ? 'transparent' : 'inherit'
+        }}
+      >
+        <SlCalender
+          size={17}
+          style={{
+            color: activepage === 'Event' ? '#FF8A00' : 'white',
+            marginRight: "10px"
+          }}
+        /> Event
+      </div>
 
       <div
         onClick={() => handleChange("Form")}
@@ -135,56 +124,40 @@ const Sidebar = ({ activepage, handleChange }) => {
     <>
       <div className={styles.sidebar}>
         <div className={styles.profile}>
-       
-            <div style={{ width: "auto", position: "relative" ,cursor:"pointer" }}    >
-              <img
-                src={imagePrv || authCtx.user.pic || defaultImg}
-                alt="Profile"
-                className={styles.profilePhoto}
-                onClick={() => {
-                  imgRef.current?.click();
-                }}
-            
-              />
-              <input
-                style={{
-                  display: "none",
-                }}
-                type="file"
-                ref={imgRef}
-                onChange={handleFileChange} 
-           
-              />
-
-
-              
-{/* {selectedFile && (
+          <div
+            style={{ width: "auto", position: "relative", cursor: "pointer" }}
+            onClick={() => navigate("/profile")}
+          >
+            <img
+              src={imagePrv || authCtx.user.pic || defaultImg}
+              alt="Profile"
+              className={styles.profilePhoto}
+            />
+            {selectedFile && (
               <EditImage
                 selectedFile={selectedFile}
-                ref={editorRef}
-                setImage={setimagePrv}
-                setFile={setSelectedFile}
+                closeModal={closeModal}
+                setimage={setImage}
               />
-            )} */}
-
-{selectedFile && (
-            <EditImage
-              selectedFile={selectedFile}
-              closeModal={closeModal}
-              setimage={setImage}
-        
-            />
-          )}
-
-              <div
-                style={{ position: "absolute", bottom: "5px", right: "5px" }}
-              >
-                <img      onClick={() => {
-                  imgRef.current?.click();
-                }} src={camera}  />
-              </div>
+            )}
+            <div
+              style={{ position: "absolute", bottom: "5px", right: "5px" }}
+              onClick={(e) => {
+                e.stopPropagation();
+                imgRef.current?.click();
+              }}
+            >
+              <img src={camera} alt="camera" />
             </div>
-          
+            <input
+              style={{
+                display: "none",
+              }}
+              type="file"
+              ref={imgRef}
+              onChange={handleFileChange}
+            />
+          </div>
           <div className={styles.profileInfo}>
             <p className={styles.name}>{handleName()}</p>
             <p className={styles.role}>{designation}</p>

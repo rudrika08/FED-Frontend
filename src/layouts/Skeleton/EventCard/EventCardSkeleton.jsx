@@ -5,7 +5,7 @@ import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import style from "./styles/eventskeleton.module.scss";
 import { SkeletonTheme } from "react-loading-skeleton";
-import AnimatedBox from "../../assets/animations/socialPageAnimation";
+import AnimatedBox from "../../../assets/animations/socialPageAnimation";
 
 const EventCardSkeleton = ({ amount }) => {
   const loadCards = Array(amount).fill(1);

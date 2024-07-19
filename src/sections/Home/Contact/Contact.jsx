@@ -1,14 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import styles from './styles/Contact.module.scss';
 import contactImg from '../../../assets/images/contact.png';
 import { AnimatedBox } from '../../../assets/animations/AnimatedBox';
 import { Alert } from '../../../microInteraction';
-import { BorderColor } from '@mui/icons-material';
-import { BorderBottom } from '@mui/icons-material';
 
 const ContactForm = () => {
   const [alert, setAlert] = useState(null);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -27,8 +29,7 @@ const ContactForm = () => {
         type: 'success', 
         message: 'Your message has been submitted!', 
         position: 'bottom-right', 
-        duration: 5000, 
-        
+        duration: 5000 
       });
       event.target.reset(); // Clear the form fields
     } catch (error) {
@@ -37,10 +38,8 @@ const ContactForm = () => {
         type: 'error',
         message: 'There was an error submitting your message. Please try again.',
         position: 'bottom-right',
-        duration: 4000,
-
+        duration: 4000
       });
-      
     }
   };
 
@@ -55,20 +54,23 @@ const ContactForm = () => {
               <input 
                 type="text" 
                 name="name" 
-                placeholder="Name" required 
+                placeholder="Name" 
+                required 
               />
             </div>
             <div className={styles.formGroup}>
               <input 
                 type="email" 
                 name="email" 
-                placeholder="Email" required 
+                placeholder="Email" 
+                required 
               />
             </div>
             <div className={styles.formGroup}>
               <textarea 
                 name="message" 
-                placeholder="Message" required>
+                placeholder="Message" 
+                required>
               </textarea>
             </div>
             <button type="submit">Submit</button>
