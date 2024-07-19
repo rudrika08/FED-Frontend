@@ -244,7 +244,7 @@
     );
     display: inline-flex;
     color: #fff;
-    padding: 0.3rem 0.6rem;
+    padding: 0.4rem 0.6rem;
     justify-content: center;
     align-items: center;
     gap: 0.71575rem;
@@ -375,5 +375,13 @@
 
   .eventname {
     font-size: 2rem;
+  }
+}
+
+
+@media(min-width:901px){
+  .registerbtn button{
+    min-width: 10rem;
+    padding: 0.7rem 0.9rem;
   }
 }

@@ -112,7 +112,10 @@ const SignUP = () => {
         </Link>
 
         <div className={style.circle}>
-          <div></div>
+        
+        </div>
+        <div className={style.circleMid}>
+        
         </div>
 
         <div className={style.circle1}></div>

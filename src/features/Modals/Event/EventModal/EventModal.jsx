@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useContext } from "react";
 import EventCardModal from "./styles/EventModal.module.scss";
 import groupIcon from "../../../../assets/images/groups.svg";
 import rupeeIcon from "../../../../assets/images/rupeeIcon.svg";
@@ -12,18 +12,33 @@ import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { CiLock } from "react-icons/ci";
 import { PiClockCountdownDuotone } from "react-icons/pi";
+import AuthContext from "../../../../context/AuthContext";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
+import { SkeletonTheme } from "react-loading-skeleton";
+
+
 
 const EventModal = (props) => {
     const{onClosePath}=props;
   const navigate = useNavigate();
   const { eventId } = useParams();
+  // console.log(eventId);
+  // console.log(FormData);
   const {events}=FormData;
-  const data = events.find((event) => event.id === eventId);
+  // console.log(events);
+  const data = events.find((event) => event.id === parseInt(eventId));
+  console.log(data);
+
   // const buttonText=data.ongoingEvent?'Register Now':'Registration closed';
 const{info}=data;
 
   const [remainingTime, setRemainingTime] = useState("");
   const [btnTxt, setBtnTxt] = useState("Register Now");
+  const authCtx=useContext(AuthContext);
+  
+
+  // console.log(info)
 
   useEffect(() => {
     if (info.regDateAndTime) {
@@ -88,14 +103,14 @@ const{info}=data;
 
   // Update button text based on registration status and remaining time
   useEffect(() => {
-    if (info.registrationClosed) {
+    if (info.isRegistrationClosed) {
       setBtnTxt("Closed");
     } else if (!remainingTime) {
       setBtnTxt("Register Now");
     } else {
       setBtnTxt(remainingTime);
     }
-  }, [info.registrationClosed, remainingTime]);
+  }, [info.isRegistrationClosed, remainingTime]);
 
 
   const handleModalClose = () => {
@@ -108,6 +123,12 @@ const{info}=data;
   const handleShare = () => {
     setOpen(!isOpen);
   };
+
+  const handleForm=()=>{
+    const path = authCtx.isLoggedIn?'/Events/'+data.id+"/Form":'/Login';
+    navigate(onClosePath);
+    navigate(path);
+}
 
   const url = window.location.href;
 
@@ -152,6 +173,11 @@ const{info}=data;
 
           {data && (
             <>
+
+<SkeletonTheme baseColor="#313131" highlightColor="#525252">
+        <Skeleton height={180} style={{ marginBottom: "1rem" }} />
+        <Skeleton count={3} height={20} width="100%" style={{ marginBottom: "0.5rem" }} />
+      </SkeletonTheme>
               <div className={EventCardModal.card}   data-aos="zoom-in-up" data-aos-duration="500">
                 <div
                   style={{
@@ -166,7 +192,7 @@ const{info}=data;
                   </button>
                   <div className={EventCardModal.backimg}>
                     <img
-                      srcSet={info.imageURL}
+                      srcSet={info.eventImg}
                       className={EventCardModal.img}
                       alt="Event"
                     />
@@ -182,12 +208,12 @@ const{info}=data;
                   </div>
                   <div className={EventCardModal.backbtn}>
                     <div className={EventCardModal.eventname}>
-                      {info.eventName}
+                      {info.eventTitle}
                       <div className={EventCardModal.price}>
-                        {info.eventPrice ? (
+                        {info.eventAmount ? (
                           <p>
                             <img src={rupeeIcon} alt="Rupee" />
-                            {info.eventPrice}
+                            {info.eventAmount}
                           </p>
                         ) : (
                           <p style={{ color: "inherit" }}>Free</p>
@@ -195,13 +221,13 @@ const{info}=data;
                       </div>
                       <p>
                         <img src={groupIcon} alt="Group" />
-                        Team size: {info.minSize}{" - "}{info.maxSize}
+                        Team size: {info.minTeamSize}{" - "}{info.maxTeamSize}
                       </p>
                     </div>
                     <div className={EventCardModal.registerbtn}>
                       <button className={EventCardModal.regbtn}>
                        {
-                        info.ongoingEvent ?(<>
+                        !info.isEventPast ?(<>
                                  {btnTxt === "Closed" ? (
                   <>
                    Registration Closed <CiLock style={{ marginLeft: "" }} />
@@ -213,7 +239,7 @@ const{info}=data;
                         <PiClockCountdownDuotone /> {btnTxt}
                       </>
                     ) : (
-                      btnTxt
+                      <div onClick={handleForm} style={{fontSize:"0.8rem"}}>{btnTxt}</div>
                     )}
                   </>
                 )}
@@ -227,7 +253,7 @@ const{info}=data;
                     </div>
                   </div>
                   <div className={EventCardModal.backtxt}>
-                    {info.description}
+                    {info.eventdescription}
                   </div>
                 </div>
               </div>

@@ -9,14 +9,20 @@ import styles from "./styles/Sidebar.module.scss";
 
 import defaultImg from "../../../assets/images/defaultImg.jpg";
 import camera from "../../../assets/images/camera.svg";
+import { EditImage } from "../../../features";
+
 
 const Sidebar = ({ activepage, handleChange }) => {
   const [designation, setDesignation] = useState("");
   const authCtx = useContext(AuthContext);
   const [imagePrv, setimagePrv] = useState(null);
+  const [selectedFile, setSelectedFile] = useState(null);
+  
+
+  
   const imgRef = useRef(null);
   const navigate = useNavigate();
-  const [openModal, setOpen] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
 
   useEffect(() => {
     const access = authCtx.user.access;
@@ -41,6 +47,28 @@ const Sidebar = ({ activepage, handleChange }) => {
     const name = authCtx.user.name || ''; 
     return name.length > maxLength ? `${name.slice(0, maxLength)}...` : name;
   };
+
+  const handleFileChange = (event) => {
+    setSelectedFile(event.target.files[0]);
+    setOpenModal(true);
+  };
+
+ 
+
+
+  const closeModal = () => {
+    
+    setSelectedFile(null); 
+    setOpenModal(false); // Close the modal without saving
+   // Clear selected file state
+  };
+
+ const setImage=(url)=>{
+  setimagePrv(url);
+
+ }
+
+
 
   const renderAdminMenu = () => (
     <>
@@ -107,16 +135,16 @@ const Sidebar = ({ activepage, handleChange }) => {
     <>
       <div className={styles.sidebar}>
         <div className={styles.profile}>
-          <a
-            onClick={() => {
-              imgRef.current?.click();
-            }}
-          >
-            <div style={{ width: "auto", position: "relative" }}>
+       
+            <div style={{ width: "auto", position: "relative" ,cursor:"pointer" }}    >
               <img
                 src={imagePrv || authCtx.user.pic || defaultImg}
                 alt="Profile"
                 className={styles.profilePhoto}
+                onClick={() => {
+                  imgRef.current?.click();
+                }}
+            
               />
               <input
                 style={{
@@ -124,17 +152,39 @@ const Sidebar = ({ activepage, handleChange }) => {
                 }}
                 type="file"
                 ref={imgRef}
-                onChange={(e) => {
-                  setimagePrv(URL.createObjectURL(imgRef.current?.files[0]));
-                }}
+                onChange={handleFileChange} 
+           
               />
+
+
+              
+{/* {selectedFile && (
+              <EditImage
+                selectedFile={selectedFile}
+                ref={editorRef}
+                setImage={setimagePrv}
+                setFile={setSelectedFile}
+              />
+            )} */}
+
+{selectedFile && (
+            <EditImage
+              selectedFile={selectedFile}
+              closeModal={closeModal}
+              setimage={setImage}
+        
+            />
+          )}
+
               <div
                 style={{ position: "absolute", bottom: "5px", right: "5px" }}
               >
-                <img onClick={handleChange} src={camera} />
+                <img      onClick={() => {
+                  imgRef.current?.click();
+                }} src={camera}  />
               </div>
             </div>
-          </a>
+          
           <div className={styles.profileInfo}>
             <p className={styles.name}>{handleName()}</p>
             <p className={styles.role}>{designation}</p>

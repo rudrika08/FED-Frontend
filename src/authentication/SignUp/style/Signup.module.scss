@@ -1,5 +1,5 @@
 .container {
-  background-color: #2f2f2f;
+  background-color: #2f2f2f90;
   border: 1px solid #ffffff61;
   border-radius: 10px;
   padding: 20px;
@@ -7,7 +7,7 @@
   display: flex;
   flex-direction: row;
   margin: 0% auto;
-  scale: 0.90;
+  scale: 0.85;
 }
 
 // .signupForm {
@@ -49,8 +49,20 @@
   background-color: rgba(255, 92, 0, 0.19);
   filter: blur(100px);
   position: absolute;
-  top: 40%;
+  top: 20%;
   left: -12%;
+  border-radius: 50%;
+  overflow: hidden;
+  z-index: 0;
+}
+.circleMid {
+  height: 25rem;
+  width: 25rem;
+  background-color: rgba(255, 92, 0, 0.19);
+  filter: blur(100px);
+  position: absolute;
+  top: 10%;
+  left: 40%;
   border-radius: 50%;
   overflow: hidden;
   z-index: 0;
