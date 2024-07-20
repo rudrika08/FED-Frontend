@@ -4,6 +4,7 @@ import { FaLinkedin, FaGithub } from 'react-icons/fa';
 import styles from './styles/TeamCard.module.scss';
 import TeamCardSkeleton from '../../layouts/Skeleton/TeamCard/TeamCard';
 import { Button } from '../Core';
+
 const TeamCard = ({
   name,
   image,
