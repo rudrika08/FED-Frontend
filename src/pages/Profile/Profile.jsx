@@ -1,9 +1,15 @@
-import { useState, useContext, useEffect } from 'react';
+import { useState, useContext, useEffect } from "react";
 
-import { ProfileLayout, Sidebar } from '../../layouts';
-import { ProfileView, EventsView, NewForm, ViewMember, ViewEvent } from '../../sections';
+import { ProfileLayout, Sidebar } from "../../layouts";
+import {
+  ProfileView,
+  EventsView,
+  NewForm,
+  ViewMember,
+  ViewEvent,
+} from "../../sections";
 
-import AuthContext from '../../context/AuthContext';
+import AuthContext from "../../context/AuthContext";
 
 import style from "./styles/Profile.module.scss";
 
@@ -29,20 +35,20 @@ const Profile = () => {
     if (designation === "Admin") {
       switch (activePage) {
         case "Event":
-          return <ViewEvent />;
+          return <ViewEvent handleChangePage={(page) => setActivePage(page)} />;
         case "Form":
           return <NewForm />;
         case "Members":
           return <ViewMember />;
         default:
-          return <ProfileView editmodal='/profile/' />;
+          return <ProfileView editmodal="/profile/" />;
       }
     } else {
       switch (activePage) {
         case "Event":
           return <EventsView />;
         default:
-          return <ProfileView editmodal='/profile/' />;
+          return <ProfileView editmodal="/profile/" />;
       }
     }
   };
@@ -50,10 +56,7 @@ const Profile = () => {
   return (
     <ProfileLayout>
       <div className={style.profile}>
-        <Sidebar
-          activepage={activePage}
-          handleChange={setActivePage}
-        />
+        <Sidebar activepage={activePage} handleChange={setActivePage} />
         <div className={style.profile__content}>{getActivePage()}</div>
       </div>
     </ProfileLayout>

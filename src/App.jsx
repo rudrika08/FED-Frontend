@@ -2,7 +2,7 @@ import { Suspense, lazy, useContext } from "react";
 import { Routes, Route, Outlet, Navigate } from "react-router-dom";
 
 // layouts
-import {Footer, Navbar } from "./layouts";
+import { Footer, Navbar } from "./layouts";
 
 // microInteraction
 import { Loading, Alert } from "./microInteraction";
@@ -30,13 +30,15 @@ const ForgotPassword = lazy(() =>
 const Error = lazy(() => import("./pages/Error/Error"));
 const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy/PrivacyPolicy"));
 const TermsAndConditions = lazy(() => import("./pages/TermsAndConditions/T&C"));
-const PageRenderer = lazy(()=>import("./authentication/Login/ForgotPassword/PageRender"))
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+const PageRenderer = lazy(() =>
+  import("./authentication/Login/ForgotPassword/PageRender")
+);
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const MainLayout = () => (
   <div>
-    <Navbar/>
+    <Navbar />
     <div className="page">
       <Outlet />
     </div>
@@ -46,7 +48,7 @@ const MainLayout = () => (
 
 const AuthLayout = () => (
   <div className="page">
-     <ToastContainer />
+    <ToastContainer />
     <Outlet />
   </div>
 );
@@ -71,10 +73,6 @@ function App() {
                 path="/profile/Events/:eventId"
                 element={[<Profile />, <EventModal onClosePath="/profile" />]}
               />,
-              <Route
-              path="/Events/:eventId/Form"
-              element={[<Event />, <EventForm />]}
-            />
             ]}
             <Route
               path="/Events/:eventId"
@@ -103,11 +101,34 @@ function App() {
             />
             <Route path="*" element={<Error />} />
           </Route>
-       
+
           <Route element={<AuthLayout />}>
-            <Route path="/Login" element={authCtx.isLoggedIn ? <Navigate to='/profile' /> : <PageRenderer />} />
-            <Route path="/SignUp" element={authCtx.isLoggedIn ? <Navigate to='/profile' /> : <Signup />} />
-            <Route path="/ForgotPassword" element={authCtx.isLoggedIn ? <Navigate to='/profile' /> : <ForgotPassword />} />
+            <Route
+              path="/Login"
+              element={
+                authCtx.isLoggedIn ? (
+                  <Navigate to="/profile" />
+                ) : (
+                  <PageRenderer />
+                )
+              }
+            />
+            <Route
+              path="/SignUp"
+              element={
+                authCtx.isLoggedIn ? <Navigate to="/profile" /> : <Signup />
+              }
+            />
+            <Route
+              path="/ForgotPassword"
+              element={
+                authCtx.isLoggedIn ? (
+                  <Navigate to="/profile" />
+                ) : (
+                  <ForgotPassword />
+                )
+              }
+            />
           </Route>
         </Routes>
       </Suspense>

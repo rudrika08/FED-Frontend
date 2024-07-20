@@ -2,19 +2,18 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import styles from "./styles/ViewEvent.module.scss";
 import AOS from "aos";
-import 'aos/dist/aos.css';
-import {Button, EventCard} from "../../../../../components";
-import FormData from "../../../../../data/FormData.json"
-
+import "aos/dist/aos.css";
+import { Button, EventCard } from "../../../../../components";
+import FormData from "../../../../../data/FormData.json";
 
 // AOS.init({
 //   disable:true
 // })
-function ViewEvent() {
+function ViewEvent({ handleChangePage }) {
   const [activePage, setActivePage] = useState("View Events");
   const [pastEvents, setPastEvents] = useState([]);
-  const[ongoingEvent,setOngoingEvent]=useState([]);
-  const{events}=FormData;
+  const { events } = FormData;
+
   useEffect(() => {
     // Fetch event data using axios
     const fetchEventData = async () => {
@@ -22,13 +21,8 @@ function ViewEvent() {
         // const response = await axios.get("/api/form/getAllForms");
         // const fetchedEvents = response.data;
         // setPastEvents(fetchedEvents);
-        const ongoingEvents=events.filter((event)=>!event.info.isEventPast)
-        const pastEvent=events.filter((event)=>event.info.isEventPast)
-        setOngoingEvent(ongoingEvents);
-        setPastEvents(pastEvent);
-        console.log(ongoingEvent);
-        console.log(pastEvents)
-
+        const testEvents = events;
+        setPastEvents(testEvents);
       } catch (error) {
         console.error("Error fetching event data:", error);
       }
@@ -37,8 +31,8 @@ function ViewEvent() {
     fetchEventData();
   }, []);
 
-   // Initialize AOS
-   useEffect(() => {
+  // Initialize AOS
+  useEffect(() => {
     AOS.init();
   }, []);
 
@@ -46,8 +40,8 @@ function ViewEvent() {
     eventname: {
       fontSize: "1rem",
     },
-    date:{
-        fontSize:"1rem",
+    date: {
+      fontSize: "1rem",
     },
     registerbtn: {
       width: "auto",
@@ -85,11 +79,12 @@ function ViewEvent() {
                   data={event}
                   customStyles={customStyles}
                   type="past"
-                   modalpath='/profile/Events/'
+                  modalpath="/profile/Events/"
                   isPastpage={true}
                   aosDisable={true}
+                  onEdit={() => handleChangePage("Form")}
                 />
-                </div>
+              </div>
             ))}
           </div>
         )}

@@ -1,11 +1,14 @@
 import { useState, useRef } from "react";
 import { Button, Input, Text, Section } from "../../../../../components";
+import { IoSettingsOutline, IoSettingsSharp } from "react-icons/io5";
+import AuthContext from "../../../../../context/AuthContext";
 import { PreviewForm } from "../../../../../features";
 import styles from "./styles/NewForm.module.scss";
 import Switch from "react-switch";
 import moment from "moment";
-import { IoSettingsOutline, IoSettingsSharp } from "react-icons/io5";
 import { nanoid } from "nanoid";
+import { useContext } from "react";
+import { useEffect } from "react";
 
 export const getOutboundList = (array, index) => {
   const getIndex = array.findIndex((sec) => sec._id === index);
@@ -33,9 +36,10 @@ const TEAM_SIZE = [
 function NewForm() {
   const scrollRef = useRef(null);
   const [isVisibility, setisVisibility] = useState(true);
+  const authCtx = useContext(AuthContext);
   const [data, setdata] = useState({
     _id: nanoid(),
-    title: "",
+    eventName: "",
     logoLink: "",
     eventDate: "",
     eventType: "Free",
@@ -43,7 +47,7 @@ function NewForm() {
       media: "",
       upi: "",
     },
-    amount: "",
+    eventPrice: "",
     relatedEvent: "",
     participationType: "",
     minSize: "",
@@ -52,7 +56,7 @@ function NewForm() {
     description: "",
     successMessage: "",
     maxReg: "",
-    openDT: "",
+    regDateAndTime: "",
     isRegEnd: false,
     isEventPast: false,
     isPublic: false,
@@ -95,9 +99,16 @@ function NewForm() {
   const [paymentSection, setpaymentSection] = useState(null);
   const [showPreview, setshowPreview] = useState(false);
 
+  useEffect(() => {
+    if (authCtx.eventData) {
+      setdata(authCtx.eventData?.info);
+      setsections(authCtx.eventData?.sections);
+    }
+  }, []);
+
   const isValidSections = () => {
     return sections.every((section) =>
-      section.fields.every((field) => {
+      section.fields?.every((field) => {
         if (
           !field.name ||
           !field.type ||
@@ -119,12 +130,12 @@ function NewForm() {
   };
 
   const isValidEvent = () => {
-    if (!data.title) {
+    if (!data.eventName) {
       alert("Title is required.");
       return false;
     }
 
-    if (!data.logoLink) {
+    if (!data.imageURL) {
       alert("Logo link is required.");
       return false;
     }
@@ -162,7 +173,7 @@ function NewForm() {
     }
 
     if (data.eventType === "Paid") {
-      if (!data.amount) {
+      if (!data.eventPrice) {
         alert("Amount is required.");
         return false;
       }
@@ -195,9 +206,16 @@ function NewForm() {
   const onSaveEvent = () => {
     if (isValidEvent()) {
       const form = {
-        ...data,
+        info: {
+          ...data,
+        },
         sections,
       };
+
+      if (authCtx.eventData) {
+        form.id = authCtx.eventData?.id;
+      }
+
       console.log("form", form);
     }
   };
@@ -420,7 +438,7 @@ function NewForm() {
   };
 
   const onChangeEventType = (value) => {
-    setdata({ ...data, eventType: value, amount: "" });
+    setdata({ ...data, eventType: value, eventPrice: "" });
 
     if (value === "Paid") {
       setpaymentSection({
@@ -568,7 +586,7 @@ function NewForm() {
       console.log("Invalid Event");
     }
   };
-  
+
   return (
     <div
       style={{
@@ -761,17 +779,21 @@ function NewForm() {
             <Input
               placeholder="Enter Form Name"
               label="Form Name"
-              value={data.title}
+              value={data.eventName}
               className={styles.formInput}
-              onChange={(e) => setdata({ ...data, title: e.target.value })}
+              onChange={(e) => setdata({ ...data, eventName: e.target.value })}
             />
             <Input
               placeholder="Event Logo"
               label="Event Logo"
               type={"image"}
-              value={data.logoLink?.name || ""}
+              value={
+                typeof data.imageURL === "string"
+                  ? data.imageURL
+                  : data.imageURL?.name || ""
+              }
               containerClassName={styles.formInput}
-              onChange={(e) => setdata({ ...data, logoLink: e.target.value })}
+              onChange={(e) => setdata({ ...data, imageURL: e.target.value })}
               className={styles.formInput}
             />
             <Input
@@ -802,14 +824,20 @@ function NewForm() {
                   placeholder="Enter Amount"
                   label="Amount"
                   type="number"
-                  value={data.amount}
-                  onChange={(e) => setdata({ ...data, amount: e.target.value })}
+                  value={data.eventPrice}
+                  onChange={(e) =>
+                    setdata({ ...data, eventPrice: e.target.value })
+                  }
                   className={styles.formInput}
                 />
                 <Input
                   placeholder={"Attach Media/Images/Qr Code"}
                   label={"Upload Media"}
-                  value={data.receiverDetails.media?.name || ""}
+                  value={
+                    typeof data.receiverDetails?.media === "string"
+                      ? data.receiverDetails?.media
+                      : data.receiverDetails?.media?.name || ""
+                  }
                   className={styles.formInput}
                   containerClassName={styles.formInput}
                   type="image"
@@ -827,7 +855,7 @@ function NewForm() {
                 <Input
                   placeholder={"Enter UPI ID"}
                   label={"UPI ID"}
-                  value={data.receiverDetails.upi}
+                  value={data?.receiverDetails?.upi}
                   className={styles.formInput}
                   onChange={(e) =>
                     setdata({
@@ -905,11 +933,13 @@ function NewForm() {
               className={styles.formInput}
               label="Event Open Date & Time"
               type="datetime-local"
-              value={data.openDT}
+              value={data.regDateAndTime}
               onChange={(date) => {
                 setdata({
                   ...data,
-                  openDT: moment(date).format("MMMM Do YYYY, h:mm:ss a"),
+                  regDateAndTime: moment(date).format(
+                    "MMMM Do YYYY, h:mm:ss a"
+                  ),
                 });
               }}
             />

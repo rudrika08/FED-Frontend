@@ -98,7 +98,19 @@ const Section = (props) => {
             sections,
             nextSection._id
           )?.nextSection;
-          nextSection.validations[0].onNext = nxtSec?._id || null;
+
+          if (nextSection.validations[0]) {
+            nextSection.validations[0].onNext = nxtSec?._id || null;
+          } else {
+            nextSection.validations.push({
+              _id: nanoid(),
+              field_id: null,
+              onNext: nxtSec?._id || null,
+              onBack: backSection?._id || null,
+              values: null,
+            });
+          }
+          // nextSection.validations[0].onNext = nxtSec?._id || null;
         }
 
         if (backSection) {
@@ -476,7 +488,7 @@ const Section = (props) => {
         <textarea
           value={section.description}
           onDoubleClick={() => {
-            if (section.description.length > 0) {
+            if (section.description?.length > 0) {
               setshowDescription(!showDescription);
             } else {
               setshowDescription(false);
@@ -511,7 +523,7 @@ const Section = (props) => {
             outline: "none",
             height: "auto",
             maxHeight: "100px",
-            opacity: section.description.length > 0 ? 1 : 0.4,
+            opacity: section.description?.length > 0 ? 1 : 0.4,
           }}
           placeholder={`Enter ${section.name} Description`}
         />

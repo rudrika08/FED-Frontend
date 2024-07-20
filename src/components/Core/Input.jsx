@@ -76,6 +76,7 @@ const customStyles = {
   menu: (provided) => ({
     ...provided,
     width: "99.5%",
+    marginLeft: "8px",
   }),
   menuPortal: (provided) => ({ ...provided, zIndex: 111 }),
   placeholder: (provided) => ({
@@ -219,7 +220,7 @@ const Input = (props) => {
               components={{ DropdownIndicator }}
               isSearchable={false}
               className={className}
-              menuPosition="fixed"
+              menuPosition="auto"
               {...rest}
             />
           </div>
