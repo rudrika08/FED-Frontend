@@ -3,16 +3,15 @@ import PropTypes from "prop-types";
 import style from "./styles/EventCard.module.scss";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import { Link ,useNavigate} from "react-router-dom";
-import Share from '../../features/Modals/Event/ShareModal/ShareModal';
+import { Link, useNavigate } from "react-router-dom";
+import Share from "../../features/Modals/Event/ShareModal/ShareModal";
 import shareOutline from "../../assets/images/shareOutline.svg";
 import groupIcon from "../../assets/images/groups.svg";
 import rupeeIcon from "../../assets/images/rupeeIcon.svg";
-import ciLock from '../../assets/images/lock.svg'
+import ciLock from "../../assets/images/lock.svg";
 import { PiClockCountdownDuotone } from "react-icons/pi";
+import { Button } from "../Core";
 import AuthContext from "../../context/AuthContext";
-import Skeleton from 'react-loading-skeleton'
-import 'react-loading-skeleton/dist/skeleton.css'
 
 const EventCard = (props) => {
   const {
@@ -25,16 +24,16 @@ const EventCard = (props) => {
     showRegisterButton = true,
     additionalContent,
     aosDisable,
+    onEdit,
   } = props;
 
-
   const { info } = data;
-
+  const authCtx = useContext(AuthContext);
   const [isOpen, setOpen] = useState(false);
+  const [isHovered, setisHovered] = useState(false);
   const [remainingTime, setRemainingTime] = useState("");
   const [btnTxt, setBtnTxt] = useState("Register Now");
-  const navigate=useNavigate();
-  const authCtx=useContext(AuthContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (aosDisable) {
@@ -43,8 +42,6 @@ const EventCard = (props) => {
       AOS.init({ duration: 2000 });
     }
   }, [aosDisable]);
-
-
 
   useEffect(() => {
     if (info.regDateAndTime) {
@@ -121,24 +118,48 @@ const EventCard = (props) => {
     setOpen(false);
   };
 
-  
-  const handleForm=()=>{
-    const path = authCtx.isLoggedIn?'/Events/'+data.id+"/Form":'/Login';
-    navigate(path)
-}
-
+  const handleForm = () => {
+    const path = authCtx.isLoggedIn ? "/Events/" + data.id + "/Form" : "/Login";
+    navigate(path);
+  };
 
   const url = window.location.href;
 
   return (
     <>
-      <div className={style.card} style={customStyles.card} data-aos={aosDisable ? "" : "fade-up"}>
-        <div className={style.backimg} style={customStyles.backimg} onClick={onOpen}>
-          <img srcSet={info.eventImg} className={style.img} style={customStyles.img} alt="Event" />
-          <div className={style.date} style={customStyles.date}>{formattedDate}</div>
+      <div
+        onMouseEnter={() => setisHovered(true)}
+        onMouseLeave={() => setisHovered(false)}
+        className={style.card}
+        style={customStyles.card}
+        data-aos={aosDisable ? "" : "fade-up"}
+      >
+        <div
+          className={style.backimg}
+          style={customStyles.backimg}
+          onClick={onOpen}
+        >
+          <img
+            srcSet={info.imageURL}
+            className={style.img}
+            style={customStyles.img}
+            alt="Event"
+          />
+          <div className={style.date} style={customStyles.date}>
+            {formattedDate}
+          </div>
           {type === "ongoing" && showShareButton && (
-            <div className={style.share} style={customStyles.share} onClick={handleShare}>
-              <img className={style.shareIcon} style={customStyles.shareIcon} src={shareOutline} alt="Share" />
+            <div
+              className={style.share}
+              style={customStyles.share}
+              onClick={handleShare}
+            >
+              <img
+                className={style.shareIcon}
+                style={customStyles.shareIcon}
+                src={shareOutline}
+                alt="Share"
+              />
             </div>
           )}
         </div>
@@ -148,7 +169,9 @@ const EventCard = (props) => {
             {type === "ongoing" && (
               <p>
                 <img src={groupIcon} alt="Group" />
-                Team size: {info.minTeamSize}{"-"}{info.maxTeamSize} {" || "}
+                Team size: {info.minSize}
+                {"-"}
+                {info.maxSize} {" || "}
                 <div className={style.price} style={customStyles.price}>
                   {info.eventAmount ? (
                     <p style={customStyles.eventnamep}>
@@ -174,7 +197,8 @@ const EventCard = (props) => {
               >
                 {btnTxt === "Closed" ? (
                   <>
-                    <div style={{fontSize:"0.8rem"}}>Closed</div> <img src={ciLock} alt="" style={{marginLeft:"0px"}} />
+                    <div style={{ fontSize: "0.8rem" }}>Closed</div>{" "}
+                    <img src={ciLock} alt="" style={{ marginLeft: "0px" }} />
                   </>
                 ) : (
                   <>
@@ -183,8 +207,9 @@ const EventCard = (props) => {
                         <PiClockCountdownDuotone /> {btnTxt}
                       </>
                     ) : (
-                   <div onClick={handleForm} style={{fontSize:"0.8rem"}}>{btnTxt}</div>
-                   
+                      <Link to={"/Events/" + data.id + "/Form"}>
+                        <div style={{ fontSize: "0.8rem" }}>{btnTxt}</div>
+                      </Link>
                     )}
                   </>
                 )}
@@ -194,13 +219,20 @@ const EventCard = (props) => {
         </div>
         <div className={style.backtxt} style={customStyles.backtxt}>
           <div style={{ display: "flex", alignItems: "center" }}>
-            <div className={style.EventDesc} style={customStyles.EventDesc}>{info.eventdescription}</div>
+            <div className={style.EventDesc} style={customStyles.EventDesc}>
+              {info.description}
+            </div>
             <Link to={modalpath + data.id}>
-              <span onClick={handleCloseShare} className={style.seeMore} style={{
-                ...customStyles.seeMore,
-                marginLeft: "auto",
-                whiteSpace: "nowrap"
-              }}>
+              <span
+                onClick={handleCloseShare}
+                className={style.seeMore}
+                style={{
+                  ...customStyles.seeMore,
+                  marginLeft: "auto",
+                  whiteSpace: "nowrap",
+                  height: "fit-content",
+                }}
+              >
                 See More...
               </span>
             </Link>
@@ -208,7 +240,30 @@ const EventCard = (props) => {
           {additionalContent && <div>{additionalContent}</div>}
         </div>
       </div>
-      {isOpen && type === "ongoing" && <Share onClose={handleShare} urlpath={url + "/" + data.id} />}
+      {isOpen && type === "ongoing" && (
+        <Share onClose={handleShare} urlpath={url + "/" + data.id} />
+      )}
+      {isHovered && (
+        <div
+          onMouseEnter={() => setisHovered(true)}
+          onMouseLeave={() => setisHovered(false)}
+          className={style.hovered}
+        >
+          <Button
+            onClick={(e) => {
+              e.preventDefault();
+              if (onEdit) {
+                authCtx.eventData = data;
+                onEdit();
+              }
+            }}
+            variant="secondary"
+          >
+            Edit Event
+          </Button>
+          <Button variant="secondary">Delete Event</Button>
+        </div>
+      )}
     </>
   );
 };

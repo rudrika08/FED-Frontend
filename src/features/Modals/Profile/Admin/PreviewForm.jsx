@@ -287,7 +287,7 @@ const PreviewForm = ({
   };
 
   const renderPaymentScreen = () => {
-    const { eventType, receiverDetails, amount } = eventData;
+    const { eventType, receiverDetails, eventPrice } = eventData;
     if (eventType === "Paid" && currentSection.name === "Payment Details") {
       return (
         <div
@@ -323,7 +323,7 @@ const PreviewForm = ({
                 color: "#fff",
               }}
             >
-              &#8377;{amount}
+              &#8377;{eventPrice}
             </strong>{" "}
             using QR-Code or UPI Id{" "}
             <strong

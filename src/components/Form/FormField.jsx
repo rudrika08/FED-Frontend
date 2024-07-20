@@ -140,7 +140,7 @@ function FormField(props) {
         values: null,
       };
       section.validations =
-        (section.validations[0] === undefined
+        (section?.validations[0] === undefined
           ? [secValidations]
           : [section.validations[0]]) || [];
     }
