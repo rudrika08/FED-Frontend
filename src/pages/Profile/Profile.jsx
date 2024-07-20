@@ -14,7 +14,7 @@ import AuthContext from "../../context/AuthContext";
 import style from "./styles/Profile.module.scss";
 
 const Profile = () => {
-  const [activePage, setActivePage] = useState("Form");
+  const [activePage, setActivePage] = useState("Profile");
   const authCtx = useContext(AuthContext);
   const [designation, setDesignation] = useState("Admin");
 
@@ -33,7 +33,9 @@ const Profile = () => {
 
   const getActivePage = () => {
     if (designation === "Admin") {
+      console.log(activePage);
       switch (activePage) {
+        
         case "Event":
           return <ViewEvent handleChangePage={(page) => setActivePage(page)} />;
         case "Form":

@@ -126,7 +126,7 @@ const Sidebar = ({ activepage, handleChange }) => {
         <div className={styles.profile}>
           <div
             style={{ width: "auto", position: "relative", cursor: "pointer" }}
-            onClick={() => navigate("/profile")}
+            onClick={()=>handleChange("Profile")}
           >
             <img
               src={imagePrv || authCtx.user.pic || defaultImg}
