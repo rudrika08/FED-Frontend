@@ -12,6 +12,7 @@ import FormData from "../../../../../data/FormData.json";
 function ViewEvent({ handleChangePage }) {
   const [activePage, setActivePage] = useState("View Events");
   const [pastEvents, setPastEvents] = useState([]);
+  const[ongoingEvent,setOngoingEvent]=useState([]);
   const { events } = FormData;
 
   useEffect(() => {

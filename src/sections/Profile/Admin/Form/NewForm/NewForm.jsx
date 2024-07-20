@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect, useContext } from "react";
 import { Button, Input, Text, Section } from "../../../../../components";
 import { IoSettingsOutline, IoSettingsSharp } from "react-icons/io5";
 import AuthContext from "../../../../../context/AuthContext";
@@ -7,8 +7,6 @@ import styles from "./styles/NewForm.module.scss";
 import Switch from "react-switch";
 import moment from "moment";
 import { nanoid } from "nanoid";
-import { useContext } from "react";
-import { useEffect } from "react";
 
 export const getOutboundList = (array, index) => {
   const getIndex = array.findIndex((sec) => sec._id === index);

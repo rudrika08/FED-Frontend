@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import style from "./styles/EventCard.module.scss";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Share from "../../features/Modals/Event/ShareModal/ShareModal";
 import shareOutline from "../../assets/images/shareOutline.svg";
 import groupIcon from "../../assets/images/groups.svg";
@@ -253,7 +253,6 @@ const EventCard = (props) => {
             onClick={(e) => {
               e.preventDefault();
               if (onEdit) {
-                handl;
                 authCtx.eventData = data;
                 onEdit();
               }
