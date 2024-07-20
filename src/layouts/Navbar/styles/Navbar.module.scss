@@ -17,6 +17,7 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  margin-left: 10px;
 }
 
 .logo {
@@ -41,7 +42,6 @@
   justify-content: center;
   align-items: center;
   width: 100%;
-  max-width: 1200px;
   padding-top: 5px;
 }
 
@@ -73,7 +73,44 @@
   color: inherit;
 }
 
-.navLinks a:hover,
+.navLinks {
+  .navItems {
+    li {
+      a {
+        position: relative;
+        text-decoration: none;
+        color: inherit;
+
+        &:hover {
+          background: var(--primary);
+          background-clip: text;
+          color: transparent;
+          transition: 0.2s ease-in;
+
+          &::after {
+            width: 100%;
+            left: 0;
+          }
+        }
+
+        &::after {
+          content: "";
+          display: block;
+          height: 2px;
+          position: absolute;
+          bottom: 0;
+          left: 50%;
+          width: 0;
+          background: #fff;
+          transition: width 0.3s ease, left 0.3s ease;
+        }
+      }
+    }
+  }
+}
+
+
+
 .navLinks .activeLink {
   background: var(--primary);
   -webkit-background-clip: text;
@@ -147,6 +184,7 @@
   height: 3.5rem;
   list-style: none;
   padding: 20px;
+  margin-left: -10px;
 }
 
 .activeLink {

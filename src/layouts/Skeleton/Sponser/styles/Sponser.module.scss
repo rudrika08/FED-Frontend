@@ -4,6 +4,7 @@
   background: linear-gradient(90deg, #313131 25%, #525252 50%, #313131 75%);;
   background-size: 200% 100%;
   animation: slideShimmer 1.5s infinite ease-in-out, dimInOut 1.5s infinite ease-in-out;
+  border-radius: 20px;
 }
 
 .skeletonBack{
@@ -13,6 +14,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  border-radius: 20px;
 }
 
 @keyframes dimInOut {
@@ -42,6 +44,7 @@
   height: 100%;
   width: 100%;
   background: inherit;
+  border-radius: 20px;
 }
 @media (max-width: 1024px) {
   .skeleton_card {
