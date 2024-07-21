@@ -10,6 +10,7 @@ import ring from "../../assets/images/ring.svg";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import EventCardSkeleton from "../../layouts/Skeleton/EventCard/EventCardSkeleton";
 import { SkeletonTheme } from "react-loading-skeleton";
+import { color } from "framer-motion";
 
 const Event = () => {
   useEffect(() => {
@@ -44,15 +45,14 @@ const Event = () => {
 
   const customStyles = {
     eventname: {
+      paddingTop: "5px",
       fontSize: "1.2rem",
     },
     registerbtn: {
-      width: "8rem",
-      fontSize: ".721rem"
+      width: "7rem",
+      fontSize: ".721rem",
     },
-    eventnamep: {
-      fontSize: "0.7rem",
-    },
+
   };
 
   return (

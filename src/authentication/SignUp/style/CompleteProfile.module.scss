@@ -15,12 +15,10 @@
   backdrop-filter: blur(10px);
   overflow: hidden;
   transition: all 0.3s;
-  z-index: 3;
+  z-index: 1000;
 }
 
 .mDivCon {
-  margin-top: 0.2%;
-
   position: relative;
   display: flex;
   flex-direction: column;

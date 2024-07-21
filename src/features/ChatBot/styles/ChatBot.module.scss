@@ -106,7 +106,12 @@ header{
     margin-top: 5px;
     font-size: 2rem;
     cursor: pointer;
+    color:white;
+}
+
+.close:hover{
     color: #D14206;
+    transition:.2s linear;
 }
 
 .fed{

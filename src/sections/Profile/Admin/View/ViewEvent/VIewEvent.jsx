@@ -84,6 +84,7 @@ function ViewEvent({ handleChangePage }) {
                   isPastpage={true}
                   aosDisable={true}
                   onEdit={() => handleChangePage("Form")}
+                  enableEdit={true}
                 />
               </div>
             ))}

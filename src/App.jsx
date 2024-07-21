@@ -22,17 +22,23 @@ const Social = lazy(() => import("./pages/Social/Social"));
 const Team = lazy(() => import("./pages/Team/Team"));
 const Alumni = lazy(() => import("./pages/Alumni/Alumni"));
 const Profile = lazy(() => import("./pages/Profile/Profile"));
+
 // const Login = lazy(() => import("./pages/Authentication/Login/Login"));
 const Signup = lazy(() => import("./pages/Authentication/Signup/Signup"));
 const ForgotPassword = lazy(() =>
   import("./pages/Authentication/ForgotPassword/ForgotPassword")
 );
+const CompleteProfile = lazy(() =>
+  import("./authentication/SignUp/CompleteProfile")
+);
+
 const Error = lazy(() => import("./pages/Error/Error"));
 const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy/PrivacyPolicy"));
 const TermsAndConditions = lazy(() => import("./pages/TermsAndConditions/T&C"));
 const PageRenderer = lazy(() =>
   import("./authentication/Login/ForgotPassword/PageRender")
 );
+
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -67,6 +73,7 @@ function App() {
             <Route path="/Social" element={<Social />} />
             <Route path="/Team" element={<Team />} />
             <Route path="/Alumni" element={<Alumni />} />
+
             {authCtx.isLoggedIn && [
               <Route path="/profile" element={<Profile />} />,
               <Route
@@ -117,6 +124,12 @@ function App() {
               path="/SignUp"
               element={
                 authCtx.isLoggedIn ? <Navigate to="/profile" /> : <Signup />
+              }
+            />
+            <Route 
+              path="/completeProfile" 
+              element={
+                authCtx.isLoggedIn ? <Navigate to="/profile" /> : <CompleteProfile />
               }
             />
             <Route

@@ -10,6 +10,7 @@ import groupIcon from "../../assets/images/groups.svg";
 import rupeeIcon from "../../assets/images/rupeeIcon.svg";
 import ciLock from "../../assets/images/lock.svg";
 import { PiClockCountdownDuotone } from "react-icons/pi";
+import { IoIosLock } from "react-icons/io";
 import { Button } from "../Core";
 import AuthContext from "../../context/AuthContext";
 
@@ -25,6 +26,7 @@ const EventCard = (props) => {
     additionalContent,
     aosDisable,
     onEdit,
+    enableEdit,
   } = props;
 
   const { info } = data;
@@ -110,6 +112,15 @@ const EventCard = (props) => {
     }
   }, [info.isRegistrationClosed, remainingTime]);
 
+  useEffect(() => {
+    if (authCtx.isLoggedIn) {
+      const isRegistered = authCtx.user.regForm.includes(data.id);
+      if (isRegistered) {
+        setBtnTxt("Already Registered");
+      }
+    }
+  }, [authCtx.isLoggedIn, authCtx.user.regForm, btnTxt, navigate, data.id]);
+
   const handleShare = () => {
     setOpen(!isOpen);
   };
@@ -119,8 +130,12 @@ const EventCard = (props) => {
   };
 
   const handleForm = () => {
-    const path = authCtx.isLoggedIn ? "/Events/" + data.id + "/Form" : "/Login";
-    navigate(path);
+    if (authCtx.isLoggedIn) {
+      navigate("/Events/" + data.id + "/Form");
+    } else {
+      sessionStorage.setItem('prevPage', window.location.pathname);
+      navigate('/login');
+    }
   };
 
   const url = window.location.href;
@@ -140,7 +155,7 @@ const EventCard = (props) => {
           onClick={onOpen}
         >
           <img
-            srcSet={info.imageURL}
+            srcSet={info.eventImg}
             className={style.img}
             style={customStyles.img}
             alt="Event"
@@ -169,9 +184,12 @@ const EventCard = (props) => {
             {type === "ongoing" && (
               <p>
                 <img src={groupIcon} alt="Group" />
-                Team size: {info.minSize}
+                <span style={{ color: "white", paddingRight: "5px" }}>
+                  Team size:
+                </span>{" "}
+                {info.minTeamSize}
                 {"-"}
-                {info.maxSize} {" || "}
+                {info.maxTeamSize} {" | "}
                 <div className={style.price} style={customStyles.price}>
                   {info.eventAmount ? (
                     <p style={customStyles.eventnamep}>
@@ -186,19 +204,29 @@ const EventCard = (props) => {
             )}
           </div>
           {type === "ongoing" && showRegisterButton && (
-            <div>
+            <div style={{ fontSize: ".85rem", color: "white" }}>
               <button
                 className={style.registerbtn}
                 style={{
                   ...customStyles.registerbtn,
                   cursor: btnTxt === "Register Now" ? "pointer" : "not-allowed",
                 }}
-                disabled={btnTxt === "Closed"}
+                onClick={handleForm}
+                disabled={btnTxt === "Closed" || btnTxt === "Already Registered"}
               >
                 {btnTxt === "Closed" ? (
                   <>
-                    <div style={{ fontSize: "0.8rem" }}>Closed</div>{" "}
-                    <img src={ciLock} alt="" style={{ marginLeft: "0px" }} />
+                    <div style={{ fontSize: "0.85rem" }}>Closed</div>{" "}
+                    <IoIosLock
+                      alt=""
+                      style={{ marginLeft: "0px", fontSize: "1rem" }}
+                    />
+                  </>
+                ) : btnTxt === "Already Registered" ? (
+                  <>
+                    <div style={{ fontSize: "0.85rem" }}>
+                      Registered
+                    </div>{" "}
                   </>
                 ) : (
                   <>
@@ -207,9 +235,7 @@ const EventCard = (props) => {
                         <PiClockCountdownDuotone /> {btnTxt}
                       </>
                     ) : (
-                      <Link to={"/Events/" + data.id + "/Form"}>
-                        <div style={{ fontSize: "0.8rem" }}>{btnTxt}</div>
-                      </Link>
+                      "Register Now"
                     )}
                   </>
                 )}
@@ -220,7 +246,7 @@ const EventCard = (props) => {
         <div className={style.backtxt} style={customStyles.backtxt}>
           <div style={{ display: "flex", alignItems: "center" }}>
             <div className={style.EventDesc} style={customStyles.EventDesc}>
-              {info.description}
+              {info.eventdescription}
             </div>
             <Link to={modalpath + data.id}>
               <span
@@ -233,7 +259,7 @@ const EventCard = (props) => {
                   height: "fit-content",
                 }}
               >
-                See More...
+                See More
               </span>
             </Link>
           </div>
@@ -243,7 +269,7 @@ const EventCard = (props) => {
       {isOpen && type === "ongoing" && (
         <Share onClose={handleShare} urlpath={url + "/" + data.id} />
       )}
-      {isHovered && (
+      {enableEdit && isHovered && authCtx.user.access==="ADMIN" && (
         <div
           onMouseEnter={() => setisHovered(true)}
           onMouseLeave={() => setisHovered(false)}
@@ -277,13 +303,9 @@ EventCard.propTypes = {
   showShareButton: PropTypes.bool,
   showRegisterButton: PropTypes.bool,
   additionalContent: PropTypes.node,
-};
-
-EventCard.defaultProps = {
-  customStyles: {},
-  showShareButton: true,
-  showRegisterButton: true,
-  additionalContent: null,
+  aosDisable: PropTypes.bool,
+  onEdit: PropTypes.func,
+  enableEdit: PropTypes.bool,
 };
 
 export default EventCard;

@@ -56,7 +56,6 @@ const Share = ({ onClose, urlpath }) => {
             top: "1.4rem",
             zIndex: "20",
             fontSize: "1.2rem",
-            color: "white",
           }}
         >
           <X />

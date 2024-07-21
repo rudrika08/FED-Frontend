@@ -4,10 +4,14 @@ import styles from "./styles/EventsView.module.scss";
 import AuthContext from "../../../../context/AuthContext";
 import eventsData from "../../../../data/FormData.json";
 import { EventModal } from "../../../../features/Modals";
+import { useNavigate } from "react-router-dom";
 
 const Events = () => {
   const authCtx = useContext(AuthContext);
   const [userEvents, setUserEvents] = useState([]);
+  const [selectedEventId, setSelectedEventId] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchEventsData = async () => {
@@ -36,8 +40,10 @@ const Events = () => {
     fetchEventsData();
   }, [authCtx.user.email]);
 
-  const handleView = () => {
-    <EventModal />;
+  const handleView = (eventId) => {
+    setSelectedEventId(eventId);
+    setIsModalOpen(true);
+    navigate(`/profile/Events/${eventId}`);
   };
 
   const formatDate = (dateString) => {
@@ -71,7 +77,12 @@ const Events = () => {
                   <td>{event.info.eventTitle}</td>
                   <td>{formatDate(event.info.eventDate)}</td>
                   <td className={styles.mobilewidthtd}>
-                    <button onClick={handleView}>View</button>
+                    <button
+                      onClick={() => handleView(event.id)}
+                      className={styles.viewButton}
+                    >
+                      View
+                    </button>
                   </td>
                   {/* Add more table cells */}
                 </tr>
@@ -82,7 +93,15 @@ const Events = () => {
           <p className={styles.noEvents}>Not participated in any Events</p>
         )}
       </div>
+      {isModalOpen && selectedEventId && (
+        <EventModal
+          eventId={selectedEventId}
+          onClose={() => setIsModalOpen(false)}
+        />
+      )}
     </div>
+
+    
   );
 };
 

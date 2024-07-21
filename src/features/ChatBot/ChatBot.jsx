@@ -5,7 +5,7 @@ import { IoCloseOutline } from 'react-icons/io5';
 import { GiFox } from 'react-icons/gi';
 
 export default function ChatBot() {
-  const name = "Fedrick";
+  const name = "Fed Bot";
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
   const [isTyping, setIsTyping] = useState(false);

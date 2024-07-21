@@ -1,20 +1,20 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
+import { NavLink, useLocation } from "react-router-dom";
+import { MdOutlineLogout } from "react-icons/md";
+import AuthContext from '../../context/AuthContext';
 import styles from "./styles/Navbar.module.scss";
 import logo from "../../assets/images/Logo/logo.svg";
-import defaultImg from "../../assets/images/defaultImg.jpg"; 
-import AuthContext from '../../context/AuthContext';
-import { useLocation, NavLink } from "react-router-dom";
-import { MdOutlineLogout } from "react-icons/md";
+import defaultImg from "../../assets/images/defaultImg.jpg";
 
 const Navbar = () => {
-  const [hoveredLink, setHoveredLink] = useState(null);
-  const location = useLocation();
-  const authCtx = useContext(AuthContext);
   const [isMobile, setIsMobile] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
-  const lastScrollY = useRef(0);
   const [navbarHeight, setNavbarHeight] = useState("80px");
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const [activeLink, setActiveLink] = useState("/");
+  const lastScrollY = useRef(0);
+  const authCtx = useContext(AuthContext);
+  const location = useLocation(); // Hook to get the current location
 
   const handleScroll = () => {
     if (window.scrollY > lastScrollY.current) {
@@ -43,6 +43,10 @@ const Navbar = () => {
       window.removeEventListener("resize", handleResize);
     };
   }, [isMobile]);
+
+  useEffect(() => {
+    setActiveLink(location.pathname); // Update active link based on current location
+  }, [location]);
 
   const toggleMobileMenu = () => {
     setIsMobile(!isMobile);
@@ -77,14 +81,13 @@ const Navbar = () => {
               </>
             )}
           </div>
-
           <div className={styles.logo_text}></div>
         </div>
 
         <ul className={`${styles.navLinks} ${isMobile ? styles.active : ""} ${authCtx.isLoggedIn ? styles.loggedIn : ""}`}>
           {authCtx.isLoggedIn && windowWidth <= 768 && (
             <NavLink to="/profile" className="LinkStyle" onClick={closeMobileMenu}>
-              <div className={styles.profileImgdiv}>   
+              <div className={styles.profileImgdiv}>
                 <img
                   src={authCtx.user.pic || defaultImg}
                   alt="Profile"
@@ -94,7 +97,7 @@ const Navbar = () => {
             </NavLink>
           )}
 
-          <NavLink to="/" className={styles.logoLink}>
+          <NavLink to="/" className={styles.logoLink} onClick={closeMobileMenu}>
             <div className={styles.logo_div}>
               <img src={logo} alt="Logo" className={styles.logo} />
               <div className={styles.logo_text}></div>
@@ -105,11 +108,7 @@ const Navbar = () => {
             <li>
               <NavLink
                 to="/"
-                className={({ isActive }) =>
-                  isActive ? styles.activeLink : ""
-                }
-                onMouseEnter={() => setHoveredLink("/")}
-                onMouseLeave={() => setHoveredLink(null)}
+                className={activeLink === "/" ? `${styles.link} ${styles.activeLink}` : styles.link}
                 onClick={closeMobileMenu}
               >
                 Home
@@ -118,11 +117,7 @@ const Navbar = () => {
             <li>
               <NavLink
                 to="/Events"
-                className={({ isActive }) =>
-                  isActive ? styles.activeLink : ""
-                }
-                onMouseEnter={() => setHoveredLink("/Events")}
-                onMouseLeave={() => setHoveredLink(null)}
+                className={activeLink === "/Events" ? `${styles.link} ${styles.activeLink}` : styles.link}
                 onClick={closeMobileMenu}
               >
                 Event
@@ -131,11 +126,7 @@ const Navbar = () => {
             <li>
               <NavLink
                 to="/Social"
-                className={({ isActive }) =>
-                  isActive ? styles.activeLink : ""
-                }
-                onMouseEnter={() => setHoveredLink("/Social")}
-                onMouseLeave={() => setHoveredLink(null)}
+                className={activeLink === "/Social" ? `${styles.link} ${styles.activeLink}` : styles.link}
                 onClick={closeMobileMenu}
               >
                 Social
@@ -144,11 +135,7 @@ const Navbar = () => {
             <li>
               <NavLink
                 to="/Team"
-                className={({ isActive }) =>
-                  isActive ? styles.activeLink : ""
-                }
-                onMouseEnter={() => setHoveredLink("/Team")}
-                onMouseLeave={() => setHoveredLink(null)}
+                className={activeLink === "/Team" ? `${styles.link} ${styles.activeLink}` : styles.link}
                 onClick={closeMobileMenu}
               >
                 Team
@@ -160,8 +147,8 @@ const Navbar = () => {
             windowWidth <= 768 ? (
               <button className={styles.authButton} onClick={handleLogout}>Logout <MdOutlineLogout size={25} /></button>
             ) : (
-              <NavLink to="/profile" className="LinkStyle">
-                <div className={styles.profileImgdiv}>   
+              <NavLink to="/profile" className="LinkStyle" onClick={closeMobileMenu}>
+                <div className={styles.profileImgdiv}>
                   <img
                     src={authCtx.user.pic || defaultImg}
                     alt="Profile"

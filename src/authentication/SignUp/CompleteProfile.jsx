@@ -1,19 +1,16 @@
-import React, { useState, useEffect, useRef, useContext } from "react";
+import React, { useState, useContext } from "react";
 import PropTypes from "prop-types";
-import { Link, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Input from "../../components/Core/Input";
 import Button from "../../components/Core/Button";
-// import bcrypt from "bcryptjs-react";
-
 import Load from "../../microInteraction/Load/Load";
 import axios from "axios";
 import CPCss from "./style/CompleteProfile.module.scss";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import AuthContext from "../../context/AuthContext";
 
-function CompleteProfile(props) {
+function CompleteProfile() {
   const [loadingEffect, setLoad] = useState(false);
-  // const [DropShow, hideDrop] = useState(false);
   const [year, setYear] = useState("");
   const [showUser, setUser] = useState({
     email: "",
@@ -27,14 +24,15 @@ function CompleteProfile(props) {
     year: "",
   });
 
-  // var setError = props.setError;
-
   const authCtx = useContext(AuthContext);
-
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const userData = location.state?.data || {};  // Default to an empty object if state.data is undefined
+  const { name = "", email = "", picture: img = "" } = userData;
 
   const DataInp = (name, value) => {
-    setUser({ ...showUser, [name]: value });
+    setUser(prevUser => ({ ...prevUser, [name]: value }));
   };
 
   const handleChange = (event) => {
@@ -47,36 +45,20 @@ function CompleteProfile(props) {
     { value: "3rd", text: "3rd year" },
     { value: "4th", text: "4th year" },
     { value: "5th", text: "5th year" },
+    { value: "Passout", text: "Passout" },
   ];
 
   const handleCreateProfile = async (e) => {
     e.preventDefault();
-    console.log(showUser);
+    setLoad(true);
 
-    const { RollNumber, School, College, MobileNo, tandC } = showUser;
-
-    // if (
-    //   props.data.name !== "" &&
-    //   props.data.id !== "" &&
-    //   props.data.email !== "" &&
-    //   props.data.picture !== "" &&
-    //   RollNumber !== "" &&
-    //   School !== "" &&
-    //   College !== "" &&
-    //   MobileNo.length === 10 &&
-    //   tandC
-    // ) {
-    //   setLoad(true);
-    alert("profile created");
-
-    const password = props.data.id;
-    console.log(props.data.email);
+    const { RollNumber, School, College, MobileNo } = showUser;
 
     const userObject = {
-      name: props.data.name,
-      email: props.data.email,
-      password: password,
-      img: props.data.picture,
+      name,
+      email,
+      password: showUser.Password,
+      img,
       RollNumber,
       School,
       College,
@@ -85,70 +67,40 @@ function CompleteProfile(props) {
     };
     console.log(userObject);
 
-    // try {
-    //   const response = await axios.post(`/auth/googleregister`, userObject);
-
-    //   if (response.data.status === true) {
-    //     authCtx.login(
-    //       response.data.user.name,
-    //       response.data.user.email,
-    //       response.data.user.img,
-    //       response.data.user.RollNumber,
-    //       response.data.user.School,
-    //       response.data.user.College,
-    //       response.data.user.MobileNo,
-    //       response.data.user.selected,
-    //       response.data.user.regForm,
-    //       Number(response.data.user.access),
-    //       response.data.token,
-    //       10800000
-    //     );
-
-    //     props.set(false);
-
-    //     if (authCtx.target == "" || (authCtx.target == null) == "") {
-    //       // navigate("/MyProfile");
-    //       window.history.back();
-    //     } else {
-    //       navigate(`/${authCtx.target}`);
-    //       authCtx.settarget(null);
-    //     }
-
-    //     return;
-    //   } else {
-    //     setLoad(false);
-    //   }
-    // } catch (error) {
-    //   setLoad(false);
-
-    //   if (error.response.data.code === 1) {
-    //     console.log("error code 1");
-    //   }
-    //   if (error.response.data.code === 2) {
-    //     console.log("error code 2");
-    //   }
-    // }
-    // } else {
-    //   setLoad(false);
-
-    // if (MobileNo.length !== 10) {
-    //   console.log("enter correct mobile no");
-    // } else {
-    //   console.log("fill all details");
-    // }
-
-    // }
+    try {
+      // const response = await axios.post(`/auth/googleregister`, userObject);
+      // if (response.data.status === true) {
+      //   authCtx.login(
+      //     response.data.user.name,
+      //     response.data.user.email,
+      //     response.data.user.img,
+      //     response.data.user.RollNumber,
+      //     response.data.user.School,
+      //     response.data.user.College,
+      //     response.data.user.MobileNo,
+      //     response.data.user.selected,
+      //     response.data.user.regForm,
+      //     Number(response.data.user.access),
+      //     response.data.token,
+      //     10800000
+      // );
+      
+      console.log("Profile created successfully");
+      alert("Profile created successfully");
+      navigate("/profile");  // Navigate to MyProfile after successful registration
+      
+    } catch (error) {
+      console.error("Error during profile creation:", error);
+      alert("An error occurred while creating your profile. Please try again.");
+    } finally {
+      setLoad(false);
+    }
   };
 
   return (
-    <div
-      className={CPCss.mDiv}
-      id={
-        Object.keys(props.data).length > 0 ? CPCss.showCreate : CPCss.hideCreate
-      }
-    >
+    <div className={CPCss.mDiv}>
       <div className={CPCss.mDivCon}>
-        <div className={CPCss.ArrowBackIcon} onClick={() => props.set(false)}>
+        <div className={CPCss.ArrowBackIcon} onClick={() => navigate(-1)}>
           <ArrowBackIcon />
         </div>
         <div className={CPCss.BackGround}>
@@ -157,9 +109,7 @@ function CompleteProfile(props) {
             <p className={CPCss.Please}>Please enter Your Details</p>
           </div>
 
-          <form className={CPCss.FormTag}>
-            {/* college */}
-
+          <form className={CPCss.FormTag} onSubmit={handleCreateProfile}>
             <Input
               type="select"
               placeholder="College Name"
@@ -177,8 +127,6 @@ function CompleteProfile(props) {
               style={{ width: "96%" }}
             />
 
-            {/* Roll number */}
-
             <Input
               type="text"
               placeholder="Roll Number"
@@ -189,7 +137,6 @@ function CompleteProfile(props) {
               style={{ width: "100%" }}
             />
 
-            {/* school */}
             <Input
               type="text"
               placeholder="School"
@@ -199,8 +146,6 @@ function CompleteProfile(props) {
               required
               style={{ width: "100%" }}
             />
-
-            {/* Phone Number */}
 
             <Input
               type="text"
@@ -214,7 +159,7 @@ function CompleteProfile(props) {
 
             <div>
               <label style={{ marginLeft: "2%" }} htmlFor="year">
-                year
+                Year
               </label>
               <select
                 value={year}
@@ -231,11 +176,7 @@ function CompleteProfile(props) {
               </select>
             </div>
 
-            <div
-              style={{
-                marginLeft: "8px",
-              }}
-            >
+            <div style={{ marginLeft: "8px" }}>
               <Button
                 style={{
                   width: "102%",
@@ -260,6 +201,9 @@ function CompleteProfile(props) {
   );
 }
 
-CompleteProfile.propTypes = {};
+CompleteProfile.propTypes = {
+  data: PropTypes.object,
+  set: PropTypes.func,
+};
 
 export default CompleteProfile;

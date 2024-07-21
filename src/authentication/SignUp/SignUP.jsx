@@ -104,7 +104,7 @@ const SignUP = () => {
   };
 
   return (
-    <div style={{ width: "100vw", position: "relative" }}>
+    <div style={{ width: "100vw" }}>
          <Link to={"/"}>
           <div className={style.ArrowBackIcon}>
             <ArrowBackIcon />
@@ -255,6 +255,7 @@ const SignUP = () => {
                     { value: "3rd", label: "3rd year" },
                     { value: "4th", label: "4th year" },
                     { value: "5th", label: "5th year" },
+                    { value: "Passout", label: "Passout" },
                   ]}
                   value={showUser.year}
                   onChange={(value) => DataInp("year", value)}

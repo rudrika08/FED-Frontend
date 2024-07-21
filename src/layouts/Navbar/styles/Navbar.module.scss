@@ -42,7 +42,7 @@
   justify-content: center;
   align-items: center;
   width: 100%;
-  padding-top: 5px;
+  padding: 5px 30px 0px 25px;
 }
 
 .navLinks {
@@ -73,49 +73,41 @@
   color: inherit;
 }
 
-.navLinks {
-  .navItems {
-    li {
-      a {
-        position: relative;
-        text-decoration: none;
-        color: inherit;
-
-        &:hover {
-          background: var(--primary);
-          background-clip: text;
-          color: transparent;
-          transition: 0.2s ease-in;
-
-          &::after {
-            width: 100%;
-            left: 0;
-          }
-        }
-
-        &::after {
-          content: "";
-          display: block;
-          height: 2px;
-          position: absolute;
-          bottom: 0;
-          left: 50%;
-          width: 0;
-          background: #fff;
-          transition: width 0.3s ease, left 0.3s ease;
-        }
-      }
-    }
-  }
-}
-
-
-
 .navLinks .activeLink {
   background: var(--primary);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+}
+
+.navLinks li a {
+  position: relative;
+  text-decoration: none;
+  color: inherit;
+}
+
+.navLinks li a:hover {
+  background: var(--primary);
+  background-clip: text;
+  color: transparent;
+  transition: 0.2s ease-in;
+
+  &::after {
+    width: 100%;
+    left: 0;
+  }
+}
+
+.navLinks li a::after {
+  content: "";
+  display: block;
+  height: 2px;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  background: #fff;
+  transition: width 0.3s ease, left 0.3s ease;
 }
 
 .hidden {
@@ -187,27 +179,13 @@
   margin-left: -10px;
 }
 
-.activeLink {
-  background: var(--primary);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
-.navLinks li a:hover {
-  background: var(--primary);
-  background-clip: text;
-  color: transparent;
-  transition: 0.2s ease-in;
-}
-
 .authButton {
   font-family: Poppins, sans-serif;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 1.65rem;
-  height: 3.7rem;
+  height: 3.5rem;
   font-size: 1.2rem;
   background: linear-gradient(
     260deg,
@@ -215,7 +193,7 @@
     rgba(251, 88, 33, 0.84) 128.34%
   );
   font-weight: 600;
-  padding: 8px 35px;
+  padding: 8px 30px;
   border: none;
   color: #fff;
   cursor: pointer;
@@ -240,19 +218,19 @@
   display: none;
 }
 
-
-
 @media (max-width: 768px) {
 
-  .navbar{
+  .navbar {
     margin-top: 0;
     border-radius: 0;
   }
+
   .navbarContent {
     backdrop-filter: blur(20px);
     display: flex;
     align-items: flex-start;
     padding-top: 25px;
+    padding-right: 0px;
   }
 
   .mobNav {
@@ -305,5 +283,4 @@
   .menuToggle {
     display: flex;
   }
-
 }
