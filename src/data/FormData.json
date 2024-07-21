@@ -1,15 +1,20 @@
 {
     "events": [
       {
-        "id": 1719947858869,
+        "_id": 1719947858869,
         "info": {
             "eventTitle": "Blizz Battle1",
             "eventdescription": "BIZZ-BATTLE is an engaging business challenge event designed for aspiring business leaders. It consists of three rounds, each aimed at testing participant's knowledge, agility, and strategic acumen. The event begins with Round 1, a business quiz featuring questions to assess the depth of participant's knowledge. Teams that excel in this round move forward to Round 2, a thrilling treasure hunt where they must find answers to a set of riddles on campus. The most accurate teams then progress to the final round, Round 3, where they are presented with a real-world business scenario.",
             "eventImg": "https://cdn.builder.io/api/v1/image/assets/TEMP/d12862ae94db7f4c1a27971143bd81d9a7fb60f50f4151f6f4b2ed8c1ee3eb23?apiKey=4aa0ae1a0e814437847f3f8ff6c4ef38&width=800",
             "eventDate": "2024-07-09T18:30:00.000Z",
             "eventType": "Paid",
+            "receiverDetails": {
+              "media": "QR.jpg",
+              "upi": "22345@okicici"
+            },
             "eventAmount": "250",
             "eventMaxReg": "500",
+            "relatedEvent": "Bizz Battle",
             "participationType": "Team",
             "maxTeamSize": "5",
             "minTeamSize": "2",
@@ -25,20 +30,21 @@
             "_id": 1719947858693,
             "name": "Basic Details",
             "description": "Enter your basic details for the event",
+            "isDisabled": false,
             "validations": [
               {
+                "_id": 1719947845678,
                 "field_id": 1719947858693,
                 "onNext": "Submit",
                 "onBack": "Back",
-                "values": "[ml,ai]",
-                "message": "Please select atleast 2 courses"
+                "values": "[ml,ai]"
               },
               {
-                "field_id": 1719947858693,
-                "onNext": "Next_Section_ID",
-                "onBack": "Previous_Section_ID",
-                "values": "[ai]",
-                "message": "Please select atleast 1 course"
+                "_id": 1719947845679,
+                "field_id": 1719947858698,
+                "onNext": "Submit",
+                "onBack": "Back",
+                "values": "[ml,ai]"
               }
             ],
             "fields": [
@@ -50,19 +56,25 @@
                 "isRequired": true,
                 "validations": [
                   {
+                    "_id": 1719948008132,
                     "type": "length",
                     "value": "2",
-                    "operator": "<="
+                    "operator": "<=",
+                    "message": ""
                   },
                   {
+                    "_id": 1719948008133,
                     "type": "length",
                     "value": "10",
-                    "operator": "<="
+                    "operator": "<=",
+                    "message": ""
                   },
                   {
+                    "_id": 1719948008134,
                     "type": "length",
                     "value": "10",
-                    "operator": "<="
+                    "operator": "<=",
+                    "message": ""
                   }
                 ]
               },

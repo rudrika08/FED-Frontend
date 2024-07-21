@@ -36,29 +36,53 @@ function NewForm() {
   const [isVisibility, setisVisibility] = useState(true);
   const authCtx = useContext(AuthContext);
   const [data, setdata] = useState({
+
     _id: nanoid(),
-    eventName: "",
-    logoLink: "",
+    eventTitle: "",
+    eventdescription:"",
+    eventImg: "",
     eventDate: "",
     eventType: "Free",
     receiverDetails: {
       media: "",
       upi: "",
     },
-    eventPrice: "",
+    eventAmount: "",
+    eventMaxReg: "",
     relatedEvent: "",
-    participationType: "",
-    minSize: "",
-    maxSize: "",
-    priority: "",
-    description: "",
-    successMessage: "",
-    maxReg: "",
+    participationType : "",
+    maxTeamSize: "",
+    minTeamSize: "",
     regDateAndTime: "",
-    isRegEnd: false,
-    isEventPast: false,
+    eventPriority: "",
+    successMessage: "",
     isPublic: false,
+    isRegistrationClosed: false,
+    isEventPast: false,
+
+    // eventName:"",
+    // logoLink: "",
+    // eventDate: "",
+    // eventType: "Free",
+    // receiverDetails: {
+    //   media: "",
+    //   upi: "",
+    // },
+    // eventPrice: "",
+    // relatedEvent: "",
+    // participationType: "",
+    // minSize: "",
+    // maxSize: "",
+    // priority: "",
+    // description: "",
+    // successMessage: "",
+    // maxReg: "",
+    // regDateAndTime: "",
+    // isRegEnd: false,
+    // isEventPast: false,
+    // isPublic: false,
   });
+
   const [sections, setsections] = useState([
     {
       _id: nanoid(),
@@ -128,13 +152,13 @@ function NewForm() {
   };
 
   const isValidEvent = () => {
-    if (!data.eventName) {
+    if (!data.eventTitle) {
       alert("Title is required.");
       return false;
     }
 
-    if (!data.imageURL) {
-      alert("Logo link is required.");
+    if (!data.eventImg) {
+      alert("Image is required.");
       return false;
     }
     if (!data.eventDate) {
@@ -153,11 +177,11 @@ function NewForm() {
       alert("Participation type is required.");
       return false;
     }
-    if (!data.priority) {
+    if (!data.eventPriority) {
       alert("Priority is required.");
       return false;
     }
-    if (!data.description) {
+    if (!data.eventdescription) {
       alert("Description is required.");
       return false;
     }
@@ -165,13 +189,13 @@ function NewForm() {
       alert("Success message is required.");
       return false;
     }
-    if (!data.maxReg) {
+    if (!data.eventMaxReg) {
       alert("Maximum registration is required.");
       return false;
     }
 
     if (data.eventType === "Paid") {
-      if (!data.eventPrice) {
+      if (!data.eventAmount) {
         alert("Amount is required.");
         return false;
       }
@@ -188,12 +212,12 @@ function NewForm() {
     }
 
     if (data.participationType === "Team") {
-      if (!data.maxSize) {
+      if (!data.maxTeamSize) {
         alert("Maximum team size is required.");
         return false;
       }
 
-      if (!data.minSize) {
+      if (!data.minTeamSize) {
         alert("Minimum team size is required.");
         return false;
       }
@@ -215,6 +239,7 @@ function NewForm() {
       }
 
       console.log("form", form);
+      console.log("Form Data", data);
     }
   };
 
@@ -280,7 +305,7 @@ function NewForm() {
 
   const handleChangeTeamSize = (value) => {
     if (value < 1 || !value) {
-      setdata({ ...data, maxSize: "" });
+      setdata({ ...data, maxTeamSize: "" });
       setsections(
         sections.filter((section) => section.name !== "Team Members")
       );
@@ -289,7 +314,7 @@ function NewForm() {
       alert("Team size should be between 1 and 7.");
     } else {
       if (value > 0 && value <= 7) {
-        setdata({ ...data, maxSize: value });
+        setdata({ ...data, maxTeamSize: value });
 
         const fields = Array.from({ length: value }, (_, index) => [
           {
@@ -297,15 +322,15 @@ function NewForm() {
             name: `Enter ${getOrdinalSuffix(index + 1)} Member Name`,
             type: "text",
             value: "Enter Member Name",
-            isRequired: index < data.minSize ? true : false,
+            isRequired: index < data.minTeamSize ? true : false,
             validations: [],
           },
           {
             _id: nanoid(),
             name: `Enter ${getOrdinalSuffix(index + 1)} Member Email`,
             type: "text",
-            value: "Enter Email",
-            isRequired: index < data.minSize ? true : false,
+            value: "Enter Member Email",
+            isRequired: index < data.minTeamSize ? true : false,
             validations: [],
           },
           {
@@ -313,7 +338,7 @@ function NewForm() {
             name: `Enter ${getOrdinalSuffix(index + 1)} Member Roll Number`,
             type: "number",
             value: "Enter Roll Number",
-            isRequired: index < data.minSize ? true : false,
+            isRequired: index < data.minTeamSize ? true : false,
             validations: [],
           },
         ]).flat();
@@ -391,15 +416,15 @@ function NewForm() {
 
   const handleChangeMinSize = (value) => {
     if (value < 1 || !value) {
-      setdata({ ...data, minSize: "1" });
+      setdata({ ...data, minTeamSize: "1" });
     }
     if (value === 0 || value >= 7) {
       alert("Team size should be between 1 and 7.");
-      setdata({ ...data, minSize: "1" });
+      setdata({ ...data, minTeamSize: "1" });
     }
-    if (data.maxSize > 0 && data.maxSize < value) {
+    if (data.maxTeamSize > 0 && data.maxTeamSize < value) {
       alert("Team min size should be less than max");
-      setdata({ ...data, minSize: "1" });
+      setdata({ ...data, minTeamSize: "1" });
     } else {
       const isHavingTeamSection = sections.some(
         (section) => section.name === "Team Members"
@@ -423,7 +448,7 @@ function NewForm() {
         });
         setsections(updatedSections);
       }
-      setdata({ ...data, minSize: value });
+      setdata({ ...data, minTeamSize: value });
     }
   };
 
@@ -436,7 +461,7 @@ function NewForm() {
   };
 
   const onChangeEventType = (value) => {
-    setdata({ ...data, eventType: value, eventPrice: "" });
+    setdata({ ...data, eventType: value, eventAmount: "" });
 
     if (value === "Paid") {
       setpaymentSection({
@@ -518,8 +543,8 @@ function NewForm() {
         setdata({
           ...data,
           participationType: value,
-          minSize: "",
-          maxSize: "",
+          minTeamSize: "",
+          maxTeamSize: "",
         });
         const removedSection = sections.filter(
           (section) => section.name !== "Team Members"
@@ -567,8 +592,8 @@ function NewForm() {
       setdata({
         ...data,
         participationType: value,
-        minSize: "",
-        maxSize: "",
+        minTeamSize: "",
+        maxTeamSize: "",
       });
     }
   };
@@ -694,14 +719,14 @@ function NewForm() {
                 color: "#fff",
                 margin: "4px 0",
                 fontSize: ".8em",
-                opacity: data.isRegEnd ? "1" : ".6",
+                opacity: data.isRegistrationClosed ? "1" : ".6",
                 transition: "all .4s",
               }}
             >
               Close Event Registration
             </label>
             <Switch
-              checked={data.isRegEnd}
+              checked={data.isRegistrationClosed}
               width={36}
               height={18}
               onColor="#FF8A00"
@@ -712,7 +737,7 @@ function NewForm() {
               onChange={() => {
                 setdata({
                   ...data,
-                  isRegEnd: !data.isRegEnd,
+                  isRegistrationClosed: !data.isRegistrationClosed,
                 });
               }}
             />
@@ -757,7 +782,8 @@ function NewForm() {
       )}
       <div
         style={{
-          height: "420px",
+          height: "90vh",
+          width: "90%",
           overflow: "hidden scroll",
           scrollbarWidth: "none",
           marginBottom: "50px",
@@ -775,23 +801,23 @@ function NewForm() {
             }}
           >
             <Input
-              placeholder="Enter Form Name"
-              label="Form Name"
-              value={data.eventName}
+              placeholder="Enter Event Title or Name"
+              label="Event Title"
+              value={data.eventTitle}
               className={styles.formInput}
-              onChange={(e) => setdata({ ...data, eventName: e.target.value })}
+              onChange={(e) => setdata({ ...data, eventTitle: e.target.value })}
             />
             <Input
-              placeholder="Event Logo"
-              label="Event Logo"
+              placeholder="Attach Event Image"
+              label="Event Image"
               type={"image"}
               value={
-                typeof data.imageURL === "string"
-                  ? data.imageURL
-                  : data.imageURL?.name || ""
+                typeof data.eventImg === "string"
+                  ? data.eventImg
+                  : data.eventImg?.name || ""
               }
               containerClassName={styles.formInput}
-              onChange={(e) => setdata({ ...data, imageURL: e.target.value })}
+              onChange={(e) => setdata({ ...data, eventImg: e.target.value })}
               className={styles.formInput}
             />
             <Input
@@ -804,8 +830,8 @@ function NewForm() {
               onChange={(date) => setdata({ ...data, eventDate: date })}
             />
             <Input
-              placeholder="Event Type"
-              label="Select Type"
+              placeholder="Select Event Type"
+              label="Event Type"
               type="select"
               className={styles.formInput}
               options={[
@@ -819,18 +845,18 @@ function NewForm() {
             {data.eventType === "Paid" && (
               <div>
                 <Input
-                  placeholder="Enter Amount"
-                  label="Amount"
+                  placeholder="Enter Event Registration Amount"
+                  label="Event Registration Fee"
                   type="number"
-                  value={data.eventPrice}
+                  value={data.eventAmount}
                   onChange={(e) =>
-                    setdata({ ...data, eventPrice: e.target.value })
+                    setdata({ ...data, eventAmount: e.target.value })
                   }
                   className={styles.formInput}
                 />
                 <Input
-                  placeholder={"Attach Media/Images/Qr Code"}
-                  label={"Upload Media"}
+                  placeholder={"Upload Media/Images/Qr Code"}
+                  label={"Receiver Payment QR Code"}
                   value={
                     typeof data.receiverDetails?.media === "string"
                       ? data.receiverDetails?.media
@@ -852,7 +878,7 @@ function NewForm() {
 
                 <Input
                   placeholder={"Enter UPI ID"}
-                  label={"UPI ID"}
+                  label={"Receiver UPI ID"}
                   value={data?.receiverDetails?.upi}
                   className={styles.formInput}
                   onChange={(e) =>
@@ -898,38 +924,38 @@ function NewForm() {
                   label="Team Size (Min)"
                   type="select"
                   options={TEAM_SIZE.filter(
-                    (item) => item.value <= (data.maxSize || 7)
+                    (item) => item.value <= (data.maxTeamSize || 7)
                   )}
                   className={styles.formInput}
-                  value={data.minSize}
+                  value={data.minTeamSize}
                   onChange={(value) => handleChangeMinSize(value)}
                 />
-                {data.minSize && (
+                {data.minTeamSize && (
                   <Input
                     placeholder="Enter Team Size "
                     label="Team Size (Max)"
                     type="select"
                     options={TEAM_SIZE.filter(
-                      (item) => item.value >= (data.minSize || 1)
+                      (item) => item.value >= (data.minTeamSize || 1)
                     )}
                     className={styles.formInput}
-                    value={data.maxSize}
+                    value={data.maxTeamSize}
                     onChange={(value) => handleChangeTeamSize(value)}
                   />
                 )}
               </div>
             )}
             <Input
-              placeholder="Event Priority"
+              placeholder="Enter Priority Number"
               className={styles.formInput}
-              label="Priority"
-              value={data.priority}
-              onChange={(e) => setdata({ ...data, priority: e.target.value })}
+              label="Event Priority"
+              value={data.eventPriority}
+              onChange={(e) => setdata({ ...data, eventPriority: e.target.value })}
             />
             <Input
               placeholder="Open Date & Time"
               className={styles.formInput}
-              label="Event Open Date & Time"
+              label="Event Registration Open Date & Time"
               type="datetime-local"
               value={data.regDateAndTime}
               onChange={(date) => {
@@ -952,9 +978,9 @@ function NewForm() {
               label="Event Description"
               type="textArea"
               className={` ${styles.formInputTxtArea}`}
-              value={data.description}
+              value={data.eventdescription}
               onChange={(e) =>
-                setdata({ ...data, description: e.target.value })
+                setdata({ ...data, eventdescription: e.target.value })
               }
             />
             <Input
@@ -971,11 +997,11 @@ function NewForm() {
             <Input
               placeholder="Enter Number"
               className={styles.formInput}
-              label="Maximum Registrations"
+              label="Maximum Registrations Allowed"
               type="number"
-              value={data.maxReg}
+              value={data.eventMaxReg}
               containerStyle={{ marginTop: "12px" }}
-              onChange={(e) => setdata({ ...data, maxReg: e.target.value })}
+              onChange={(e) => setdata({ ...data, eventMaxReg: e.target.value })}
             />
           </div>
         </div>

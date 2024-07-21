@@ -42,9 +42,6 @@ const Login = lazy(() =>
 const OTPInput = lazy(()=>import("./authentication/Login/ForgotPassword/OTPInput"));
 const Reset = lazy(()=>import("./authentication/Login/ForgotPassword/Reset"));
 
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-
 
 const MainLayout = () => (
   <div>
@@ -57,8 +54,7 @@ const MainLayout = () => (
 );
 
 const AuthLayout = () => (
-  <div className="authpage">
-    <ToastContainer />
+  <div className="page">
     <Outlet />
   </div>
 );
