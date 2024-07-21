@@ -6,14 +6,15 @@ import Button from "../../../components/Core/Button";
 import styles from "../../SignUp/style/Signup.module.scss";
 import otpstyle from "./styles/OTPInput.module.scss"
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { useNavigate } from "react-router-dom";
 
 export default function OTPInput() {
-  const { email, otp, setPage } = useContext(RecoveryContext);
+  const { email, otp } = useContext(RecoveryContext);
   const [timerCount, setTimer] = useState(60);
   const [OTPinput, setOTPinput] = useState(["", "", "", ""]);
   const [disable, setDisable] = useState(true);
   const inputRefs = useRef([]);
-
+  const navigate = useNavigate();
   function resendOTP() {
     if (disable) return;
     axios
@@ -27,14 +28,14 @@ export default function OTPInput() {
   }
 
   function verifyOTP() {
-    // Convert OTPinput array to string for comparison
+
     const enteredOTP = OTPinput.join("");
 
     console.log("Entered OTP:", enteredOTP);
     console.log("Expected OTP:", otp);
 
     if (enteredOTP === String(otp)) {
-      setPage("reset");
+      navigate('/reset');
     } else {
       alert("The code you have entered is not correct, try again or re-send the link");
     }
@@ -74,7 +75,7 @@ export default function OTPInput() {
     }
   };
 
-  // Function to handle backspace key
+
   const handleKeyDown = (e, index) => {
     if (e.key === "Backspace" && !OTPinput[index] && index > 0) {
       inputRefs.current[index - 1].focus();
@@ -87,7 +88,7 @@ export default function OTPInput() {
         <div></div>
       </div>
       <div className={styles.circle1}></div>
-      <div onClick={()=>setPage("SendOtp")} className={styles.ArrowBackIcon}>
+      <div onClick={()=>navigate('/ForgotPassword')} className={styles.ArrowBackIcon}>
             <ArrowBackIcon />
           </div>
       <div className={otpstyle.innerBox1}>

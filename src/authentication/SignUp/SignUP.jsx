@@ -142,7 +142,7 @@ const SignUP = () => {
             <p style={{ color: "#fff", textAlign: "center" }}>or</p>
             <div className={style.divider} />
           </div>
-          <form onSubmit={handleSignup}>
+          <form  onSubmit={handleSignup}>
             <div style={{ display: "flex", justifyContent: "space-between" }}>
               <div style={{ width: "48%" }}>
                 <Input
@@ -311,11 +311,11 @@ const SignUP = () => {
               }}
             >
               Already Have an account?{" "}
-              <a href="/Login" style={{ background: "var(--primary)",
+              <Link to='/Login' style={{ background: "var(--primary)",
                   WebkitBackgroundClip: "text",
                   color: "transparent" }}>
                 Login
-              </a>
+              </Link>
             </Text>
           </form>
         </div>

@@ -11,6 +11,10 @@
   scale: 0.85;
 }
 
+// .form{
+//   width: 100%;
+// }
+
 // .signupForm {
 //   height: 25rem;
 // }
@@ -98,6 +102,13 @@
 .google_btn:hover {
   border: 1px solid #fff;
 }
+
+
+// @media(min-width:800px){
+//   .container{
+//    margin-top: -10%;
+//   }
+// }
 
 @media (max-width: 600px) {
   .container {

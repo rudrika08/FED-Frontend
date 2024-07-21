@@ -41,7 +41,7 @@
   margin-left: 0rem;
 }
 
-form {
+.contactForm {
   width: 60%;
   padding-left: 30px;
   padding-right: 60px;
@@ -90,7 +90,7 @@ form {
   resize: none;
 }
 
-form button {
+.contactForm button {
   background: var(--primary);
   color: transparent;
   color: white;
@@ -145,7 +145,7 @@ form button {
 
 /* Responsive Styles */
 @media (max-width: 1024px) {
-  form {
+  .contactForm {
     padding-left: 10px;
     padding-right: 10px;
     width: 100%;
@@ -188,7 +188,7 @@ form button {
     flex-direction: column;
     align-items: center;
   }
-  form {
+  .contactForm {
     width: 100%;
     // padding: 0 20px;
   }
@@ -219,7 +219,7 @@ form button {
     width: 6rem;
   }
   
-  form{
+  .contactForm{
     width: 125%;
   }
   .imageSection{
@@ -253,12 +253,12 @@ form button {
 }
 
 @media (max-width: 430px){
-  form{
+  .contactForm{
     width: 100%;
   }
 }
 @media (max-width: 400px){
-  form{
+  .contactForm{
     width: 100%;
   }
 }

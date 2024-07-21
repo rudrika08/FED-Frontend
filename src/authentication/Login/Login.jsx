@@ -60,7 +60,7 @@ const Login = () => {
   };
 
   const handleForgot = () => {
-    setPage("SendOtp");
+    navigate('/ForgotPassword')
   };
 
   return (
@@ -147,8 +147,7 @@ const Login = () => {
               }}
             >
               Don't have an account?{" "}
-              <a
-                href="/signup"
+              <Link to='/signup'
                 onClick={(e) => {
                   sessionStorage.setItem("prevPage", window.location.pathname);
                 }}
@@ -159,7 +158,7 @@ const Login = () => {
                 }}
               >
                 Sign Up
-              </a>
+              </Link>
             </Text>
           </form>
         </div>

@@ -33,7 +33,7 @@ export default function Reset() {
         password,
       })
       .then(() => {
-        setPage("loginMain")
+        navigate('/Login')
         toast.success("Password reset successfully");
       })
       .catch((err) => {
@@ -45,13 +45,13 @@ export default function Reset() {
   return (
     <div>
       <section className={resetStyle.outerdiv}>
-      <div onClick={()=>setPage("otp")} className={styles.ArrowBackIcon}>
+      <div onClick={()=>navigate('/otp')} className={styles.ArrowBackIcon}>
             <ArrowBackIcon />
           </div>
-        <div className={styles.circle}>
+        <div className={resetStyle.circle}>
           <div></div>
         </div>
-        <div className={styles.circle1}></div>
+        <div className={resetStyle.circle1}></div>
         <div className={resetStyle.innerdiv1}>
           <div className={resetStyle.innerTitlediv}>
             <h2 className={resetStyle.innerTitle}>

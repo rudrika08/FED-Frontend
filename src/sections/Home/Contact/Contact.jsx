@@ -62,7 +62,7 @@ const ContactForm = () => {
         <h2>GET <span className={styles.highlight}>IN</span> TOUCH</h2>
         <div className={styles.bottomLine}></div>
         <div className={styles.formSection}>
-          <form onSubmit={handleSubmit}>
+          <form className={styles.contactForm} onSubmit={handleSubmit}>
             <div className={styles.formGroup}>
               <input 
                 type="text" 

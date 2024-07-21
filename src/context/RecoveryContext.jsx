@@ -13,7 +13,7 @@ const componentMap = {
 };
 
 const initialContext = {
-  page: 'loginMain', // Initial page to render
+  // page: 'SendOtp', // Initial page to render
   email: '',
   otp: '',
 };
@@ -22,19 +22,19 @@ const RecoveryContextProvider = ({ children }) => {
   const [state, setState] = useState(() => {
     const storedEmail = localStorage.getItem('recoveryEmail') || '';
     const storedOTP = localStorage.getItem('recoveryOTP') || '';
-    const storedPage = localStorage.getItem('recoveryPage') || initialContext.page;
+    // const storedPage = localStorage.getItem('recoveryPage') ;
     return {
       ...initialContext,
       email: storedEmail,
       otp: storedOTP,
-      page: storedPage,
+      // page: storedPage,
     };
   });
 
-  const setPage = (newPage) => {
-    localStorage.setItem('recoveryPage', newPage);
-    setState(prevState => ({ ...prevState, page: newPage }));
-  };
+  // const setPage = (newPage) => {
+  //   localStorage.setItem('recoveryPage', newPage);
+  //   setState(prevState => ({ ...prevState, page: newPage }));
+  // };
 
   const setEmail = (newEmail) => {
     localStorage.setItem('recoveryEmail', newEmail);
@@ -50,12 +50,12 @@ const RecoveryContextProvider = ({ children }) => {
     return () => {
       localStorage.removeItem('recoveryEmail');
       localStorage.removeItem('recoveryOTP');
-      localStorage.removeItem('recoveryPage');
+      // localStorage.removeItem('recoveryPage');
     };
   }, []);
 
   return (
-    <RecoveryContext.Provider value={{ ...state, setPage, setEmail, setOTP }}>
+    <RecoveryContext.Provider value={{ ...state, setEmail, setOTP }}>
       {children}
     </RecoveryContext.Provider>
   );

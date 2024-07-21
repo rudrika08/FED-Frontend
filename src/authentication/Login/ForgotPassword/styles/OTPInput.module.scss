@@ -155,3 +155,30 @@
     flex-direction: row;
     align-items: center;
 }
+
+
+@media(max-width:500px){
+  .innerBox1{
+    max-width: 90%;
+    overflow: hidden;
+  }
+  .buttondiv{
+    width: 85%;
+  }
+
+  .otpcontainer{
+    width: 90%;
+    margin-left: 5%;
+  }
+  .innerTitlediv{
+    margin-left: -10%;
+  }
+  .otpBox{
+    height: 3rem;
+    width: 3rem;
+  }
+
+  .innerTitle2{
+    margin-left: -10% ;
+  }
+}

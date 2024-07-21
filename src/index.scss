@@ -36,6 +36,15 @@ body {
   overflow: hidden;
   margin-top: 90px;
 }
+.authpage {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: $page-color;
+  overflow: hidden;
+  // margin-top: 90px;
+}
 
 .pageExt {
   max-width: 1750px;
