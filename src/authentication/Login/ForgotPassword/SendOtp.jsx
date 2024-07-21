@@ -9,11 +9,13 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import 'react-toastify/dist/ReactToastify.css';
 import resetStyle from "./styles/reset.module.scss"
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
   const { setEmail, email, setOTP, setPage } = useContext(RecoveryContext);
   const [loading, setLoading] = useState(false);
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const navigate=useNavigate();
 
   function navigateToOtp(e) {
     e.preventDefault(); // Prevent default form submission behavior
@@ -28,7 +30,7 @@ export default function Login() {
       setOTP(OTP); // Set OTP in context and local storage
 
       setLoading(true);
-      setPage("otp");
+      navigate('/otp')
       setLoading(false);
 
       // axios
@@ -55,12 +57,12 @@ export default function Login() {
           <div className={style.fullScreen}>
 
          
-          <div onClick={()=>setPage("loginMain")} className={styles.ArrowBackIcon}>
+          <div onClick={()=>navigate("/Login")} className={styles.ArrowBackIcon}>
             <ArrowBackIcon />
           </div>
   
-            <div className={styles.circle}><div></div></div>
-            <div className={styles.circle1}></div>
+            <div className={style.circle}><div></div></div>
+            <div className={style.circle1}></div>
             <div  className={style.primaryBox}>
               <form>
                 <div className={style.boxTitle}>

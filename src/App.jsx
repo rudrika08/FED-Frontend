@@ -26,7 +26,7 @@ const Profile = lazy(() => import("./pages/Profile/Profile"));
 // const Login = lazy(() => import("./pages/Authentication/Login/Login"));
 const Signup = lazy(() => import("./pages/Authentication/Signup/Signup"));
 const ForgotPassword = lazy(() =>
-  import("./pages/Authentication/ForgotPassword/ForgotPassword")
+  import("./authentication/Login/ForgotPassword/SendOtp")
 );
 const CompleteProfile = lazy(() =>
   import("./authentication/SignUp/CompleteProfile")
@@ -35,12 +35,16 @@ const CompleteProfile = lazy(() =>
 const Error = lazy(() => import("./pages/Error/Error"));
 const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy/PrivacyPolicy"));
 const TermsAndConditions = lazy(() => import("./pages/TermsAndConditions/T&C"));
-const PageRenderer = lazy(() =>
-  import("./authentication/Login/ForgotPassword/PageRender")
+const Login = lazy(() =>
+  import("./pages/Authentication/Login/Login")
 );
+
+const OTPInput = lazy(()=>import("./authentication/Login/ForgotPassword/OTPInput"));
+const Reset = lazy(()=>import("./authentication/Login/ForgotPassword/Reset"));
 
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
 
 const MainLayout = () => (
   <div>
@@ -53,7 +57,7 @@ const MainLayout = () => (
 );
 
 const AuthLayout = () => (
-  <div className="page">
+  <div className="authpage">
     <ToastContainer />
     <Outlet />
   </div>
@@ -116,7 +120,7 @@ function App() {
                 authCtx.isLoggedIn ? (
                   <Navigate to="/profile" />
                 ) : (
-                  <PageRenderer />
+                  <Login/>
                 )
               }
             />
@@ -129,9 +133,10 @@ function App() {
             <Route 
               path="/completeProfile" 
               element={
-                authCtx.isLoggedIn ? <Navigate to="/profile" /> : <CompleteProfile />
+                authCtx.isLoggedIn ? <Navigate to="/profile" /> : [<Signup/>,<CompleteProfile />]
               }
             />
+       
             <Route
               path="/ForgotPassword"
               element={
@@ -140,6 +145,18 @@ function App() {
                 ) : (
                   <ForgotPassword />
                 )
+              }
+            />
+                 <Route 
+              path="/otp" 
+              element={
+                authCtx.isLoggedIn ? <Navigate to="/profile" /> : <OTPInput/>
+              }
+            />
+                 <Route 
+              path="/reset" 
+              element={
+                authCtx.isLoggedIn ? <Navigate to="/profile" /> : <Reset/>
               }
             />
           </Route>

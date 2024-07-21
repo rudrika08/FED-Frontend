@@ -14,7 +14,6 @@ function CompleteProfile() {
   const [year, setYear] = useState("");
   const [showUser, setUser] = useState({
     email: "",
-    Password: "",
     name: "",
     RollNumber: "",
     School: "",
@@ -28,7 +27,7 @@ function CompleteProfile() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const userData = location.state?.data || {};  // Default to an empty object if state.data is undefined
+  const userData = location.state?.data || {}; 
   const { name = "", email = "", picture: img = "" } = userData;
 
   const DataInp = (name, value) => {
@@ -57,7 +56,6 @@ function CompleteProfile() {
     const userObject = {
       name,
       email,
-      password: showUser.Password,
       img,
       RollNumber,
       School,
@@ -68,6 +66,7 @@ function CompleteProfile() {
     console.log(userObject);
 
     try {
+      //  API call
       // const response = await axios.post(`/auth/googleregister`, userObject);
       // if (response.data.status === true) {
       //   authCtx.login(
@@ -83,8 +82,24 @@ function CompleteProfile() {
       //     Number(response.data.user.access),
       //     response.data.token,
       //     10800000
-      // );
-      
+      //   );
+
+      // userObject for demonstration
+      authCtx.login(
+        userObject.name,
+        userObject.email,
+        userObject.img,
+        userObject.RollNumber,
+        userObject.School,
+        userObject.College,
+        userObject.MobileNo,
+        userObject.year,
+        "someRegForm",
+        "user",
+        "someToken",
+        7200000
+      );
+
       console.log("Profile created successfully");
       alert("Profile created successfully");
       navigate("/profile");  // Navigate to MyProfile after successful registration
