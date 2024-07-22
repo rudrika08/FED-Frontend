@@ -147,6 +147,7 @@ const PreviewForm = ({
     formData.forEach((value, key) => {
       console.log(key + " " + value);
     });
+    
   };
 
   const areRequiredFieldsFilled = () => {
@@ -357,7 +358,7 @@ const PreviewForm = ({
             </Link>
           )}
           <Text style={{ marginBottom: "20px" }}>
-            {eventData?.title || "Preview Event"}
+            {eventData?.eventTitle || "Preview Event"}
           </Text>
           {!isCompleted.includes("Submitted") ? (
             <div
