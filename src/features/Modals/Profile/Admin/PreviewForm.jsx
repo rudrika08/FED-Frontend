@@ -218,13 +218,18 @@ const PreviewForm = ({
   };
 
   const isMetaExist = () => {
-    const paymentSection = meta.find((sec) => sec.name === "Payment Details");
-    if (paymentSection) {
-      paymentSection.isDisabled = false;
-      paymentSection.validations[0].onBack = currentSection._id;
-      return paymentSection;
+    
+    if (!Array.isArray(meta) || meta.length === 0) {
+      return false;
+    } else {
+      const paymentSection = meta.find((sec) => sec.name === "Payment Details");
+      if (paymentSection) {
+        paymentSection.isDisabled = false;
+        paymentSection.validations[0].onBack = currentSection._id;
+        return paymentSection;
+      }
+      return null;
     }
-    return null;
   };
 
   const inboundList = () => {
@@ -287,7 +292,7 @@ const PreviewForm = ({
   };
 
   const renderPaymentScreen = () => {
-    const { eventType, receiverDetails, eventPrice } = eventData;
+    const { eventType, receiverDetails, eventAmount } = eventData;
     if (eventType === "Paid" && currentSection.name === "Payment Details") {
       return (
         <div
@@ -323,7 +328,7 @@ const PreviewForm = ({
                 color: "#fff",
               }}
             >
-              &#8377;{eventPrice}
+              &#8377;{eventAmount}
             </strong>{" "}
             using QR-Code or UPI Id{" "}
             <strong

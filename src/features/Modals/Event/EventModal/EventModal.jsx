@@ -26,7 +26,7 @@ const EventModal = (props) => {
   // console.log(FormData);
   const { events } = FormData;
   // console.log(events);
-  const data = events.find((event) => event.id === parseInt(eventId));
+  const data = events.find((event) => event._id === parseInt(eventId));
   console.log(data);
 
   // const buttonText=data.ongoingEvent?'Register Now':'Registration closed';
@@ -109,12 +109,12 @@ const EventModal = (props) => {
 
   useEffect(() => {
     if (authCtx.isLoggedIn) {
-      const isRegistered = authCtx.user.regForm.includes(data.id);
+      const isRegistered = authCtx.user.regForm.includes(data._id);
       if (isRegistered) {
         setBtnTxt("Already Registered");
       }
     }
-  }, [authCtx.isLoggedIn, authCtx.user.regForm, btnTxt, navigate, data.id]);
+  }, [authCtx.isLoggedIn, authCtx.user.regForm, btnTxt, navigate, data._id]);
 
 
   const handleModalClose = () => {
@@ -129,7 +129,7 @@ const EventModal = (props) => {
 
   const handleForm = () => {
     if (authCtx.isLoggedIn) {
-      navigate("/Events/" + data.id + "/Form");
+      navigate("/Events/" + data._id + "/Form");
     } else {
       sessionStorage.setItem('prevPage', window.location.pathname);
       navigate('/login');

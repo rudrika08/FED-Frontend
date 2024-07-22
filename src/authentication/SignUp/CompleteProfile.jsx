@@ -5,7 +5,7 @@ import Input from "../../components/Core/Input";
 import Button from "../../components/Core/Button";
 import Load from "../../microInteraction/Load/Load";
 import axios from "axios";
-import CPCss from "./style/CompleteProfile.module.scss";
+import styles from "./style/CompleteProfile.module.scss";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import AuthContext from "../../context/AuthContext";
 
@@ -22,20 +22,25 @@ function CompleteProfile() {
     img: "",
     year: "",
   });
+  const [errors, setErrors] = useState({});
 
   const authCtx = useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
 
-  const userData = location.state?.data || {}; 
+  const userData = location.state?.data || {};
   const { name = "", email = "", picture: img = "" } = userData;
 
-  const DataInp = (name, value) => {
-    setUser(prevUser => ({ ...prevUser, [name]: value }));
-  };
+  const validate = () => {
+    const newErrors = {};
+    if (!showUser.RollNumber) newErrors.RollNumber = "Roll Number is required";
+    if (!showUser.School) newErrors.School = "School is required";
+    if (!showUser.College) newErrors.College = "College is required";
+    if (!showUser.MobileNo || !/^\d{10}$/.test(showUser.MobileNo)) newErrors.MobileNo = "Enter a valid 10-digit Mobile Number";
+    if (!year) newErrors.year = "Year is required";
 
-  const handleChange = (event) => {
-    setYear(event.target.value);
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
   };
 
   const options = [
@@ -49,6 +54,8 @@ function CompleteProfile() {
 
   const handleCreateProfile = async (e) => {
     e.preventDefault();
+    if (!validate()) return;
+
     setLoad(true);
 
     const { RollNumber, School, College, MobileNo } = showUser;
@@ -63,10 +70,9 @@ function CompleteProfile() {
       MobileNo,
       year,
     };
-    console.log(userObject);
 
     try {
-      //  API call
+      // API call
       // const response = await axios.post(`/auth/googleregister`, userObject);
       // if (response.data.status === true) {
       //   authCtx.login(
@@ -95,15 +101,13 @@ function CompleteProfile() {
         userObject.MobileNo,
         userObject.year,
         "someRegForm",
-        "user",
+        "USER",
         "someToken",
         7200000
       );
 
-      console.log("Profile created successfully");
       alert("Profile created successfully");
-      navigate("/profile");  // Navigate to MyProfile after successful registration
-      
+      navigate("/profile"); // Navigate to MyProfile after successful registration
     } catch (error) {
       console.error("Error during profile creation:", error);
       alert("An error occurred while creating your profile. Please try again.");
@@ -113,21 +117,69 @@ function CompleteProfile() {
   };
 
   return (
-    <div className={CPCss.mDiv}>
-      <div className={CPCss.mDivCon}>
-        <div className={CPCss.ArrowBackIcon} onClick={() => navigate(-1)}>
+    <div className={styles.mDiv}>
+      <div className={styles.mDivCon}>
+        <div className={styles.ArrowBackIcon} onClick={() => navigate(-1)}>
           <ArrowBackIcon />
         </div>
-        <div className={CPCss.BackGround}>
+        <div className={styles.circle}></div>
+        <div className={styles.circle1}></div>
+        <div className={styles.BackGround}>
           <div>
-            <p className={CPCss.CreateProfile}>Create Profile</p>
-            <p className={CPCss.Please}>Please enter Your Details</p>
+            <p
+              className={styles.CreateProfile}
+              style={{
+                background: "var(--primary)",
+                padding: "5px 0px 5px 0px",
+                WebkitBackgroundClip: "text",
+                color: "transparent",
+                alignItems: "center",
+              }}
+            >
+              Create Profile
+            </p>
+            <p className={styles.Please}>Please enter Your Details</p>
           </div>
 
-          <form className={CPCss.FormTag} onSubmit={handleCreateProfile}>
+          <form className={styles.FormTag} onSubmit={handleCreateProfile}>
+            <Input
+              type="text"
+              placeholder="Enter Roll Number"
+              label="Roll Number"
+              name="RollNumber"
+              onChange={(e) => setUser((prev) => ({ ...prev, [e.target.name]: e.target.value }))}
+              required
+              style={{ width: "100%" }}
+              error={errors.RollNumber}
+            />
+
             <Input
               type="select"
-              placeholder="College Name"
+              placeholder="Select Year"
+              label="Year"
+              name="year"
+              options={options.map(option => ({ label: option.text, value: option.value }))}
+              value={year}
+              onChange={(value) => setYear(value)}
+              required
+              style={{ width: "100%" }}
+              error={errors.year}
+            />
+
+            <Input
+              type="text"
+              placeholder="Enter School"
+              label="School"
+              name="School"
+              onChange={(e) => setUser((prev) => ({ ...prev, [e.target.name]: e.target.value }))}
+              required
+              style={{ width: "100%" }}
+              error={errors.School}
+            />
+
+            <Input
+              type="select"
+              placeholder="Select College"
               label="College"
               name="College"
               options={[
@@ -137,74 +189,35 @@ function CompleteProfile() {
                 },
               ]}
               value={showUser.College}
-              onChange={(value) => DataInp("College", value)}
+              onChange={(value) => setUser((prev) => ({ ...prev, College: value }))}
               required
               style={{ width: "96%" }}
+              error={errors.College}
             />
 
             <Input
-              type="text"
-              placeholder="Roll Number"
-              label="Roll Number"
-              name="RollNumber"
-              onChange={(e) => DataInp(e.target.name, e.target.value)}
-              required
-              style={{ width: "100%" }}
-            />
-
-            <Input
-              type="text"
-              placeholder="School"
-              label="School"
-              name="School"
-              onChange={(e) => DataInp(e.target.name, e.target.value)}
-              required
-              style={{ width: "100%" }}
-            />
-
-            <Input
-              type="text"
-              placeholder="1234567890"
+              type="number"
+              placeholder="Enter Mobile Number"
               label="Mobile"
               name="MobileNo"
-              onChange={(e) => DataInp(e.target.name, e.target.value)}
+              onChange={(e) => setUser((prev) => ({ ...prev, [e.target.name]: e.target.value }))}
               required
               style={{ width: "100%" }}
+              error={errors.MobileNo}
             />
-
-            <div>
-              <label style={{ marginLeft: "2%" }} htmlFor="year">
-                Year
-              </label>
-              <select
-                value={year}
-                name="year"
-                onChange={handleChange}
-                className={CPCss.year}
-              >
-                <option hidden>Year</option>
-                {options.map((option) => (
-                  <option key={option.value} value={option.value}>
-                    {option.text}
-                  </option>
-                ))}
-              </select>
-            </div>
 
             <div style={{ marginLeft: "8px" }}>
               <Button
                 style={{
                   width: "102%",
-                  backgroundColor: "#ff6b00",
+                  background: "var(--primary)",
                   color: "#fff",
                   height: "40px",
                   marginTop: "20px",
                   fontSize: "1rem",
                   cursor: "pointer",
-                  border: "1px solid #fff",
                 }}
                 type="submit"
-                onClick={handleCreateProfile}
               >
                 {loadingEffect ? <Load /> : "Create Profile"}
               </Button>

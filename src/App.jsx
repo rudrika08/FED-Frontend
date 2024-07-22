@@ -129,7 +129,7 @@ function App() {
             <Route 
               path="/completeProfile" 
               element={
-                authCtx.isLoggedIn ? <Navigate to="/profile" /> : [<Signup/>,<CompleteProfile />]
+                authCtx.isLoggedIn ? <Navigate to="/profile" /> : [<CompleteProfile />]
               }
             />
        

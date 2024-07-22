@@ -131,7 +131,7 @@ const EventCard = (props) => {
 
   const handleForm = () => {
     if (authCtx.isLoggedIn) {
-      navigate("/Events/" + data.id + "/Form");
+      navigate("/Events/" + data._id + "/Form");
     } else {
       sessionStorage.setItem('prevPage', window.location.pathname);
       navigate('/login');
@@ -248,7 +248,7 @@ const EventCard = (props) => {
             <div className={style.EventDesc} style={customStyles.EventDesc}>
               {info.eventdescription}
             </div>
-            <Link to={modalpath + data.id}>
+            <Link to={modalpath + data._id}>
               <span
                 onClick={handleCloseShare}
                 className={style.seeMore}
@@ -267,7 +267,7 @@ const EventCard = (props) => {
         </div>
       </div>
       {isOpen && type === "ongoing" && (
-        <Share onClose={handleShare} urlpath={url + "/" + data.id} />
+        <Share onClose={handleShare} urlpath={url + "/" + data._id} />
       )}
       {enableEdit && isHovered && authCtx.user.access==="ADMIN" && (
         <div

@@ -1057,7 +1057,7 @@ function NewForm() {
             handleClose={() => setshowPreview(false)}
             sections={constructForPreview()}
             eventData={data}
-            meta={[paymentSection]}
+            meta={paymentSection ? [paymentSection] : []}
           />
         )}
       </div>

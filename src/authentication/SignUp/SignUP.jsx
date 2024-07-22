@@ -1,5 +1,5 @@
 import { useState } from "react";
-import style from "./style/Signup.module.scss";
+import styles from "./style/Signup.module.scss";
 import Input from "../../components/Core/Input";
 import Button from "../../components/Core/Button";
 import Text from "../../components/Core/Text";
@@ -105,30 +105,33 @@ const SignUP = () => {
 
   return (
     <div style={{ width: "100vw" }}>
-         <Link to={"/"}>
-          <div className={style.ArrowBackIcon}>
-            <ArrowBackIcon />
-          </div>
-        </Link>
-
-        <div className={style.circle}>
-        
+      <Link to={"/"}>
+        <div className={styles.ArrowBackIcon}>
+          <ArrowBackIcon />
         </div>
-        <div className={style.circleMid}>
-        
-        </div>
+      </Link>
 
-        <div className={style.circle1}></div>
+      <div className={styles.circle}></div>
+
+      <div className={styles.circle1}></div>
       <div
-        className={style.container}
+        className={styles.container}
         style={{
           zIndex: "10",
         }}
       >
-     
-     
-        <div className={style.signin}>
-          <h2>Sign Up</h2>
+        <div className={styles.signin}>
+          <h1
+            style={{
+              paddingTop: "10px",
+              background: "var(--primary)",
+              width: "20%",
+              WebkitBackgroundClip: "text",
+              color: "transparent",
+            }}
+          >
+            SignUp
+          </h1>
           <GoogleSignup />
           <div
             style={{
@@ -138,11 +141,11 @@ const SignUP = () => {
               margin: "8 px 0 4px 0",
             }}
           >
-            <div className={style.divider} />
+            <div className={styles.divider} />
             <p style={{ color: "#fff", textAlign: "center" }}>or</p>
-            <div className={style.divider} />
+            <div className={styles.divider} />
           </div>
-          <form  onSubmit={handleSignup}>
+          <form onSubmit={handleSignup}>
             <div style={{ display: "flex", justifyContent: "space-between" }}>
               <div style={{ width: "48%" }}>
                 <Input
@@ -152,8 +155,8 @@ const SignUP = () => {
                   name="FirstName"
                   onChange={(e) => DataInp(e.target.name, e.target.value)}
                   required
-                  style={{ width: "96%", }}
-                  className={style.input}
+                  style={{ width: "96%" }}
+                  className={styles.input}
                 />
               </div>
               <div style={{ width: "48%" }}>
@@ -165,7 +168,7 @@ const SignUP = () => {
                   onChange={(e) => DataInp(e.target.name, e.target.value)}
                   required
                   style={{ width: "96%" }}
-                  className={style.input}
+                  className={styles.input}
                 />
               </div>
             </div>
@@ -176,11 +179,10 @@ const SignUP = () => {
                   placeholder="eg.-myemail@gmail.com"
                   label="Email"
                   name="email"
-                  className={style.input}
+                  className={styles.input}
                   onChange={(e) => DataInp(e.target.name, e.target.value)}
                   required
                   style={{ width: "96%" }}
-                 
                 />
               </div>
               <div style={{ width: "48%" }}>
@@ -192,7 +194,7 @@ const SignUP = () => {
                   onChange={(e) => DataInp(e.target.name, e.target.value)}
                   required
                   style={{ width: "96%" }}
-                  className={style.input}
+                  className={styles.input}
                 />
               </div>
             </div>
@@ -210,7 +212,7 @@ const SignUP = () => {
                   placeholder="College Name"
                   label="College"
                   name="College"
-                  className={style.input}
+                  className={styles.input}
                   options={[
                     {
                       label: "Kalinga Institute of Industrial Technology",
@@ -229,7 +231,7 @@ const SignUP = () => {
                   placeholder="School"
                   label="School"
                   name="School"
-                  className={style.input}
+                  className={styles.input}
                   onChange={(e) => DataInp(e.target.name, e.target.value)}
                   required
                   style={{ width: "96%" }}
@@ -261,7 +263,7 @@ const SignUP = () => {
                   onChange={(value) => DataInp("year", value)}
                   required
                   style={{ width: "96%" }}
-                  className={style.input}
+                  className={styles.input}
                 />
               </div>
               <div style={{ width: "48%" }}>
@@ -273,7 +275,7 @@ const SignUP = () => {
                   onChange={(e) => DataInp(e.target.name, e.target.value)}
                   required
                   style={{ width: "96%" }}
-                  className={style.input}
+                  className={styles.input}
                 />
               </div>
             </div>
@@ -285,8 +287,7 @@ const SignUP = () => {
               onChange={(e) => DataInp(e.target.name, e.target.value)}
               required
               style={{ width: "98%" }}
-              className={style.input}
-              
+              className={styles.input}
             />
             <Button
               style={{
@@ -305,21 +306,26 @@ const SignUP = () => {
             </Button>
             <Text
               style={{
-                fontSize: "0.7rem",
+                fontSize: "0.9rem",
                 textAlign: "center",
                 marginTop: "14px",
               }}
             >
               Already Have an account?{" "}
-              <Link to='/Login' style={{ background: "var(--primary)",
+              <Link
+                to="/Login"
+                style={{
+                  background: "var(--primary)",
                   WebkitBackgroundClip: "text",
-                  color: "transparent" }}>
+                  color: "transparent",
+                }}
+              >
                 Login
               </Link>
             </Text>
           </form>
         </div>
-        <div className={style.sideImage}></div>
+        <div className={styles.sideImage}></div>
       </div>
     </div>
   );

@@ -1,1273 +1,1768 @@
 {
     "events": [
       {
-        "_id": 1719947858869,
+        "_id": 1719947858855,
         "info": {
-            "eventTitle": "Blizz Battle1",
-            "eventdescription": "BIZZ-BATTLE is an engaging business challenge event designed for aspiring business leaders. It consists of three rounds, each aimed at testing participant's knowledge, agility, and strategic acumen. The event begins with Round 1, a business quiz featuring questions to assess the depth of participant's knowledge. Teams that excel in this round move forward to Round 2, a thrilling treasure hunt where they must find answers to a set of riddles on campus. The most accurate teams then progress to the final round, Round 3, where they are presented with a real-world business scenario.",
+            "_id": "E679zJkiBohAO0YxjqXO4",
+            "eventTitle": "Pitchers1.0",
+            "eventdescription": "Pitchers is an engaging business challenge event designed for aspiring business leaders. It consists of three rounds, each aimed at testing participant's knowledge, agility, and strategic acumen. The event begins with Round 1, a business quiz featuring questions to assess the depth of participant's knowledge. Teams that excel in this round move forward to Round 2, a thrilling treasure hunt where they must find answers to a set of riddles on campus. The most accurate teams then progress to the final round, Round 3, where they are presented with a real-world business scenario.",
             "eventImg": "https://cdn.builder.io/api/v1/image/assets/TEMP/d12862ae94db7f4c1a27971143bd81d9a7fb60f50f4151f6f4b2ed8c1ee3eb23?apiKey=4aa0ae1a0e814437847f3f8ff6c4ef38&width=800",
-            "eventDate": "2024-07-09T18:30:00.000Z",
+            "eventDate": "2024-07-22T18:30:00.000Z",
             "eventType": "Paid",
             "receiverDetails": {
-              "media": "QR.jpg",
-              "upi": "22345@okicici"
+                "media": "https://cdn.builder.io/api/v1/image/assets/TEMP/d12862ae94db7f4c1a27971143bd81d9a7fb60f50f4151f6f4b2ed8c1ee3eb23?apiKey=4aa0ae1a0e814437847f3f8ff6c4ef38&width=800",
+                "upi": "1234@okicici"
             },
             "eventAmount": "250",
             "eventMaxReg": "500",
-            "relatedEvent": "Bizz Battle",
+            "relatedEvent": "Pitchers2.0",
             "participationType": "Team",
             "maxTeamSize": "5",
             "minTeamSize": "2",
-            "regDateAndTime": "2024-07-04T18:18:00",
-            "isPublic": true,
+            "regDateAndTime": "July 22nd 2024, 6:00:00 am",
+            "eventPriority": "1",
+            "successMessage": "Thanks for registering for this event",
+            "isPublic": false,
             "isRegistrationClosed": true,
-            "isEventPast": false,
-            "eventPriority": "1",
-            "successMessage": "Thanks for registering for this event"
+            "isEventPast": false
         },
         "sections": [
-          {
-            "_id": 1719947858693,
-            "name": "Basic Details",
-            "description": "Enter your basic details for the event",
-            "isDisabled": false,
-            "validations": [
-              {
-                "_id": 1719947845678,
-                "field_id": 1719947858693,
-                "onNext": "Submit",
-                "onBack": "Back",
-                "values": "[ml,ai]"
-              },
-              {
-                "_id": 1719947845679,
-                "field_id": 1719947858698,
-                "onNext": "Submit",
-                "onBack": "Back",
-                "values": "[ml,ai]"
-              }
-            ],
-            "fields": [
-              {
-                "_id": 1719948008156,
-                "name": "Full Name",
-                "type": "text",
-                "value": "Enter your Full Name",
-                "isRequired": true,
+            {
+                "_id": "vfDDGGXMdTnBzPOXfmKuL",
+                "name": "Basic Details",
+                "description": "Enter your basic details here",
+                "isDisabled": false,
                 "validations": [
-                  {
-                    "_id": 1719948008132,
-                    "type": "length",
-                    "value": "2",
-                    "operator": "<=",
-                    "message": ""
-                  },
-                  {
-                    "_id": 1719948008133,
-                    "type": "length",
-                    "value": "10",
-                    "operator": "<=",
-                    "message": ""
-                  },
-                  {
-                    "_id": 1719948008134,
-                    "type": "length",
-                    "value": "10",
-                    "operator": "<=",
-                    "message": ""
-                  }
+                    {
+                        "_id": "EhwNk5i2NOYKzmeYHIfzV",
+                        "field_id": null,
+                        "onNext": "iddPLHIIw0W8xZPXmM7iD",
+                        "onBack": null,
+                        "values": null
+                    }
+                ],
+                "fields": [
+                    {
+                        "_id": "SzNbAIntueg9F4Rt9gnGP",
+                        "name": "Full Name",
+                        "type": "text",
+                        "value": "Enter your Full Name",
+                        "isRequired": true,
+                        "validations": [
+                            {
+                                "_id": "ycPO9a4co4SUdjWAaU9Hq",
+                                "type": "length",
+                                "value": 50,
+                                "operator": "<=",
+                                "message": "Full Name should be less than 200 characters long"
+                            }
+                        ]
+                    },
+                    {
+                        "_id": "_1FGNKC_c2sKqBMKMrrA9",
+                        "name": "Roll Number",
+                        "type": "number",
+                        "value": "Enter your Roll Number",
+                        "isRequired": true,
+                        "validations": [
+                            {
+                                "_id": "HbEfjuTocGnma4eQ8yvX5",
+                                "type": "length",
+                                "value": "10",
+                                "operator": "<=",
+                                "message": "Roll Number should be less than 200 characters long"
+                            }
+                        ]
+                    },
+                    {
+                        "_id": "wl5lrEA_8f9iIy6J2IWFL",
+                        "name": "Contact Number",
+                        "type": "number",
+                        "value": "Enter your Contact Number",
+                        "isRequired": true,
+                        "validations": [
+                            {
+                                "_id": "uWS2EpHO-iHzeYlxO32Ft",
+                                "type": "length",
+                                "value": "10",
+                                "operator": "<=",
+                                "message": "Contact Number should be less than 200 characters long"
+                            }
+                        ]
+                    },
+                    {
+                        "_id": "pV8ziUZKEcxR3t6eRcmJu",
+                        "name": "Team Name",
+                        "type": "text",
+                        "value": "Enter your Team Name",
+                        "isRequired": true,
+                        "validations": [
+                            {
+                                "_id": "Zb7D15QtrPkrHt63JrWq2",
+                                "type": "length",
+                                "value": "10",
+                                "operator": "<=",
+                                "message": "Team Name should be less than 200 characters long"
+                            }
+                        ]
+                    }
                 ]
-              },
-              {
-                "_id": 1719948008157,
-                "name": "Roll Number",
-                "type": "number",
-                "value": "Enter your Roll Number",
-                "isRequired": true,
-                "validations": []
-              },
-              {
-                "_id": 1719948008158,
-                "name": "Contact Number",
-                "type": "number",
-                "value": "Enter your Contact Number",
-                "isRequired": true,
-                "validations": []
-              },
-              {
-                "_id": 1719948008163,
-                "name": "Team Name",
-                "type": "text",
-                "value": "Enter your Team Name",
-                "isRequired": true,
-                "validations": []
-              }
-            ]
-          },
-          {
-            "_id": 1719947858694,
-            "name": "Team Members",
-            "description": "Enter the details of your Team Members",
-            "fields": [
-              {
-                "_id": 1719947922838,
-                "name": "1st Member Name",
-                "type": "text",
-                "value": "Enter Member Name",
-                "isRequired": true,
-                "validations": []
-              },
-              {
-                "_id": 1719947922839,
-                "name": "1st Member Email",
-                "type": "text",
-                "value": "Enter Member Email",
-                "isRequired": true,
-                "validations": []
-              },
-              {
-                "_id": 1719947922840,
-                "name": "1st Member Roll Number",
-                "type": "number",
-                "value": "Enter Member Roll Number",
-                "isRequired": true,
-                "validations": []
-              },
-              {
-                "_id": 1719947922841,
-                "name": "2nd Member Name",
-                "type": "text",
-                "value": "Enter Member Name",
-                "isRequired": true,
-                "validations": []
-              },
-              {
-                "_id": 1719947922842,
-                "name": "2nd Member Email",
-                "type": "text",
-                "value": "Enter Member Email",
-                "isRequired": true,
-                "validations": []
-              },
-              {
-                "_id": 1719947922843,
-                "name": "2nd Member Roll Number",
-                "type": "number",
-                "value": "Enter Member Roll Number",
-                "isRequired": true,
-                "validations": []
-              },
-              {
-                "_id": 1719947922844,
-                "name": "3rd Member Name",
-                "type": "text",
-                "value": "Enter Member Name",
-                "isRequired": true,
-                "validations": []
-              },
-              {
-                "_id": 1719947922845,
-                "name": "3rd Member Email",
-                "type": "text",
-                "value": "Enter Member Email",
-                "isRequired": true,
-                "validations": []
-              },
-              {
-                "_id": 1719947922846,
-                "name": "3rd Member Roll Number",
-                "type": "number",
-                "value": "Enter Member Roll Number",
-                "isRequired": true,
-                "validations": []
-              },
-              {
-                "_id": 1719947922847,
-                "name": "4th Member Name",
-                "type": "text",
-                "value": "Enter Member Name",
-                "isRequired": true,
-                "validations": []
-              },
-              {
-                "_id": 1719947922848,
-                "name": "4th Member Email",
-                "type": "text",
-                "value": "Enter Member Email",
-                "isRequired": true,
-                "validations": []
-              },
-              {
-                "_id": 1719947922849,
-                "name": "4th Member Roll Number",
-                "type": "number",
-                "value": "Enter Member Roll Number",
-                "isRequired": true,
-                "validations": []
-              },
-              {
-                "_id": 1719947922850,
-                "name": "5th Member Name",
-                "type": "text",
-                "value": "Enter Member Name",
-                "isRequired": true,
-                "validations": []
-              },
-              {
-                "_id": 1719947922851,
-                "name": "5th Member Email",
-                "type": "text",
-                "value": "Enter Member Email",
-                "isRequired": true,
-                "validations": []
-              },
-              {
-                "_id": 1719947922852,
-                "name": "5th Member Roll Number",
-                "type": "number",
-                "value": "Enter Member Roll Number",
-                "isRequired": true,
-                "validations": []
-              }
-            ]
-          },
-          {
-            "_id": 1719947858695,
-            "name": "Domains of Interest",
-            "description": "Select Domain of Interest you want to participate",
-            "fields": [
-              {
-                "_id": 1719948008789,
-                "name": "Domain",
-                "type": "checkbox",
-                "value": "[General Quiz, Business Pitching, Case Study, Business Analysis]",
-                "isRequired": true,
-                "validations": []
-              },
-              {
-                "_id": 1719948008790,
-                "name": "Why do you want to participate in this event?",
-                "type": "text",
-                "value": "Enter your reason",
-                "isRequired": true,
-                "validations": []
-              },
-              {
-                "_id": 1719948008791,
-                "name": "Any related questions you want to ask?",
-                "type": "text",
-                "value": "Enter your question",
-                "isRequired": true,
-                "validations": []
-              }
-            ]
-          },
-          {
-            "_id": 1719947858696,
-            "name": "Payment Details",
-            "description": "Scan the following QR code to pay the registration fee and attach a screenshot of the payment confirmation",
-            "fields": [
-              {
-                "_id": 1719948008789,
-                "name": "Payment QR Code",
-                "type": "image",
-                "value": "Uploaded QR Code by admin should already show here, NON Editable, center aligned",
-                "isRequired": true,
-                "validations": []
-              },
-              {
-                "_id": 1719948008789,
-                "name": "Payment UPI ID",
-                "type": "text",
-                "value": "Uploaded UPI ID by admin should already show here, NON Editable, center aligned",
-                "isRequired": true,
-                "validations": []
-              },
-              {
-                "_id": 1719948008789,
-                "name": "Account Number",
-                "type": "text",
-                "value": "Enter your Account Number Last 4 digits",
-                "isRequired": true,
-                "validations": []
-              },
-              {
-                "_id": 1719948008789,
-                "name": "UPI ID",
-                "type": "text",
-                "value": "Enter your UPI ID",
-                "isRequired": true,
-                "validations": []
-              },
-              {
-                "_id": 1719948008789,
-                "name": "Payment Screenshot",
-                "type": "image",
-                "value": "Upload the screenshot of the payment for confirmation",
-                "isRequired": true,
-                "validations": []
-              }
-            ]
-          },
-          {
-            "_id": 1719947858697,
-            "name": "Confirmation Window",
-            "description": "Please confirm the details you have entered",
-            "fields": [
-              {
-                "_id": 1719948008940,
-                "name": "Self Declaration",
-                "type": "checkbox",
-                "value": "[I hereby declare that the information provided by me is true and accurate to the best of my knowledge.]",
-                "isRequired": true,
-                "validations": []
-              },
-              {
-                "_id": 1719948008941,
-                "name": "Terms and Conditions",
-                "type": "checkbox",
-                "value": "[I have read and agree to the terms and conditions of the event.]",
-                "isRequired": true,
-                "validations": []
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "id": 1719947858871,
-        "info": {
-            "eventTitle": "Blizz Battle2",
-            "eventdescription": "BIZZ-BATTLE is an engaging business challenge event designed for aspiring business leaders. It consists of three rounds, each aimed at testing participant's knowledge, agility, and strategic acumen. The event begins with Round 1, a business quiz featuring questions to assess the depth of participant's knowledge. Teams that excel in this round move forward to Round 2, a thrilling treasure hunt where they must find answers to a set of riddles on campus. The most accurate teams then progress to the final round, Round 3, where they are presented with a real-world business scenario.",
-            "eventImg": "https://cdn.builder.io/api/v1/image/assets/TEMP/d12862ae94db7f4c1a27971143bd81d9a7fb60f50f4151f6f4b2ed8c1ee3eb23?apiKey=4aa0ae1a0e814437847f3f8ff6c4ef38&width=800",
-            "eventDate": "2024-07-04T18:30:00.000Z",
-            "eventType": "Paid",
-            "eventAmount": "250",
-            "eventMaxReg": "500",
-            "participationType": "Team",
-            "maxTeamSize": "5",
-            "minTeamSize": "2",
-            "regDateAndTime": "2024-07-04T18:18:00",
-            "isPublic": true,
-            "isRegistrationClosed": false,
-            "isEventPast": false,
-            "eventPriority": "1",
-            "successMessage": "Thanks for registering for this event"
-        },
-        "sections": [
-          {
-            "_id": 1719947858693,
-            "name": "Basic Details",
-            "description": "Enter your basic details for the event",
-            "validations": [
-              {
-                "field_id": 1719947858693,
-                "onNext": "Submit",
-                "onBack": "Back",
-                "values": "[ml,ai]",
-                "message": "Please select atleast 2 courses"
-              },
-              {
-                "field_id": 1719947858693,
-                "onNext": "Next_Section_ID",
-                "onBack": "Previous_Section_ID",
-                "values": "[ai]",
-                "message": "Please select atleast 1 course"
-              }
-            ],
-            "fields": [
-              {
-                "_id": 1719948008156,
-                "name": "Full Name",
-                "type": "text",
-                "value": "Enter your Full Name",
-                "isRequired": true,
+            },
+            {
+                "_id": "iddPLHIIw0W8xZPXmM7iD",
+                "name": "Team Members",
+                "fields": [
+                    {
+                        "_id": "EHGpeRVNGenw1pgYNKTNO",
+                        "name": "Enter 1st Member Name",
+                        "type": "text",
+                        "value": "Enter Member Name",
+                        "isRequired": true,
+                        "validations": []
+                    },
+                    {
+                        "_id": "dKtEFl9BU3UVaukyQQBWq",
+                        "name": "Enter 1st Member Email",
+                        "type": "text",
+                        "value": "Enter Member Email",
+                        "isRequired": true,
+                        "validations": []
+                    },
+                    {
+                        "_id": "xiZEg-b9P0QzcVsng7hua",
+                        "name": "Enter 1st Member Roll Number",
+                        "type": "number",
+                        "value": "Enter Roll Number",
+                        "isRequired": true,
+                        "validations": []
+                    },
+                    {
+                        "_id": "FgTPUo2_WcI1CEWWWwfxg",
+                        "name": "Enter 2nd Member Name",
+                        "type": "text",
+                        "value": "Enter Member Name",
+                        "isRequired": true,
+                        "validations": []
+                    },
+                    {
+                        "_id": "KVHxulFebHD4fDhA8bvls",
+                        "name": "Enter 2nd Member Email",
+                        "type": "text",
+                        "value": "Enter Member Email",
+                        "isRequired": true,
+                        "validations": []
+                    },
+                    {
+                        "_id": "DlRZ3COXGs-bn4Xl2h6CU",
+                        "name": "Enter 2nd Member Roll Number",
+                        "type": "number",
+                        "value": "Enter Roll Number",
+                        "isRequired": true,
+                        "validations": []
+                    },
+                    {
+                        "_id": "uLR2l9PidiaMtx43DGvBc",
+                        "name": "Enter 3rd Member Name",
+                        "type": "text",
+                        "value": "Enter Member Name",
+                        "isRequired": false,
+                        "validations": []
+                    },
+                    {
+                        "_id": "21pBDVv05gCSPOQG17INY",
+                        "name": "Enter 3rd Member Email",
+                        "type": "text",
+                        "value": "Enter Member Email",
+                        "isRequired": false,
+                        "validations": []
+                    },
+                    {
+                        "_id": "XmqQcsH4H-9YzlVl66mMQ",
+                        "name": "Enter 3rd Member Roll Number",
+                        "type": "number",
+                        "value": "Enter Roll Number",
+                        "isRequired": false,
+                        "validations": []
+                    },
+                    {
+                        "_id": "zio8JrjyhY5TtwmJZL5_a",
+                        "name": "Enter 4th Member Name",
+                        "type": "text",
+                        "value": "Enter Member Name",
+                        "isRequired": false,
+                        "validations": []
+                    },
+                    {
+                        "_id": "Izy6RAhlP-WDYL33rp22e",
+                        "name": "Enter 4th Member Email",
+                        "type": "text",
+                        "value": "Enter Member Email",
+                        "isRequired": false,
+                        "validations": []
+                    },
+                    {
+                        "_id": "h3kFOFWJQFoQM9yQrdhdi",
+                        "name": "Enter 4th Member Roll Number",
+                        "type": "number",
+                        "value": "Enter Roll Number",
+                        "isRequired": false,
+                        "validations": []
+                    },
+                    {
+                        "_id": "lYWp44SbqUE4ZZ3tNQIAh",
+                        "name": "Enter 5th Member Name",
+                        "type": "text",
+                        "value": "Enter Member Name",
+                        "isRequired": false,
+                        "validations": []
+                    },
+                    {
+                        "_id": "6fX7Ey6y2K87U45Jh_KZf",
+                        "name": "Enter 5th Member Email",
+                        "type": "text",
+                        "value": "Enter Member Email",
+                        "isRequired": false,
+                        "validations": []
+                    },
+                    {
+                        "_id": "IXn9DwKzTo2Q2lYx4U7qS",
+                        "name": "Enter 5th Member Roll Number",
+                        "type": "number",
+                        "value": "Enter Roll Number",
+                        "isRequired": false,
+                        "validations": []
+                    }
+                ],
+                "description": "Enter your team members details here",
+                "isDisabled": true,
                 "validations": [
-                  {
-                    "type": "length",
-                    "value": "2",
-                    "operator": "<="
-                  },
-                  {
-                    "type": "length",
-                    "value": "10",
-                    "operator": "<="
-                  },
-                  {
-                    "type": "length",
-                    "value": "10",
-                    "operator": "<="
-                  }
+                    {
+                        "_id": "Q-RVQNa284e-NcwYCHwLA",
+                        "field_id": null,
+                        "onNext": "9FZNpjpxXtm86OZgCORSI",
+                        "onBack": "vfDDGGXMdTnBzPOXfmKuL",
+                        "values": null
+                    }
                 ]
-              },
-              {
-                "_id": 1719948008157,
-                "name": "Roll Number",
-                "type": "number",
-                "value": "Enter your Roll Number",
-                "isRequired": true,
-                "validations": []
-              },
-              {
-                "_id": 1719948008158,
-                "name": "Contact Number",
-                "type": "number",
-                "value": "Enter your Contact Number",
-                "isRequired": true,
-                "validations": []
-              },
-              {
-                "_id": 1719948008163,
-                "name": "Team Name",
-                "type": "text",
-                "value": "Enter your Team Name",
-                "isRequired": true,
-                "validations": []
-              }
-            ]
-          },
-          {
-            "_id": 1719947858694,
-            "name": "Team Members",
-            "description": "Enter the details of your Team Members",
-            "fields": [
-              {
-                "_id": 1719947922838,
-                "name": "1st Member Name",
-                "type": "text",
-                "value": "Enter Member Name",
-                "isRequired": true,
-                "validations": []
-              },
-              {
-                "_id": 1719947922839,
-                "name": "1st Member Email",
-                "type": "text",
-                "value": "Enter Member Email",
-                "isRequired": true,
-                "validations": []
-              },
-              {
-                "_id": 1719947922840,
-                "name": "1st Member Roll Number",
-                "type": "number",
-                "value": "Enter Member Roll Number",
-                "isRequired": true,
-                "validations": []
-              },
-              {
-                "_id": 1719947922841,
-                "name": "2nd Member Name",
-                "type": "text",
-                "value": "Enter Member Name",
-                "isRequired": true,
-                "validations": []
-              },
-              {
-                "_id": 1719947922842,
-                "name": "2nd Member Email",
-                "type": "text",
-                "value": "Enter Member Email",
-                "isRequired": true,
-                "validations": []
-              },
-              {
-                "_id": 1719947922843,
-                "name": "2nd Member Roll Number",
-                "type": "number",
-                "value": "Enter Member Roll Number",
-                "isRequired": true,
-                "validations": []
-              },
-              {
-                "_id": 1719947922844,
-                "name": "3rd Member Name",
-                "type": "text",
-                "value": "Enter Member Name",
-                "isRequired": true,
-                "validations": []
-              },
-              {
-                "_id": 1719947922845,
-                "name": "3rd Member Email",
-                "type": "text",
-                "value": "Enter Member Email",
-                "isRequired": true,
-                "validations": []
-              },
-              {
-                "_id": 1719947922846,
-                "name": "3rd Member Roll Number",
-                "type": "number",
-                "value": "Enter Member Roll Number",
-                "isRequired": true,
-                "validations": []
-              },
-              {
-                "_id": 1719947922847,
-                "name": "4th Member Name",
-                "type": "text",
-                "value": "Enter Member Name",
-                "isRequired": true,
-                "validations": []
-              },
-              {
-                "_id": 1719947922848,
-                "name": "4th Member Email",
-                "type": "text",
-                "value": "Enter Member Email",
-                "isRequired": true,
-                "validations": []
-              },
-              {
-                "_id": 1719947922849,
-                "name": "4th Member Roll Number",
-                "type": "number",
-                "value": "Enter Member Roll Number",
-                "isRequired": true,
-                "validations": []
-              },
-              {
-                "_id": 1719947922850,
-                "name": "5th Member Name",
-                "type": "text",
-                "value": "Enter Member Name",
-                "isRequired": true,
-                "validations": []
-              },
-              {
-                "_id": 1719947922851,
-                "name": "5th Member Email",
-                "type": "text",
-                "value": "Enter Member Email",
-                "isRequired": true,
-                "validations": []
-              },
-              {
-                "_id": 1719947922852,
-                "name": "5th Member Roll Number",
-                "type": "number",
-                "value": "Enter Member Roll Number",
-                "isRequired": true,
-                "validations": []
-              }
-            ]
-          },
-          {
-            "_id": 1719947858695,
-            "name": "Domains of Interest",
-            "description": "Select Domain of Interest you want to participate",
-            "fields": [
-              {
-                "_id": 1719948008789,
-                "name": "Domain",
-                "type": "checkbox",
-                "value": "[General Quiz, Business Pitching, Case Study, Business Analysis]",
-                "isRequired": true,
-                "validations": []
-              },
-              {
-                "_id": 1719948008790,
-                "name": "Why do you want to participate in this event?",
-                "type": "text",
-                "value": "Enter your reason",
-                "isRequired": true,
-                "validations": []
-              },
-              {
-                "_id": 1719948008791,
-                "name": "Any related questions you want to ask?",
-                "type": "text",
-                "value": "Enter your question",
-                "isRequired": true,
-                "validations": []
-              }
-            ]
-          },
-          {
-            "_id": 1719947858696,
-            "name": "Payment Details",
-            "description": "Scan the following QR code to pay the registration fee and attach a screenshot of the payment confirmation",
-            "fields": [
-              {
-                "_id": 1719948008789,
-                "name": "Payment QR Code",
-                "type": "image",
-                "value": "Uploaded QR Code by admin should already show here, NON Editable, center aligned",
-                "isRequired": true,
-                "validations": []
-              },
-              {
-                "_id": 1719948008789,
-                "name": "Payment UPI ID",
-                "type": "text",
-                "value": "Uploaded UPI ID by admin should already show here, NON Editable, center aligned",
-                "isRequired": true,
-                "validations": []
-              },
-              {
-                "_id": 1719948008789,
-                "name": "Account Number",
-                "type": "text",
-                "value": "Enter your Account Number Last 4 digits",
-                "isRequired": true,
-                "validations": []
-              },
-              {
-                "_id": 1719948008789,
-                "name": "UPI ID",
-                "type": "text",
-                "value": "Enter your UPI ID",
-                "isRequired": true,
-                "validations": []
-              },
-              {
-                "_id": 1719948008789,
-                "name": "Payment Screenshot",
-                "type": "image",
-                "value": "Upload the screenshot of the payment for confirmation",
-                "isRequired": true,
-                "validations": []
-              }
-            ]
-          },
-          {
-            "_id": 1719947858697,
-            "name": "Confirmation Window",
-            "description": "Please confirm the details you have entered",
-            "fields": [
-              {
-                "_id": 1719948008940,
-                "name": "Self Declaration",
-                "type": "checkbox",
-                "value": "[I hereby declare that the information provided by me is true and accurate to the best of my knowledge.]",
-                "isRequired": true,
-                "validations": []
-              },
-              {
-                "_id": 1719948008941,
-                "name": "Terms and Conditions",
-                "type": "checkbox",
-                "value": "[I have read and agree to the terms and conditions of the event.]",
-                "isRequired": true,
-                "validations": []
-              }
-            ]
-          }
+            },
+            {
+                "name": "Domain Selection",
+                "_id": "9FZNpjpxXtm86OZgCORSI",
+                "description": "Select Specific Domains You want to Participate in with your team (max 2)",
+                "isDisabled": false,
+                "validations": [
+                    {
+                        "_id": "ngwXPENTPiuVzoBNM3WWC",
+                        "field_id": null,
+                        "onNext": "569O4L5wLcm4-LIl6UgGy",
+                        "onBack": "iddPLHIIw0W8xZPXmM7iD",
+                        "values": null
+                    },
+                    {
+                        "_id": "exaiZrZ4gt0-BnkJ1P-0f",
+                        "field_id": "Y7yzyQIlb-bpOTkrw64-Y",
+                        "onNext": "569O4L5wLcm4-LIl6UgGy",
+                        "onBack": "iddPLHIIw0W8xZPXmM7iD",
+                        "values": "General Quiz"
+                    },
+                    {
+                        "_id": "INfjQvmSLqNmp9Ey4_6o6",
+                        "field_id": "Y7yzyQIlb-bpOTkrw64-Y",
+                        "onNext": "569O4L5wLcm4-LIl6UgGy",
+                        "onBack": "iddPLHIIw0W8xZPXmM7iD",
+                        "values": "Business Pitching"
+                    },
+                    {
+                        "_id": "AOQTd3WBkTZtjYNRD4wfq",
+                        "field_id": "Y7yzyQIlb-bpOTkrw64-Y",
+                        "onNext": "569O4L5wLcm4-LIl6UgGy",
+                        "onBack": "iddPLHIIw0W8xZPXmM7iD",
+                        "values": "Case Study"
+                    },
+                    {
+                        "_id": "2Y6_kPajP9Fifa50eH5Z6",
+                        "field_id": "Y7yzyQIlb-bpOTkrw64-Y",
+                        "onNext": "569O4L5wLcm4-LIl6UgGy",
+                        "onBack": "iddPLHIIw0W8xZPXmM7iD",
+                        "values": "Business Analysis"
+                    }
+                ],
+                "fields": [
+                    {
+                        "_id": "Y7yzyQIlb-bpOTkrw64-Y",
+                        "name": "Select Your Domain",
+                        "type": "checkbox",
+                        "value": "General Quiz, Business Pitching, Case Study, Business Analysis",
+                        "isRequired": true,
+                        "validations": [
+                            {
+                                "_id": "ys4T7DLMYzXT09j2KB3T0",
+                                "type": "length",
+                                "value": "2",
+                                "operator": "<=",
+                                "message": " should be less than 1 characters long"
+                            }
+                        ]
+                    },
+                    {
+                        "_id": "YAsu3DeC9PK7cG4R6070s",
+                        "name": "Why do you want to participate in this event?",
+                        "type": "text",
+                        "value": "Enter your reason",
+                        "isRequired": true,
+                        "validations": [
+                            {
+                                "_id": "TE4ZMLs3PKeQdr8rPZBA9",
+                                "type": "length",
+                                "value": 50,
+                                "operator": "<=",
+                                "message": "Why do you want to participate in this event? should be less than 200 characters long"
+                            }
+                        ]
+                    },
+                    {
+                        "_id": "PL5bFLZDkqLwQBgZVptES",
+                        "name": "Any related questions you want to ask?",
+                        "type": "text",
+                        "value": "Enter your question",
+                        "isRequired": true,
+                        "validations": [
+                            {
+                                "_id": "1kAuI-vPlr8Qv3e7zZfUC",
+                                "type": "length",
+                                "value": 50,
+                                "operator": "<=",
+                                "message": "Any related questions you want to ask? should be less than 200 characters long"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "Terms&Conditions",
+                "_id": "569O4L5wLcm4-LIl6UgGy",
+                "description": "Kindly Make sure to fill your form correctly and adhere with our terms and conditions",
+                "isDisabled": false,
+                "validations": [
+                    {
+                        "_id": "q3Y16MxRw36uH_wt5Yn9m",
+                        "field_id": null,
+                        "onNext": "RBriksZbdwnwWBLaNuEI5",
+                        "onBack": "9FZNpjpxXtm86OZgCORSI",
+                        "values": null
+                    },
+                    {
+                        "_id": "a4oXjyvloUJilL27ZKMbc",
+                        "field_id": "zBfPopRcjicSpj9d5EC3f",
+                        "onNext": "RBriksZbdwnwWBLaNuEI5",
+                        "onBack": "9FZNpjpxXtm86OZgCORSI",
+                        "values": "I have read and agree to the terms and conditions of the event"
+                    }
+                ],
+                "fields": [
+                    {
+                        "_id": "e2SQGAWP2rUCtX34NUxYv",
+                        "name": "Self Declaration",
+                        "type": "checkbox",
+                        "value": "I hereby declare that the information provided by me is true and accurate to the best of my knowledge",
+                        "isRequired": true,
+                        "validations": [
+                            {
+                                "_id": "0lVtThDHgu2LViNOmo1uK",
+                                "type": "length",
+                                "value": 50,
+                                "operator": "<=",
+                                "message": "Self Declaration should be less than 200 characters long"
+                            }
+                        ]
+                    },
+                    {
+                        "_id": "zBfPopRcjicSpj9d5EC3f",
+                        "name": "Terms and Conditions",
+                        "type": "checkbox",
+                        "value": "I have read and agree to the terms and conditions of the event",
+                        "isRequired": true,
+                        "validations": [
+                            {
+                                "_id": "ey-Ve4rGvW8IBdALTS0io",
+                                "type": "length",
+                                "value": 50,
+                                "operator": "<=",
+                                "message": "Terms and Conditions should be less than 200 characters long"
+                            }
+                        ]
+                    }
+                ]
+            }
         ]
       },
       {
-        "id": 1719947858872,
+        "_id": 1719947858866,
         "info": {
-            "eventTitle": "Blizz Battle3",
-            "eventdescription": "BIZZ-BATTLE is an engaging business challenge event designed for aspiring business leaders. It consists of three rounds, each aimed at testing participant's knowledge, agility, and strategic acumen. The event begins with Round 1, a business quiz featuring questions to assess the depth of participant's knowledge. Teams that excel in this round move forward to Round 2, a thrilling treasure hunt where they must find answers to a set of riddles on campus. The most accurate teams then progress to the final round, Round 3, where they are presented with a real-world business scenario.",
+            "_id": "E679zJkiBohAO0YxjqXO4",
+            "eventTitle": "Pitchers2.0",
+            "eventdescription": "Pitchers is an engaging business challenge event designed for aspiring business leaders. It consists of three rounds, each aimed at testing participant's knowledge, agility, and strategic acumen. The event begins with Round 1, a business quiz featuring questions to assess the depth of participant's knowledge. Teams that excel in this round move forward to Round 2, a thrilling treasure hunt where they must find answers to a set of riddles on campus. The most accurate teams then progress to the final round, Round 3, where they are presented with a real-world business scenario.",
             "eventImg": "https://cdn.builder.io/api/v1/image/assets/TEMP/d12862ae94db7f4c1a27971143bd81d9a7fb60f50f4151f6f4b2ed8c1ee3eb23?apiKey=4aa0ae1a0e814437847f3f8ff6c4ef38&width=800",
-            "eventDate": "2024-07-04T18:30:00.000Z",
+            "eventDate": "2024-07-22T18:30:00.000Z",
             "eventType": "Paid",
+            "receiverDetails": {
+                "media": "https://cdn.builder.io/api/v1/image/assets/TEMP/d12862ae94db7f4c1a27971143bd81d9a7fb60f50f4151f6f4b2ed8c1ee3eb23?apiKey=4aa0ae1a0e814437847f3f8ff6c4ef38&width=800",
+                "upi": "1234@okicici"
+            },
             "eventAmount": "250",
             "eventMaxReg": "500",
+            "relatedEvent": "Pitchers2.0",
             "participationType": "Team",
             "maxTeamSize": "5",
             "minTeamSize": "2",
-            "regDateAndTime": "2024-07-04T18:18:00",
-            "isPublic": true,
-            "isRegistrationClosed": false,
-            "isEventPast": true,
+            "regDateAndTime": "July 22nd 2024, 6:00:00 am",
             "eventPriority": "1",
-            "successMessage": "Thanks for registering for this event"
+            "successMessage": "Thanks for registering for this event",
+            "isPublic": false,
+            "isRegistrationClosed": false,
+            "isEventPast": false
         },
         "sections": [
-          {
-            "_id": 1719947858693,
-            "name": "Basic Details",
-            "description": "Enter your basic details for the event",
-            "validations": [
-              {
-                "field_id": 1719947858693,
-                "onNext": "Submit",
-                "onBack": "Back",
-                "values": "[ml,ai]",
-                "message": "Please select atleast 2 courses"
-              },
-              {
-                "field_id": 1719947858693,
-                "onNext": "Next_Section_ID",
-                "onBack": "Previous_Section_ID",
-                "values": "[ai]",
-                "message": "Please select atleast 1 course"
-              }
-            ],
-            "fields": [
-              {
-                "_id": 1719948008156,
-                "name": "Full Name",
-                "type": "text",
-                "value": "Enter your Full Name",
-                "isRequired": true,
-                "validations": []
-              },
-              {
-                "_id": 1719948008157,
-                "name": "Roll Number",
-                "type": "number",
-                "value": "Enter your Roll Number",
-                "isRequired": true,
-                "validations": []
-              },
-              {
-                "_id": 1719948008158,
-                "name": "Contact Number",
-                "type": "number",
-                "value": "Enter your Contact Number",
-                "isRequired": true,
-                "validations": []
-              },
-              {
-                "_id": 1719948008163,
-                "name": "Team Name",
-                "type": "text",
-                "value": "Enter your Team Name",
-                "isRequired": true,
-                "validations": []
-              }
-            ]
-          },
-          {
-            "_id": 1719947858694,
-            "name": "Team Members",
-            "description":"Enter the details of your Team Members",
-            "fields": [
-              {
-                "_id": 1719947922838,
-                "name": "1st Member Name",
-                "type": "text",
-                "value": "Enter Member Name",
-                "isRequired": true,
-                "validations": []
-              },
-              {
-                "_id": 1719947922839,
-                "name": "1st Member Email",
-                "type": "text",
-                "value": "Enter Member Email",
-                "isRequired": true,
-                "validations": []
-              },
-              {
-                "_id": 1719947922840,
-                "name": "1st Member Roll Number",
-                "type": "number",
-                "value": "Enter Member Roll Number",
-                "isRequired": true,
-                "validations": []
-              },
-              {
-                "_id": 1719947922841,
-                "name": "2nd Member Name",
-                "type": "text",
-                "value": "Enter Member Name",
-                "isRequired": true,
-                "validations": []
-              },
-              {
-                "_id": 1719947922842,
-                "name": "2nd Member Email",
-                "type": "text",
-                "value": "Enter Member Email",
-                "isRequired": true,
-                "validations": []
-              },
-              {
-                "_id": 1719947922843,
-                "name": "2nd Member Roll Number",
-                "type": "number",
-                "value": "Enter Member Roll Number",
-                "isRequired": true,
-                "validations": []
-              },
-              {
-                "_id": 1719947922844,
-                "name": "3rd Member Name",
-                "type": "text",
-                "value": "Enter Member Name",
-                "isRequired": true,
-                "validations": []
-              },
-              {
-                "_id": 1719947922845,
-                "name": "3rd Member Email",
-                "type": "text",
-                "value": "Enter Member Email",
-                "isRequired": true,
-                "validations": []
-              },
-              {
-                "_id": 1719947922846,
-                "name": "3rd Member Roll Number",
-                "type": "number",
-                "value": "Enter Member Roll Number",
-                "isRequired": true,
-                "validations": []
-              },
-              {
-                "_id": 1719947922847,
-                "name": "4th Member Name",
-                "type": "text",
-                "value": "Enter Member Name",
-                "isRequired": true,
-                "validations": []
-              },
-              {
-                "_id": 1719947922848,
-                "name": "4th Member Email",
-                "type": "text",
-                "value": "Enter Member Email",
-                "isRequired": true,
-                "validations": []
-              },
-              {
-                "_id": 1719947922849,
-                "name": "4th Member Roll Number",
-                "type": "number",
-                "value": "Enter Member Roll Number",
-                "isRequired": true,
-                "validations": []
-              },
-              {
-                "_id": 1719947922850,
-                "name": "5th Member Name",
-                "type": "text",
-                "value": "Enter Member Name",
-                "isRequired": true,
-                "validations": []
-              },
-              {
-                "_id": 1719947922851,
-                "name": "5th Member Email",
-                "type": "text",
-                "value": "Enter Member Email",
-                "isRequired": true,
-                "validations": []
-              },
-              {
-                "_id": 1719947922852,
-                "name": "5th Member Roll Number",
-                "type": "number",
-                "value": "Enter Member Roll Number",
-                "isRequired": true,
-                "validations": []
-              }
-            ]
-          },
-          {
-            "_id": 1719947858695,
-            "name": "Domains of Interest",
-            "description": "Select Domain of Interest you want to participate",
-            "fields": [
-              {
-                "_id": 1719948008789,
-                "name": "Domain",
-                "type": "checkbox",
-                "value": "[General Quiz, Business Pitching, Case Study, Business Analysis]",
-                "isRequired": true,
-                "validations": []
-              },
-              {
-                "_id": 1719948008790,
-                "name": "Why do you want to participate in this event?",
-                "type": "text",
-                "value": "Enter your reason",
-                "isRequired": true,
-                "validations": []
-              },
-              {
-                "_id": 1719948008791,
-                "name": "Any related questions you want to ask?",
-                "type": "text",
-                "value": "Enter your question",
-                "isRequired": true,
-                "validations": []
-              }
-            ]
-          },
-          {
-            "_id": 1719947858696,
-            "name": "Payment Details",
-            "description": "Scan the following QR code to pay the registration fee and attach a screenshot of the payment confirmation",
-            "fields": [
-              {
-                "_id": 1719948008789,
-                "name": "Payment QR Code",
-                "type": "image",
-                "value": "Uploaded QR Code by admin should already show here, NON Editable, center aligned",
-                "isRequired": true,
-                "validations": []
-              },
-              {
-                "_id": 1719948008789,
-                "name": "Payment UPI ID",
-                "type": "text",
-                "value": "Uploaded UPI ID by admin should already show here, NON Editable, center aligned",
-                "isRequired": true,
-                "validations": []
-              },
-              {
-                "_id": 1719948008789,
-                "name": "Account Number",
-                "type": "text",
-                "value": "Enter your Account Number Last 4 digits",
-                "isRequired": true,
-                "validations": []
-              },
-              {
-                "_id": 1719948008789,
-                "name": "UPI ID",
-                "type": "text",
-                "value": "Enter your UPI ID",
-                "isRequired": true,
-                "validations": []
-              },
-              {
-                "_id": 1719948008789,
-                "name": "Payment Screenshot",
-                "type": "image",
-                "value": "Upload the screenshot of the payment for confirmation",
-                "isRequired": true,
-                "validations": []
-              }
-            ]
-          },
-          {
-            "_id": 1719947858697,
-            "name": "Confirmation Window",
-            "description": "Please confirm the details you have entered",
-            "fields": [
-              {
-                "_id": 1719948008940,
-                "name": "Self Declaration",
-                "type": "checkbox",
-                "value": "[I hereby declare that the information provided by me is true and accurate to the best of my knowledge.]",
-                "isRequired": true,
-                "validations": []
-              },
-              {
-                "_id": 1719948008941,
-                "name": "Terms and Conditions",
-                "type": "checkbox",
-                "value": "[I have read and agree to the terms and conditions of the event.]",
-                "isRequired": true,
-                "validations": []
-              }
-            ]
-          }
+            {
+                "_id": "vfDDGGXMdTnBzPOXfmKuL",
+                "name": "Basic Details",
+                "description": "Enter your basic details here",
+                "isDisabled": false,
+                "validations": [
+                    {
+                        "_id": "EhwNk5i2NOYKzmeYHIfzV",
+                        "field_id": null,
+                        "onNext": "iddPLHIIw0W8xZPXmM7iD",
+                        "onBack": null,
+                        "values": null
+                    }
+                ],
+                "fields": [
+                    {
+                        "_id": "SzNbAIntueg9F4Rt9gnGP",
+                        "name": "Full Name",
+                        "type": "text",
+                        "value": "Enter your Full Name",
+                        "isRequired": true,
+                        "validations": [
+                            {
+                                "_id": "ycPO9a4co4SUdjWAaU9Hq",
+                                "type": "length",
+                                "value": 50,
+                                "operator": "<=",
+                                "message": "Full Name should be less than 200 characters long"
+                            }
+                        ]
+                    },
+                    {
+                        "_id": "_1FGNKC_c2sKqBMKMrrA9",
+                        "name": "Roll Number",
+                        "type": "number",
+                        "value": "Enter your Roll Number",
+                        "isRequired": true,
+                        "validations": [
+                            {
+                                "_id": "HbEfjuTocGnma4eQ8yvX5",
+                                "type": "length",
+                                "value": "10",
+                                "operator": "<=",
+                                "message": "Roll Number should be less than 200 characters long"
+                            }
+                        ]
+                    },
+                    {
+                        "_id": "wl5lrEA_8f9iIy6J2IWFL",
+                        "name": "Contact Number",
+                        "type": "number",
+                        "value": "Enter your Contact Number",
+                        "isRequired": true,
+                        "validations": [
+                            {
+                                "_id": "uWS2EpHO-iHzeYlxO32Ft",
+                                "type": "length",
+                                "value": "10",
+                                "operator": "<=",
+                                "message": "Contact Number should be less than 200 characters long"
+                            }
+                        ]
+                    },
+                    {
+                        "_id": "pV8ziUZKEcxR3t6eRcmJu",
+                        "name": "Team Name",
+                        "type": "text",
+                        "value": "Enter your Team Name",
+                        "isRequired": true,
+                        "validations": [
+                            {
+                                "_id": "Zb7D15QtrPkrHt63JrWq2",
+                                "type": "length",
+                                "value": "10",
+                                "operator": "<=",
+                                "message": "Team Name should be less than 200 characters long"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "_id": "iddPLHIIw0W8xZPXmM7iD",
+                "name": "Team Members",
+                "fields": [
+                    {
+                        "_id": "EHGpeRVNGenw1pgYNKTNO",
+                        "name": "Enter 1st Member Name",
+                        "type": "text",
+                        "value": "Enter Member Name",
+                        "isRequired": true,
+                        "validations": []
+                    },
+                    {
+                        "_id": "dKtEFl9BU3UVaukyQQBWq",
+                        "name": "Enter 1st Member Email",
+                        "type": "text",
+                        "value": "Enter Member Email",
+                        "isRequired": true,
+                        "validations": []
+                    },
+                    {
+                        "_id": "xiZEg-b9P0QzcVsng7hua",
+                        "name": "Enter 1st Member Roll Number",
+                        "type": "number",
+                        "value": "Enter Roll Number",
+                        "isRequired": true,
+                        "validations": []
+                    },
+                    {
+                        "_id": "FgTPUo2_WcI1CEWWWwfxg",
+                        "name": "Enter 2nd Member Name",
+                        "type": "text",
+                        "value": "Enter Member Name",
+                        "isRequired": true,
+                        "validations": []
+                    },
+                    {
+                        "_id": "KVHxulFebHD4fDhA8bvls",
+                        "name": "Enter 2nd Member Email",
+                        "type": "text",
+                        "value": "Enter Member Email",
+                        "isRequired": true,
+                        "validations": []
+                    },
+                    {
+                        "_id": "DlRZ3COXGs-bn4Xl2h6CU",
+                        "name": "Enter 2nd Member Roll Number",
+                        "type": "number",
+                        "value": "Enter Roll Number",
+                        "isRequired": true,
+                        "validations": []
+                    },
+                    {
+                        "_id": "uLR2l9PidiaMtx43DGvBc",
+                        "name": "Enter 3rd Member Name",
+                        "type": "text",
+                        "value": "Enter Member Name",
+                        "isRequired": false,
+                        "validations": []
+                    },
+                    {
+                        "_id": "21pBDVv05gCSPOQG17INY",
+                        "name": "Enter 3rd Member Email",
+                        "type": "text",
+                        "value": "Enter Member Email",
+                        "isRequired": false,
+                        "validations": []
+                    },
+                    {
+                        "_id": "XmqQcsH4H-9YzlVl66mMQ",
+                        "name": "Enter 3rd Member Roll Number",
+                        "type": "number",
+                        "value": "Enter Roll Number",
+                        "isRequired": false,
+                        "validations": []
+                    },
+                    {
+                        "_id": "zio8JrjyhY5TtwmJZL5_a",
+                        "name": "Enter 4th Member Name",
+                        "type": "text",
+                        "value": "Enter Member Name",
+                        "isRequired": false,
+                        "validations": []
+                    },
+                    {
+                        "_id": "Izy6RAhlP-WDYL33rp22e",
+                        "name": "Enter 4th Member Email",
+                        "type": "text",
+                        "value": "Enter Member Email",
+                        "isRequired": false,
+                        "validations": []
+                    },
+                    {
+                        "_id": "h3kFOFWJQFoQM9yQrdhdi",
+                        "name": "Enter 4th Member Roll Number",
+                        "type": "number",
+                        "value": "Enter Roll Number",
+                        "isRequired": false,
+                        "validations": []
+                    },
+                    {
+                        "_id": "lYWp44SbqUE4ZZ3tNQIAh",
+                        "name": "Enter 5th Member Name",
+                        "type": "text",
+                        "value": "Enter Member Name",
+                        "isRequired": false,
+                        "validations": []
+                    },
+                    {
+                        "_id": "6fX7Ey6y2K87U45Jh_KZf",
+                        "name": "Enter 5th Member Email",
+                        "type": "text",
+                        "value": "Enter Member Email",
+                        "isRequired": false,
+                        "validations": []
+                    },
+                    {
+                        "_id": "IXn9DwKzTo2Q2lYx4U7qS",
+                        "name": "Enter 5th Member Roll Number",
+                        "type": "number",
+                        "value": "Enter Roll Number",
+                        "isRequired": false,
+                        "validations": []
+                    }
+                ],
+                "description": "Enter your team members details here",
+                "isDisabled": true,
+                "validations": [
+                    {
+                        "_id": "Q-RVQNa284e-NcwYCHwLA",
+                        "field_id": null,
+                        "onNext": "9FZNpjpxXtm86OZgCORSI",
+                        "onBack": "vfDDGGXMdTnBzPOXfmKuL",
+                        "values": null
+                    }
+                ]
+            },
+            {
+                "name": "Domain Selection",
+                "_id": "9FZNpjpxXtm86OZgCORSI",
+                "description": "Select Specific Domains You want to Participate in with your team (max 2)",
+                "isDisabled": false,
+                "validations": [
+                    {
+                        "_id": "ngwXPENTPiuVzoBNM3WWC",
+                        "field_id": null,
+                        "onNext": "569O4L5wLcm4-LIl6UgGy",
+                        "onBack": "iddPLHIIw0W8xZPXmM7iD",
+                        "values": null
+                    },
+                    {
+                        "_id": "exaiZrZ4gt0-BnkJ1P-0f",
+                        "field_id": "Y7yzyQIlb-bpOTkrw64-Y",
+                        "onNext": "569O4L5wLcm4-LIl6UgGy",
+                        "onBack": "iddPLHIIw0W8xZPXmM7iD",
+                        "values": "General Quiz"
+                    },
+                    {
+                        "_id": "INfjQvmSLqNmp9Ey4_6o6",
+                        "field_id": "Y7yzyQIlb-bpOTkrw64-Y",
+                        "onNext": "569O4L5wLcm4-LIl6UgGy",
+                        "onBack": "iddPLHIIw0W8xZPXmM7iD",
+                        "values": "Business Pitching"
+                    },
+                    {
+                        "_id": "AOQTd3WBkTZtjYNRD4wfq",
+                        "field_id": "Y7yzyQIlb-bpOTkrw64-Y",
+                        "onNext": "569O4L5wLcm4-LIl6UgGy",
+                        "onBack": "iddPLHIIw0W8xZPXmM7iD",
+                        "values": "Case Study"
+                    },
+                    {
+                        "_id": "2Y6_kPajP9Fifa50eH5Z6",
+                        "field_id": "Y7yzyQIlb-bpOTkrw64-Y",
+                        "onNext": "569O4L5wLcm4-LIl6UgGy",
+                        "onBack": "iddPLHIIw0W8xZPXmM7iD",
+                        "values": "Business Analysis"
+                    }
+                ],
+                "fields": [
+                    {
+                        "_id": "Y7yzyQIlb-bpOTkrw64-Y",
+                        "name": "Select Your Domain",
+                        "type": "checkbox",
+                        "value": "General Quiz, Business Pitching, Case Study, Business Analysis",
+                        "isRequired": true,
+                        "validations": [
+                            {
+                                "_id": "ys4T7DLMYzXT09j2KB3T0",
+                                "type": "length",
+                                "value": "2",
+                                "operator": "<=",
+                                "message": " should be less than 1 characters long"
+                            }
+                        ]
+                    },
+                    {
+                        "_id": "YAsu3DeC9PK7cG4R6070s",
+                        "name": "Why do you want to participate in this event?",
+                        "type": "text",
+                        "value": "Enter your reason",
+                        "isRequired": true,
+                        "validations": [
+                            {
+                                "_id": "TE4ZMLs3PKeQdr8rPZBA9",
+                                "type": "length",
+                                "value": 50,
+                                "operator": "<=",
+                                "message": "Why do you want to participate in this event? should be less than 200 characters long"
+                            }
+                        ]
+                    },
+                    {
+                        "_id": "PL5bFLZDkqLwQBgZVptES",
+                        "name": "Any related questions you want to ask?",
+                        "type": "text",
+                        "value": "Enter your question",
+                        "isRequired": true,
+                        "validations": [
+                            {
+                                "_id": "1kAuI-vPlr8Qv3e7zZfUC",
+                                "type": "length",
+                                "value": 50,
+                                "operator": "<=",
+                                "message": "Any related questions you want to ask? should be less than 200 characters long"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "Terms&Conditions",
+                "_id": "569O4L5wLcm4-LIl6UgGy",
+                "description": "Kindly Make sure to fill your form correctly and adhere with our terms and conditions",
+                "isDisabled": false,
+                "validations": [
+                    {
+                        "_id": "q3Y16MxRw36uH_wt5Yn9m",
+                        "field_id": null,
+                        "onNext": "RBriksZbdwnwWBLaNuEI5",
+                        "onBack": "9FZNpjpxXtm86OZgCORSI",
+                        "values": null
+                    },
+                    {
+                        "_id": "a4oXjyvloUJilL27ZKMbc",
+                        "field_id": "zBfPopRcjicSpj9d5EC3f",
+                        "onNext": "RBriksZbdwnwWBLaNuEI5",
+                        "onBack": "9FZNpjpxXtm86OZgCORSI",
+                        "values": "I have read and agree to the terms and conditions of the event"
+                    }
+                ],
+                "fields": [
+                    {
+                        "_id": "e2SQGAWP2rUCtX34NUxYv",
+                        "name": "Self Declaration",
+                        "type": "checkbox",
+                        "value": "I hereby declare that the information provided by me is true and accurate to the best of my knowledge",
+                        "isRequired": true,
+                        "validations": [
+                            {
+                                "_id": "0lVtThDHgu2LViNOmo1uK",
+                                "type": "length",
+                                "value": 50,
+                                "operator": "<=",
+                                "message": "Self Declaration should be less than 200 characters long"
+                            }
+                        ]
+                    },
+                    {
+                        "_id": "zBfPopRcjicSpj9d5EC3f",
+                        "name": "Terms and Conditions",
+                        "type": "checkbox",
+                        "value": "I have read and agree to the terms and conditions of the event",
+                        "isRequired": true,
+                        "validations": [
+                            {
+                                "_id": "ey-Ve4rGvW8IBdALTS0io",
+                                "type": "length",
+                                "value": 50,
+                                "operator": "<=",
+                                "message": "Terms and Conditions should be less than 200 characters long"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+      },
+      { 
+        "_id": 1719947858877,
+        "info": {
+            "_id": "E679zJkiBohAO0YxjqXO4",
+            "eventTitle": "Pitchers3.0",
+            "eventdescription": "Pitchers is an engaging business challenge event designed for aspiring business leaders. It consists of three rounds, each aimed at testing participant's knowledge, agility, and strategic acumen. The event begins with Round 1, a business quiz featuring questions to assess the depth of participant's knowledge. Teams that excel in this round move forward to Round 2, a thrilling treasure hunt where they must find answers to a set of riddles on campus. The most accurate teams then progress to the final round, Round 3, where they are presented with a real-world business scenario.",
+            "eventImg": "https://cdn.builder.io/api/v1/image/assets/TEMP/d12862ae94db7f4c1a27971143bd81d9a7fb60f50f4151f6f4b2ed8c1ee3eb23?apiKey=4aa0ae1a0e814437847f3f8ff6c4ef38&width=800",
+            "eventDate": "2024-07-22T18:30:00.000Z",
+            "eventType": "Paid",
+            "receiverDetails": {
+                "media": "https://cdn.builder.io/api/v1/image/assets/TEMP/d12862ae94db7f4c1a27971143bd81d9a7fb60f50f4151f6f4b2ed8c1ee3eb23?apiKey=4aa0ae1a0e814437847f3f8ff6c4ef38&width=800",
+                "upi": "1234@okicici"
+            },
+            "eventAmount": "250",
+            "eventMaxReg": "500",
+            "relatedEvent": "Pitchers2.0",
+            "participationType": "Team",
+            "maxTeamSize": "5",
+            "minTeamSize": "2",
+            "regDateAndTime": "July 22nd 2024, 6:00:00 am",
+            "eventPriority": "1",
+            "successMessage": "Thanks for registering for this event",
+            "isPublic": false,
+            "isRegistrationClosed": false,
+            "isEventPast": false
+        },
+        "sections": [
+            {
+                "_id": "vfDDGGXMdTnBzPOXfmKuL",
+                "name": "Basic Details",
+                "description": "Enter your basic details here",
+                "isDisabled": false,
+                "validations": [
+                    {
+                        "_id": "EhwNk5i2NOYKzmeYHIfzV",
+                        "field_id": null,
+                        "onNext": "iddPLHIIw0W8xZPXmM7iD",
+                        "onBack": null,
+                        "values": null
+                    }
+                ],
+                "fields": [
+                    {
+                        "_id": "SzNbAIntueg9F4Rt9gnGP",
+                        "name": "Full Name",
+                        "type": "text",
+                        "value": "Enter your Full Name",
+                        "isRequired": true,
+                        "validations": [
+                            {
+                                "_id": "ycPO9a4co4SUdjWAaU9Hq",
+                                "type": "length",
+                                "value": 50,
+                                "operator": "<=",
+                                "message": "Full Name should be less than 200 characters long"
+                            }
+                        ]
+                    },
+                    {
+                        "_id": "_1FGNKC_c2sKqBMKMrrA9",
+                        "name": "Roll Number",
+                        "type": "number",
+                        "value": "Enter your Roll Number",
+                        "isRequired": true,
+                        "validations": [
+                            {
+                                "_id": "HbEfjuTocGnma4eQ8yvX5",
+                                "type": "length",
+                                "value": "10",
+                                "operator": "<=",
+                                "message": "Roll Number should be less than 200 characters long"
+                            }
+                        ]
+                    },
+                    {
+                        "_id": "wl5lrEA_8f9iIy6J2IWFL",
+                        "name": "Contact Number",
+                        "type": "number",
+                        "value": "Enter your Contact Number",
+                        "isRequired": true,
+                        "validations": [
+                            {
+                                "_id": "uWS2EpHO-iHzeYlxO32Ft",
+                                "type": "length",
+                                "value": "10",
+                                "operator": "<=",
+                                "message": "Contact Number should be less than 200 characters long"
+                            }
+                        ]
+                    },
+                    {
+                        "_id": "pV8ziUZKEcxR3t6eRcmJu",
+                        "name": "Team Name",
+                        "type": "text",
+                        "value": "Enter your Team Name",
+                        "isRequired": true,
+                        "validations": [
+                            {
+                                "_id": "Zb7D15QtrPkrHt63JrWq2",
+                                "type": "length",
+                                "value": "10",
+                                "operator": "<=",
+                                "message": "Team Name should be less than 200 characters long"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "_id": "iddPLHIIw0W8xZPXmM7iD",
+                "name": "Team Members",
+                "fields": [
+                    {
+                        "_id": "EHGpeRVNGenw1pgYNKTNO",
+                        "name": "Enter 1st Member Name",
+                        "type": "text",
+                        "value": "Enter Member Name",
+                        "isRequired": true,
+                        "validations": []
+                    },
+                    {
+                        "_id": "dKtEFl9BU3UVaukyQQBWq",
+                        "name": "Enter 1st Member Email",
+                        "type": "text",
+                        "value": "Enter Member Email",
+                        "isRequired": true,
+                        "validations": []
+                    },
+                    {
+                        "_id": "xiZEg-b9P0QzcVsng7hua",
+                        "name": "Enter 1st Member Roll Number",
+                        "type": "number",
+                        "value": "Enter Roll Number",
+                        "isRequired": true,
+                        "validations": []
+                    },
+                    {
+                        "_id": "FgTPUo2_WcI1CEWWWwfxg",
+                        "name": "Enter 2nd Member Name",
+                        "type": "text",
+                        "value": "Enter Member Name",
+                        "isRequired": true,
+                        "validations": []
+                    },
+                    {
+                        "_id": "KVHxulFebHD4fDhA8bvls",
+                        "name": "Enter 2nd Member Email",
+                        "type": "text",
+                        "value": "Enter Member Email",
+                        "isRequired": true,
+                        "validations": []
+                    },
+                    {
+                        "_id": "DlRZ3COXGs-bn4Xl2h6CU",
+                        "name": "Enter 2nd Member Roll Number",
+                        "type": "number",
+                        "value": "Enter Roll Number",
+                        "isRequired": true,
+                        "validations": []
+                    },
+                    {
+                        "_id": "uLR2l9PidiaMtx43DGvBc",
+                        "name": "Enter 3rd Member Name",
+                        "type": "text",
+                        "value": "Enter Member Name",
+                        "isRequired": false,
+                        "validations": []
+                    },
+                    {
+                        "_id": "21pBDVv05gCSPOQG17INY",
+                        "name": "Enter 3rd Member Email",
+                        "type": "text",
+                        "value": "Enter Member Email",
+                        "isRequired": false,
+                        "validations": []
+                    },
+                    {
+                        "_id": "XmqQcsH4H-9YzlVl66mMQ",
+                        "name": "Enter 3rd Member Roll Number",
+                        "type": "number",
+                        "value": "Enter Roll Number",
+                        "isRequired": false,
+                        "validations": []
+                    },
+                    {
+                        "_id": "zio8JrjyhY5TtwmJZL5_a",
+                        "name": "Enter 4th Member Name",
+                        "type": "text",
+                        "value": "Enter Member Name",
+                        "isRequired": false,
+                        "validations": []
+                    },
+                    {
+                        "_id": "Izy6RAhlP-WDYL33rp22e",
+                        "name": "Enter 4th Member Email",
+                        "type": "text",
+                        "value": "Enter Member Email",
+                        "isRequired": false,
+                        "validations": []
+                    },
+                    {
+                        "_id": "h3kFOFWJQFoQM9yQrdhdi",
+                        "name": "Enter 4th Member Roll Number",
+                        "type": "number",
+                        "value": "Enter Roll Number",
+                        "isRequired": false,
+                        "validations": []
+                    },
+                    {
+                        "_id": "lYWp44SbqUE4ZZ3tNQIAh",
+                        "name": "Enter 5th Member Name",
+                        "type": "text",
+                        "value": "Enter Member Name",
+                        "isRequired": false,
+                        "validations": []
+                    },
+                    {
+                        "_id": "6fX7Ey6y2K87U45Jh_KZf",
+                        "name": "Enter 5th Member Email",
+                        "type": "text",
+                        "value": "Enter Member Email",
+                        "isRequired": false,
+                        "validations": []
+                    },
+                    {
+                        "_id": "IXn9DwKzTo2Q2lYx4U7qS",
+                        "name": "Enter 5th Member Roll Number",
+                        "type": "number",
+                        "value": "Enter Roll Number",
+                        "isRequired": false,
+                        "validations": []
+                    }
+                ],
+                "description": "Enter your team members details here",
+                "isDisabled": true,
+                "validations": [
+                    {
+                        "_id": "T5-npU1Z6NweSwN5WY6q0",
+                        "field_id": null,
+                        "onNext": "3p2QqD2VyUdqqO5Yik2Jh",
+                        "onBack": "vfDDGGXMdTnBzPOXfmKuL",
+                        "values": null
+                    }
+                ]
+            },
+            {
+                "name": "t&c",
+                "_id": "3p2QqD2VyUdqqO5Yik2Jh",
+                "description": "CHECK123",
+                "isDisabled": false,
+                "validations": [
+                    {
+                        "_id": "ZhT9gu0fp41-7YaZ0jrmu",
+                        "field_id": null,
+                        "onNext": "LuoKeXlpy-mQH8lRV4SiG",
+                        "onBack": "iddPLHIIw0W8xZPXmM7iD",
+                        "values": null
+                    },
+                    {
+                        "_id": "vCtNEMdwRAbTy8HPDIcK7",
+                        "field_id": "-gO96nY7ZlXFJ10Ca0NOL",
+                        "onNext": "submit",
+                        "onBack": "iddPLHIIw0W8xZPXmM7iD",
+                        "values": "check Mark for t&C"
+                    }
+                ],
+                "fields": [
+                    {
+                        "_id": "-gO96nY7ZlXFJ10Ca0NOL",
+                        "name": "t&c",
+                        "type": "radio",
+                        "value": "check Mark for t&C",
+                        "isRequired": true,
+                        "validations": [
+                            {
+                                "_id": "FpJnjqeGIvhrvRoaj6ynv",
+                                "type": "length",
+                                "value": 50,
+                                "operator": "<=",
+                                "message": "t&c should be less than 200 characters long"
+                            }
+                        ]
+                    }
+                ]
+            }
         ]
       },
       {
-        "id": 1719947858873,
+        "_id": 1719947858899,
         "info": {
-            "eventTitle": "Blizz Battle4",
-            "eventdescription": "BIZZ-BATTLE is an engaging business challenge event designed for aspiring business leaders. It consists of three rounds, each aimed at testing participant's knowledge, agility, and strategic acumen. The event begins with Round 1, a business quiz featuring questions to assess the depth of participant's knowledge. Teams that excel in this round move forward to Round 2, a thrilling treasure hunt where they must find answers to a set of riddles on campus. The most accurate teams then progress to the final round, Round 3, where they are presented with a real-world business scenario.",
+            "_id": "E679zJkiBohAO0YxjqXO4",
+            "eventTitle": "Pitchers4.0",
+            "eventdescription": "Pitchers is an engaging business challenge event designed for aspiring business leaders. It consists of three rounds, each aimed at testing participant's knowledge, agility, and strategic acumen. The event begins with Round 1, a business quiz featuring questions to assess the depth of participant's knowledge. Teams that excel in this round move forward to Round 2, a thrilling treasure hunt where they must find answers to a set of riddles on campus. The most accurate teams then progress to the final round, Round 3, where they are presented with a real-world business scenario.",
             "eventImg": "https://cdn.builder.io/api/v1/image/assets/TEMP/d12862ae94db7f4c1a27971143bd81d9a7fb60f50f4151f6f4b2ed8c1ee3eb23?apiKey=4aa0ae1a0e814437847f3f8ff6c4ef38&width=800",
-            "eventDate": "2024-07-04T18:30:00.000Z",
+            "eventDate": "2024-07-22T18:30:00.000Z",
             "eventType": "Paid",
+            "receiverDetails": {
+                "media": "https://cdn.builder.io/api/v1/image/assets/TEMP/d12862ae94db7f4c1a27971143bd81d9a7fb60f50f4151f6f4b2ed8c1ee3eb23?apiKey=4aa0ae1a0e814437847f3f8ff6c4ef38&width=800",
+                "upi": "1234@okicici"
+            },
             "eventAmount": "250",
             "eventMaxReg": "500",
+            "relatedEvent": "Pitchers2.0",
             "participationType": "Team",
             "maxTeamSize": "5",
             "minTeamSize": "2",
-            "regDateAndTime": "2024-07-04T18:18:00",
-            "isPublic": true,
-            "isRegistrationClosed": false,
-            "isEventPast": true,
+            "regDateAndTime": "July 22nd 2024, 6:00:00 am",
             "eventPriority": "1",
-            "successMessage": "Thanks for registering for this event"
+            "successMessage": "Thanks for registering for this event",
+            "isPublic": false,
+            "isRegistrationClosed": true,
+            "isEventPast": true
         },
         "sections": [
-          {
-            "_id": 1719947858693,
-            "name": "Basic Details",
-            "description": "Enter your basic details for the event",
-            "validations": [
-              {
-                "field_id": 1719947858693,
-                "onNext": "Submit",
-                "onBack": "Back",
-                "values": "[ml,ai]",
-                "message": "Please select atleast 2 courses"
-              },
-              {
-                "field_id": 1719947858693,
-                "onNext": "Next_Section_ID",
-                "onBack": "Previous_Section_ID",
-                "values": "[ai]",
-                "message": "Please select atleast 1 course"
-              }
-            ],
-            "fields": [
-              {
-                "_id": 1719948008156,
-                "name": "Full Name",
-                "type": "text",
-                "value": "Enter your Full Name",
-                "isRequired": true,
-                "validations": []
-              },
-              {
-                "_id": 1719948008157,
-                "name": "Roll Number",
-                "type": "number",
-                "value": "Enter your Roll Number",
-                "isRequired": true,
-                "validations": []
-              },
-              {
-                "_id": 1719948008158,
-                "name": "Contact Number",
-                "type": "number",
-                "value": "Enter your Contact Number",
-                "isRequired": true,
-                "validations": []
-              },
-              {
-                "_id": 1719948008163,
-                "name": "Team Name",
-                "type": "text",
-                "value": "Enter your Team Name",
-                "isRequired": true,
-                "validations": []
-              }
-            ]
-          },
-          {
-            "_id": 1719947858694,
-            "name": "Team Members",
-            "description":"Enter the details of your Team Members",
-            "fields": [
-              {
-                "_id": 1719947922838,
-                "name": "1st Member Name",
-                "type": "text",
-                "value": "Enter Member Name",
-                "isRequired": true,
-                "validations": []
-              },
-              {
-                "_id": 1719947922839,
-                "name": "1st Member Email",
-                "type": "text",
-                "value": "Enter Member Email",
-                "isRequired": true,
-                "validations": []
-              },
-              {
-                "_id": 1719947922840,
-                "name": "1st Member Roll Number",
-                "type": "number",
-                "value": "Enter Member Roll Number",
-                "isRequired": true,
-                "validations": []
-              },
-              {
-                "_id": 1719947922841,
-                "name": "2nd Member Name",
-                "type": "text",
-                "value": "Enter Member Name",
-                "isRequired": true,
-                "validations": []
-              },
-              {
-                "_id": 1719947922842,
-                "name": "2nd Member Email",
-                "type": "text",
-                "value": "Enter Member Email",
-                "isRequired": true,
-                "validations": []
-              },
-              {
-                "_id": 1719947922843,
-                "name": "2nd Member Roll Number",
-                "type": "number",
-                "value": "Enter Member Roll Number",
-                "isRequired": true,
-                "validations": []
-              },
-              {
-                "_id": 1719947922844,
-                "name": "3rd Member Name",
-                "type": "text",
-                "value": "Enter Member Name",
-                "isRequired": true,
-                "validations": []
-              },
-              {
-                "_id": 1719947922845,
-                "name": "3rd Member Email",
-                "type": "text",
-                "value": "Enter Member Email",
-                "isRequired": true,
-                "validations": []
-              },
-              {
-                "_id": 1719947922846,
-                "name": "3rd Member Roll Number",
-                "type": "number",
-                "value": "Enter Member Roll Number",
-                "isRequired": true,
-                "validations": []
-              },
-              {
-                "_id": 1719947922847,
-                "name": "4th Member Name",
-                "type": "text",
-                "value": "Enter Member Name",
-                "isRequired": true,
-                "validations": []
-              },
-              {
-                "_id": 1719947922848,
-                "name": "4th Member Email",
-                "type": "text",
-                "value": "Enter Member Email",
-                "isRequired": true,
-                "validations": []
-              },
-              {
-                "_id": 1719947922849,
-                "name": "4th Member Roll Number",
-                "type": "number",
-                "value": "Enter Member Roll Number",
-                "isRequired": true,
-                "validations": []
-              },
-              {
-                "_id": 1719947922850,
-                "name": "5th Member Name",
-                "type": "text",
-                "value": "Enter Member Name",
-                "isRequired": true,
-                "validations": []
-              },
-              {
-                "_id": 1719947922851,
-                "name": "5th Member Email",
-                "type": "text",
-                "value": "Enter Member Email",
-                "isRequired": true,
-                "validations": []
-              },
-              {
-                "_id": 1719947922852,
-                "name": "5th Member Roll Number",
-                "type": "number",
-                "value": "Enter Member Roll Number",
-                "isRequired": true,
-                "validations": []
-              }
-            ]
-          },
-          {
-            "_id": 1719947858695,
-            "name": "Domains of Interest",
-            "description": "Select Domain of Interest you want to participate",
-            "fields": [
-              {
-                "_id": 1719948008789,
-                "name": "Domain",
-                "type": "checkbox",
-                "value": "[General Quiz, Business Pitching, Case Study, Business Analysis]",
-                "isRequired": true,
-                "validations": []
-              },
-              {
-                "_id": 1719948008790,
-                "name": "Why do you want to participate in this event?",
-                "type": "text",
-                "value": "Enter your reason",
-                "isRequired": true,
-                "validations": []
-              },
-              {
-                "_id": 1719948008791,
-                "name": "Any related questions you want to ask?",
-                "type": "text",
-                "value": "Enter your question",
-                "isRequired": true,
-                "validations": []
-              }
-            ]
-          },
-          {
-            "_id": 1719947858696,
-            "name": "Payment Details",
-            "description": "Scan the following QR code to pay the registration fee and attach a screenshot of the payment confirmation",
-            "fields": [
-              {
-                "_id": 1719948008789,
-                "name": "Payment QR Code",
-                "type": "image",
-                "value": "Uploaded QR Code by admin should already show here, NON Editable, center aligned",
-                "isRequired": true,
-                "validations": []
-              },
-              {
-                "_id": 1719948008789,
-                "name": "Payment UPI ID",
-                "type": "text",
-                "value": "Uploaded UPI ID by admin should already show here, NON Editable, center aligned",
-                "isRequired": true,
-                "validations": []
-              },
-              {
-                "_id": 1719948008789,
-                "name": "Account Number",
-                "type": "text",
-                "value": "Enter your Account Number Last 4 digits",
-                "isRequired": true,
-                "validations": []
-              },
-              {
-                "_id": 1719948008789,
-                "name": "UPI ID",
-                "type": "text",
-                "value": "Enter your UPI ID",
-                "isRequired": true,
-                "validations": []
-              },
-              {
-                "_id": 1719948008789,
-                "name": "Payment Screenshot",
-                "type": "image",
-                "value": "Upload the screenshot of the payment for confirmation",
-                "isRequired": true,
-                "validations": []
-              }
-            ]
-          },
-          {
-            "_id": 1719947858697,
-            "name": "Confirmation Window",
-            "description": "Please confirm the details you have entered",
-            "fields": [
-              {
-                "_id": 1719948008940,
-                "name": "Self Declaration",
-                "type": "checkbox",
-                "value": "[I hereby declare that the information provided by me is true and accurate to the best of my knowledge.]",
-                "isRequired": true,
-                "validations": []
-              },
-              {
-                "_id": 1719948008941,
-                "name": "Terms and Conditions",
-                "type": "checkbox",
-                "value": "[I have read and agree to the terms and conditions of the event.]",
-                "isRequired": true,
-                "validations": []
-              }
-            ]
-          }
+            {
+                "_id": "vfDDGGXMdTnBzPOXfmKuL",
+                "name": "Basic Details",
+                "description": "Enter your basic details here",
+                "isDisabled": false,
+                "validations": [
+                    {
+                        "_id": "EhwNk5i2NOYKzmeYHIfzV",
+                        "field_id": null,
+                        "onNext": "iddPLHIIw0W8xZPXmM7iD",
+                        "onBack": null,
+                        "values": null
+                    }
+                ],
+                "fields": [
+                    {
+                        "_id": "SzNbAIntueg9F4Rt9gnGP",
+                        "name": "Full Name",
+                        "type": "text",
+                        "value": "Enter your Full Name",
+                        "isRequired": true,
+                        "validations": [
+                            {
+                                "_id": "ycPO9a4co4SUdjWAaU9Hq",
+                                "type": "length",
+                                "value": 50,
+                                "operator": "<=",
+                                "message": "Full Name should be less than 200 characters long"
+                            }
+                        ]
+                    },
+                    {
+                        "_id": "_1FGNKC_c2sKqBMKMrrA9",
+                        "name": "Roll Number",
+                        "type": "number",
+                        "value": "Enter your Roll Number",
+                        "isRequired": true,
+                        "validations": [
+                            {
+                                "_id": "HbEfjuTocGnma4eQ8yvX5",
+                                "type": "length",
+                                "value": "10",
+                                "operator": "<=",
+                                "message": "Roll Number should be less than 200 characters long"
+                            }
+                        ]
+                    },
+                    {
+                        "_id": "wl5lrEA_8f9iIy6J2IWFL",
+                        "name": "Contact Number",
+                        "type": "number",
+                        "value": "Enter your Contact Number",
+                        "isRequired": true,
+                        "validations": [
+                            {
+                                "_id": "uWS2EpHO-iHzeYlxO32Ft",
+                                "type": "length",
+                                "value": "10",
+                                "operator": "<=",
+                                "message": "Contact Number should be less than 200 characters long"
+                            }
+                        ]
+                    },
+                    {
+                        "_id": "pV8ziUZKEcxR3t6eRcmJu",
+                        "name": "Team Name",
+                        "type": "text",
+                        "value": "Enter your Team Name",
+                        "isRequired": true,
+                        "validations": [
+                            {
+                                "_id": "Zb7D15QtrPkrHt63JrWq2",
+                                "type": "length",
+                                "value": "10",
+                                "operator": "<=",
+                                "message": "Team Name should be less than 200 characters long"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "_id": "iddPLHIIw0W8xZPXmM7iD",
+                "name": "Team Members",
+                "fields": [
+                    {
+                        "_id": "EHGpeRVNGenw1pgYNKTNO",
+                        "name": "Enter 1st Member Name",
+                        "type": "text",
+                        "value": "Enter Member Name",
+                        "isRequired": true,
+                        "validations": []
+                    },
+                    {
+                        "_id": "dKtEFl9BU3UVaukyQQBWq",
+                        "name": "Enter 1st Member Email",
+                        "type": "text",
+                        "value": "Enter Member Email",
+                        "isRequired": true,
+                        "validations": []
+                    },
+                    {
+                        "_id": "xiZEg-b9P0QzcVsng7hua",
+                        "name": "Enter 1st Member Roll Number",
+                        "type": "number",
+                        "value": "Enter Roll Number",
+                        "isRequired": true,
+                        "validations": []
+                    },
+                    {
+                        "_id": "FgTPUo2_WcI1CEWWWwfxg",
+                        "name": "Enter 2nd Member Name",
+                        "type": "text",
+                        "value": "Enter Member Name",
+                        "isRequired": true,
+                        "validations": []
+                    },
+                    {
+                        "_id": "KVHxulFebHD4fDhA8bvls",
+                        "name": "Enter 2nd Member Email",
+                        "type": "text",
+                        "value": "Enter Member Email",
+                        "isRequired": true,
+                        "validations": []
+                    },
+                    {
+                        "_id": "DlRZ3COXGs-bn4Xl2h6CU",
+                        "name": "Enter 2nd Member Roll Number",
+                        "type": "number",
+                        "value": "Enter Roll Number",
+                        "isRequired": true,
+                        "validations": []
+                    },
+                    {
+                        "_id": "uLR2l9PidiaMtx43DGvBc",
+                        "name": "Enter 3rd Member Name",
+                        "type": "text",
+                        "value": "Enter Member Name",
+                        "isRequired": false,
+                        "validations": []
+                    },
+                    {
+                        "_id": "21pBDVv05gCSPOQG17INY",
+                        "name": "Enter 3rd Member Email",
+                        "type": "text",
+                        "value": "Enter Member Email",
+                        "isRequired": false,
+                        "validations": []
+                    },
+                    {
+                        "_id": "XmqQcsH4H-9YzlVl66mMQ",
+                        "name": "Enter 3rd Member Roll Number",
+                        "type": "number",
+                        "value": "Enter Roll Number",
+                        "isRequired": false,
+                        "validations": []
+                    },
+                    {
+                        "_id": "zio8JrjyhY5TtwmJZL5_a",
+                        "name": "Enter 4th Member Name",
+                        "type": "text",
+                        "value": "Enter Member Name",
+                        "isRequired": false,
+                        "validations": []
+                    },
+                    {
+                        "_id": "Izy6RAhlP-WDYL33rp22e",
+                        "name": "Enter 4th Member Email",
+                        "type": "text",
+                        "value": "Enter Member Email",
+                        "isRequired": false,
+                        "validations": []
+                    },
+                    {
+                        "_id": "h3kFOFWJQFoQM9yQrdhdi",
+                        "name": "Enter 4th Member Roll Number",
+                        "type": "number",
+                        "value": "Enter Roll Number",
+                        "isRequired": false,
+                        "validations": []
+                    },
+                    {
+                        "_id": "lYWp44SbqUE4ZZ3tNQIAh",
+                        "name": "Enter 5th Member Name",
+                        "type": "text",
+                        "value": "Enter Member Name",
+                        "isRequired": false,
+                        "validations": []
+                    },
+                    {
+                        "_id": "6fX7Ey6y2K87U45Jh_KZf",
+                        "name": "Enter 5th Member Email",
+                        "type": "text",
+                        "value": "Enter Member Email",
+                        "isRequired": false,
+                        "validations": []
+                    },
+                    {
+                        "_id": "IXn9DwKzTo2Q2lYx4U7qS",
+                        "name": "Enter 5th Member Roll Number",
+                        "type": "number",
+                        "value": "Enter Roll Number",
+                        "isRequired": false,
+                        "validations": []
+                    }
+                ],
+                "description": "Enter your team members details here",
+                "isDisabled": true,
+                "validations": [
+                    {
+                        "_id": "Q-RVQNa284e-NcwYCHwLA",
+                        "field_id": null,
+                        "onNext": "9FZNpjpxXtm86OZgCORSI",
+                        "onBack": "vfDDGGXMdTnBzPOXfmKuL",
+                        "values": null
+                    }
+                ]
+            },
+            {
+                "name": "Domain Selection",
+                "_id": "9FZNpjpxXtm86OZgCORSI",
+                "description": "Select Specific Domains You want to Participate in with your team (max 2)",
+                "isDisabled": false,
+                "validations": [
+                    {
+                        "_id": "ngwXPENTPiuVzoBNM3WWC",
+                        "field_id": null,
+                        "onNext": "569O4L5wLcm4-LIl6UgGy",
+                        "onBack": "iddPLHIIw0W8xZPXmM7iD",
+                        "values": null
+                    },
+                    {
+                        "_id": "exaiZrZ4gt0-BnkJ1P-0f",
+                        "field_id": "Y7yzyQIlb-bpOTkrw64-Y",
+                        "onNext": "569O4L5wLcm4-LIl6UgGy",
+                        "onBack": "iddPLHIIw0W8xZPXmM7iD",
+                        "values": "General Quiz"
+                    },
+                    {
+                        "_id": "INfjQvmSLqNmp9Ey4_6o6",
+                        "field_id": "Y7yzyQIlb-bpOTkrw64-Y",
+                        "onNext": "569O4L5wLcm4-LIl6UgGy",
+                        "onBack": "iddPLHIIw0W8xZPXmM7iD",
+                        "values": "Business Pitching"
+                    },
+                    {
+                        "_id": "AOQTd3WBkTZtjYNRD4wfq",
+                        "field_id": "Y7yzyQIlb-bpOTkrw64-Y",
+                        "onNext": "569O4L5wLcm4-LIl6UgGy",
+                        "onBack": "iddPLHIIw0W8xZPXmM7iD",
+                        "values": "Case Study"
+                    },
+                    {
+                        "_id": "2Y6_kPajP9Fifa50eH5Z6",
+                        "field_id": "Y7yzyQIlb-bpOTkrw64-Y",
+                        "onNext": "569O4L5wLcm4-LIl6UgGy",
+                        "onBack": "iddPLHIIw0W8xZPXmM7iD",
+                        "values": "Business Analysis"
+                    }
+                ],
+                "fields": [
+                    {
+                        "_id": "Y7yzyQIlb-bpOTkrw64-Y",
+                        "name": "Select Your Domain",
+                        "type": "checkbox",
+                        "value": "General Quiz, Business Pitching, Case Study, Business Analysis",
+                        "isRequired": true,
+                        "validations": [
+                            {
+                                "_id": "ys4T7DLMYzXT09j2KB3T0",
+                                "type": "length",
+                                "value": "2",
+                                "operator": "<=",
+                                "message": " should be less than 1 characters long"
+                            }
+                        ]
+                    },
+                    {
+                        "_id": "YAsu3DeC9PK7cG4R6070s",
+                        "name": "Why do you want to participate in this event?",
+                        "type": "text",
+                        "value": "Enter your reason",
+                        "isRequired": true,
+                        "validations": [
+                            {
+                                "_id": "TE4ZMLs3PKeQdr8rPZBA9",
+                                "type": "length",
+                                "value": 50,
+                                "operator": "<=",
+                                "message": "Why do you want to participate in this event? should be less than 200 characters long"
+                            }
+                        ]
+                    },
+                    {
+                        "_id": "PL5bFLZDkqLwQBgZVptES",
+                        "name": "Any related questions you want to ask?",
+                        "type": "text",
+                        "value": "Enter your question",
+                        "isRequired": true,
+                        "validations": [
+                            {
+                                "_id": "1kAuI-vPlr8Qv3e7zZfUC",
+                                "type": "length",
+                                "value": 50,
+                                "operator": "<=",
+                                "message": "Any related questions you want to ask? should be less than 200 characters long"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "Terms&Conditions",
+                "_id": "569O4L5wLcm4-LIl6UgGy",
+                "description": "Kindly Make sure to fill your form correctly and adhere with our terms and conditions",
+                "isDisabled": false,
+                "validations": [
+                    {
+                        "_id": "q3Y16MxRw36uH_wt5Yn9m",
+                        "field_id": null,
+                        "onNext": "RBriksZbdwnwWBLaNuEI5",
+                        "onBack": "9FZNpjpxXtm86OZgCORSI",
+                        "values": null
+                    },
+                    {
+                        "_id": "a4oXjyvloUJilL27ZKMbc",
+                        "field_id": "zBfPopRcjicSpj9d5EC3f",
+                        "onNext": "RBriksZbdwnwWBLaNuEI5",
+                        "onBack": "9FZNpjpxXtm86OZgCORSI",
+                        "values": "I have read and agree to the terms and conditions of the event"
+                    }
+                ],
+                "fields": [
+                    {
+                        "_id": "e2SQGAWP2rUCtX34NUxYv",
+                        "name": "Self Declaration",
+                        "type": "checkbox",
+                        "value": "I hereby declare that the information provided by me is true and accurate to the best of my knowledge",
+                        "isRequired": true,
+                        "validations": [
+                            {
+                                "_id": "0lVtThDHgu2LViNOmo1uK",
+                                "type": "length",
+                                "value": 50,
+                                "operator": "<=",
+                                "message": "Self Declaration should be less than 200 characters long"
+                            }
+                        ]
+                    },
+                    {
+                        "_id": "zBfPopRcjicSpj9d5EC3f",
+                        "name": "Terms and Conditions",
+                        "type": "checkbox",
+                        "value": "I have read and agree to the terms and conditions of the event",
+                        "isRequired": true,
+                        "validations": [
+                            {
+                                "_id": "ey-Ve4rGvW8IBdALTS0io",
+                                "type": "length",
+                                "value": 50,
+                                "operator": "<=",
+                                "message": "Terms and Conditions should be less than 200 characters long"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+      },
+      { 
+        "_id": 1719947858888,
+        "info": {
+            "_id": "E679zJkiBohAO0YxjqXO4",
+            "eventTitle": "Pitchers5.0",
+            "eventdescription": "Pitchers is an engaging business challenge event designed for aspiring business leaders. It consists of three rounds, each aimed at testing participant's knowledge, agility, and strategic acumen. The event begins with Round 1, a business quiz featuring questions to assess the depth of participant's knowledge. Teams that excel in this round move forward to Round 2, a thrilling treasure hunt where they must find answers to a set of riddles on campus. The most accurate teams then progress to the final round, Round 3, where they are presented with a real-world business scenario.",
+            "eventImg": "https://cdn.builder.io/api/v1/image/assets/TEMP/d12862ae94db7f4c1a27971143bd81d9a7fb60f50f4151f6f4b2ed8c1ee3eb23?apiKey=4aa0ae1a0e814437847f3f8ff6c4ef38&width=800",
+            "eventDate": "2024-07-22T18:30:00.000Z",
+            "eventType": "Paid",
+            "receiverDetails": {
+                "media": "https://cdn.builder.io/api/v1/image/assets/TEMP/d12862ae94db7f4c1a27971143bd81d9a7fb60f50f4151f6f4b2ed8c1ee3eb23?apiKey=4aa0ae1a0e814437847f3f8ff6c4ef38&width=800",
+                "upi": "1234@okicici"
+            },
+            "eventAmount": "250",
+            "eventMaxReg": "500",
+            "relatedEvent": "Pitchers2.0",
+            "participationType": "Team",
+            "maxTeamSize": "5",
+            "minTeamSize": "2",
+            "regDateAndTime": "July 22nd 2024, 6:00:00 am",
+            "eventPriority": "1",
+            "successMessage": "Thanks for registering for this event",
+            "isPublic": false,
+            "isRegistrationClosed": true,
+            "isEventPast": true
+        },
+        "sections": [
+            {
+                "_id": "vfDDGGXMdTnBzPOXfmKuL",
+                "name": "Basic Details",
+                "description": "Enter your basic details here",
+                "isDisabled": false,
+                "validations": [
+                    {
+                        "_id": "EhwNk5i2NOYKzmeYHIfzV",
+                        "field_id": null,
+                        "onNext": "iddPLHIIw0W8xZPXmM7iD",
+                        "onBack": null,
+                        "values": null
+                    }
+                ],
+                "fields": [
+                    {
+                        "_id": "SzNbAIntueg9F4Rt9gnGP",
+                        "name": "Full Name",
+                        "type": "text",
+                        "value": "Enter your Full Name",
+                        "isRequired": true,
+                        "validations": [
+                            {
+                                "_id": "ycPO9a4co4SUdjWAaU9Hq",
+                                "type": "length",
+                                "value": 50,
+                                "operator": "<=",
+                                "message": "Full Name should be less than 200 characters long"
+                            }
+                        ]
+                    },
+                    {
+                        "_id": "_1FGNKC_c2sKqBMKMrrA9",
+                        "name": "Roll Number",
+                        "type": "number",
+                        "value": "Enter your Roll Number",
+                        "isRequired": true,
+                        "validations": [
+                            {
+                                "_id": "HbEfjuTocGnma4eQ8yvX5",
+                                "type": "length",
+                                "value": "10",
+                                "operator": "<=",
+                                "message": "Roll Number should be less than 200 characters long"
+                            }
+                        ]
+                    },
+                    {
+                        "_id": "wl5lrEA_8f9iIy6J2IWFL",
+                        "name": "Contact Number",
+                        "type": "number",
+                        "value": "Enter your Contact Number",
+                        "isRequired": true,
+                        "validations": [
+                            {
+                                "_id": "uWS2EpHO-iHzeYlxO32Ft",
+                                "type": "length",
+                                "value": "10",
+                                "operator": "<=",
+                                "message": "Contact Number should be less than 200 characters long"
+                            }
+                        ]
+                    },
+                    {
+                        "_id": "pV8ziUZKEcxR3t6eRcmJu",
+                        "name": "Team Name",
+                        "type": "text",
+                        "value": "Enter your Team Name",
+                        "isRequired": true,
+                        "validations": [
+                            {
+                                "_id": "Zb7D15QtrPkrHt63JrWq2",
+                                "type": "length",
+                                "value": "10",
+                                "operator": "<=",
+                                "message": "Team Name should be less than 200 characters long"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "_id": "iddPLHIIw0W8xZPXmM7iD",
+                "name": "Team Members",
+                "fields": [
+                    {
+                        "_id": "EHGpeRVNGenw1pgYNKTNO",
+                        "name": "Enter 1st Member Name",
+                        "type": "text",
+                        "value": "Enter Member Name",
+                        "isRequired": true,
+                        "validations": []
+                    },
+                    {
+                        "_id": "dKtEFl9BU3UVaukyQQBWq",
+                        "name": "Enter 1st Member Email",
+                        "type": "text",
+                        "value": "Enter Member Email",
+                        "isRequired": true,
+                        "validations": []
+                    },
+                    {
+                        "_id": "xiZEg-b9P0QzcVsng7hua",
+                        "name": "Enter 1st Member Roll Number",
+                        "type": "number",
+                        "value": "Enter Roll Number",
+                        "isRequired": true,
+                        "validations": []
+                    },
+                    {
+                        "_id": "FgTPUo2_WcI1CEWWWwfxg",
+                        "name": "Enter 2nd Member Name",
+                        "type": "text",
+                        "value": "Enter Member Name",
+                        "isRequired": true,
+                        "validations": []
+                    },
+                    {
+                        "_id": "KVHxulFebHD4fDhA8bvls",
+                        "name": "Enter 2nd Member Email",
+                        "type": "text",
+                        "value": "Enter Member Email",
+                        "isRequired": true,
+                        "validations": []
+                    },
+                    {
+                        "_id": "DlRZ3COXGs-bn4Xl2h6CU",
+                        "name": "Enter 2nd Member Roll Number",
+                        "type": "number",
+                        "value": "Enter Roll Number",
+                        "isRequired": true,
+                        "validations": []
+                    },
+                    {
+                        "_id": "uLR2l9PidiaMtx43DGvBc",
+                        "name": "Enter 3rd Member Name",
+                        "type": "text",
+                        "value": "Enter Member Name",
+                        "isRequired": false,
+                        "validations": []
+                    },
+                    {
+                        "_id": "21pBDVv05gCSPOQG17INY",
+                        "name": "Enter 3rd Member Email",
+                        "type": "text",
+                        "value": "Enter Member Email",
+                        "isRequired": false,
+                        "validations": []
+                    },
+                    {
+                        "_id": "XmqQcsH4H-9YzlVl66mMQ",
+                        "name": "Enter 3rd Member Roll Number",
+                        "type": "number",
+                        "value": "Enter Roll Number",
+                        "isRequired": false,
+                        "validations": []
+                    },
+                    {
+                        "_id": "zio8JrjyhY5TtwmJZL5_a",
+                        "name": "Enter 4th Member Name",
+                        "type": "text",
+                        "value": "Enter Member Name",
+                        "isRequired": false,
+                        "validations": []
+                    },
+                    {
+                        "_id": "Izy6RAhlP-WDYL33rp22e",
+                        "name": "Enter 4th Member Email",
+                        "type": "text",
+                        "value": "Enter Member Email",
+                        "isRequired": false,
+                        "validations": []
+                    },
+                    {
+                        "_id": "h3kFOFWJQFoQM9yQrdhdi",
+                        "name": "Enter 4th Member Roll Number",
+                        "type": "number",
+                        "value": "Enter Roll Number",
+                        "isRequired": false,
+                        "validations": []
+                    },
+                    {
+                        "_id": "lYWp44SbqUE4ZZ3tNQIAh",
+                        "name": "Enter 5th Member Name",
+                        "type": "text",
+                        "value": "Enter Member Name",
+                        "isRequired": false,
+                        "validations": []
+                    },
+                    {
+                        "_id": "6fX7Ey6y2K87U45Jh_KZf",
+                        "name": "Enter 5th Member Email",
+                        "type": "text",
+                        "value": "Enter Member Email",
+                        "isRequired": false,
+                        "validations": []
+                    },
+                    {
+                        "_id": "IXn9DwKzTo2Q2lYx4U7qS",
+                        "name": "Enter 5th Member Roll Number",
+                        "type": "number",
+                        "value": "Enter Roll Number",
+                        "isRequired": false,
+                        "validations": []
+                    }
+                ],
+                "description": "Enter your team members details here",
+                "isDisabled": true,
+                "validations": [
+                    {
+                        "_id": "T5-npU1Z6NweSwN5WY6q0",
+                        "field_id": null,
+                        "onNext": "3p2QqD2VyUdqqO5Yik2Jh",
+                        "onBack": "vfDDGGXMdTnBzPOXfmKuL",
+                        "values": null
+                    }
+                ]
+            },
+            {
+                "name": "t&c",
+                "_id": "3p2QqD2VyUdqqO5Yik2Jh",
+                "description": "CHECK123",
+                "isDisabled": false,
+                "validations": [
+                    {
+                        "_id": "ZhT9gu0fp41-7YaZ0jrmu",
+                        "field_id": null,
+                        "onNext": "LuoKeXlpy-mQH8lRV4SiG",
+                        "onBack": "iddPLHIIw0W8xZPXmM7iD",
+                        "values": null
+                    },
+                    {
+                        "_id": "vCtNEMdwRAbTy8HPDIcK7",
+                        "field_id": "-gO96nY7ZlXFJ10Ca0NOL",
+                        "onNext": "submit",
+                        "onBack": "iddPLHIIw0W8xZPXmM7iD",
+                        "values": "check Mark for t&C"
+                    }
+                ],
+                "fields": [
+                    {
+                        "_id": "-gO96nY7ZlXFJ10Ca0NOL",
+                        "name": "t&c",
+                        "type": "radio",
+                        "value": "check Mark for t&C",
+                        "isRequired": true,
+                        "validations": [
+                            {
+                                "_id": "FpJnjqeGIvhrvRoaj6ynv",
+                                "type": "length",
+                                "value": 50,
+                                "operator": "<=",
+                                "message": "t&c should be less than 200 characters long"
+                            }
+                        ]
+                    }
+                ]
+            }
         ]
       }
     ]
 
 }
+

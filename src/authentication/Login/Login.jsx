@@ -53,14 +53,13 @@ const Login = () => {
       sessionStorage.removeItem("prevPage"); // Clean up
       navigate(prevPage);
       alert("Login successful");
-      
     } else {
       alert("Invalid email or password");
     }
   };
 
   const handleForgot = () => {
-    navigate('/ForgotPassword')
+    navigate("/ForgotPassword");
   };
 
   return (
@@ -76,7 +75,17 @@ const Login = () => {
         </div>
         <div className={style.circle1}></div>
         <div className={style.login}>
-          <h1>Login</h1>
+          <h1
+            style={{
+              paddingTop: "10px",
+              background: "var(--primary)",
+              width: "20%",
+              WebkitBackgroundClip: "text",
+              color: "transparent"
+            }}
+          >
+            Login
+          </h1>
           <GoogleLogin />
           <div
             style={{
@@ -121,6 +130,10 @@ const Login = () => {
               style={{
                 fontSize: "0.7rem",
                 cursor: "pointer",
+                width: "30%",
+                background: "var(--primary)",
+                WebkitBackgroundClip: "text",
+                color: "transparent"
               }}
             >
               Forget Password?
@@ -141,13 +154,14 @@ const Login = () => {
             </Button>
             <Text
               style={{
-                fontSize: "0.7rem",
+                fontSize: "0.8rem",
                 textAlign: "center",
                 marginTop: "14px",
               }}
             >
               Don't have an account?{" "}
-              <Link to='/signup'
+              <Link
+                to="/signup"
                 onClick={(e) => {
                   sessionStorage.setItem("prevPage", window.location.pathname);
                 }}

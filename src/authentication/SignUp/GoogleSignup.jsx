@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import style from "./style/Signup.module.scss";
+import styles from "./styles/Signup.module.scss";
 
 import { useGoogleLogin } from "@react-oauth/google";
 import axios from "axios";
@@ -69,7 +69,7 @@ export default function GoogleSignup() {
         justifyContent: "center",
         alignItems: "center",
       }}
-      className={style.google_btn}
+      className={styles.google_btn}
       onClick={login}
     >
       <img
