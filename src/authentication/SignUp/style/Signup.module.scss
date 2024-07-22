@@ -1,14 +1,24 @@
 .container {
-  background-color: #2f2f2f;
+  background-color: #2f2f2f90;
   border: 1px solid #ffffff61;
   border-radius: 10px;
+  background: linear-gradient(
+    90deg,
+    rgba(32, 32, 32, 0.95) -11.52%,
+    rgba(37, 37, 37, 0.95) 106.29%
+  );
   padding: 20px;
   width: 38vw;
   display: flex;
   flex-direction: row;
-  margin: 0% auto;
-  scale: 0.90;
+  margin: auto;
+  margin-top: -50px;
+  scale: 0.85;
 }
+
+// .form{
+//   width: 100%;
+// }
 
 // .signupForm {
 //   height: 25rem;
@@ -20,9 +30,8 @@
   box-shadow: 2px 3px #94949470;
 }
 
-.container h2 {
-  color: #ff6b00;
-  font-size: 1.1rem;
+.container h1 {
+  font-size: 1.5rem;
   margin-top: -0.5rem;
 }
 .signin {
@@ -49,12 +58,13 @@
   background-color: rgba(255, 92, 0, 0.19);
   filter: blur(100px);
   position: absolute;
-  top: 40%;
+  top: 20%;
   left: -12%;
   border-radius: 50%;
   overflow: hidden;
   z-index: 0;
 }
+
 
 .circle1 {
   height: 25rem;
@@ -85,6 +95,13 @@
 .google_btn:hover {
   border: 1px solid #fff;
 }
+
+
+// @media(min-width:800px){
+//   .container{
+//    margin-top: -10%;
+//   }
+// }
 
 @media (max-width: 600px) {
   .container {

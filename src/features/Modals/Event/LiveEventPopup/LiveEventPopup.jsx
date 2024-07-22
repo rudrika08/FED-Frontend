@@ -25,7 +25,7 @@ const LiveEventPopup = () => {
           const timer = setTimeout(() => {
             setIsVisible(true);
             popupCount++;
-          }, 100);
+          }, 2500);
 
           return () => clearTimeout(timer);
         } else {

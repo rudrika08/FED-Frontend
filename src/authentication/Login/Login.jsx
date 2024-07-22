@@ -1,31 +1,28 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useContext, useEffect } from "react";
+import { useNavigate, Link } from "react-router-dom";
 import style from "./styles/Login.module.scss";
 import Input from "../../components/Core/Input";
 import Button from "../../components/Core/Button";
 import Text from "../../components/Core/Text";
-// import google from "../../assets/images/google.png";
 import users from "../../data/user.json";
 import AuthContext from "../../context/AuthContext";
-import { useContext } from "react";
-import { useEffect } from "react";
-
+import { RecoveryContext } from "../../context/RecoveryContext";
 import GoogleLogin from "./GoogleLogin";
-import { Link } from "react-router-dom";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { color } from "framer-motion";
 
 const Login = () => {
   const navigate = useNavigate();
+  const { setPage } = useContext(RecoveryContext);
+  const authCtx = useContext(AuthContext);
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  });
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const authCtx = useContext(AuthContext);
+  }, []);
 
-  const handleLogin = () => {
+  const handleLogin = (event) => {
     event.preventDefault();
     if (email === "" || password === "") {
       alert("Please fill all the fields");
@@ -51,13 +48,20 @@ const Login = () => {
         "someToken",
         3600000
       );
-      navigate("/");
+
+      const prevPage = sessionStorage.getItem("prevPage") || "/";
+      sessionStorage.removeItem("prevPage"); // Clean up
+      navigate(prevPage);
       alert("Login successful");
-      console.log(authCtx);
     } else {
       alert("Invalid email or password");
     }
   };
+
+  const handleForgot = () => {
+    navigate("/ForgotPassword");
+  };
+
   return (
     <div>
       <div className={style.container}>
@@ -69,14 +73,20 @@ const Login = () => {
         <div className={style.circle}>
           <div></div>
         </div>
-
         <div className={style.circle1}></div>
         <div className={style.login}>
-        <h1>  Login</h1>
-
-
+          <h1
+            style={{
+              paddingTop: "10px",
+              background: "var(--primary)",
+              width: "20%",
+              WebkitBackgroundClip: "text",
+              color: "transparent"
+            }}
+          >
+            Login
+          </h1>
           <GoogleLogin />
-
           <div
             style={{
               display: "flex",
@@ -114,15 +124,20 @@ const Login = () => {
                 width: "98%",
               }}
             />
-               <Text
-                    variant="secondary"
-                    style={{
-                      fontSize: "0.7rem",
-                      cursor: "pointer",
-                    }}
-                  >
-                    Forget Password?
-                </Text>
+            <Text
+              onClick={handleForgot}
+              variant="secondary"
+              style={{
+                fontSize: "0.7rem",
+                cursor: "pointer",
+                width: "30%",
+                background: "var(--primary)",
+                WebkitBackgroundClip: "text",
+                color: "transparent"
+              }}
+            >
+              Forget Password?
+            </Text>
             <Button
               style={{
                 width: "100%",
@@ -133,34 +148,34 @@ const Login = () => {
                 fontSize: "1rem",
                 cursor: "pointer",
               }}
-              onClick={(e) => {
-                handleLogin();
-              }}
+              onClick={handleLogin}
             >
               Login
             </Button>
             <Text
               style={{
-                fontSize: "0.7rem",
+                fontSize: "0.8rem",
                 textAlign: "center",
                 marginTop: "14px",
               }}
             >
               Don't have an account?{" "}
-              <a
-                href="/signup"
+              <Link
+                to="/signup"
+                onClick={(e) => {
+                  sessionStorage.setItem("prevPage", window.location.pathname);
+                }}
                 style={{
                   background: "var(--primary)",
                   WebkitBackgroundClip: "text",
-                  color: "transparent"
+                  color: "transparent",
                 }}
               >
                 Sign Up
-              </a>
+              </Link>
             </Text>
           </form>
         </div>
-        {/* <div className={style.sideImage}></div> */}
       </div>
     </div>
   );

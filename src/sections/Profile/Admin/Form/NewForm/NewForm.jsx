@@ -1,87 +1,164 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect, useContext } from "react";
 import { Button, Input, Text, Section } from "../../../../../components";
+import { IoSettingsOutline, IoSettingsSharp } from "react-icons/io5";
+import AuthContext from "../../../../../context/AuthContext";
 import { PreviewForm } from "../../../../../features";
-
 import styles from "./styles/NewForm.module.scss";
-
 import Switch from "react-switch";
 import moment from "moment";
-import { IoSettingsOutline, IoSettingsSharp } from "react-icons/io5";
+import { nanoid } from "nanoid";
+
+export const getOutboundList = (array, index) => {
+  const getIndex = array.findIndex((sec) => sec._id === index);
+
+  const prv_element = array[getIndex - 1];
+  const next_element = array[getIndex + 1];
+
+  const outbound = {
+    nextSection: next_element || null,
+    backSection: prv_element || null,
+  };
+  return outbound;
+};
+
+const TEAM_SIZE = [
+  { label: "1", value: "1" },
+  { label: "2", value: "2" },
+  { label: "3", value: "3" },
+  { label: "4", value: "4" },
+  { label: "5", value: "5" },
+  { label: "6", value: "6" },
+  { label: "7", value: "7" },
+];
 
 function NewForm() {
   const scrollRef = useRef(null);
   const [isVisibility, setisVisibility] = useState(true);
+  const authCtx = useContext(AuthContext);
   const [data, setdata] = useState({
-    _id: Date.now(),
-    title: "",
-    logoLink: "",
+
+    _id: nanoid(),
+    eventTitle: "",
+    eventdescription:"",
+    eventImg: "",
     eventDate: "",
-    eventType: "",
-    amount: "",
+    eventType: "Free",
+    receiverDetails: {
+      media: "",
+      upi: "",
+    },
+    eventAmount: "",
+    eventMaxReg: "",
     relatedEvent: "",
-    participationType: "",
-    minSize: "",
-    maxSize: "",
-    priority: "",
-    description: "",
+    participationType : "",
+    maxTeamSize: "",
+    minTeamSize: "",
+    regDateAndTime: "",
+    eventPriority: "",
     successMessage: "",
-    maxReg: "",
-    openDT: "",
-    isRegEnd: false,
-    isEventPast: false,
     isPublic: false,
+    isRegistrationClosed: false,
+    isEventPast: false,
+
+    // eventName:"",
+    // logoLink: "",
+    // eventDate: "",
+    // eventType: "Free",
+    // receiverDetails: {
+    //   media: "",
+    //   upi: "",
+    // },
+    // eventPrice: "",
+    // relatedEvent: "",
+    // participationType: "",
+    // minSize: "",
+    // maxSize: "",
+    // priority: "",
+    // description: "",
+    // successMessage: "",
+    // maxReg: "",
+    // regDateAndTime: "",
+    // isRegEnd: false,
+    // isEventPast: false,
+    // isPublic: false,
   });
+
   const [sections, setsections] = useState([
     {
-      _id: Date.now(),
-      name: 'Basic Details',
+      _id: nanoid(),
+      name: "Basic Details",
+      description: "Enter your basic details here",
+      isDisabled: false,
+      validations: [
+        {
+          _id: nanoid(),
+          field_id: null, // Field_ID
+          onNext: null, // Submit, Section_ID
+          onBack: null, // Back, Section_ID
+          values: null, // [value1, value2]
+        },
+      ],
       fields: [
         {
-          _id: Date.now(),
+          _id: nanoid(),
           name: "",
           type: "",
           value: "",
           isRequired: true,
           validations: [
             {
-              _id: Date.now(),
-              condition: "",
-              target: "Submit",
+              _id: nanoid(),
+              type: null, //length, pattern, range
+              value: null,
+              operator: null, //<,>,<=,>=,===,!==
+              message: "",
             },
           ],
         },
       ],
     },
   ]);
+  const [paymentSection, setpaymentSection] = useState(null);
   const [showPreview, setshowPreview] = useState(false);
 
+  useEffect(() => {
+    if (authCtx.eventData) {
+      setdata(authCtx.eventData?.info);
+      setsections(authCtx.eventData?.sections);
+    }
+  }, []);
+
   const isValidSections = () => {
-    let valid = true;
-    sections.forEach((section) => {
-      section.fields.forEach((field) => {
-        if (!field.name || !field.type || !field.value) {
-          valid = false;
+    return sections.every((section) =>
+      section.fields?.every((field) => {
+        if (
+          !field.name ||
+          !field.type ||
+          (field.type !== "file" && field.type !== "image" && !field.value)
+        ) {
+          return false;
         }
+
         if (["radio", "checkbox", "select"].includes(field.type)) {
-          field.validations.forEach((validation) => {
-            if (!validation.condition || !validation.target) {
-              valid = false;
-            }
-          });
+          return field.validations.every(
+            (validation) =>
+              validation.type && validation.value && validation.operator
+          );
         }
-      });
-    });
-    return valid;
+
+        return true;
+      })
+    );
   };
 
   const isValidEvent = () => {
-    if (!data.title) {
+    if (!data.eventTitle) {
       alert("Title is required.");
       return false;
     }
 
-    if (!data.logoLink) {
-      alert("Logo link is required.");
+    if (!data.eventImg) {
+      alert("Image is required.");
       return false;
     }
     if (!data.eventDate) {
@@ -100,11 +177,11 @@ function NewForm() {
       alert("Participation type is required.");
       return false;
     }
-    if (!data.priority) {
+    if (!data.eventPriority) {
       alert("Priority is required.");
       return false;
     }
-    if (!data.description) {
+    if (!data.eventdescription) {
       alert("Description is required.");
       return false;
     }
@@ -112,21 +189,38 @@ function NewForm() {
       alert("Success message is required.");
       return false;
     }
-    if (!data.maxReg) {
+    if (!data.eventMaxReg) {
       alert("Maximum registration is required.");
       return false;
     }
-    if (data.eventType === "Paid" && !data.amount) {
-      alert("Amount is required.");
-      return false;
+
+    if (data.eventType === "Paid") {
+      if (!data.eventAmount) {
+        alert("Amount is required.");
+        return false;
+      }
+
+      if (!data.receiverDetails.media) {
+        alert("Media is required.");
+        return false;
+      }
+
+      if (!data.receiverDetails.upi) {
+        alert("UPI is required.");
+        return false;
+      }
     }
-    if (data.participationType === "Team" && !data.maxSize) {
-      alert("Team size is required.");
-      return false;
-    }
-    if (data.participationType === "Team" && !data.minSize) {
-      alert("Minimum team size is required.");
-      return false;
+
+    if (data.participationType === "Team") {
+      if (!data.maxTeamSize) {
+        alert("Maximum team size is required.");
+        return false;
+      }
+
+      if (!data.minTeamSize) {
+        alert("Minimum team size is required.");
+        return false;
+      }
     }
     return true;
   };
@@ -134,10 +228,18 @@ function NewForm() {
   const onSaveEvent = () => {
     if (isValidEvent()) {
       const form = {
-        ...data,
+        info: {
+          ...data,
+        },
         sections,
       };
+
+      if (authCtx.eventData) {
+        form.id = authCtx.eventData?.id;
+      }
+
       console.log("form", form);
+      console.log("Form Data", data);
     }
   };
 
@@ -145,47 +247,52 @@ function NewForm() {
     const lastSection = sections[sections.length - 1];
     const sectionName = prompt("Enter Section Name");
     if (sectionName) {
-      const newSectionID = Date.now();
-      const newSection = {
-        name: sectionName,
-        _id: newSectionID,
-        fields: [
-          {
-            _id: Date.now(),
-            name: "",
-            type: "",
-            value: "",
-            isRequired: true,
-            validations: [
-              {
-                _id: Date.now(),
-                condition: "",
-                target: "Submit",
-              },
-            ],
-          },
-        ],
-      };
-
       if (lastSection) {
+        const newSectionID = nanoid();
         const updatedLastSection = {
           ...lastSection,
-          fields: lastSection.fields.map((field) => ({
-            ...field,
-            validations: field.validations.map((validation) => ({
-              ...validation,
-              target: newSectionID,
-            })),
-          })),
         };
 
+        updatedLastSection.validations[0] = {
+          _id: nanoid(),
+          field_id: null,
+          onNext: newSectionID,
+          onBack: lastSection.validations[0]?.onBack || null,
+          values: null,
+        };
+
+        const newSection = {
+          name: sectionName,
+          _id: newSectionID,
+          description: "",
+          isDisabled: false,
+          validations: [
+            {
+              _id: nanoid(),
+              field_id: null,
+              onNext: null,
+              onBack: lastSection._id,
+              values: null,
+            },
+          ],
+          fields: [
+            {
+              _id: nanoid(),
+              name: "",
+              type: "",
+              value: "",
+              isRequired: true,
+              validations: [],
+            },
+          ],
+        };
         setsections([
           ...sections.slice(0, sections.length - 1),
           updatedLastSection,
           newSection,
         ]);
       } else {
-        setsections([...sections, newSection]);
+        alert("Functionality not implemented yet.");
       }
       setTimeout(() => {
         scrollRef.current.scrollIntoView({
@@ -196,10 +303,9 @@ function NewForm() {
     }
   };
 
-  const handleChangeTeamSize = (e) => {
-    const value = parseInt(e.target.value, 10);
+  const handleChangeTeamSize = (value) => {
     if (value < 1 || !value) {
-      setdata({ ...data, maxSize: "" });
+      setdata({ ...data, maxTeamSize: "" });
       setsections(
         sections.filter((section) => section.name !== "Team Members")
       );
@@ -207,58 +313,96 @@ function NewForm() {
     if (value === 0 || value > 7) {
       alert("Team size should be between 1 and 7.");
     } else {
-      if (typeof value === "number" && value > 0 && value <= 7) {
-        setdata({ ...data, maxSize: value });
+      if (value > 0 && value <= 7) {
+        setdata({ ...data, maxTeamSize: value });
 
         const fields = Array.from({ length: value }, (_, index) => [
           {
-            _id: Date.now() + index * 3 + 1,
+            _id: nanoid(),
             name: `Enter ${getOrdinalSuffix(index + 1)} Member Name`,
             type: "text",
             value: "Enter Member Name",
-            isRequired: true,
+            isRequired: index < data.minTeamSize ? true : false,
             validations: [],
           },
           {
-            _id: Date.now() + index * 3 + 2,
+            _id: nanoid(),
             name: `Enter ${getOrdinalSuffix(index + 1)} Member Email`,
             type: "text",
-            value: "Enter Email",
-            isRequired: true,
+            value: "Enter Member Email",
+            isRequired: index < data.minTeamSize ? true : false,
             validations: [],
           },
           {
-            _id: Date.now() + index * 3 + 3,
+            _id: nanoid(),
             name: `Enter ${getOrdinalSuffix(index + 1)} Member Roll Number`,
             type: "number",
             value: "Enter Roll Number",
-            isRequired: true,
+            isRequired: index < data.minTeamSize ? true : false,
             validations: [],
           },
         ]).flat();
-        const sectionId = Date.now();
-        const newSection = {
-          _id: sectionId,
-          name: "Team Members",
-          fields: fields,
-        };
+        const lastSection = sections[sections.length - 1];
+        if (lastSection) {
+          const newSectionID = nanoid();
+          const updatedLastSection = {
+            ...lastSection,
+            validations: [
+              {
+                _id: nanoid(),
+                field_id: null,
+                onNext: newSectionID,
+                onBack: lastSection.validations[0]?.onBack || null,
+                values: null,
+              },
+            ],
+          };
+          const newSection = {
+            _id: newSectionID,
+            name: "Team Members",
+            fields: fields,
+            description: "Enter your team members details here",
+            isDisabled: true,
+            validations: [
+              {
+                _id: nanoid(),
+                field_id: null,
+                onNext: null,
+                onBack: lastSection._id,
+                values: null,
+              },
+            ],
+          };
 
-        const isHavingTeamSection = sections.some(
-          (section) => section.name === "Team Members"
-        );
+          const isHavingTeamSection = sections.some(
+            (section) => section.name === "Team Members"
+          );
 
-        if (isHavingTeamSection) {
-          const updatedSections = sections.map((section) => {
-            if (section.name === "Team Members") {
-              return newSection;
-            }
-            return section;
-          });
-          setsections(updatedSections);
-        } else {
-          setsections([...sections, newSection]);
+          if (isHavingTeamSection) {
+            const updatedSections = sections.map((section) => {
+              if (section.name === "Team Members") {
+                return {
+                  ...section,
+                  fields: fields,
+                };
+              }
+              return section;
+            });
+            setsections(updatedSections);
+          } else {
+            const removed = sections.filter(
+              (section) => section._id !== lastSection._id
+            );
+            setsections([...removed, updatedLastSection, newSection]);
+          }
         }
       }
+      setTimeout(() => {
+        scrollRef.current.scrollIntoView({
+          behavior: "smooth",
+          block: "nearest",
+        });
+      }, 100);
     }
   };
 
@@ -270,15 +414,41 @@ function NewForm() {
     return `${num}${suffix}`;
   };
 
-  const handleChangeMinSize = (e) => {
-    const value = parseInt(e.target.value, 10);
+  const handleChangeMinSize = (value) => {
     if (value < 1 || !value) {
-      setdata({ ...data, minSize: "" });
+      setdata({ ...data, minTeamSize: "1" });
     }
     if (value === 0 || value >= 7) {
       alert("Team size should be between 1 and 7.");
+      setdata({ ...data, minTeamSize: "1" });
+    }
+    if (data.maxTeamSize > 0 && data.maxTeamSize < value) {
+      alert("Team min size should be less than max");
+      setdata({ ...data, minTeamSize: "1" });
     } else {
-      setdata({ ...data, minSize: value });
+      const isHavingTeamSection = sections.some(
+        (section) => section.name === "Team Members"
+      );
+      if (isHavingTeamSection) {
+        const updatedSections = sections.map((section) => {
+          if (section.name === "Team Members") {
+            const updatedFields = section.fields.map((fld, idx) => {
+              return {
+                ...fld,
+                isRequired: idx < value * 3 ? true : false,
+              };
+            });
+
+            return {
+              ...section,
+              fields: updatedFields,
+            };
+          }
+          return section;
+        });
+        setsections(updatedSections);
+      }
+      setdata({ ...data, minTeamSize: value });
     }
   };
 
@@ -290,11 +460,161 @@ function NewForm() {
     }
   };
 
+  const onChangeEventType = (value) => {
+    setdata({ ...data, eventType: value, eventAmount: "" });
+
+    if (value === "Paid") {
+      setpaymentSection({
+        _id: nanoid(),
+        name: "Payment Details",
+        description:
+          "Make the payment to attached UPI ID or Scan the QR code. In the end, Share the complete detailes with us!",
+        isDisabled: true,
+        validations: [
+          {
+            _id: nanoid(),
+            field_id: null,
+            onNext: null,
+            onBack: null,
+            values: null,
+          },
+        ],
+        fields: [
+          {
+            _id: nanoid(),
+            name: "Enter UPI ID",
+            type: "text",
+            value: "Enter UPI ID",
+            isRequired: true,
+            validations: [],
+          },
+          {
+            _id: nanoid(),
+            name: "Paid Amount",
+            type: "number",
+            value: "Enter Amount Paid",
+            isRequired: true,
+            validations: [],
+          },
+          {
+            _id: nanoid(),
+            name: "Transaction ID",
+            type: "text",
+            value: "Enter Transaction ID",
+            isRequired: true,
+            validations: [],
+          },
+        ],
+      });
+    } else {
+      setpaymentSection(null);
+    }
+  };
+
+  const constructForPreview = () => {
+    const formatedData = [...sections];
+
+    if (paymentSection && data.eventType === "Paid") {
+      paymentSection.isDisabled = true;
+      formatedData.forEach((section) => {
+        section.validations.forEach((validation) => {
+          if (!validation.onNext) {
+            validation.onNext = paymentSection._id;
+          }
+        });
+      });
+
+      formatedData.push(paymentSection);
+      return formatedData;
+    }
+
+    return formatedData;
+  };
+
+  const handleChangeParticipantType = (value) => {
+    const isHavingTeamSection = sections.some(
+      (section) => section.name === "Team Members"
+    );
+    if (isHavingTeamSection) {
+      const isConfirm = confirm(
+        "Are you sure you want to change the participation type? All the data will be lost."
+      );
+      if (isConfirm) {
+        setdata({
+          ...data,
+          participationType: value,
+          minTeamSize: "",
+          maxTeamSize: "",
+        });
+        const removedSection = sections.filter(
+          (section) => section.name !== "Team Members"
+        );
+        setsections(removedSection);
+        if (removedSection.length === 0) {
+          setsections([
+            {
+              _id: nanoid(),
+              name: "Basic Details",
+              description: "Enter your basic details here",
+              isDisabled: false,
+              validations: [
+                {
+                  _id: nanoid(),
+                  field_id: null,
+                  onNext: null,
+                  onBack: null,
+                  values: null,
+                },
+              ],
+              fields: [
+                {
+                  _id: nanoid(),
+                  name: "",
+                  type: "",
+                  value: "",
+                  isRequired: true,
+                  validations: [
+                    {
+                      _id: nanoid(),
+                      type: null,
+                      value: null,
+                      operator: null,
+                      message: "",
+                    },
+                  ],
+                },
+              ],
+            },
+          ]);
+        }
+      }
+    } else {
+      setdata({
+        ...data,
+        participationType: value,
+        minTeamSize: "",
+        maxTeamSize: "",
+      });
+    }
+  };
+
+  const handlePreview = () => {
+    if (isValidEvent()) {
+      if (isValidSections()) {
+        setshowPreview(!showPreview);
+      } else {
+        alert("Section is not valid. Please fill all the fields.");
+      }
+    } else {
+      console.log("Invalid Event");
+    }
+  };
+
   return (
     <div
       style={{
         width: "100%",
-        marginLeft:"70px",
+        marginLeft: "70px",
       }}
     >
       <div className={styles.formHeader}>
@@ -320,13 +640,13 @@ function NewForm() {
               <IoSettingsSharp
                 size={20}
                 color="#FF8A00"
-                style={{ cursor: "pointer" ,marginTop:"10px"}}
+                style={{ cursor: "pointer", marginTop: "10px" }}
                 onClick={() => setisVisibility(!isVisibility)}
               />
             ) : (
               <IoSettingsOutline
                 size={20}
-                style={{ cursor: "pointer",marginTop:"10px"}}
+                style={{ cursor: "pointer", marginTop: "10px" }}
                 color="#fff"
                 onClick={() => setisVisibility(!isVisibility)}
               />
@@ -334,17 +654,7 @@ function NewForm() {
           </div>
 
           <Button onClick={onSaveEvent}>Save</Button>
-          <Button
-            isLoading={false}
-            onClick={() => {
-              if (isValidSections()) {
-                setshowPreview(!showPreview);
-              } else {
-                alert("Fill all the form fields, including conditions");
-              }
-            }}
-            variant="secondary"
-          >
+          <Button isLoading={false} onClick={handlePreview} variant="secondary">
             {showPreview ? "Hide" : "Preview"}
           </Button>
         </div>
@@ -409,14 +719,14 @@ function NewForm() {
                 color: "#fff",
                 margin: "4px 0",
                 fontSize: ".8em",
-                opacity: data.isRegEnd ? "1" : ".6",
+                opacity: data.isRegistrationClosed ? "1" : ".6",
                 transition: "all .4s",
               }}
             >
               Close Event Registration
             </label>
             <Switch
-              checked={data.isRegEnd}
+              checked={data.isRegistrationClosed}
               width={36}
               height={18}
               onColor="#FF8A00"
@@ -427,7 +737,7 @@ function NewForm() {
               onChange={() => {
                 setdata({
                   ...data,
-                  isRegEnd: !data.isRegEnd,
+                  isRegistrationClosed: !data.isRegistrationClosed,
                 });
               }}
             />
@@ -470,212 +780,287 @@ function NewForm() {
           </div>
         </div>
       )}
-    <div 
-      style={{
-        height: "420px",
-        overflow:"hidden scroll",
-        scrollbarWidth:"none",
-        marginBottom: "50px"
-      }}
-    >
       <div
         style={{
-          display: "flex",
-          flexDirection: "row",
+          height: "90vh",
+          width: "90%",
+          overflow: "hidden scroll",
+          scrollbarWidth: "none",
+          marginBottom: "50px",
         }}
       >
         <div
           style={{
-            width: "45%",
+            display: "flex",
+            flexDirection: "row",
           }}
         >
-          <Input
-            placeholder="Enter Form Name"
-            label="Form Name"
-            value={data.title}
-            className={styles.formInput}
-            onChange={(e) => setdata({ ...data, title: e.target.value })}
-          />
-          <Input
-            placeholder="Logo Link"
-            label="Event Logo"
-            value={data.logoLink}
-            onChange={(e) => setdata({ ...data, logoLink: e.target.value })}
-            className={styles.formInput}
-          />
-          <Input
-            placeholder="Select Date"
-            className={styles.formInput}
-            label="Event Date"
-            type="date"
-            style={{ width: "88%" }}
-            value={data.eventDate}
-            onChange={(date) => setdata({ ...data, eventDate: date })}
-          />
-          <Input
-            placeholder="Event Type"
-            label="Select Type"
-            type="select"
-            className={styles.formInput}
-            options={[
-              { label: "Paid", value: "Paid" },
-              { label: "Free", value: "Free" },
-            ]}
-            style={{ width: "88%" }}
-            value={data.eventType}
-            onChange={(value) => setdata({ ...data, eventType: value })}
-          />
-          {data.eventType === "Paid" && (
+          <div
+            style={{
+              width: "45%",
+            }}
+          >
             <Input
-              placeholder="Enter Amount"
-              label="Amount"
-              type="number"
-              value={data.amount}
-              onChange={(e) => setdata({ ...data, amount: e.target.value })}
+              placeholder="Enter Event Title or Name"
+              label="Event Title"
+              value={data.eventTitle}
+              className={styles.formInput}
+              onChange={(e) => setdata({ ...data, eventTitle: e.target.value })}
+            />
+            <Input
+              placeholder="Attach Event Image"
+              label="Event Image"
+              type={"image"}
+              value={
+                typeof data.eventImg === "string"
+                  ? data.eventImg
+                  : data.eventImg?.name || ""
+              }
+              containerClassName={styles.formInput}
+              onChange={(e) => setdata({ ...data, eventImg: e.target.value })}
               className={styles.formInput}
             />
-          )}
-          <Input
-            placeholder="Enter Event Name"
-            label="Related Event Name"
-            value={data.relatedEvent}
-            className={styles.formInput}
-            onChange={(e) => setdata({ ...data, relatedEvent: e.target.value })}
-          />
-          <Input
-            label="Participation Type"
-            placeholder="Select Type"
-            className={styles.formInput}
-            type="select"
-            options={[
-              { label: "Individual", value: "Individual" },
-              { label: "Team", value: "Team" },
-            ]}
-            style={{ width: "88%" }}
-            value={data.participationType}
-            onChange={(value) => setdata({ ...data, participationType: value })}
-          />
-          {data.participationType === "Team" && (
-            <div>
-              <Input
-                placeholder="Enter Team Size "
-                label="Team Size (Min)"
-                type="number"
-                className={styles.formInput}
-                value={data.minSize}
-                onChange={handleChangeMinSize}
-              />
-              <Input
-                placeholder="Enter Team Size "
-                label="Team Size (Max)"
-                type="number"
-                className={styles.formInput}
-                value={data.maxSize}
-                onChange={handleChangeTeamSize}
-              />
-            </div>
-          )}
-          <Input
-            placeholder="Event Priority"
-            className={styles.formInput}
-            label="Priority"
-            value={data.priority}
-            onChange={(e) => setdata({ ...data, priority: e.target.value })}
-          />
-          <Input
-            placeholder="Open Date & Time"
-            className={styles.formInput}
-            label="Event Open Date & Time"
-            type="datetime-local"
-            value={data.openDT}
-            onChange={(date) => {
-              setdata({
-                ...data,
-                openDT: moment(date).format("MMMM Do YYYY, h:mm:ss a"),
-              });
+            <Input
+              placeholder="Select Date"
+              className={styles.formInput}
+              label="Event Date"
+              type="date"
+              style={{ width: "88%" }}
+              value={data.eventDate}
+              onChange={(date) => setdata({ ...data, eventDate: date })}
+            />
+            <Input
+              placeholder="Select Event Type"
+              label="Event Type"
+              type="select"
+              className={styles.formInput}
+              options={[
+                { label: "Paid", value: "Paid" },
+                { label: "Free", value: "Free" },
+              ]}
+              style={{ width: "88%" }}
+              value={data.eventType}
+              onChange={(value) => onChangeEventType(value)}
+            />
+            {data.eventType === "Paid" && (
+              <div>
+                <Input
+                  placeholder="Enter Event Registration Amount"
+                  label="Event Registration Fee"
+                  type="number"
+                  value={data.eventAmount}
+                  onChange={(e) =>
+                    setdata({ ...data, eventAmount: e.target.value })
+                  }
+                  className={styles.formInput}
+                />
+                <Input
+                  placeholder={"Upload Media/Images/Qr Code"}
+                  label={"Receiver Payment QR Code"}
+                  value={
+                    typeof data.receiverDetails?.media === "string"
+                      ? data.receiverDetails?.media
+                      : data.receiverDetails?.media?.name || ""
+                  }
+                  className={styles.formInput}
+                  containerClassName={styles.formInput}
+                  type="image"
+                  onChange={(e) =>
+                    setdata({
+                      ...data,
+                      receiverDetails: {
+                        ...data.receiverDetails,
+                        media: e.target.value,
+                      },
+                    })
+                  }
+                />
+
+                <Input
+                  placeholder={"Enter UPI ID"}
+                  label={"Receiver UPI ID"}
+                  value={data?.receiverDetails?.upi}
+                  className={styles.formInput}
+                  onChange={(e) =>
+                    setdata({
+                      ...data,
+                      receiverDetails: {
+                        ...data.receiverDetails,
+                        upi: e.target.value,
+                      },
+                    })
+                  }
+                />
+              </div>
+            )}
+            <Input
+              placeholder="Enter Event Name"
+              label="Related Event Name"
+              value={data.relatedEvent}
+              className={styles.formInput}
+              onChange={(e) =>
+                setdata({ ...data, relatedEvent: e.target.value })
+              }
+            />
+            <Input
+              label="Participation Type"
+              placeholder="Select Type"
+              className={styles.formInput}
+              type="select"
+              options={[
+                { label: "Individual", value: "Individual" },
+                { label: "Team", value: "Team" },
+              ]}
+              style={{ width: "88%" }}
+              value={data.participationType}
+              onChange={(value) => {
+                handleChangeParticipantType(value);
+              }}
+            />
+            {data.participationType === "Team" && (
+              <div>
+                <Input
+                  placeholder="Enter Team Size "
+                  label="Team Size (Min)"
+                  type="select"
+                  options={TEAM_SIZE.filter(
+                    (item) => item.value <= (data.maxTeamSize || 7)
+                  )}
+                  className={styles.formInput}
+                  value={data.minTeamSize}
+                  onChange={(value) => handleChangeMinSize(value)}
+                />
+                {data.minTeamSize && (
+                  <Input
+                    placeholder="Enter Team Size "
+                    label="Team Size (Max)"
+                    type="select"
+                    options={TEAM_SIZE.filter(
+                      (item) => item.value >= (data.minTeamSize || 1)
+                    )}
+                    className={styles.formInput}
+                    value={data.maxTeamSize}
+                    onChange={(value) => handleChangeTeamSize(value)}
+                  />
+                )}
+              </div>
+            )}
+            <Input
+              placeholder="Enter Priority Number"
+              className={styles.formInput}
+              label="Event Priority"
+              value={data.eventPriority}
+              onChange={(e) => setdata({ ...data, eventPriority: e.target.value })}
+            />
+            <Input
+              placeholder="Open Date & Time"
+              className={styles.formInput}
+              label="Event Registration Open Date & Time"
+              type="datetime-local"
+              value={data.regDateAndTime}
+              onChange={(date) => {
+                setdata({
+                  ...data,
+                  regDateAndTime: moment(date).format(
+                    "MMMM Do YYYY, h:mm:ss a"
+                  ),
+                });
+              }}
+            />
+          </div>
+          <div
+            style={{
+              width: "45%",
             }}
-          />
+          >
+            <Input
+              placeholder="Enter Event Description"
+              label="Event Description"
+              type="textArea"
+              className={` ${styles.formInputTxtArea}`}
+              value={data.eventdescription}
+              onChange={(e) =>
+                setdata({ ...data, eventdescription: e.target.value })
+              }
+            />
+            <Input
+              placeholder="Enter Message"
+              label="Registration Success Message"
+              type="textArea"
+              className={` ${styles.formInputTxtArea}`}
+              value={data.successMessage}
+              containerStyle={{ marginTop: "12px" }}
+              onChange={(e) =>
+                setdata({ ...data, successMessage: e.target.value })
+              }
+            />
+            <Input
+              placeholder="Enter Number"
+              className={styles.formInput}
+              label="Maximum Registrations Allowed"
+              type="number"
+              value={data.eventMaxReg}
+              containerStyle={{ marginTop: "12px" }}
+              onChange={(e) => setdata({ ...data, eventMaxReg: e.target.value })}
+            />
+          </div>
         </div>
         <div
           style={{
-            width: "45%",
+            display: "flex",
+            flexDirection: "row",
+            width: "86%",
+            marginBottom: "12px",
           }}
         >
-          <Input
-            placeholder="Enter Event Description"
-            label="Event Description"
-            type="textArea"
-            className={` ${styles.formInputTxtArea}`}
-            value={data.description}
-            onChange={(e) => setdata({ ...data, description: e.target.value })}
-          />
-          <Input
-            placeholder="Enter Message"
-            label="Registration Success Message"
-            type="textArea"
-            className={` ${styles.formInputTxtArea}`}
-            value={data.successMessage}
-            containerStyle={{ marginTop: "12px" }}
-            onChange={(e) =>
-              setdata({ ...data, successMessage: e.target.value })
-            }
-          />
-          <Input
-            placeholder="Enter Number"
-            className={styles.formInput}
-            label="Maximum Registrations"
-            type="number"
-            value={data.maxReg}
-            containerStyle={{ marginTop: "12px" }}
-            onChange={(e) => setdata({ ...data, maxReg: e.target.value })}
-          />
+          <Text
+            style={{
+              fontSize: "14px",
+              margin: "auto 6px",
+              marginRight: "auto",
+            }}
+          >
+            Sections
+          </Text>
+          <Button onClick={handleSaveSection}>Save</Button>
+          <Button
+            variant="secondary"
+            style={{ marginLeft: "12px" }}
+            onClick={onAddSection}
+          >
+            Add Section
+          </Button>
         </div>
-      </div>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          // justifyContent: "space-between",
-          width: "86%",
-          marginBottom: "12px",
-        }}
-      >
-        <Text
-          style={{
-            fontSize: "14px",
-            margin: "auto 6px",
-            marginRight: "auto",
-          }}
-        >
-          Sections
-        </Text>
-        <Button onClick={handleSaveSection}>Save</Button>
-        <Button
-          variant="secondary"
-          style={{ marginLeft: "12px" }}
-          onClick={onAddSection}
-        >
-          Add Section
-        </Button>
-      </div>
-      {sections.map((section) => (
-        <div key={section._id} ref={scrollRef}>
+        {sections.map((section) => (
+          <div key={section._id} ref={scrollRef}>
+            <Section
+              section={section}
+              sections={sections}
+              setsections={setsections}
+              showAddButton={!section.isDisabled}
+              disabled={section.isDisabled}
+            />
+          </div>
+        ))}
+        {paymentSection && (
           <Section
-            section={section}
+            section={paymentSection}
             sections={sections}
             setsections={setsections}
+            showAddButton={!paymentSection.isDisabled}
+            disabled={paymentSection.isDisabled}
           />
-        </div>
-      ))}
-      {showPreview && (
-        <PreviewForm
-          open={showPreview}
-          handleClose={() => setshowPreview(false)}
-          sections={sections}
-          eventData={data}
-        />
-      )}
-    </div>
+        )}
+        {showPreview && (
+          <PreviewForm
+            open={showPreview}
+            handleClose={() => setshowPreview(false)}
+            sections={constructForPreview()}
+            eventData={data}
+            meta={paymentSection ? [paymentSection] : []}
+          />
+        )}
+      </div>
     </div>
   );
 }

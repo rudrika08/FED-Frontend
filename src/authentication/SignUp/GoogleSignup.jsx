@@ -1,87 +1,62 @@
-import React, { useContext, useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import style from "./style/Signup.module.scss";
-
+import styles from "./style/Signup.module.scss";
 
 import { useGoogleLogin } from "@react-oauth/google";
-
-
 import axios from "axios";
-
-
 import AuthContext from "../../context/AuthContext";
-
 import google from "../../assets/images/google.png";
-import CompleteProfile from "./CompleteProfile";
-import { useEffect } from "react";
+import users from "../../data/user.json";
 
 export default function GoogleSignup() {
-  const [passData, setGoogleData] = useState([]);
-  const [codeResponse,setCodeResponse]=useState();
+  const [codeResponse, setCodeResponse] = useState(null);
+  const [errorMessage, setErrorMessage] = useState("");
   const authCtx = useContext(AuthContext);
   const navigate = useNavigate();
 
   const login = useGoogleLogin({
-    onSuccess: (tokenResponse) =>setCodeResponse(tokenResponse),
-    onError: (error) => console.error('Login failed:', error),
+    onSuccess: (tokenResponse) => setCodeResponse(tokenResponse),
+    onError: (error) => console.error("Login failed:", error),
   });
 
+  useEffect(() => {
+    if (codeResponse) {
+      handleLoginSuccess();
+    }
+  }, [codeResponse]);
 
-    useEffect(()=>{
-    handleLoginSuccess()
-    },[codeResponse])
   const handleLoginSuccess = async () => {
     try {
-  
       const googleResponse = await axios.get(
         `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${codeResponse.access_token}`
       );
-     
+
       const userInfo = googleResponse.data;
-      const mail  = userInfo.email;
-      console.log('Google user info:', userInfo);
-       setGoogleData(userInfo);
-      //  console.log(passData);
-     
-      const response = await axios.post("/auth/googleverification", {
+      const email = userInfo.email;
+
+      const data = {
         email: userInfo.email,
-      });
+        image: userInfo.picture,
+      };
 
-      if (response.status===202) {
-        authCtx.login(
-          response.data.user.name,
-          response.data.user.email,
-          response.data.user.img,
-          response.data.user.RollNumber,
-          response.data.user.School,
-          response.data.user.College,
-          response.data.user.MobileNo,
-          response.data.user.selected,
-          response.data.user.regForm,
-          Number(response.data.user.access),
-          response.data.token,
-          // 10800000
-        );
+      console.log("Google User Data:", data);
+      const user = users.find((user) => user.email === data.email);
 
-        if (!authCtx.target) {
-          window.history.back();
-        } else {
-          navigate(`/${authCtx.target}`);
-          authCtx.settarget(null);
-        }
+      if (user) {
+        // User is already registered
+        alert("Already registered. Please log in.");
+        navigate("/login");
       } else {
-        setGoogleData(googleResponse.data);
+        // User is not registered, navigate to CompleteProfile with state
+        navigate("/completeProfile", { state: { data: userInfo } });
       }
     } catch (error) {
-      console.error('Login error:', error);
+      console.error("Login error:", error);
+      setErrorMessage("An error occurred during login. Please try again.");
     }
   };
 
-
-  // console.log(passData);
-
   return (
-    <>
     <button
       style={{
         backgroundColor: "transparent",
@@ -94,7 +69,7 @@ export default function GoogleSignup() {
         justifyContent: "center",
         alignItems: "center",
       }}
-      className={style.google_btn}
+      className={styles.google_btn}
       onClick={login}
     >
       <img
@@ -108,7 +83,5 @@ export default function GoogleSignup() {
       />
       <span>Sign Up with Google</span>
     </button>
-  <CompleteProfile data={passData} set={setGoogleData}/>
-    </>
   );
 }

@@ -22,18 +22,17 @@ export default function Footer() {
           <div className={styles.footerright}>
             <div className={styles.row2}>
             <h4>Explore</h4>
-              <Link to="/" className={styles.footerleftlink} target="_blank">
+              <Link to="/" className={styles.footerleftlink}>
                 Home
               </Link>
               <Link
                 to="/Events"
                 className={styles.footerleftlink}
-                target="_blank"
               >
                 Events
               </Link>
               
-              <Link to="/Team" className={styles.footerleftlink} target="_blank">
+              <Link to="/Team" className={styles.footerleftlink}>
                 Team
               </Link>
             </div>
@@ -42,9 +41,9 @@ export default function Footer() {
 
             <div className={styles.row1}>
               <h4>Community</h4>
-              <HashLink smooth to="/#ContactUs" className={styles.footerleftlink}>
-                Contact
-              </HashLink>
+              <HashLink smooth to="/#Contact" className={styles.footerleftlink}>
+              Contact
+            </HashLink>
               <Link to="/Team" className={styles.footerleftlink}>
                 Member
               </Link>
@@ -68,17 +67,17 @@ export default function Footer() {
           <h4 className={styles.socialh4}>Social</h4>
             <div className={styles.icondiv2}>
               
-              <Link to="/" className={styles.link1} target="_blank">
+              <Link to="/" className={styles.link1}>
               <FaLinkedin className={styles.icon} />
               </Link>
               <Link
                 to="/Events"
                 className={styles.link1}
-                target="_blank"
+              
               >
                 <FaInstagram className={styles.icon} />
               </Link>
-              <Link to="/Social" className={styles.link1} target="_blank">
+              <Link to="/Social" className={styles.link1}>
               <FaYoutube className={styles.icon} />
               </Link>
 
@@ -95,11 +94,11 @@ export default function Footer() {
 
         <div className={styles.terms_and_policies}>
           <div className={styles.tap1Div}>
-            <Link to="/T&C" className={styles.Linkstyles}>
+            <Link to="/TermsAndConditions" className={styles.Linkstyles}>
               Terms and conditions
             </Link>
             <p>&</p>
-            <Link to="/PrivacyPolicies" className={styles.Linkstyles}>
+            <Link to="/PrivacyPolicy" className={styles.Linkstyles}>
               Privacy policy
             </Link>
           

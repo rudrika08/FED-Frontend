@@ -91,26 +91,22 @@ function ViewMember() {
   };
 
   const customStyles = {
-    teamMember:{
-      height: "10rem",
-      width: "10rem",
-    },
+    teamMember: styles.teamMemberCustom,
+    teamMemberBackh5: styles.teamMemberBackh5Custom,
+    socialLinksa: styles.socialLinksaCustom,
+    button: styles.buttonCustom,
+    knowPara: styles.knowParaCustom,
+    updatebtn: styles.updatebtnCustom,
+    teamMemberBack: styles.teamMemberBackCustom,
+  };
 
-    teamMemberBackh5:{
-      fontSize: "1.1rem",
-    },
+  const handleUpdate = (name, role, title) => {
+    console.log(`Update member: ${name}, ${role}, ${title}`);
+  };
 
-    socialLinksa:{
-      fontSize: "2rem",
-    },
-    button:{
-      fontSize:"1rem"
-    },
-    knowPara:{
-      height:"10rem",
-    }
-    // Any other custom styles
-};
+  const handleRemove = (name, role, title) => {
+    console.log(`Remove member: ${name}, ${role}, ${title}`);
+  };
 
   const membersToDisplay = getMembersByPage();
 
@@ -138,6 +134,8 @@ function ViewMember() {
                   role={member.access}
                   know={member.extra.know}
                   customStyles={customStyles}
+                  onUpdate={handleUpdate}
+                  onRemove={handleRemove}
                 />
               ))}
             </div>

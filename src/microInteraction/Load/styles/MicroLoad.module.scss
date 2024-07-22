@@ -1,0 +1,22 @@
+// load.module.scss
+@import "../../../assets/styles/Global.scss";
+
+.containerLoad {
+  background-color: cyan; /* Semi-transparent background */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+}
+
+
+// @media (max-width: 768px) {
+//     .containerLoad {
+//         top: 52%;
+//         left: 50%;
+//         transform: translate(-50%, -50%);
+//         width: 100vw;
+//         height: 90vh;
+//     }
+// }

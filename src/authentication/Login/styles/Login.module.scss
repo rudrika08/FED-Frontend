@@ -1,15 +1,18 @@
 .container {
-  background-color: #2f2f2f;
+  background-color: #2f2f2f90;
   border: 1px solid #ffffff61;
   border-radius: 10px;
+  background: linear-gradient(
+    90deg,
+    rgba(32, 32, 32, 0.95) -11.52%,
+    rgba(37, 37, 37, 0.95) 106.29%
+  );
   padding: 15px;
   justify-content: center;
   align-items: center;
-  width: 34vw;
+  width: 32vw;
   display: flex;
   flex-direction: row;
-  margin: 10% auto;
-
 }
 .form{
   width: auto;
@@ -108,11 +111,11 @@
 
 @media (max-width: 1100px) {
   .container {
-     width: 60vw;
+     width: 50vw;
   }
 
   .login {
-    width: 60vw;
+    width: 50vw;
   }
 
   .circle {
@@ -137,7 +140,8 @@
   .container {
     flex-direction: column;
     width: 80vw;
-    margin-top: 50%;
+    margin-top: 40%;
+    margin-right: 20px;
   }
   .sideImage {
     display: none;

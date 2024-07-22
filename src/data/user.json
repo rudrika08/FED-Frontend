@@ -10,7 +10,7 @@
       "mobileNo": "1234567890",
       "year": "3",
       "access": "DIRECTOR_TECHNICAL",
-      "regForm": []
+      "regForm": [1719947858869, 1719947858871]
     },
     {
       "email": "22053275@kiit.ac.in",
@@ -40,6 +40,19 @@
     },
     {
       "email": "admin@example.com",
+      "password": "adminpassword",
+      "name": "Prityanshu Singh",
+      "pic": "https://i.pinimg.com/736x/54/72/d1/5472d1b09d3d724228109d381d617326.jpg",
+      "rollNo": "54321",
+      "school": "School of Management",
+      "college": "Kalinga Institute of Industrial Technology",
+      "mobileNo": "0987654321",
+      "year": "2",
+      "access": "ADMIN",
+      "regForm": []
+    },
+    {
+      "email": "prityanshusingh2003@gmail.com",
       "password": "adminpassword",
       "name": "Prityanshu Singh",
       "pic": "https://i.pinimg.com/736x/54/72/d1/5472d1b09d3d724228109d381d617326.jpg",

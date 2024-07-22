@@ -182,6 +182,10 @@ export default function GoogleLogin() {
     }
   }, [codeResponse]);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const handleLoginSuccess = async () => {
     try {
     
@@ -217,18 +221,24 @@ export default function GoogleLogin() {
         );
 
         console.log("Auth Context after login:", authCtx);
-        navigate("/profile");
+        const prevPage = sessionStorage.getItem('prevPage') || '/';
+        sessionStorage.removeItem('prevPage'); // Clean up
+        navigate(prevPage);
+        alert("Login successfull");
+
       } else {
-        handleLoginError(data);
+        navigate("/signup");
+        alert("User Not Registered, Kindly Register First");
       }
+
     } catch (error) {
       console.error("Login error:", error);
     }
   };
 
-  const handleLoginError = (data) => {
-    setGoogleData(data);
-  };
+  // const handleLoginError = (data) => {
+  //   setGoogleData(data);
+  // };
 
   return (
     <>
@@ -258,7 +268,6 @@ export default function GoogleLogin() {
         />
         <span>Login with Google</span>
       </button>
-      <CompleteProfile data={passData} set={setGoogleData} />
     </>
   );
 }

@@ -11,7 +11,7 @@
     flex-direction: row;
     background-color: #1C1C1C;
     position: relative; 
-    margin-top:1rem;   
+    margin-top: 1rem;   
     padding-bottom: 4.5vw;
     padding-left: 0px;
     z-index: 0;
@@ -31,14 +31,13 @@
   
   
   .hero2 {
-    width: 100%; 
     display: flex;
     justify-content: center;
     align-items: center;
     position: relative;
   }
 
-  span{
+  .main span{
     color: transparent;
     background-clip: text;
   }
@@ -105,7 +104,7 @@
       flex-direction: column-reverse;
       background-color: #1C1C1C;
       position: relative; 
-      margin-top: 1rem;
+      margin-top: -1rem;
       margin-right: 0rem;
     }
   
@@ -116,6 +115,7 @@
     .hero1 {
       z-index: 1; 
       padding-left: 25px;
+      padding-right: 30px;
     }
   }
 

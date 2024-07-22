@@ -119,10 +119,10 @@ const Team = () => {
   };
 
   return (
-    <div>
+    <div className={styles.Team}>
       <h2>Meet Our <span style={{ background: "var(--primary)", WebkitBackgroundClip: "text", color: "transparent" }}>Team</span></h2>
       <div className={styles.para}>
-        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Totam provident commodi consequatur neque magni, non tempore dolor corporis voluptate animi voluptatibus assumenda illo consectetur voluptatem quam, cum eligendi libero quos.</p>
+        <p>We are a tight-knit community of passionate people devoted to bringing about vibrant and awe-inspiring changes in the field of Entrepreneurship. The pillars of our crew are the Marketing group, the Creative group, the Technical group, and the Operations group.</p>
       </div>
       <div className={styles.circle}></div>
       {/* <div className={styles.circle2}></div>  */}

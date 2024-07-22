@@ -1,10 +1,11 @@
-h2 {
+.Alumni h2 {
   text-align: center;
   font-size: 50px;
   margin-top: 20px;
+  margin-bottom: 20px;
 }
 
-h2 span {
+.Alumni h2 span {
   color: #FF8A00;
 }
 
@@ -22,7 +23,6 @@ h2 span {
 }
 
 .alumniSection span {
-  margin-left: 25px;
   font-weight: 800;
 }
 
@@ -93,7 +93,7 @@ h2 span {
   // }
 
 
-  h2 {
+  .Alumni h2 {
     font-size: 2.5rem;
   }
 
@@ -127,7 +127,7 @@ h2 span {
     margin-top: 1.7rem;
   }
 
-  h2 {
+  .Alumni h2 {
     font-size: 2rem;
   }
   // .circle {

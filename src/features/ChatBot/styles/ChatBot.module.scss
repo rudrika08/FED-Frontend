@@ -12,7 +12,7 @@
 }
 
 .popup {
-  z-index: 2;
+  z-index: 50;
   position: fixed;
   top: 0;
   left: 0;
@@ -106,7 +106,12 @@ header{
     margin-top: 5px;
     font-size: 2rem;
     cursor: pointer;
+    color:white;
+}
+
+.close:hover{
     color: #D14206;
+    transition:.2s linear;
 }
 
 .fed{
@@ -153,7 +158,6 @@ hr{
     margin-top: 10px;
     font-size: 0.95rem;
     padding: 0.5rem;
-    color:black;
     border-radius: 10px;
     max-width: 80%;
     position: relative;
@@ -168,6 +172,7 @@ hr{
     text-align: left;
     background-color: #e0e0e0;
     align-self: flex-end;
+    color: #000;
 }
 
 .usermessage:after {
@@ -185,7 +190,7 @@ hr{
 .botmessage {
     text-align: left;
     background: linear-gradient(260deg, rgba(255, 190, 11, 0.84) -29.7%, rgba(244, 43, 3, 0.84) 128.34%);
-    color:black;
+    color: #fff;
 }
 
 .botmessage:after {

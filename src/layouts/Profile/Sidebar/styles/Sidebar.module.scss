@@ -28,7 +28,7 @@
 }
 .profilePhoto {
   width: 148px;
-  height:auto;
+  height: auto;
   border-radius: 19px;
   object-fit: cover;
   // margin-bottom: 10px;
@@ -80,6 +80,7 @@
   flex-direction: row;
   align-items: center;
 }
+
 
 .menuItem:hover {
   background-color: #ffffff;

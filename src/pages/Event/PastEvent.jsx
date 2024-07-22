@@ -24,7 +24,7 @@ const PastEvent = () => {
         // setPastEvents(response.data.filter(event => !event.ongoingEvent));
 
         // using local JSON data
-        const localEventData = events.filter(event => !event.info.ongoingEvent);
+        const localEventData = events.filter(event => event.info.isEventPast);
         setPastEvents(localEventData);
         setLoading(false);
 

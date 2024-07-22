@@ -1,15 +1,18 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
 import style from "./styles/EventCard.module.scss";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import { Link } from "react-router-dom";
-import Share from '../../features/Modals/Event/ShareModal/ShareModal';
+import { Link, useNavigate } from "react-router-dom";
+import Share from "../../features/Modals/Event/ShareModal/ShareModal";
 import shareOutline from "../../assets/images/shareOutline.svg";
 import groupIcon from "../../assets/images/groups.svg";
 import rupeeIcon from "../../assets/images/rupeeIcon.svg";
-import ciLock from '../../assets/images/lock.svg'
+import ciLock from "../../assets/images/lock.svg";
 import { PiClockCountdownDuotone } from "react-icons/pi";
+import { IoIosLock } from "react-icons/io";
+import { Button } from "../Core";
+import AuthContext from "../../context/AuthContext";
 
 const EventCard = (props) => {
   const {
@@ -22,13 +25,17 @@ const EventCard = (props) => {
     showRegisterButton = true,
     additionalContent,
     aosDisable,
+    onEdit,
+    enableEdit,
   } = props;
 
   const { info } = data;
-
+  const authCtx = useContext(AuthContext);
   const [isOpen, setOpen] = useState(false);
+  const [isHovered, setisHovered] = useState(false);
   const [remainingTime, setRemainingTime] = useState("");
   const [btnTxt, setBtnTxt] = useState("Register Now");
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (aosDisable) {
@@ -96,14 +103,23 @@ const EventCard = (props) => {
   };
 
   useEffect(() => {
-    if (info.registrationClosed) {
+    if (info.isRegistrationClosed) {
       setBtnTxt("Closed");
     } else if (!remainingTime) {
       setBtnTxt("Register Now");
     } else {
       setBtnTxt(remainingTime);
     }
-  }, [info.registrationClosed, remainingTime]);
+  }, [info.isRegistrationClosed, remainingTime]);
+
+  useEffect(() => {
+    if (authCtx.isLoggedIn) {
+      const isRegistered = authCtx.user.regForm.includes(data.id);
+      if (isRegistered) {
+        setBtnTxt("Already Registered");
+      }
+    }
+  }, [authCtx.isLoggedIn, authCtx.user.regForm, btnTxt, navigate, data.id]);
 
   const handleShare = () => {
     setOpen(!isOpen);
@@ -113,32 +129,72 @@ const EventCard = (props) => {
     setOpen(false);
   };
 
+  const handleForm = () => {
+    if (authCtx.isLoggedIn) {
+      navigate("/Events/" + data._id + "/Form");
+    } else {
+      sessionStorage.setItem('prevPage', window.location.pathname);
+      navigate('/login');
+    }
+  };
+
   const url = window.location.href;
 
   return (
     <>
-      <div className={style.card} style={customStyles.card} data-aos={aosDisable ? "" : "fade-up"}>
-        <div className={style.backimg} style={customStyles.backimg} onClick={onOpen}>
-          <img srcSet={info.imageURL} className={style.img} style={customStyles.img} alt="Event" />
-          <div className={style.date} style={customStyles.date}>{formattedDate}</div>
+      <div
+        onMouseEnter={() => setisHovered(true)}
+        onMouseLeave={() => setisHovered(false)}
+        className={style.card}
+        style={customStyles.card}
+        data-aos={aosDisable ? "" : "fade-up"}
+      >
+        <div
+          className={style.backimg}
+          style={customStyles.backimg}
+          onClick={onOpen}
+        >
+          <img
+            srcSet={info.eventImg}
+            className={style.img}
+            style={customStyles.img}
+            alt="Event"
+          />
+          <div className={style.date} style={customStyles.date}>
+            {formattedDate}
+          </div>
           {type === "ongoing" && showShareButton && (
-            <div className={style.share} style={customStyles.share} onClick={handleShare}>
-              <img className={style.shareIcon} style={customStyles.shareIcon} src={shareOutline} alt="Share" />
+            <div
+              className={style.share}
+              style={customStyles.share}
+              onClick={handleShare}
+            >
+              <img
+                className={style.shareIcon}
+                style={customStyles.shareIcon}
+                src={shareOutline}
+                alt="Share"
+              />
             </div>
           )}
         </div>
         <div className={style.backbtn} style={customStyles.backbtn}>
           <div className={style.eventname} style={customStyles.eventname}>
-            {info.eventName}
+            {info.eventTitle}
             {type === "ongoing" && (
               <p>
                 <img src={groupIcon} alt="Group" />
-                Team size: {info.minSize}{"-"}{info.maxSize} {" || "}
+                <span style={{ color: "white", paddingRight: "5px" }}>
+                  Team size:
+                </span>{" "}
+                {info.minTeamSize}
+                {"-"}
+                {info.maxTeamSize} {" | "}
                 <div className={style.price} style={customStyles.price}>
-                  {info.eventPrice ? (
+                  {info.eventAmount ? (
                     <p style={customStyles.eventnamep}>
                       <img src={rupeeIcon} alt="Rupee" />
-                      {info.eventPrice}
+                      {info.eventAmount}
                     </p>
                   ) : (
                     <p style={{ color: "inherit" }}>Free</p>
@@ -148,18 +204,29 @@ const EventCard = (props) => {
             )}
           </div>
           {type === "ongoing" && showRegisterButton && (
-            <div>
+            <div style={{ fontSize: ".85rem", color: "white" }}>
               <button
                 className={style.registerbtn}
                 style={{
                   ...customStyles.registerbtn,
                   cursor: btnTxt === "Register Now" ? "pointer" : "not-allowed",
                 }}
-                disabled={btnTxt === "Closed"}
+                onClick={handleForm}
+                disabled={btnTxt === "Closed" || btnTxt === "Already Registered"}
               >
                 {btnTxt === "Closed" ? (
                   <>
-                    <div style={{fontSize:"0.8rem"}}>Closed</div> <img src={ciLock} alt="" style={{marginLeft:"0px"}} />
+                    <div style={{ fontSize: "0.85rem" }}>Closed</div>{" "}
+                    <IoIosLock
+                      alt=""
+                      style={{ marginLeft: "0px", fontSize: "1rem" }}
+                    />
+                  </>
+                ) : btnTxt === "Already Registered" ? (
+                  <>
+                    <div style={{ fontSize: "0.85rem" }}>
+                      Registered
+                    </div>{" "}
                   </>
                 ) : (
                   <>
@@ -168,8 +235,7 @@ const EventCard = (props) => {
                         <PiClockCountdownDuotone /> {btnTxt}
                       </>
                     ) : (
-                      <Link to={'/Events/'+data.id+"/Form"}><div style={{fontSize:"0.8rem"}}>{btnTxt}</div></Link>
-                   
+                      "Register Now"
                     )}
                   </>
                 )}
@@ -179,21 +245,51 @@ const EventCard = (props) => {
         </div>
         <div className={style.backtxt} style={customStyles.backtxt}>
           <div style={{ display: "flex", alignItems: "center" }}>
-            <div className={style.EventDesc} style={customStyles.EventDesc}>{info.description}</div>
-            <Link to={modalpath + data.id}>
-              <span onClick={handleCloseShare} className={style.seeMore} style={{
-                ...customStyles.seeMore,
-                marginLeft: "auto",
-                whiteSpace: "nowrap"
-              }}>
-                See More...
+            <div className={style.EventDesc} style={customStyles.EventDesc}>
+              {info.eventdescription}
+            </div>
+            <Link to={modalpath + data._id}>
+              <span
+                onClick={handleCloseShare}
+                className={style.seeMore}
+                style={{
+                  ...customStyles.seeMore,
+                  marginLeft: "auto",
+                  whiteSpace: "nowrap",
+                  height: "fit-content",
+                }}
+              >
+                See More
               </span>
             </Link>
           </div>
           {additionalContent && <div>{additionalContent}</div>}
         </div>
       </div>
-      {isOpen && type === "ongoing" && <Share onClose={handleShare} urlpath={url + "/" + data.id} />}
+      {isOpen && type === "ongoing" && (
+        <Share onClose={handleShare} urlpath={url + "/" + data._id} />
+      )}
+      {enableEdit && isHovered && authCtx.user.access==="ADMIN" && (
+        <div
+          onMouseEnter={() => setisHovered(true)}
+          onMouseLeave={() => setisHovered(false)}
+          className={style.hovered}
+        >
+          <Button
+            onClick={(e) => {
+              e.preventDefault();
+              if (onEdit) {
+                authCtx.eventData = data;
+                onEdit();
+              }
+            }}
+            variant="secondary"
+          >
+            Edit Event
+          </Button>
+          <Button variant="secondary">Delete Event</Button>
+        </div>
+      )}
     </>
   );
 };
@@ -207,13 +303,9 @@ EventCard.propTypes = {
   showShareButton: PropTypes.bool,
   showRegisterButton: PropTypes.bool,
   additionalContent: PropTypes.node,
-};
-
-EventCard.defaultProps = {
-  customStyles: {},
-  showShareButton: true,
-  showRegisterButton: true,
-  additionalContent: null,
+  aosDisable: PropTypes.bool,
+  onEdit: PropTypes.func,
+  enableEdit: PropTypes.bool,
 };
 
 export default EventCard;

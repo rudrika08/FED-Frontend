@@ -1,23 +1,19 @@
-import React, { useState, useEffect, useRef, useContext } from "react";
+import React, { useState, useContext } from "react";
 import PropTypes from "prop-types";
-import { Link, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Input from "../../components/Core/Input";
 import Button from "../../components/Core/Button";
-// import bcrypt from "bcryptjs-react";
-
 import Load from "../../microInteraction/Load/Load";
 import axios from "axios";
-import CPCss from "./style/CompleteProfile.module.scss";
+import styles from "./style/CompleteProfile.module.scss";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import AuthContext from "../../context/AuthContext";
 
-function CompleteProfile(props) {
+function CompleteProfile() {
   const [loadingEffect, setLoad] = useState(false);
-  // const [DropShow, hideDrop] = useState(false);
   const [year, setYear] = useState("");
   const [showUser, setUser] = useState({
     email: "",
-    Password: "",
     name: "",
     RollNumber: "",
     School: "",
@@ -26,19 +22,25 @@ function CompleteProfile(props) {
     img: "",
     year: "",
   });
-
-  // var setError = props.setError;
+  const [errors, setErrors] = useState({});
 
   const authCtx = useContext(AuthContext);
-
   const navigate = useNavigate();
+  const location = useLocation();
 
-  const DataInp = (name, value) => {
-    setUser({ ...showUser, [name]: value });
-  };
+  const userData = location.state?.data || {};
+  const { name = "", email = "", picture: img = "" } = userData;
 
-  const handleChange = (event) => {
-    setYear(event.target.value);
+  const validate = () => {
+    const newErrors = {};
+    if (!showUser.RollNumber) newErrors.RollNumber = "Roll Number is required";
+    if (!showUser.School) newErrors.School = "School is required";
+    if (!showUser.College) newErrors.College = "College is required";
+    if (!showUser.MobileNo || !/^\d{10}$/.test(showUser.MobileNo)) newErrors.MobileNo = "Enter a valid 10-digit Mobile Number";
+    if (!year) newErrors.year = "Year is required";
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
   };
 
   const options = [
@@ -47,122 +49,137 @@ function CompleteProfile(props) {
     { value: "3rd", text: "3rd year" },
     { value: "4th", text: "4th year" },
     { value: "5th", text: "5th year" },
+    { value: "Passout", text: "Passout" },
   ];
 
   const handleCreateProfile = async (e) => {
     e.preventDefault();
-    console.log(showUser);
+    if (!validate()) return;
 
-    const { RollNumber, School, College, MobileNo, tandC } = showUser;
+    setLoad(true);
 
-    // if (
-    //   props.data.name !== "" &&
-    //   props.data.id !== "" &&
-    //   props.data.email !== "" &&
-    //   props.data.picture !== "" &&
-    //   RollNumber !== "" &&
-    //   School !== "" &&
-    //   College !== "" &&
-    //   MobileNo.length === 10 &&
-    //   tandC
-    // ) {
-    //   setLoad(true);
-    alert("profile created");
-
-    const password = props.data.id;
-    console.log(props.data.email);
+    const { RollNumber, School, College, MobileNo } = showUser;
 
     const userObject = {
-      name: props.data.name,
-      email: props.data.email,
-      password: password,
-      img: props.data.picture,
+      name,
+      email,
+      img,
       RollNumber,
       School,
       College,
       MobileNo,
       year,
     };
-    console.log(userObject);
 
-    // try {
-    //   const response = await axios.post(`/auth/googleregister`, userObject);
+    try {
+      // API call
+      // const response = await axios.post(`/auth/googleregister`, userObject);
+      // if (response.data.status === true) {
+      //   authCtx.login(
+      //     response.data.user.name,
+      //     response.data.user.email,
+      //     response.data.user.img,
+      //     response.data.user.RollNumber,
+      //     response.data.user.School,
+      //     response.data.user.College,
+      //     response.data.user.MobileNo,
+      //     response.data.user.selected,
+      //     response.data.user.regForm,
+      //     Number(response.data.user.access),
+      //     response.data.token,
+      //     10800000
+      //   );
 
-    //   if (response.data.status === true) {
-    //     authCtx.login(
-    //       response.data.user.name,
-    //       response.data.user.email,
-    //       response.data.user.img,
-    //       response.data.user.RollNumber,
-    //       response.data.user.School,
-    //       response.data.user.College,
-    //       response.data.user.MobileNo,
-    //       response.data.user.selected,
-    //       response.data.user.regForm,
-    //       Number(response.data.user.access),
-    //       response.data.token,
-    //       10800000
-    //     );
+      // userObject for demonstration
+      authCtx.login(
+        userObject.name,
+        userObject.email,
+        userObject.img,
+        userObject.RollNumber,
+        userObject.School,
+        userObject.College,
+        userObject.MobileNo,
+        userObject.year,
+        "someRegForm",
+        "USER",
+        "someToken",
+        7200000
+      );
 
-    //     props.set(false);
-
-    //     if (authCtx.target == "" || (authCtx.target == null) == "") {
-    //       // navigate("/MyProfile");
-    //       window.history.back();
-    //     } else {
-    //       navigate(`/${authCtx.target}`);
-    //       authCtx.settarget(null);
-    //     }
-
-    //     return;
-    //   } else {
-    //     setLoad(false);
-    //   }
-    // } catch (error) {
-    //   setLoad(false);
-
-    //   if (error.response.data.code === 1) {
-    //     console.log("error code 1");
-    //   }
-    //   if (error.response.data.code === 2) {
-    //     console.log("error code 2");
-    //   }
-    // }
-    // } else {
-    //   setLoad(false);
-
-    // if (MobileNo.length !== 10) {
-    //   console.log("enter correct mobile no");
-    // } else {
-    //   console.log("fill all details");
-    // }
-
-    // }
+      alert("Profile created successfully");
+      navigate("/profile"); // Navigate to MyProfile after successful registration
+    } catch (error) {
+      console.error("Error during profile creation:", error);
+      alert("An error occurred while creating your profile. Please try again.");
+    } finally {
+      setLoad(false);
+    }
   };
 
   return (
-    <div
-      className={CPCss.mDiv}
-      id={
-        Object.keys(props.data).length > 0 ? CPCss.showCreate : CPCss.hideCreate
-      }
-    >
-      <div className={CPCss.mDivCon}>
-        <div className={CPCss.ArrowBackIcon} onClick={() => props.set(false)}>
+    <div className={styles.mDiv}>
+      <div className={styles.mDivCon}>
+        <div className={styles.ArrowBackIcon} onClick={() => navigate(-1)}>
           <ArrowBackIcon />
         </div>
-        <div className={CPCss.BackGround}>
+        <div className={styles.circle}></div>
+        <div className={styles.circle1}></div>
+        <div className={styles.BackGround}>
           <div>
-            <p className={CPCss.CreateProfile}>Create Profile</p>
-            <p className={CPCss.Please}>Please enter Your Details</p>
+            <p
+              className={styles.CreateProfile}
+              style={{
+                background: "var(--primary)",
+                padding: "5px 0px 5px 0px",
+                WebkitBackgroundClip: "text",
+                color: "transparent",
+                alignItems: "center",
+              }}
+            >
+              Create Profile
+            </p>
+            <p className={styles.Please}>Please enter Your Details</p>
           </div>
 
-          <form className={CPCss.FormTag}>
-            {/* college */}
+          <form className={styles.FormTag} onSubmit={handleCreateProfile}>
+            <Input
+              type="text"
+              placeholder="Enter Roll Number"
+              label="Roll Number"
+              name="RollNumber"
+              onChange={(e) => setUser((prev) => ({ ...prev, [e.target.name]: e.target.value }))}
+              required
+              style={{ width: "100%" }}
+              error={errors.RollNumber}
+            />
 
             <Input
               type="select"
-              placeholder="College Name"
+              placeholder="Select Year"
+              label="Year"
+              name="year"
+              options={options.map(option => ({ label: option.text, value: option.value }))}
+              value={year}
+              onChange={(value) => setYear(value)}
+              required
+              style={{ width: "100%" }}
+              error={errors.year}
+            />
+
+            <Input
+              type="text"
+              placeholder="Enter School"
+              label="School"
+              name="School"
+              onChange={(e) => setUser((prev) => ({ ...prev, [e.target.name]: e.target.value }))}
+              required
+              style={{ width: "100%" }}
+              error={errors.School}
+            />
+
+            <Input
+              type="select"
+              placeholder="Select College"
               label="College"
               name="College"
               options={[
@@ -172,83 +189,35 @@ function CompleteProfile(props) {
                 },
               ]}
               value={showUser.College}
-              onChange={(value) => DataInp("College", value)}
+              onChange={(value) => setUser((prev) => ({ ...prev, College: value }))}
               required
               style={{ width: "96%" }}
+              error={errors.College}
             />
 
-            {/* Roll number */}
-
             <Input
-              type="text"
-              placeholder="Roll Number"
-              label="Roll Number"
-              name="RollNumber"
-              onChange={(e) => DataInp(e.target.name, e.target.value)}
-              required
-              style={{ width: "100%" }}
-            />
-
-            {/* school */}
-            <Input
-              type="text"
-              placeholder="School"
-              label="School"
-              name="School"
-              onChange={(e) => DataInp(e.target.name, e.target.value)}
-              required
-              style={{ width: "100%" }}
-            />
-
-            {/* Phone Number */}
-
-            <Input
-              type="text"
-              placeholder="1234567890"
+              type="number"
+              placeholder="Enter Mobile Number"
               label="Mobile"
               name="MobileNo"
-              onChange={(e) => DataInp(e.target.name, e.target.value)}
+              onChange={(e) => setUser((prev) => ({ ...prev, [e.target.name]: e.target.value }))}
               required
               style={{ width: "100%" }}
+              error={errors.MobileNo}
             />
 
-            <div>
-              <label style={{ marginLeft: "2%" }} htmlFor="year">
-                year
-              </label>
-              <select
-                value={year}
-                name="year"
-                onChange={handleChange}
-                className={CPCss.year}
-              >
-                <option hidden>Year</option>
-                {options.map((option) => (
-                  <option key={option.value} value={option.value}>
-                    {option.text}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            <div
-              style={{
-                marginLeft: "8px",
-              }}
-            >
+            <div style={{ marginLeft: "8px" }}>
               <Button
                 style={{
                   width: "102%",
-                  backgroundColor: "#ff6b00",
+                  background: "var(--primary)",
                   color: "#fff",
                   height: "40px",
                   marginTop: "20px",
                   fontSize: "1rem",
                   cursor: "pointer",
-                  border: "1px solid #fff",
                 }}
                 type="submit"
-                onClick={handleCreateProfile}
               >
                 {loadingEffect ? <Load /> : "Create Profile"}
               </Button>
@@ -260,6 +229,9 @@ function CompleteProfile(props) {
   );
 }
 
-CompleteProfile.propTypes = {};
+CompleteProfile.propTypes = {
+  data: PropTypes.object,
+  set: PropTypes.func,
+};
 
 export default CompleteProfile;

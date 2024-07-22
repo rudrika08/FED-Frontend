@@ -2,18 +2,19 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import styles from "./styles/ViewEvent.module.scss";
 import AOS from "aos";
-import 'aos/dist/aos.css';
-import {Button, EventCard} from "../../../../../components";
-import FormData from "../../../../../data/FormData.json"
-
+import "aos/dist/aos.css";
+import { Button, EventCard } from "../../../../../components";
+import FormData from "../../../../../data/FormData.json";
 
 // AOS.init({
 //   disable:true
 // })
-function ViewEvent() {
+function ViewEvent({ handleChangePage }) {
   const [activePage, setActivePage] = useState("View Events");
   const [pastEvents, setPastEvents] = useState([]);
-  const{events}=FormData;
+  const[ongoingEvent,setOngoingEvent]=useState([]);
+  const { events } = FormData;
+
   useEffect(() => {
     // Fetch event data using axios
     const fetchEventData = async () => {
@@ -21,9 +22,8 @@ function ViewEvent() {
         // const response = await axios.get("/api/form/getAllForms");
         // const fetchedEvents = response.data;
         // setPastEvents(fetchedEvents);
-        const testEvents=events;
+        const testEvents = events;
         setPastEvents(testEvents);
-
       } catch (error) {
         console.error("Error fetching event data:", error);
       }
@@ -32,8 +32,8 @@ function ViewEvent() {
     fetchEventData();
   }, []);
 
-   // Initialize AOS
-   useEffect(() => {
+  // Initialize AOS
+  useEffect(() => {
     AOS.init();
   }, []);
 
@@ -41,8 +41,8 @@ function ViewEvent() {
     eventname: {
       fontSize: "1rem",
     },
-    date:{
-        fontSize:"1rem",
+    date: {
+      fontSize: "1rem",
     },
     registerbtn: {
       width: "auto",
@@ -63,17 +63,30 @@ function ViewEvent() {
       <form className={styles.form}>
         {activePage === "View Events" && (
           <div className={styles.eventList}>
+            {ongoingEvent.map((event, index) => (
+              <div style={{ width: "23rem", height: "auto" }} key={index}>
+                <EventCard
+                  data={event}
+                  customStyles={customStyles}
+                  type="ongoing"
+                   modalpath='/profile/Events/'
+                  isPastpage={true}
+                />
+              </div>
+            ))}
             {pastEvents.map((event, index) => (
               <div style={{ width: "23rem", height: "auto" }} key={index}>
                 <EventCard
                   data={event}
                   customStyles={customStyles}
                   type="past"
-                   modalpath='/profile/Events/'
+                  modalpath="/profile/Events/"
                   isPastpage={true}
                   aosDisable={true}
+                  onEdit={() => handleChangePage("Form")}
+                  enableEdit={true}
                 />
-                </div>
+              </div>
             ))}
           </div>
         )}

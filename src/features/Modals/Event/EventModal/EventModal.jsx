@@ -1,29 +1,42 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import EventCardModal from "./styles/EventModal.module.scss";
 import groupIcon from "../../../../assets/images/groups.svg";
 import rupeeIcon from "../../../../assets/images/rupeeIcon.svg";
 import { X } from "lucide-react";
 import { useNavigate, useParams } from "react-router-dom";
 // import eventData from "../../../../data/eventData.json";
-import FormData from "../../../../data/FormData.json"
+import FormData from "../../../../data/FormData.json";
 import shareOutline from "../../../../assets/images/shareOutline.svg";
 import Share from "../../../../features/Modals/Event/ShareModal/ShareModal";
-import AOS from 'aos';
-import 'aos/dist/aos.css';
+import AOS from "aos";
+import "aos/dist/aos.css";
 import { CiLock } from "react-icons/ci";
 import { PiClockCountdownDuotone } from "react-icons/pi";
+import AuthContext from "../../../../context/AuthContext";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
+import { SkeletonTheme } from "react-loading-skeleton";
+import { IoIosLock } from "react-icons/io";
 
 const EventModal = (props) => {
-    const{onClosePath}=props;
+  const { onClosePath } = props;
   const navigate = useNavigate();
   const { eventId } = useParams();
-  const {events}=FormData;
-  const data = events.find((event) => event.id === eventId);
+  // console.log(eventId);
+  // console.log(FormData);
+  const { events } = FormData;
+  // console.log(events);
+  const data = events.find((event) => event._id === parseInt(eventId));
+  console.log(data);
+
   // const buttonText=data.ongoingEvent?'Register Now':'Registration closed';
-const{info}=data;
+  const { info } = data;
 
   const [remainingTime, setRemainingTime] = useState("");
   const [btnTxt, setBtnTxt] = useState("Register Now");
+  const authCtx = useContext(AuthContext);
+
+  // console.log(info)
 
   useEffect(() => {
     if (info.regDateAndTime) {
@@ -33,9 +46,7 @@ const{info}=data;
     }
   }, [info.regDateAndTime]);
 
-
   //Calculating data of event
-
   const dateStr = info.eventDate;
   const date = new Date(dateStr);
 
@@ -59,7 +70,6 @@ const{info}=data;
   const month = date.toLocaleDateString("en-GB", { month: "long" });
 
   const formattedDate = `${dayWithSuffix} ${month}`;
-
 
   const calculateRemainingTime = () => {
     const regStartDate = new Date(info.regDateAndTime);
@@ -88,18 +98,26 @@ const{info}=data;
 
   // Update button text based on registration status and remaining time
   useEffect(() => {
-    if (info.registrationClosed) {
+    if (info.isRegistrationClosed) {
       setBtnTxt("Closed");
     } else if (!remainingTime) {
       setBtnTxt("Register Now");
     } else {
       setBtnTxt(remainingTime);
     }
-  }, [info.registrationClosed, remainingTime]);
+  }, [info.isRegistrationClosed, remainingTime]);
+
+  useEffect(() => {
+    if (authCtx.isLoggedIn) {
+      const isRegistered = authCtx.user.regForm.includes(data._id);
+      if (isRegistered) {
+        setBtnTxt("Already Registered");
+      }
+    }
+  }, [authCtx.isLoggedIn, authCtx.user.regForm, btnTxt, navigate, data._id]);
 
 
   const handleModalClose = () => {
-
     navigate(onClosePath);
   };
 
@@ -107,6 +125,15 @@ const{info}=data;
 
   const handleShare = () => {
     setOpen(!isOpen);
+  };
+
+  const handleForm = () => {
+    if (authCtx.isLoggedIn) {
+      navigate("/Events/" + data._id + "/Form");
+    } else {
+      sessionStorage.setItem('prevPage', window.location.pathname);
+      navigate('/login');
+    }
   };
 
   const url = window.location.href;
@@ -117,42 +144,55 @@ const{info}=data;
         position: "fixed",
         width: "100%",
         height: "100%",
-        
 
         zIndex: "10",
-    
+
         left: "0",
         top: "0",
       }}
     >
       <div
         style={{
-         position:'absolute',
-         top:'0',
-         left:'0',
+          position: "absolute",
+          top: "0",
+          left: "0",
           width: "100%",
           height: "100%",
-          background: 'rgba(0, 0, 0, 0.5)',
+          background: "rgba(0, 0, 0, 0.5)",
           backdropFilter: "blur(4px)",
-          zIndex:'5',
-     
+          zIndex: "5",
+          display: "flex",
+          justifyContent: "center",
         }}
       >
-
-        <div style={{
-          zIndex:'10',
-          borderRadius:'10px',
-          padding:"2rem",
-          position:"relative",
-          display:'flex',
-          justifyContent:"center",
-          alignItems:"center",
-          marginTop:".3rem",
-        }}>
-
+        <div
+          style={{
+            zIndex: "10",
+            borderRadius: "10px",
+            padding: "2rem",
+            position: "relative",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            marginTop: ".3rem",
+          }}
+        >
           {data && (
             <>
-              <div className={EventCardModal.card}   data-aos="zoom-in-up" data-aos-duration="500">
+              <SkeletonTheme baseColor="#313131" highlightColor="#525252">
+                <Skeleton height={180} style={{ marginBottom: "1rem" }} />
+                <Skeleton
+                  count={3}
+                  height={20}
+                  width="100%"
+                  style={{ marginBottom: "0.5rem" }}
+                />
+              </SkeletonTheme>
+              <div
+                className={EventCardModal.card}
+                data-aos="zoom-in-up"
+                data-aos-duration="500"
+              >
                 <div
                   style={{
                     position: "relative",
@@ -166,28 +206,32 @@ const{info}=data;
                   </button>
                   <div className={EventCardModal.backimg}>
                     <img
-                      srcSet={info.imageURL}
+                      srcSet={info.eventImg}
                       className={EventCardModal.img}
                       alt="Event"
                     />
                     <div className={EventCardModal.date}>{formattedDate}</div>
-                    {info.ongoingEvent && <div className={EventCardModal.share} onClick={handleShare}>
-                      <img
-                        className={EventCardModal.shareIcon}
-                        src={shareOutline}
-                        alt="Share"
-                      />
-                    </div>
-}
+                    {info.ongoingEvent && (
+                      <div
+                        className={EventCardModal.share}
+                        onClick={handleShare}
+                      >
+                        <img
+                          className={EventCardModal.shareIcon}
+                          src={shareOutline}
+                          alt="Share"
+                        />
+                      </div>
+                    )}
                   </div>
                   <div className={EventCardModal.backbtn}>
                     <div className={EventCardModal.eventname}>
-                      {info.eventName}
+                      {info.eventTitle}
                       <div className={EventCardModal.price}>
-                        {info.eventPrice ? (
+                        {info.eventAmount ? (
                           <p>
                             <img src={rupeeIcon} alt="Rupee" />
-                            {info.eventPrice}
+                            {info.eventAmount}
                           </p>
                         ) : (
                           <p style={{ color: "inherit" }}>Free</p>
@@ -195,46 +239,62 @@ const{info}=data;
                       </div>
                       <p>
                         <img src={groupIcon} alt="Group" />
-                        Team size: {info.minSize}{" - "}{info.maxSize}
+                        Team size: {info.minTeamSize}
+                        {" - "}
+                        {info.maxTeamSize}
                       </p>
                     </div>
                     <div className={EventCardModal.registerbtn}>
-                      <button className={EventCardModal.regbtn}>
-                       {
-                        info.ongoingEvent ?(<>
-                                 {btnTxt === "Closed" ? (
-                  <>
-                   Registration Closed <CiLock style={{ marginLeft: "" }} />
-                  </>
-                ) : (
-                  <>
-                    {remainingTime ? (
-                      <>
-                        <PiClockCountdownDuotone /> {btnTxt}
-                      </>
-                    ) : (
-                      btnTxt
-                    )}
-                  </>
-                )}
-                        </>):(
+                      <button
+                        className={EventCardModal.registerbtn}
+                        style={{
+                          cursor:
+                            btnTxt === "Register Now"
+                              ? "pointer"
+                              : "not-allowed",
+                        }}
+                        onClick={handleForm}
+                        disabled={
+                          btnTxt === "Closed" || btnTxt === "Already Registered"
+                        }
+                      >
+                        {btnTxt === "Closed" ? (
+                          <>
+                            <div style={{ fontSize: "0.85rem" }}>Registration Closed</div>{" "}
+                            <IoIosLock
+                              alt=""
+                              style={{ marginLeft: "0px", fontSize: "1.2rem" }}
+                            />
+                          </>
+                        ) : btnTxt === "Already Registered" ? (
+                          <>
+                            <div style={{ fontSize: "0.85rem" }}>
+                              Already Registered
+                            </div>{" "}
+                          </>
+                        ) : (
+                          <>
+                            {remainingTime ? (
                               <>
-                              Registration Closed <CiLock style={{ marginLeft: "" }} />
-                             </>
-                        )
-                       }
+                                <PiClockCountdownDuotone /> {btnTxt}
+                              </>
+                            ) : (
+                              "Register Now"
+                            )}
+                          </>
+                        )}
                       </button>
                     </div>
                   </div>
                   <div className={EventCardModal.backtxt}>
-                    {info.description}
+                    {info.eventdescription}
                   </div>
                 </div>
               </div>
               {isOpen && <Share onClose={handleShare} urlpath={url} />}
             </>
           )}
-          </div>
+        </div>
         {/* </div> */}
       </div>
     </div>
