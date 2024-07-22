@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import styles from "./styles/Signup.module.scss";
+import styles from "./style/Signup.module.scss";
 
 import { useGoogleLogin } from "@react-oauth/google";
 import axios from "axios";
