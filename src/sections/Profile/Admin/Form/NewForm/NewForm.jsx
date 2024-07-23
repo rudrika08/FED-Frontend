@@ -36,10 +36,9 @@ function NewForm() {
   const [isVisibility, setisVisibility] = useState(true);
   const authCtx = useContext(AuthContext);
   const [data, setdata] = useState({
-
     _id: nanoid(),
     eventTitle: "",
-    eventdescription:"",
+    eventdescription: "",
     eventImg: "",
     eventDate: "",
     eventType: "Free",
@@ -50,7 +49,7 @@ function NewForm() {
     eventAmount: "",
     eventMaxReg: "",
     relatedEvent: "",
-    participationType : "",
+    participationType: "",
     maxTeamSize: "",
     minTeamSize: "",
     regDateAndTime: "",
@@ -962,7 +961,9 @@ function NewForm() {
               className={styles.formInput}
               label="Event Priority"
               value={data.eventPriority}
-              onChange={(e) => setdata({ ...data, eventPriority: e.target.value })}
+              onChange={(e) =>
+                setdata({ ...data, eventPriority: e.target.value })
+              }
             />
             <Input
               placeholder="Open Date & Time"
@@ -1013,7 +1014,9 @@ function NewForm() {
               type="number"
               value={data.eventMaxReg}
               containerStyle={{ marginTop: "12px" }}
-              onChange={(e) => setdata({ ...data, eventMaxReg: e.target.value })}
+              onChange={(e) =>
+                setdata({ ...data, eventMaxReg: e.target.value })
+              }
             />
           </div>
         </div>
