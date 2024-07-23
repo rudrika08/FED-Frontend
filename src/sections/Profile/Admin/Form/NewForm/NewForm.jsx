@@ -227,15 +227,27 @@ function NewForm() {
 
   const onSaveEvent = () => {
     if (isValidEvent()) {
-      const form = {
-        info: {
-          ...data,
-        },
-        sections,
-      };
+      const newSections = constructForPreview();
+      const form = new FormData();
+
+      Object.keys(data).forEach((key) => {
+        const value = data[key];
+
+        if (typeof value === "object" && value !== null) {
+          if (Array.isArray(value)) {
+            form.append(key, JSON.stringify(value));
+          } else {
+            form.append(key, value);
+          }
+        } else {
+          form.append(key, value);
+        }
+      });
+
+      form.append("sections", JSON.stringify(newSections));
 
       if (authCtx.eventData) {
-        form.id = authCtx.eventData?.id;
+        form.append("id", authCtx.eventData?.id);
       }
 
       console.log("form", form);
