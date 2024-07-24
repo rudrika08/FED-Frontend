@@ -1,5 +1,6 @@
 .mainPreview {
   display: flex;
+
   flex-direction: column;
   top: 0;
   left: 0;
@@ -19,7 +20,7 @@
   border-radius: 10px;
   width: 70%;
   padding: 1.6em;
-  height: 60%;
+  height: 90%;
   margin: auto;
   z-index: 100;
   overflow-y: scroll;
@@ -37,9 +38,10 @@
 }
 
 .closeBtn{
- position: fixed;
-  top: 5.5rem;
-  right: 12.5rem;
+  position: absolute;
+  width: 65%;
+  display: flex;
+  justify-content: flex-end;
   color: #fff;
   cursor: pointer;
   z-index: 5;
@@ -62,4 +64,16 @@
 .formFieldContainer:active {
   border: 0.5px solid #ff88008c;
   transition: 0.5s ease-in-out;
+}
+
+@media (max-width: 480px){
+    .previewContainer{
+      height: 65%;
+      width: 90%;
+    }
+
+    .closeBtn{
+      width: 80%;
+    }
+
 }
