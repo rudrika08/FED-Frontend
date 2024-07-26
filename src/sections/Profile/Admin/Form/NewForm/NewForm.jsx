@@ -1052,6 +1052,7 @@ function NewForm() {
               section={section}
               sections={sections}
               setsections={setsections}
+              meta={paymentSection ? [paymentSection] : []}
               showAddButton={!section.isDisabled}
               disabled={section.isDisabled}
             />
@@ -1062,8 +1063,8 @@ function NewForm() {
             section={paymentSection}
             sections={sections}
             setsections={setsections}
-            showAddButton={!paymentSection.isDisabled}
-            disabled={paymentSection.isDisabled}
+            showAddButton={false}
+            disabled={true}
           />
         )}
         {showPreview && (

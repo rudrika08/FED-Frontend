@@ -1,9 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useEffect } from "react";
 import { Hero, About, Sponser, Feedback, Contact } from "../../sections";
 import { ChatBot, LiveEventPopup } from "../../features";
 
 const Home = () => {
-
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -21,6 +20,6 @@ const Home = () => {
       <Feedback />
     </>
   );
-}
+};
 
 export default Home;
