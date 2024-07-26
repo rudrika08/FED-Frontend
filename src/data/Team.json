@@ -8,7 +8,8 @@
         "github": "https://github.com/johndoe",
         "title": "PRESIDENT",
         "know": "Check 123"
-      }
+      },
+      "blurhash" : "L6AcVvDi56n$C,T0IUbF{K-pNG%M"
     },
     {
       "access": "VICEPRESIDENT",
@@ -285,17 +286,7 @@
         "know": "Check 123"
       }
     },
-    {
-      "access": "CREATIVE",
-      "name": "John Doe",
-      "img": "https://png.pngtree.com/png-vector/20190710/ourmid/pngtree-user-vector-avatar-png-image_1541962.jpg",
-      "extra": {
-        "linkedin": "https://www.linkedin.com/in/johndoe",
-        "github": "https://github.com/johndoe",
-        "title": "Executive",
-        "know": "Check 123"
-      }
-    },
+    
     {
       "access": "CREATIVE",
       "name": "John Doe",

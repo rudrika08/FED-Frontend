@@ -45,6 +45,11 @@
   color: #fff;
   cursor: pointer;
   z-index: 5;
+  
+}
+
+.no-scroll {
+  overflow: hidden;
 }
 
 .formFieldContainer {
