@@ -5,10 +5,10 @@
   padding: 15px;
   justify-content: center;
   align-items: center;
-  width: 34vw;
+  width: 30rem;
   display: flex;
   flex-direction: row;
-  margin-top: 20%;
+  margin-top: 10%;
 }
 .form{
   width: auto;
@@ -78,6 +78,13 @@
   cursor: pointer;
 }
 
+.divider{
+  height: 2px;
+  width: 5rem;
+  border-radius: 15px 15px;
+  background-color: #7c7a7a90;
+}
+
 @media (max-width: 800px) {
 
   .sideImage {
@@ -107,11 +114,11 @@
 
 @media (max-width: 1100px) {
   .container {
-     width: 50vw;
+     width: 28rem;
   }
 
   .login {
-    width: 50vw;
+    width: 100%;
   }
 
   .circle {
@@ -135,9 +142,9 @@
 @media (max-width: 500px) {
   .container {
     flex-direction: column;
-    width: 80vw;
+    width: 90vw;
     margin-top: 40%;
-    margin-right: 20px;
+    margin-right: 10px;
   }
   .sideImage {
     display: none;

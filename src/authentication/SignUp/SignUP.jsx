@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import style from "./style/Signup.module.scss";
 import Input from "../../components/Core/Input";
 import Button from "../../components/Core/Button";
@@ -7,13 +7,21 @@ import GoogleSignup from "./GoogleSignup";
 import bcrypt from "bcryptjs";
 import { useEffect } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import OtpInputModal from "../../features/Modals/authentication/OtpInputModal";
+import { RecoveryContext } from "../../context/RecoveryContext";
 // import Load from "../../../microInteraction/Load/Load"
 const SignUP = () => {
   useEffect(() => {
     window.scrollTo(0, -20);
   });
+  const navigate = useNavigate();
+  const [showModal, setShowModal] = useState(false);
+  const [userObject, setUserObject] = useState({});
+  const { setEmail, } = useContext(RecoveryContext);
+  const [OTP, setOTP] = useState('');
+  const [isTandChecked ,setTandC]=useState(false);
 
   // const [loadingEffect, setLoad] = useState(false);
 
@@ -33,8 +41,12 @@ const SignUP = () => {
     setUser({ ...showUser, [name]: value });
   };
 
+  
+
   const handleSignup = async (e) => {
     e.preventDefault();
+
+    
 
     const {
       email,
@@ -48,6 +60,7 @@ const SignUP = () => {
       year,
     } = showUser;
 
+    // setEmail(showUser.email);
     const name = FirstName + " " + LastName;
 
     if (
@@ -60,11 +73,12 @@ const SignUP = () => {
       MobileNo.length >= 10 &&
       email !== "" &&
       Password !== "" &&
-      year !== ""
+      year !== "" &&
+      isTandChecked
     ) {
       // setLoad(true);
       const password = bcrypt.hashSync(Password, import.meta.env.VITE_BCRYPT);
-      const userObject = {
+      const user = {
         name,
         email,
         password,
@@ -75,35 +89,101 @@ const SignUP = () => {
         year,
       };
 
-      try {
-        console.log(userObject);
-        const response = await axios.post(`/api/auth/register`, userObject);
-        console.log(response);
-        if (response.status == 200) {
-          setLoad(false);
-          console.log("verifiatin Link has been sent");
-        }
-      } catch (error) {
-        //  setLoad(false);
+      setUserObject(user);
 
-        if (error.response.data.code === 1) {
-          console.log("user already axist");
-          return;
-        }
-        if (error.response.data.code === 2) {
-          console.log("invalid email format");
-          return;
-        } else {
-          console.log("An unexpected error occured");
-          return;
-        }
+      if (email) {
+            setEmail(email);
+        // if (!emailRegex.test(email)) {
+        // toast.error("please enter a valid email address");
+        //   return;
+        // }
+        const OTP = Math.floor(Math.random() * 9000 + 1000);
+        console.log(OTP);
+        // setOTP(OTP); // Set OTP in context and local storage
+  
+        // setLoading(true);
+
+        // await axios.post('/api/send_otp', { email: user.email, OTP: generatedOTP });
+        setShowModal(true);
+        console.log(showModal);
+    
+        // navigate('/otp')
+        // setLoading(false);
+  
+        // axios
+        //   .post("http://localhost:5000/send_recovery_email", { OTP, recipient_email: email })
+        //   .then(() => {
+        //     setPage("otp");
+        //     toast.success("otp is sent to your email")
+        //     setLoading(false);
+        //   })
+        //   .catch(error => {
+        //     console.error("Error sending recovery email:", error);
+        //     alert("Failed to send recovery email. Please try again later.");
+        //     setLoading(false);
+        //   });
+      } else {
+        alert("Please enter your email");
       }
     } else {
       console.log("invalid details enter again");
+      if(!isTandChecked){
+        console.log("select the checkbox");
+      }
     }
   };
 
+
+  const handleVerifyOTP = async (enteredOTP) => {
+    console.log(userObject);
+    console.log(enteredOTP);
+    // console.log(password);
+    console.log(enteredOTP === String(OTP))
+    setShowModal(false);
+    navigate('/profile');
+    if (enteredOTP === String(OTP)) {
+    
+      try {
+      
+        // const response = await axios.post('/api/verify_otp_signup', { email, OTP: enteredOTP, password,data:userObject });
+        // console.log(response);
+        // if (response.status == 200) {
+        //   setLoad(false);
+        //   console.log("verifiatin Link has been sent");
+        // }
+      } catch (error) {
+        //  setLoad(false);
+
+        // if (error.response.data.code === 1) {
+        //   console.log("user already axist");
+        //   return;
+        // }
+        // if (error.response.data.code === 2) {
+        //   console.log("invalid email format");
+        //   return;
+        // } else {
+        //   console.log("An unexpected error occured");
+        //   return;
+        // }
+      }
+   
+      // Handle successful verification
+    } else {
+      // Handle incorrect OTP
+    }
+  };
+
+  const handleModalClose=()=>{
+    setShowModal(false);
+    }
+
+    const handleCheckBox = () => {
+      setTandC((prevState) => !prevState);
+    };
+    
+
   return (
+    <>
     <div style={{ width: "100vw" }}>
          <Link to={"/"}>
           <div className={style.ArrowBackIcon}>
@@ -288,6 +368,41 @@ const SignUP = () => {
               className={style.input}
               
             />
+
+            <div style={{display:"flex",marginTop:"15px",marginLeft:"5px"}}>
+             <input type="checkbox" style={{height:"17px",width:"17px",cursor:"pointer"}} checked={isTandChecked}  onClick={handleCheckBox} />
+            
+                        <Text
+              style={{
+                fontSize: "0.7rem",
+                textAlign: "center",
+                marginLeft: "5px",
+                textAlign:"left"
+              }}
+            >
+              agree to FED's 
+              <Link to='/TermsAndConditions' style={{ background: "var(--primary)",
+                  WebkitBackgroundClip: "text",
+                  color: "transparent", 
+                  marginLeft:"7px",
+                  marginRight:"7px",
+
+                  }}>
+              Terms and Conditions 
+              </Link>
+              And 
+
+              <Link to='/PrivacyPolicy' style={{ background: "var(--primary)",
+                  WebkitBackgroundClip: "text",
+                  color: "transparent", 
+                  marginLeft:"7px",
+                  }}>
+              FED's Privacy Policy.
+              </Link>
+            </Text>
+
+            </div>
+        
             <Button
               style={{
                 width: "100%",
@@ -322,6 +437,10 @@ const SignUP = () => {
         <div className={style.sideImage}></div>
       </div>
     </div>
+
+    {showModal && <OtpInputModal onVerify={handleVerifyOTP} handleClose={handleModalClose} />}
+
+  </>
   );
 };
 

@@ -12,10 +12,10 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 const Login = () => {
   const navigate = useNavigate();
-  const { setPage } = useContext(RecoveryContext);
+  const { setEmail } = useContext(RecoveryContext);
   const authCtx = useContext(AuthContext);
 
-  const [email, setEmail] = useState("");
+  const [email, setemail] = useState("");
   const [password, setPassword] = useState("");
 
   useEffect(() => {
@@ -60,6 +60,7 @@ const Login = () => {
   };
 
   const handleForgot = () => {
+    setEmail(email);
     navigate('/ForgotPassword')
   };
 
@@ -83,11 +84,11 @@ const Login = () => {
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
-              margin: "20px 0 4px 0",
+              gap:"1rem"
             }}
           >
             <div className={style.divider} />
-            <p style={{ color: "#fff", textAlign: "center" }}>or</p>
+            <p style={{ color: "#fff", textAlign: "center" , marginBottom:"0.2rem" }}>or</p>
             <div className={style.divider} />
           </div>
           <form className={style.form}>
@@ -97,7 +98,7 @@ const Login = () => {
               label="Email"
               name="email"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => setemail(e.target.value)}
               required
               style={{
                 width: "98%",
@@ -121,19 +122,22 @@ const Login = () => {
               style={{
                 fontSize: "0.7rem",
                 cursor: "pointer",
+                marginLeft:"0.5rem"
               }}
+            
             >
               Forget Password?
             </Text>
             <Button
               style={{
-                width: "100%",
+                width: "98%",
                 background: "var(--primary)",
                 color: "#fff",
                 height: "40px",
                 marginTop: "20px",
                 fontSize: "1rem",
                 cursor: "pointer",
+                marginLeft:"0.4rem"
               }}
               onClick={handleLogin}
             >
