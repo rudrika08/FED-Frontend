@@ -8,8 +8,6 @@ import { EventCard } from "../../components";
 import FormData from "../../data/FormData.json"
 import ring from "../../assets/images/ring.svg";
 import { MdKeyboardArrowRight } from "react-icons/md";
-import EventCardSkeleton from "../../layouts/Skeleton/EventCard/EventCardSkeleton";
-import { SkeletonTheme } from "react-loading-skeleton";
 
 const Event = () => {
   useEffect(() => {
@@ -61,28 +59,7 @@ const Event = () => {
         <div className={style.line}></div>
         <div className={style.eventwhole}>
           {loading ? (
-            <SkeletonTheme color="#e0e0e0" highlightColor="#f5f5f5">
-              <div className={style.eventcard}>
-                <div className={style.name}>
-                  <img className={style.ring1} src={ring} alt="ring" />
-                  <span className={style.w1}>Ongoing</span>
-                  <span className={style.w2}>Events</span>
-                </div>
-                <div className={style.cardsin}>
-                  <EventCardSkeleton amount={2} />
-                </div>
-              </div>
-              <div className={style.pasteventcard} style={{ marginTop: "1rem" }}>
-                <div className={style.name}>
-                  <img className={style.ring2} src={ring} alt="ring" />
-                  <span className={style.w1}>Past</span>
-                  <span className={style.w2}>Events</span>
-                </div>
-                <div className={style.cardone}>
-                  <EventCardSkeleton amount={2} />
-                </div>
-              </div>
-            </SkeletonTheme>
+            <div>Loading...</div>
           ) : (
             <>
               {ongoingEvents.length > 0 && (
@@ -102,7 +79,8 @@ const Event = () => {
                           customStyles={customStyles}
                           modalpath='/Events/'
                           aosDisable={false}
-                  />
+                          isLoading={loading} // Pass the loading state to each EventCard
+                        />
                       </div>
                     ))}
                   </div>
@@ -122,6 +100,7 @@ const Event = () => {
                         type="past"
                         customStyles={customStyles}
                         modalpath='/Events/pastEvents/'
+                        isLoading={loading} // Pass the loading state to each EventCard
                       />
                     </div>
                   ))}

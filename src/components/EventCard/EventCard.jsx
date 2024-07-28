@@ -39,6 +39,7 @@ const EventCard = (props) => {
   const [btnTxt, setBtnTxt] = useState("Register Now");
   const navigate = useNavigate();
   const [imageLoaded, setImageLoaded] = useState(false);
+  const [showSkeleton, setShowSkeleton] = useState(true);
 
   useEffect(() => {
     if (aosDisable) {
@@ -47,6 +48,14 @@ const EventCard = (props) => {
       AOS.init({ duration: 2000 });
     }
   }, [aosDisable]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowSkeleton(false);
+    }, 2000); // Show skeleton for 2 seconds
+
+    return () => clearTimeout(timer);
+  }, []);
 
   useEffect(() => {
     if (info.regDateAndTime) {
@@ -143,7 +152,7 @@ const EventCard = (props) => {
 
   const url = window.location.href;
 
-  if (isLoading) {
+  if (isLoading || showSkeleton) {
     return <EventCardSkeleton />;
   }
 

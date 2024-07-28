@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { FaLinkedin, FaGithub } from 'react-icons/fa';
+import { Blurhash } from 'react-blurhash';
 import styles from './styles/TeamCard.module.scss';
 import TeamCardSkeleton from '../../layouts/Skeleton/TeamCard/TeamCard';
 import { Button } from '../Core';
@@ -18,26 +19,47 @@ const TeamCard = ({
 }) => {
   const [showMore, setShowMore] = useState(false);
   const [contentLoaded, setContentLoaded] = useState(false);
+  const [isImageLoaded, setIsImageLoaded] = useState(false);
+  const [showSkeleton, setShowSkeleton] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowSkeleton(false);
+    }, 2000); // Show skeleton for 2 seconds
+
+    return () => clearTimeout(timer);
+  }, []);
 
   const isDirectorRole =
     ['PRESIDENT', 'VICEPRESIDENT'].includes(role) || role.startsWith('DIRECTOR_');
 
   const handleImageLoad = () => {
-    setContentLoaded(true);
+    setIsImageLoaded(true);
   };
 
   return (
     <div className={`${styles.teamMember} ${customStyles.teamMember || ''}`}>
-      {!contentLoaded && <TeamCardSkeleton customStyles={customStyles} />}
-      <div className={styles.teamMemberInner} style={{ display: contentLoaded ? 'block' : 'none' }}>
+      {showSkeleton && <TeamCardSkeleton customStyles={customStyles} />}
+      <div className={styles.teamMemberInner} style={{ display: showSkeleton ? 'none' : 'block' }}>
         <div className={`${styles.teamMemberFront} ${customStyles.teamMemberFront || ''}`}>
           <div className={styles.ImgDiv}>
+            {!isImageLoaded && (
+              <Blurhash
+                hash="LEHV6nWB2yk8pyo0adR*.7kCMdnj"
+                width={'100%'}
+                height={'100%'}
+                resolutionX={32}
+                resolutionY={32}
+                punch={1}
+                className={styles.teamMember_blurhash}
+              />
+            )}
             <img
               src={image}
               alt={`Profile of ${name}`}
               className={styles.teamMemberImg}
               onLoad={handleImageLoad}
-              style={{ display: 'block' }}
+              style={{ display: isImageLoaded ? 'block' : 'none' }}
             />
           </div>
           <div className={`${styles.teamMemberInfo} ${customStyles.teamMemberInfo || ''}`}>
