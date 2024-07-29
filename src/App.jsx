@@ -54,7 +54,7 @@ const MainLayout = () => (
 );
 
 const AuthLayout = () => (
-  <div className="page">
+  <div className="authpage">
     <Outlet />
   </div>
 );

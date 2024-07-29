@@ -90,16 +90,21 @@
   resize: none;
 }
 
-.contactForm button {
-  background: var(--primary);
-  color: transparent;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 15px;
-  cursor: pointer;
-  font-size: 16px;
-  width: 100%;
+// .contactForm button {
+//   background: var(--primary);
+//   color: transparent;
+//   color: white;
+//   border: none;
+//   padding: 10px 20px;
+//   border-radius: 15px;
+//   cursor: pointer;
+//   font-size: 16px;
+//   width: 100%;
+// }
+
+.contactForm Button:hover {
+  transition: .2s linear;
+  background: linear-gradient(260deg, rgba(255, 190, 11, .9) -29.7%, rgba(244, 43, 3, .9) 128.34%);
 }
 
 .imageSection {
@@ -134,7 +139,7 @@
 .circle {
   height: 50vh;
   width: 50vh;
-  background-color: rgba(255, 92, 0, 0.29);
+  background-color: rgba(255, 92, 0, 0.6);
   position: absolute;
   top: 15%;
   right: -10%;

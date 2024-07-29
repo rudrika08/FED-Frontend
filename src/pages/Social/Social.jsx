@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react';
-import { SocialEmbed } from '../../components';
-import linkedinlogo from '../../assets/images/SocialMedia/linkedinLogo.svg';
-import instalogo from '../../assets/images/SocialMedia/instaLogo.svg';
-import styles from './styles/Social.module.scss';
+import React, { useEffect } from "react";
+import { SocialEmbed } from "../../components";
+import linkedinlogo from "../../assets/images/SocialMedia/linkedinLogo.svg";
+import instalogo from "../../assets/images/SocialMedia/instaLogo.svg";
+import styles from "./styles/Social.module.scss";
 
 const Social = () => {
   useEffect(() => {
@@ -17,9 +17,26 @@ const Social = () => {
           Welcome to the social media page of <br />
           <div className={styles.fed}>
             <div className={styles.box} id={styles.box1}>
-              <img className={styles.instalogo} src={instalogo} alt="Instagram Logo" />
-              <span style={{ background: "var(--primary)", WebkitBackgroundClip: "text", color: "transparent" }}> FED </span>
-              <img className={styles.linkedinlogo} src={linkedinlogo} alt="LinkedIn Logo" />
+              <img
+                className={styles.instalogo}
+                src={instalogo}
+                alt="Instagram Logo"
+              />
+              <span
+                style={{
+                  background: "var(--primary)",
+                  WebkitBackgroundClip: "text",
+                  color: "transparent",
+                }}
+              >
+                {" "}
+                FED{" "}
+              </span>
+              <img
+                className={styles.linkedinlogo}
+                src={linkedinlogo}
+                alt="LinkedIn Logo"
+              />
             </div>
           </div>
           <br />

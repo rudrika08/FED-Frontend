@@ -20,6 +20,16 @@
   margin-bottom: 15px;
 }
 
+.error{
+  padding: 30px 70px;
+  z-index: 1;
+  text-align: center;
+  margin-top: 4rem;
+  font-size: 1.5rem;
+  font-weight: 400;
+  margin-bottom: 1rem;
+}
+
 .teamSection {
   text-align: left;
   padding: 30px;
@@ -157,6 +167,15 @@ strong {
   //   display: none;
   // }
 
+  .error{
+    padding: 30px 70px;
+    z-index: 1;
+    text-align: center;
+    margin-top: 10px;
+    font-size: 1rem;
+    font-weight: 400;
+    margin-bottom: 10px;
+  }
 
   .Team h2 {
     font-size: 2.5rem;
@@ -168,8 +187,9 @@ strong {
 
 
   .para p{
-    font-size: 13px;
+    font-size: 1rem;
     padding: 30px 30px;
+    line-height: auto;
   }
 }
 
@@ -205,6 +225,16 @@ strong {
 
   .teamSection h3 {
     margin-left: 0px;
+  }
+
+  .error{
+    padding: 30px 70px;
+    z-index: 1;
+    text-align: center;
+    margin-top: 10px;
+    font-size: 1rem;
+    font-weight: 400;
+    margin-bottom: 10px;
   }
 
   .lastRowCentered{

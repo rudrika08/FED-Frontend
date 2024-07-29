@@ -5,15 +5,19 @@ import Input from "../../components/Core/Input";
 import Button from "../../components/Core/Button";
 import Text from "../../components/Core/Text";
 import users from "../../data/user.json";
+import { api } from "../../services";
 import AuthContext from "../../context/AuthContext";
 import { RecoveryContext } from "../../context/RecoveryContext";
 import GoogleLogin from "./GoogleLogin";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { Alert, MicroLoading } from "../../microInteraction";
 
 const Login = () => {
   const navigate = useNavigate();
   const { setEmail } = useContext(RecoveryContext);
   const authCtx = useContext(AuthContext);
+  const [alert, setAlert] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const [email, setemail] = useState("");
   const [password, setPassword] = useState("");
@@ -22,39 +26,95 @@ const Login = () => {
     window.scrollTo(0, 0);
   }, []);
 
-  const handleLogin = (event) => {
+  useEffect(() => {
+    if (alert) {
+      const { type, message, position, duration } = alert;
+      Alert({ type, message, position, duration });
+    }
+  }, [alert]);
+
+  const handleLogin = async (event) => {
     event.preventDefault();
+    setIsLoading(true);
+
     if (email === "" || password === "") {
-      alert("Please fill all the fields");
+      setAlert({
+        type: "error",
+        message: "Please fill all the fields",
+        position: "bottom-right",
+        duration: 3000,
+      });
+      setIsLoading(false);
       return;
     }
 
-    const user = users.find(
-      (user) => user.email === email && user.password === password
-    );
+    try {
+      const response = await api.post("/api/login", { email, password });
 
-    if (user) {
-      authCtx.login(
-        user.name,
-        user.email,
-        user.pic,
-        user.rollNo,
-        user.school,
-        user.college,
-        user.mobileNo,
-        user.year,
-        user.regForm,
-        user.access,
-        "someToken",
-        3600000
+      if (response.status === 200) {
+        const user = response.data;
+        authCtx.login(
+          user.name,
+          user.email,
+          user.pic,
+          user.rollNo,
+          user.school,
+          user.college,
+          user.mobileNo,
+          user.year,
+          user.regForm,
+          user.access,
+          "someToken",
+          3600000
+        );
+
+        const prevPage = sessionStorage.getItem("prevPage") || "/";
+        sessionStorage.removeItem("prevPage"); // Clean up
+        navigate(prevPage);
+        setAlert({
+          type: "success",
+          message: "Login successful",
+          position: "bottom-right",
+          duration: 3000,
+        });
+      } else {
+        setAlert({
+          type: "error",
+          message: response.data.message || "Invalid email or password",
+          position: "bottom-right",
+          duration: 3000,
+        });
+      }
+    } catch (error) {
+      setAlert({
+        type: "error",
+        message: "There was an error logging in. Please try again.",
+        position: "bottom-right",
+        duration: 3000,
+      });
+      console.error("Error logging in:", error);
+      const user = users.find(
+        (user) => user.email === email && user.password === password
       );
 
-      const prevPage = sessionStorage.getItem("prevPage") || "/";
-      sessionStorage.removeItem("prevPage"); // Clean up
-      navigate(prevPage);
-      alert("Login successful");
-    } else {
-      alert("Invalid email or password");
+      if (user) {
+        authCtx.login(
+          user.name,
+          user.email,
+          user.pic,
+          user.rollNo,
+          user.school,
+          user.college,
+          user.mobileNo,
+          user.year,
+          user.regForm,
+          user.access,
+          "someToken",
+          3600000
+        );
+      }
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -82,7 +142,7 @@ const Login = () => {
               background: "var(--primary)",
               width: "20%",
               WebkitBackgroundClip: "text",
-              color: "transparent"
+              color: "transparent",
             }}
           >
             Login
@@ -100,7 +160,7 @@ const Login = () => {
             <p style={{ color: "#fff", textAlign: "center" , marginBottom:"0.2rem" }}>or</p>
             <div className={style.divider} />
           </div>
-          <form className={style.form}>
+          <form className={style.form} onSubmit={handleLogin}>
             <Input
               type="text"
               placeholder="eg:something@gmail.com"
@@ -131,12 +191,17 @@ const Login = () => {
               style={{
                 fontSize: "0.7rem",
                 cursor: "pointer",
+                width: "30%",
+                background: "var(--primary)",
+                WebkitBackgroundClip: "text",
+                color: "transparent",
               }}
             
             >
               Forget Password?
             </Text>
             <Button
+              type="submit"
               style={{
                 width: "98%",
                 background: "var(--primary)",
@@ -147,9 +212,9 @@ const Login = () => {
                 cursor: "pointer",
                 marginLeft:"0.4rem"
               }}
-              onClick={handleLogin}
+              disabled={isLoading}
             >
-              Login
+              {isLoading ? <MicroLoading /> : "Login"}
             </Button>
             <Text
               style={{
@@ -176,6 +241,7 @@ const Login = () => {
           </form>
         </div>
       </div>
+      <Alert />
     </div>
   );
 };

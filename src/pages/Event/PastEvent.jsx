@@ -4,6 +4,7 @@ import axios from 'axios';
 
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import style from './styles/PastEvent.module.scss';
+import { ChatBot } from "../../features";
 import { EventCard } from '../../components';
 // import EventData from '../../data/eventData.json';
 import FormData from "../../data/FormData.json"
@@ -48,6 +49,8 @@ const PastEvent = () => {
   // };
 
   return(
+    <>
+    <ChatBot />
     <div className={style.main}>
         <Link to={'/Events'}>
         <div className={style.ArrowBackIcon}>
@@ -88,6 +91,7 @@ const PastEvent = () => {
       <div className={style.circlethree}></div>
     </div>
   </div>
+  </>
 );
 }
 

@@ -18,6 +18,7 @@
   justify-content: center;
   align-items: center;
   margin-left: 10px;
+  gap:10px;
 }
 
 .logo {
@@ -185,18 +186,23 @@
   align-items: center;
   justify-content: center;
   border-radius: 1.65rem;
-  height: 3.5rem;
+  height: 3.3rem;
   font-size: 1.2rem;
   background: linear-gradient(
     260deg,
     rgba(255, 190, 11, 0.84) -29.7%,
-    rgba(251, 88, 33, 0.84) 128.34%
+    rgba(244, 43, 3, 0.84) 128.34%
   );
   font-weight: 600;
   padding: 8px 30px;
   border: none;
   color: #fff;
   cursor: pointer;
+}
+
+.authButton:hover {
+  transition: .2s linear;
+  background: linear-gradient(260deg, rgba(255, 190, 11, .9) -29.7%, rgba(244, 43, 3, .9) 128.34%);
 }
 
 .profileImgdiv {

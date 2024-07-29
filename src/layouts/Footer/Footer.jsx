@@ -18,32 +18,28 @@ export default function Footer() {
           <p className={styles.fed}>FED</p>
         </div>
         <div className={styles.flexdiv}>
-          <div className={styles.footerleft}> 
-          <div className={styles.footerright}>
-            <div className={styles.row2}>
-            <h4>Explore</h4>
-              <Link to="/" className={styles.footerleftlink}>
-                Home
-              </Link>
-              <Link
-                to="/Events"
-                className={styles.footerleftlink}
-              >
-                Events
-              </Link>
-              
-              <Link to="/Team" className={styles.footerleftlink}>
-                Team
-              </Link>
+          <div className={styles.footerleft}>
+            <div className={styles.footerright}>
+              <div className={styles.row2}>
+                <h4>Explore</h4>
+                <Link to="/" className={styles.footerleftlink}>
+                  Home
+                </Link>
+                <Link to="/Events" className={styles.footerleftlink}>
+                  Events
+                </Link>
+
+                <Link to="/Team" className={styles.footerleftlink}>
+                  Team
+                </Link>
+              </div>
             </div>
-          </div>
-            
 
             <div className={styles.row1}>
               <h4>Community</h4>
               <HashLink smooth to="/#Contact" className={styles.footerleftlink}>
-              Contact
-            </HashLink>
+                Contact
+              </HashLink>
               <Link to="/Team" className={styles.footerleftlink}>
                 Member
               </Link>
@@ -54,70 +50,56 @@ export default function Footer() {
 
             <div className={styles.row2}>
               <h4>About Us</h4>
-              <HashLink smooth to="/#KnowUs" className={styles.footerleftlink}>
+              <HashLink
+                smooth
+                to="/Manifesto"
+                className={styles.footerleftlink}
+              >
                 Manifesto
               </HashLink>
-              <HashLink smooth to="/#work" className={styles.footerleftlink}>
-                Partner
+              <HashLink smooth to="/Partners" className={styles.footerleftlink}>
+                Partners
               </HashLink>
             </div>
 
-            
-          <div className={styles.footerright}>
-          <h4 className={styles.socialh4}>Social</h4>
-            <div className={styles.icondiv2}>
-              
-              <Link to="/" className={styles.link1}>
-              <FaLinkedin className={styles.icon} />
-              </Link>
-              <Link
-                to="/Events"
-                className={styles.link1}
-              
-              >
-                <FaInstagram className={styles.icon} />
-              </Link>
-              <Link to="/Social" className={styles.link1}>
-              <FaYoutube className={styles.icon} />
-              </Link>
-
+            <div className={styles.footerright}>
+              <h4 className={styles.socialh4}>Social</h4>
+              <div className={styles.icondiv2}>
+                <Link to="/" className={styles.link1}>
+                  <FaLinkedin className={styles.icon} />
+                </Link>
+                <Link to="/Events" className={styles.link1}>
+                  <FaInstagram className={styles.icon} />
+                </Link>
+                <Link to="/Social" className={styles.link1}>
+                  <FaYoutube className={styles.icon} />
+                </Link>
+              </div>
             </div>
-          </div>  
           </div>
         </div>
 
         <div className={styles.bottomleft}>
-            <p>Made with ❤️ from Federation of Entrepreneurship Development</p>
-          </div>
-        
+          <p>Made with ❤️ from Federation of Entrepreneurship Development</p>
+        </div>
+
         <div className={styles.bottomdiv}>
-
-        <div className={styles.terms_and_policies}>
-          <div className={styles.tap1Div}>
-            <Link to="/TermsAndConditions" className={styles.Linkstyles}>
-              Terms and conditions
-            </Link>
-            <p>&</p>
-            <Link to="/PrivacyPolicy" className={styles.Linkstyles}>
-              Privacy policy
-            </Link>
-          
+          <div className={styles.terms_and_policies}>
+            <div className={styles.tap1Div}>
+              <Link to="/TermsAndConditions" className={styles.Linkstyles}>
+                Terms and conditions
+              </Link>
+              <p>&</p>
+              <Link to="/PrivacyPolicy" className={styles.Linkstyles}>
+                Privacy policy
+              </Link>
+            </div>
+            <div className={styles.tnpMDiv}>
+              <p className={styles.copyrightPTag}>© 2024, fedkiit</p>
+            </div>
+            {/* <div className={styles.dotDiv}></div> */}
           </div>
-          <div className={styles.tnpMDiv}>
-          <p className={styles.copyrightPTag}>© 2024, fedkiit</p>
-          </div>
-          {/* <div className={styles.dotDiv}></div> */}
-          
-          
         </div>
-
-          
-
-          
-
-
-        </div>
-
       </footer>
     </section>
   );

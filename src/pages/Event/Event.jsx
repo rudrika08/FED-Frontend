@@ -4,6 +4,7 @@ import axios from 'axios';
 
 import style from "./styles/Event.module.scss";
 import { EventCard } from "../../components";
+import { ChatBot } from "../../features";
 // import EventData from "../../data/eventData.json";
 import FormData from "../../data/FormData.json"
 import ring from "../../assets/images/ring.svg";
@@ -54,6 +55,8 @@ const Event = () => {
   };
 
   return (
+    <>
+    <ChatBot />
     <div className={style.main}>
       <div style={{ display: "flex" }}>
         <div className={style.line}></div>
@@ -125,6 +128,8 @@ const Event = () => {
       <div className={style.circletwo}></div>
       <div className={style.circlethree}></div>
     </div>
+
+    </>
   );
 };
 

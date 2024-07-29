@@ -5,6 +5,7 @@ import styles from "./styles/Error.module.scss";
 function Error() {
   const navigate = useNavigate();
 
+  window.scrollTo(0, 0);
   const handleReturnToHome = () => {
     navigate('/');
   };
