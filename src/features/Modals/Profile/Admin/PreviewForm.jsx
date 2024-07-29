@@ -10,8 +10,6 @@ import Complete from "../../../../assets/images/Complete.svg";
 const operators = [
   { label: "match", value: "===" },
   { label: "match not", value: "!==" },
-  // { label: "contains", value: "includes" },
-  // { label: "does not contain", value: "!includes" },
   { label: "less than", value: "<" },
   { label: "greater than", value: ">" },
   { label: "less than or equal to", value: "<=" },
@@ -39,6 +37,18 @@ const PreviewForm = ({
     data !== undefined
       ? data.find((section) => section._id === activeSection._id)
       : null;
+
+  useEffect(() => {
+    if (open) {
+      document.body.classList.add(styles.noScroll);
+    } else {
+      document.body.classList.remove(styles.noScroll);
+    }
+
+    return () => {
+      document.body.classList.remove(styles.noScroll);
+    };
+  }, [open]);
 
   useEffect(() => {
     window.addEventListener("mousedown", handleClickOutside);
@@ -357,8 +367,14 @@ const PreviewForm = ({
               </div>
             </Link>
           )}
-          <Text style={{ marginBottom: "20px" }}>
-            {eventData?.eventTitle || "Preview Event"}
+          <Text style={{ 
+            marginBottom: "20px",
+            width: "100%",
+            display: "flex",
+            justifyContent:"center",
+            fontSize:"25px"
+          }}>
+            {eventData?.title || "Preview Event"}
           </Text>
           {!isCompleted.includes("Submitted") ? (
             <div

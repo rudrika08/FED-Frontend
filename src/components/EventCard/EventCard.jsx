@@ -8,11 +8,12 @@ import Share from "../../features/Modals/Event/ShareModal/ShareModal";
 import shareOutline from "../../assets/images/shareOutline.svg";
 import groupIcon from "../../assets/images/groups.svg";
 import rupeeIcon from "../../assets/images/rupeeIcon.svg";
-import ciLock from "../../assets/images/lock.svg";
 import { PiClockCountdownDuotone } from "react-icons/pi";
 import { IoIosLock } from "react-icons/io";
 import { Button } from "../Core";
 import AuthContext from "../../context/AuthContext";
+import EventCardSkeleton from "../../layouts/Skeleton/EventCard/EventCardSkeleton";
+import { Blurhash } from "react-blurhash"; 
 
 const EventCard = (props) => {
   const {
@@ -27,6 +28,7 @@ const EventCard = (props) => {
     aosDisable,
     onEdit,
     enableEdit,
+    isLoading,
   } = props;
 
   const { info } = data;
@@ -36,6 +38,8 @@ const EventCard = (props) => {
   const [remainingTime, setRemainingTime] = useState("");
   const [btnTxt, setBtnTxt] = useState("Register Now");
   const navigate = useNavigate();
+  const [imageLoaded, setImageLoaded] = useState(false);
+  const [showSkeleton, setShowSkeleton] = useState(true);
 
   useEffect(() => {
     if (aosDisable) {
@@ -44,6 +48,14 @@ const EventCard = (props) => {
       AOS.init({ duration: 2000 });
     }
   }, [aosDisable]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowSkeleton(false);
+    }, 2000); // Show skeleton for 2 seconds
+
+    return () => clearTimeout(timer);
+  }, []);
 
   useEffect(() => {
     if (info.regDateAndTime) {
@@ -140,6 +152,10 @@ const EventCard = (props) => {
 
   const url = window.location.href;
 
+  if (isLoading || showSkeleton) {
+    return <EventCardSkeleton />;
+  }
+
   return (
     <>
       <div
@@ -154,11 +170,22 @@ const EventCard = (props) => {
           style={customStyles.backimg}
           onClick={onOpen}
         >
+          {!imageLoaded && (
+            <Blurhash
+              hash="L6AcVvDi56n$C,T0IUbF{K-pNG%M"
+              width={"100%"}
+              height={200}
+              resolutionX={32}
+              resolutionY={32}
+              punch={1}
+            />
+          )}
           <img
             srcSet={info.eventImg}
             className={style.img}
-            style={customStyles.img}
+            style={{...customStyles.img, display: imageLoaded ? 'block' : 'none'}}
             alt="Event"
+            onLoad={() => setImageLoaded(true)}
           />
           <div className={style.date} style={customStyles.date}>
             {formattedDate}
@@ -269,7 +296,7 @@ const EventCard = (props) => {
       {isOpen && type === "ongoing" && (
         <Share onClose={handleShare} urlpath={url + "/" + data._id} />
       )}
-      {enableEdit && isHovered && authCtx.user.access==="ADMIN" && (
+      {enableEdit && isHovered && authCtx.user.access === "ADMIN" && (
         <div
           onMouseEnter={() => setisHovered(true)}
           onMouseLeave={() => setisHovered(false)}
@@ -306,6 +333,7 @@ EventCard.propTypes = {
   aosDisable: PropTypes.bool,
   onEdit: PropTypes.func,
   enableEdit: PropTypes.bool,
+  isLoading: PropTypes.bool.isRequired, 
 };
 
 export default EventCard;
