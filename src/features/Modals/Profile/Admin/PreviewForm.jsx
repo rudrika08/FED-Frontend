@@ -200,8 +200,11 @@ const PreviewForm = ({
 
   const matchCondition = (field, valid) => {
     const fieldLength = hasOptions.includes(field.type)
-      ? field.onChangeValue.split(",").length
+      ? field.type === "checkbox"
+        ? field.onChangeValue.length
+        : field.onChangeValue.split(",").length
       : field.onChangeValue.length;
+
     const operator = valid?.operator;
     const validLength =
       valid.type === "length" ? Number(valid?.value) : valid?.value;
@@ -229,17 +232,12 @@ const PreviewForm = ({
   };
 
   const isMetaExist = () => {
-    
-    if (!Array.isArray(meta) || meta.length === 0) {
-      return false;
-    } else {
-      const paymentSection = meta.find((sec) => sec.name === "Payment Details");
-      if (paymentSection) {
-        paymentSection.isDisabled = false;
-        paymentSection.validations[0].onBack = currentSection._id;
-        return paymentSection;
-      }
-      return null;
+    if (meta?.length === 0) return null;
+    const paymentSection = meta.find((sec) => sec?.name === "Payment Details");
+    if (paymentSection) {
+      paymentSection.isDisabled = false;
+      paymentSection.validations[0].onBack = currentSection._id;
+      return paymentSection;
     }
   };
 
