@@ -5,22 +5,28 @@ import Input from "../../components/Core/Input";
 import Button from "../../components/Core/Button";
 import Text from "../../components/Core/Text";
 import users from "../../data/user.json";
-import { api } from "../../services";
 import AuthContext from "../../context/AuthContext";
 import { RecoveryContext } from "../../context/RecoveryContext";
 import GoogleLogin from "./GoogleLogin";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { Alert, MicroLoading } from "../../microInteraction";
+import usePost from "../../services/api/usePost";
 
 const Login = () => {
   const navigate = useNavigate();
   const { setEmail } = useContext(RecoveryContext);
   const authCtx = useContext(AuthContext);
-  const [alert, setAlert] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
-
   const [email, setemail] = useState("");
   const [password, setPassword] = useState("");
+  const [alert, setAlert] = useState(null);
+
+  const { isLoading, data, error, success, setTrigger } = usePost(
+    "/api/login",
+    { email, password },
+    {},
+    "Login successful",
+    "There was an error logging in. Please try again."
+  );
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -30,29 +36,26 @@ const Login = () => {
     if (alert) {
       const { type, message, position, duration } = alert;
       Alert({ type, message, position, duration });
+      setAlert(null); // Reset alert after displaying it
     }
   }, [alert]);
 
-  const handleLogin = async (event) => {
-    event.preventDefault();
-    setIsLoading(true);
+  useEffect(() => {
+    if (isLoading) return;
 
-    if (email === "" || password === "") {
+    // If the request is successful, log the user in (put error for testing)
+    if (success) {  
+
       setAlert({
-        type: "error",
-        message: "Please fill all the fields",
+        type: "success",
+        message: success,
         position: "bottom-right",
         duration: 3000,
       });
-      setIsLoading(false);
-      return;
-    }
 
-    try {
-      const response = await api.post("/api/login", { email, password });
+      const user = data || users.find((user) => user.email === email && user.password === password); // Use fallback data if no API response
 
-      if (response.status === 200) {
-        const user = response.data;
+      if (user) {
         authCtx.login(
           user.name,
           user.email,
@@ -71,56 +74,47 @@ const Login = () => {
         const prevPage = sessionStorage.getItem("prevPage") || "/";
         sessionStorage.removeItem("prevPage"); // Clean up
         navigate(prevPage);
-        setAlert({
-          type: "success",
-          message: "Login successful",
-          position: "bottom-right",
-          duration: 3000,
-        });
+        
       } else {
         setAlert({
           type: "error",
-          message: response.data.message || "Invalid email or password",
+          message: "Invalid email or password",
           position: "bottom-right",
           duration: 3000,
         });
       }
-    } catch (error) {
+    } 
+    
+    if (error) {
       setAlert({
         type: "error",
-        message: "There was an error logging in. Please try again.",
+        message: error,
         position: "bottom-right",
         duration: 3000,
       });
-      console.error("Error logging in:", error);
-      const user = users.find(
-        (user) => user.email === email && user.password === password
-      );
-
-      if (user) {
-        authCtx.login(
-          user.name,
-          user.email,
-          user.pic,
-          user.rollNo,
-          user.school,
-          user.college,
-          user.mobileNo,
-          user.year,
-          user.regForm,
-          user.access,
-          "someToken",
-          3600000
-        );
-      }
-    } finally {
-      setIsLoading(false);
     }
+
+  }, [isLoading, success, error, data, navigate]);
+
+  const handleLogin = (event) => {
+    event.preventDefault();
+
+    if (email === "" || password === "") {
+      setAlert({
+        type: "error",
+        message: "Please fill all the fields",
+        position: "bottom-right",
+        duration: 3000,
+      });
+      return;
+    }
+
+    setTrigger(true); // Trigger the usePost hook
   };
 
   const handleForgot = () => {
     setEmail(email);
-    navigate('/ForgotPassword')
+    navigate("/ForgotPassword");
   };
 
   return (
@@ -153,11 +147,19 @@ const Login = () => {
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
-              gap:"1rem"
+              gap: "1rem",
             }}
           >
             <div className={style.divider} />
-            <p style={{ color: "#fff", textAlign: "center" , marginBottom:"0.2rem" }}>or</p>
+            <p
+              style={{
+                color: "#fff",
+                textAlign: "center",
+                marginBottom: "0.2rem",
+              }}
+            >
+              or
+            </p>
             <div className={style.divider} />
           </div>
           <form className={style.form} onSubmit={handleLogin}>
@@ -196,7 +198,6 @@ const Login = () => {
                 WebkitBackgroundClip: "text",
                 color: "transparent",
               }}
-            
             >
               Forget Password?
             </Text>
@@ -210,7 +211,7 @@ const Login = () => {
                 marginTop: "20px",
                 fontSize: "1rem",
                 cursor: "pointer",
-                marginLeft:"0.4rem"
+                marginLeft: "0.4rem",
               }}
               disabled={isLoading}
             >
@@ -226,9 +227,7 @@ const Login = () => {
               Don't have an account?{" "}
               <Link
                 to="/signup"
-                onClick={(e) => {
-                  sessionStorage.setItem("prevPage", window.location.pathname);
-                }}
+                onClick={() => sessionStorage.setItem("prevPage", window.location.pathname)}
                 style={{
                   background: "var(--primary)",
                   WebkitBackgroundClip: "text",

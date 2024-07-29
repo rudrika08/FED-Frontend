@@ -1,86 +1,58 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { api } from "../../services";
 import styles from "./styles/Team.module.scss";
 import { TeamCard } from "../../components";
 import { FaRegArrowAltCircleRight } from "react-icons/fa";
 import useWindowWidth from "../../hooks/useWindowWidth";
-import MemberData from "../../data/Team.json";
-import AccessTypes from "../../data/Access.json";
+import LocalMemberData from "../../data/Team.json";
+import LocalAccessTypes from "../../data/Access.json";
 import { ComponentLoading } from "../../microInteraction";
+import useGet from "../../services/api/useGet";
 
 const Team = () => {
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+  const windowWidth = useWindowWidth();
+
+  const {
+    data: teamData,
+    error: teamError,
+    isLoading: teamLoading,
+  } = useGet(
+    "/api/user/fetchTeam",
+    "Sorry for the inconvenience, we are having issues fetching our Team Members"
+  );
+
+  const { 
+    data: accessData, 
+    error: accessError 
+  } = useGet(
+    "/api/user/fetchAccessTypes",
+    "Sorry for the inconvenience, we are having issues fetching Access Types"
+  );
 
   const [teamMembers, setTeamMembers] = useState([]);
   const [access, setAccess] = useState([]);
-  const [Error, setError] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const windowWidth = useWindowWidth();
 
   useEffect(() => {
-    const fetchTeamMembers = async () => {
-      try {
-        const response = await api.get("/api/user/fetchTeam");
+    window.scrollTo(0, 0);
 
-        if (response.status === 200) {
-          setTeamMembers(response.data);
-        } else {
-          console.error("Error fetching team members:", response.data.message);
-          // using local JSON data
-          const testMembers = MemberData;
-          setTeamMembers(testMembers);
-        }
-      } catch (error) {
-        setError({
-          message:
-            "Sorry for the inconvenience, we are having issues fetching our Team Members",
-        });
-        console.error("Error fetching team members:", error);
-        // using local JSON data
-        const testMembers = MemberData;
-        setTeamMembers(testMembers);
-      } finally {
-        setIsLoading(false);
-      }
-    };
+    if (teamError) {
+      setTeamMembers(LocalMemberData);
+    } else {
+      setTeamMembers(teamData || []);
+    }
 
-    const fetchAccessTypes = async () => {
-      try {
-        const response = await api.get("/api/user/fetchAccessTypes");
-
-        if (response.status === 200) {
-          const filteredAccess = response.data.filter(
-            (accessType) => !["ADMIN", "USER", "ALUMNI"].includes(accessType)
-          );
-          setAccess(filteredAccess);
-        } else {
-          console.error("Error fetching Access Types:", response.data.message);
-          // using local JSON data
-          const testAccess = AccessTypes.data;
-          const filteredAccess = testAccess.filter(
-            (accessType) => !["ADMIN", "USER", "ALUMNI"].includes(accessType)
-          );
-          setAccess(filteredAccess);
-        }
-      } catch (error) {
-        console.error("Error fetching Access Types:", error);
-        // using local JSON data
-        const testAccess = AccessTypes.data;
-        const filteredAccess = testAccess.filter(
-          (accessType) => !["ADMIN", "USER", "ALUMNI"].includes(accessType)
-        );
-        setAccess(filteredAccess);
-      }
-    };
-
-    fetchAccessTypes();
-    fetchTeamMembers();
-  }, []);
-
-  console.log(access);
+    if (accessError) {
+      const filteredAccess = LocalAccessTypes.data.filter(
+        (accessType) => !["ADMIN", "USER", "ALUMNI"].includes(accessType)
+      );
+      setAccess(filteredAccess);
+    } else {
+      const filteredAccess = accessData?.filter(
+        (accessType) => !["ADMIN", "USER", "ALUMNI"].includes(accessType)
+      );
+      setAccess(filteredAccess || []);
+    }
+  }, [teamData, teamError, accessData, accessError]);
 
   const directorAccessCodes = access.filter(
     (code) =>
@@ -191,11 +163,11 @@ const Team = () => {
       <div className={styles.circle}></div>
       {/* <div className={styles.circle2}></div> */}
 
-      {isLoading ? (
+      {teamLoading ? (
         <ComponentLoading />
       ) : (
         <>
-          {Error && <div className={styles.error}>{Error.message}</div>}
+          {teamError && <div className={styles.error}>{teamError}</div>}
 
           <TeamSection members={directorsAndAbove} isDirector={true} />
 
@@ -222,7 +194,6 @@ const Team = () => {
           ))}
         </>
       )}
-
 
       <div className={styles.alumniBut}>
         <div className={styles.ulhover}>

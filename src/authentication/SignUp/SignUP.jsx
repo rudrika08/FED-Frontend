@@ -1,20 +1,21 @@
 import { useContext, useState } from "react";
-import style from "./style/Signup.module.scss";
+import styles from "./style/Signup.module.scss";
 import Input from "../../components/Core/Input";
 import Button from "../../components/Core/Button";
 import Text from "../../components/Core/Text";
 import GoogleSignup from "./GoogleSignup";
 import bcrypt from "bcryptjs";
 import { useEffect } from "react";
-import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import OtpInputModal from "../../features/Modals/authentication/OtpInputModal";
+import { Alert, MicroLoading } from "../../microInteraction";
 import { RecoveryContext } from "../../context/RecoveryContext";
-// import Load from "../../../microInteraction/Load/Load"
+import usePost from "../../services/api/usePost";
+
 const SignUP = () => {
   useEffect(() => {
-    window.scrollTo(0, -20);
+    window.scrollTo(0, 0);
   });
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
@@ -22,8 +23,8 @@ const SignUP = () => {
   const { setEmail, } = useContext(RecoveryContext);
   const [OTP, setOTP] = useState('');
   const [isTandChecked ,setTandC]=useState(false);
-
-  // const [loadingEffect, setLoad] = useState(false);
+  const [alert, setAlert] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const [showUser, setUser] = useState({
     email: "",
@@ -37,16 +38,25 @@ const SignUP = () => {
     year: "",
   });
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
+    if (alert) {
+      const { type, message, position, duration } = alert;
+      Alert({ type, message, position, duration });
+      setAlert(null); // Reset alert after displaying it
+    }
+  }, [alert]);
+
+
   const DataInp = (name, value) => {
     setUser({ ...showUser, [name]: value });
   };
 
-  
-
   const handleSignup = async (e) => {
     e.preventDefault();
-
-    
 
     const {
       email,
