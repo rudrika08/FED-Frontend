@@ -2,14 +2,12 @@ import React, { createContext, useState, useEffect } from 'react';
 import SendOtp from '../authentication/Login/ForgotPassword/SendOtp';
 import OTPInput from '../authentication/Login/ForgotPassword/OTPInput';
 
-import Reset from '../authentication/Login/ForgotPassword/Reset';
 
 export const RecoveryContext = createContext();
 
 const componentMap = {
   SendOtp: SendOtp,
   otp: OTPInput,
-  reset: Reset,
 };
 
 const initialContext = {

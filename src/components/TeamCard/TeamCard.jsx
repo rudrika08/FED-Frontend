@@ -1,15 +1,17 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import { FaLinkedin, FaGithub } from 'react-icons/fa';
 import styles from './styles/TeamCard.module.scss';
 import TeamCardSkeleton from '../../layouts/Skeleton/TeamCard/TeamCard';
 import { Button } from '../Core';
+import AuthContext from '../../context/AuthContext';
 
 const TeamCard = ({
   name,
   image,
   social,
   title,
+  data,
   role,
   know,
   customStyles = {},
@@ -18,6 +20,7 @@ const TeamCard = ({
 }) => {
   const [showMore, setShowMore] = useState(false);
   const [contentLoaded, setContentLoaded] = useState(false);
+  const authCtx = useContext(AuthContext);
 
   const isDirectorRole =
     ['PRESIDENT', 'VICEPRESIDENT'].includes(role) || role.startsWith('DIRECTOR_');
@@ -25,6 +28,7 @@ const TeamCard = ({
   const handleImageLoad = () => {
     setContentLoaded(true);
   };
+  console.log(data);
 
   return (
     <div className={`${styles.teamMember} ${customStyles.teamMember || ''}`}>
@@ -81,10 +85,19 @@ const TeamCard = ({
                   Know More
                 </button>
               )}
-              <div className={`${styles.updatebtn} ${customStyles.updatebtn || ''}`}>
-                <Button onClick={() => onUpdate(name, role, title)}>Update</Button>
+            { onUpdate && authCtx.user.access==="ADMIN"  && <div className={`${styles.updatebtn} ${customStyles.updatebtn || ''}`}>
+                <Button  onClick={(e) => {
+              e.preventDefault();
+              if (onUpdate) {
+              console.log(data);
+                authCtx.memberData = data;
+                onUpdate();
+              }
+            }}>
+                  Update</Button>
                 <Button onClick={() => onRemove(name, role, title)}>Remove</Button>
               </div>
+}
             </>
           ) : (
             <div className={`${styles.knowMoreContent} ${customStyles.knowMoreContent || ''}`}>

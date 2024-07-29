@@ -1,15 +1,21 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import styles from "./styles/ViewMember.module.scss";
 import { Button, TeamCard } from "../../../../../components";
 import AddMemberForm from "../../Form/MemberForm/AddMemberForm";
 import localTeamMembers from "../../../../../data/Team.json";
 import AccessTypes from "../../../../../data/Access.json";
+import AuthContext from "../../../../../context/AuthContext";
 
 function ViewMember() {
   const [memberActivePage, setMemberActivePage] = useState("Alumni");
   const [members, setMembers] = useState([]);
   const [access, setAccess] = useState([]);
+  const [selectedMember, setSelectedMember] = useState(null);
+  const authCtx = useContext(AuthContext);
+  const [enablingUpdate,setenbale]=useState(false);
+
+
 
   useEffect(() => {
     // Fetch member data using axios
@@ -70,7 +76,9 @@ function ViewMember() {
     ));
 
   const getMembersByPage = () => {
-    if (memberActivePage.toLowerCase() === "add member") return [];
+    if (memberActivePage.toLowerCase() === "add member" && !enablingUpdate){
+      authCtx.memberData = null;
+    };
 
     if (memberActivePage.toLowerCase() === "directors") {
       // Include members with access starting with "DIRECTOR_" and PRESIDENT, VICEPRESIDENT
@@ -100,13 +108,27 @@ function ViewMember() {
     teamMemberBack: styles.teamMemberBackCustom,
   };
 
-  const handleUpdate = (name, role, title) => {
-    console.log(`Update member: ${name}, ${role}, ${title}`);
+  // const handleUpdate = (name, role, title) => {
+  //   console.log(`Update member: ${name}, ${role}, ${title}`);
+  // };
+
+  const handleUpdate = member => {
+    setMemberActivePage("Add Member");
+    setenbale(true);
   };
 
-  const handleRemove = (name, role, title) => {
-    console.log(`Remove member: ${name}, ${role}, ${title}`);
+  const handleRemove = async member => {
+    try {
+      // await axios.delete(`/api/members/${member.id}`);
+      // setMembers(prev => prev.filter(m => m.id !== member.id));
+    } catch (error) {
+      console.error("Error removing member:", error);
+    }
   };
+
+  // const handleRemove = (name, role, title) => {
+  //   console.log(`Remove member: ${name}, ${role}, ${title}`);
+  // };
 
   const membersToDisplay = getMembersByPage();
 
@@ -127,6 +149,7 @@ function ViewMember() {
               {membersToDisplay.map((member, idx) => (
                 <TeamCard
                   key={idx}
+                  data= {member}
                   name={member.name}
                   image={member.img}
                   social={member.extra}
