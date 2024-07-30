@@ -5,7 +5,7 @@ import { Routes, Route, Outlet, Navigate } from "react-router-dom";
 import { Footer, Navbar } from "./layouts";
 
 // microInteraction
-import { Loading, Alert } from "./microInteraction";
+import { Loading } from "./microInteraction";
 
 // modals
 import { EventModal } from "./features";
@@ -35,13 +35,11 @@ const CompleteProfile = lazy(() =>
 const Error = lazy(() => import("./pages/Error/Error"));
 const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy/PrivacyPolicy"));
 const TermsAndConditions = lazy(() => import("./pages/TermsAndConditions/T&C"));
-const Login = lazy(() =>
-  import("./pages/Authentication/Login/Login")
+const Login = lazy(() => import("./pages/Authentication/Login/Login"));
+
+const OTPInput = lazy(() =>
+  import("./authentication/Login/ForgotPassword/OTPInput")
 );
-
-const OTPInput = lazy(()=>import("./authentication/Login/ForgotPassword/OTPInput"));
-const Reset = lazy(()=>import("./authentication/Login/ForgotPassword/Reset"));
-
 
 const MainLayout = () => (
   <div>
@@ -80,7 +78,7 @@ function App() {
                 path="/profile/Events/:eventId"
                 element={[<Profile />, <EventModal onClosePath="/profile" />]}
               />,
-            ]} 
+            ]}
             <Route
               path="/Events/:eventId"
               element={[<Event />, <EventModal onClosePath="/Events" />]}
@@ -113,11 +111,7 @@ function App() {
             <Route
               path="/Login"
               element={
-                authCtx.isLoggedIn ? (
-                  <Navigate to="/profile" />
-                ) : (
-                  <Login/>
-                )
+                authCtx.isLoggedIn ? <Navigate to="/profile" /> : <Login />
               }
             />
             <Route
@@ -126,13 +120,17 @@ function App() {
                 authCtx.isLoggedIn ? <Navigate to="/profile" /> : <Signup />
               }
             />
-            <Route 
-              path="/completeProfile" 
+            <Route
+              path="/completeProfile"
               element={
-                authCtx.isLoggedIn ? <Navigate to="/profile" /> : [<CompleteProfile />]
+                authCtx.isLoggedIn ? (
+                  <Navigate to="/profile" />
+                ) : (
+                  [<CompleteProfile />]
+                )
               }
             />
-       
+
             <Route
               path="/ForgotPassword"
               element={
@@ -143,16 +141,10 @@ function App() {
                 )
               }
             />
-                 <Route 
-              path="/otp" 
+            <Route
+              path="/otp"
               element={
-                authCtx.isLoggedIn ? <Navigate to="/profile" /> : <OTPInput/>
-              }
-            />
-                 <Route 
-              path="/reset" 
-              element={
-                authCtx.isLoggedIn ? <Navigate to="/profile" /> : <Reset/>
+                authCtx.isLoggedIn ? <Navigate to="/profile" /> : <OTPInput />
               }
             />
           </Route>
