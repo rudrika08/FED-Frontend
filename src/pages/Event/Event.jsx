@@ -74,17 +74,24 @@ const Event = () => {
           <div className={style.line}></div>
           <div className={style.eventwhole}>
             {isLoading ? (
-              <ComponentLoading
-                customStyles={{
-                  width: "100%",
-                  height: "100%",
-                  display: "flex",
-                  marginTop:"5rem",
-                  marginLeft:"-3rem",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              />
+              <>
+                <div className={style.eventcard}>
+                  <div className={style.name}>
+                    <img className={style.ringLoad} src={ring} alt="ring" />
+                  </div>
+                </div>
+                <ComponentLoading
+                  customStyles={{
+                    width: "100%",
+                    height: "100%",
+                    display: "flex",
+                    marginTop: "5rem",
+                    marginLeft: "-3rem",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                />
+              </>
             ) : !error ? (
               <div className={style.error}>{error.message}</div>
             ) : (
