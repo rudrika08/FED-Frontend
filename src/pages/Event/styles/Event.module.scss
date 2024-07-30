@@ -36,6 +36,17 @@
   margin-top: 3rem;
 }
 
+.error{
+  padding: 30px 70px;
+  z-index: 1;
+  text-align: center;
+  margin-top: 8rem;
+  font-size: 1.5rem;
+  font-weight: 400;
+  margin-bottom: 7rem;
+}
+
+
 .ring1,
 .ring2 {
   position: absolute;
@@ -164,6 +175,7 @@
   color: transparent;
   background-clip: text;
   cursor: pointer;
+  margin-left:1.5rem;
   // margin-right: 1rem;
   // margin-top: 1rem;
   // margin-bottom: 1rem;
@@ -211,11 +223,21 @@
   right: -15%;
 }
 
-@media (max-width: 658px) {
+@media (max-width: 768px) {
   .line,
   .ring1,
   .ring2 {
     display: none;
+  }
+
+  .error{
+    padding: 30px 70px;
+    z-index: 1;
+    text-align: center;
+    margin-top: 10px;
+    font-size: 1rem;
+    font-weight: 400;
+    margin-bottom: 10px;
   }
 
   .eventcard,
@@ -283,6 +305,18 @@
   }
 }
 
+@media (max-width:480px){
+  .error{
+    padding: 30px 70px;
+    z-index: 1;
+    text-align: center;
+    margin-top: 10px;
+    font-size: 1rem;
+    font-weight: 400;
+    margin-bottom: 10px;
+  }
+}
+
 @media (min-width: 600px) {
   .cardone {
     display: flex;
@@ -302,27 +336,7 @@
     margin-top: 3rem;
   }
 }
-@media (min-width: 800px) {
-  // .cardone {
-  //   margin-left: 0;
-  //   display: flex;
-  //   flex-wrap: wrap;
-  //   // justify-content: space-around;
-  //   // margin-left: -4rem;
-  //   margin-top: 0;
-  // }
-}
-@media (min-width: 900px) {
-  // .cardone {
-  //   // margin-left: 0;
-  //   display: flex;
-  //   flex-wrap: wrap;
-  //   // justify-content: space-around;
-  //   // margin-left: -1rem;
 
-  //   margin-top: 0rem;
-  // }
-}
 
 @media  (min-width:600px) and (max-width:650px) {
   .cardone{

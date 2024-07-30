@@ -1,8 +1,6 @@
 import { useContext, useState } from "react";
 import styles from "./style/Signup.module.scss";
-import Input from "../../components/Core/Input";
-import Button from "../../components/Core/Button";
-import Text from "../../components/Core/Text";
+import {Input, Button, Text} from "../../components";
 import GoogleSignup from "./GoogleSignup";
 import bcrypt from "bcryptjs";
 import { useEffect } from "react";
@@ -11,12 +9,9 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import OtpInputModal from "../../features/Modals/authentication/OtpInputModal";
 import { Alert, MicroLoading } from "../../microInteraction";
 import { RecoveryContext } from "../../context/RecoveryContext";
-import usePost from "../../services/api/usePost";
+import { api } from "../../services";
 
-const SignUP = () => {
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  });
+const SignUp = () => {
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
   const [userObject, setUserObject] = useState({});
@@ -25,6 +20,8 @@ const SignUP = () => {
   const [isTandChecked ,setTandC]=useState(false);
   const [alert, setAlert] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [shouldNavigate, setShouldNavigate] = useState(false);
+  const [navigatePath, setNavigatePath] = useState("/");
 
   const [showUser, setUser] = useState({
     email: "",
@@ -50,13 +47,21 @@ const SignUP = () => {
     }
   }, [alert]);
 
+  useEffect(() => {
+    if (shouldNavigate) {
+      navigate(navigatePath);
+      setShouldNavigate(false); // Reset state after navigation
+    }
+  }, [shouldNavigate, navigatePath, navigate]);
+
 
   const DataInp = (name, value) => {
     setUser({ ...showUser, [name]: value });
   };
 
-  const handleSignup = async (e) => {
+  const handleSignUp = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
 
     const {
       email,
@@ -133,12 +138,29 @@ const SignUP = () => {
         //     setLoading(false);
         //   });
       } else {
-        alert("Please enter your email");
+        setAlert({
+          type: "error",
+          message: "Enter a Valid Email Address",
+          position: "bottom-right",
+          duration: 3000,
+        });
       }
     } else {
-      console.log("invalid details enter again");
+
+      setAlert({
+        type: "error",
+        message: "Invalid Details! Enter Again",
+        position: "bottom-right",
+        duration: 3000,
+      });
+
       if(!isTandChecked){
-        console.log("select the checkbox");
+        setAlert({
+          type: "error",
+          message: "Please check the terms and conditions",
+          position: "bottom-right",
+          duration: 3000,
+        });
       }
     }
   };
@@ -235,7 +257,7 @@ const SignUP = () => {
             <p style={{ color: "#fff", textAlign: "center" }}>or</p>
             <div className={styles.divider} />
           </div>
-          <form onSubmit={handleSignup}>
+          <form onSubmit={handleSignUp}>
             <div style={{ display: "flex", justifyContent: "space-between" }}>
               <div style={{ width: "48%" }}>
                 <Input
@@ -415,6 +437,7 @@ const SignUP = () => {
             </div>
         
             <Button
+              type="submit"
               style={{
                 width: "100%",
                 background: "var(--primary)",
@@ -425,9 +448,9 @@ const SignUP = () => {
                 cursor: "pointer",
                 // border: "1px solid #fff",
               }}
-              type="submit"
+              disabled={isLoading}
             >
-              Sign Up
+            {isLoading ? <MicroLoading /> : "Sign Up"}
             </Button>
             <Text
               style={{
@@ -455,9 +478,10 @@ const SignUP = () => {
     </div>
 
     {showModal && <OtpInputModal onVerify={handleVerifyOTP} handleClose={handleModalClose} />}
+    <Alert />
 
   </>
   );
 };
 
-export default SignUP;
+export default SignUp;

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { api } from "../../services";
 import styles from "./styles/Alumni.module.scss";
 import { TeamCard } from "../../components";
-import useWindowWidth from "../../hooks/useWindowWidth"; // Import useWindowWidth hook
+import useWindowWidth from "../../utils/hooks/useWindowWidth"; // Import useWindowWidth hook
 import MemberData from "../../data/Team.json"; // Local fallback data
 import { ComponentLoading } from "../../microInteraction";
 

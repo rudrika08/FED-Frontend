@@ -1,8 +1,22 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Riple } from "react-loading-indicators";
-import Props from "prop-types";
+import PropTypes from "prop-types";
 
 const ComponentLoading = ({ customStyles = {} }) => {
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
   const baseStyles = {
     height: "50%",
     padding: "3rem",
@@ -11,6 +25,7 @@ const ComponentLoading = ({ customStyles = {} }) => {
     display: "flex",
     justifyContent: "center",
     ...customStyles, // Merge custom styles with base styles
+    marginLeft: isMobile ? "0rem" :  customStyles.marginLeft,
   };
 
   return (
@@ -21,7 +36,7 @@ const ComponentLoading = ({ customStyles = {} }) => {
 };
 
 ComponentLoading.propTypes = {
-  customStyles: Props.object,
+  customStyles: PropTypes.object,
 };
 
 export default ComponentLoading;

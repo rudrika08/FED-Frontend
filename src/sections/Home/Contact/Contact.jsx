@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import usePost from "../../../services/api/usePost";
+import { api } from "../../../services";
 import styles from "./styles/Contact.module.scss";
 import contactImg from "../../../assets/images/contact.png";
 import { Button } from "../../../components";
@@ -8,16 +8,7 @@ import { Alert, MicroLoading } from "../../../microInteraction";
 
 const ContactForm = () => {
   const [alert, setAlert] = useState(null);
-  const [postData, setPostData] = useState(null);
-  const [formReset, setFormReset] = useState(false);
-
-  const { isLoading, data, error, success, setTrigger } = usePost(
-    "/api/contact",
-    postData,
-    {},
-    "Your message has been submitted! We will get back to you soon.",
-    "There was an error submitting your message. Please try again."
-  );
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     if (alert) {
@@ -26,38 +17,9 @@ const ContactForm = () => {
     }
   }, [alert]);
 
-  useEffect(() => {
-    if (isLoading) return;
-
-    if (success) {
-      setAlert({
-        type: "success",
-        message: success,
-        position: "bottom-right",
-        duration: 3000,
-      });
-      setFormReset(true);
-    }
-
-    if (error) {
-      setAlert({
-        type: "error",
-        message: error,
-        position: "bottom-right",
-        duration: 3000,
-      });
-    }
-  }, [isLoading, success, error]);
-
-  useEffect(() => {
-    if (formReset) {
-      setFormReset(false); // Reset formReset after reset
-      document.querySelector("form").reset(); // Reset form fields
-    }
-  }, [formReset]);
-
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
+    setIsLoading(true);
 
     const formData = new FormData(event.target);
     const data = {
@@ -66,8 +28,38 @@ const ContactForm = () => {
       message: formData.get("message"),
     };
 
-    setPostData(data); // Set post data
-    setTrigger(true); // Trigger the usePost hook
+    try {
+      const response = await api.post("/api/contact", data);
+
+      if (response.status === 200 || response.status === 201) {
+        setAlert({
+          type: "success",
+          message:
+            "Your message has been submitted! We will get back to you soon.",
+          position: "bottom-right",
+          duration: 3000,
+        });
+        event.target.reset();
+      } else {
+        setAlert({
+          type: "error",
+          message:
+            "There was an error submitting your message. Please try again.",
+          position: "bottom-right",
+          duration: 3000,
+        });
+      }
+    } catch (error) {
+      setAlert({
+        type: "error",
+        message:
+          "There was an error submitting your message. Please try again.",
+        position: "bottom-right",
+        duration: 3000,
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (

@@ -1,4 +1,4 @@
 // Api services
 
-export {default as api} from './axiosClient';
-export {default as apiBot} from './axiosBotClient';
+export {default as api} from './client/axiosClient';
+export {default as apiBot} from './client/axiosBotClient';
