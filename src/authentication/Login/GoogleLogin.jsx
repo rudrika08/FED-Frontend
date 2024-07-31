@@ -86,8 +86,9 @@ export default function GoogleLogin() {
             position: "bottom-right",
             duration: 3000,
           });
+
+          sessionStorage.setItem("prevPage", window.location.pathname);
           setNavigatePath(sessionStorage.getItem("prevPage") || "/");
-          sessionStorage.removeItem("prevPage"); // Clean up
   
           setTimeout(() => {
             authCtx.login(
@@ -106,6 +107,8 @@ export default function GoogleLogin() {
             );
             setShouldNavigate(true);
           }, 3000);
+
+          sessionStorage.removeItem("prevPage"); // Clean up
         } else {
           // Handle unexpected response status
           console.log("Unexpected backend response status:", response.status);
@@ -144,8 +147,8 @@ export default function GoogleLogin() {
         position: "bottom-right",
         duration: 3000,
       });
+      sessionStorage.setItem("prevPage", window.location.pathname);
       setNavigatePath(sessionStorage.getItem("prevPage") || "/");
-      sessionStorage.removeItem("prevPage"); // Clean up
   
       setTimeout(() => {
         authCtx.login(
@@ -164,6 +167,8 @@ export default function GoogleLogin() {
         );
         setShouldNavigate(true);
       }, 3000);
+
+      sessionStorage.removeItem("prevPage"); // Clean up
 
     } else {
       setAlert({

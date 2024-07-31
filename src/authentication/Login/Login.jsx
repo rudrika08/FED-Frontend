@@ -68,8 +68,8 @@ const Login = () => {
           position: "bottom-right",
           duration: 3000,
         });
+        sessionStorage.setItem("prevPage", window.location.pathname);
         setNavigatePath(sessionStorage.getItem("prevPage") || "/");
-        sessionStorage.removeItem("prevPage"); // Clean up
 
         setTimeout(() => {
           authCtx.login(
@@ -89,6 +89,8 @@ const Login = () => {
   
           setShouldNavigate(true);
         }, 3000);
+
+        sessionStorage.removeItem("prevPage"); // Clean up
 
       } else {
         setAlert({
@@ -113,8 +115,8 @@ const Login = () => {
         (user) => user.email === email && user.password === password
       );
 
-      // setNavigatePath(sessionStorage.getItem("prevPage") || "/");
-      // sessionStorage.removeItem("prevPage"); // Clean up
+      sessionStorage.setItem("prevPage", window.location.pathname);
+      setNavigatePath(sessionStorage.getItem("prevPage") || "/");
       setAlert({
         type: "success",
         message: "Logging in using fallback data",
@@ -140,6 +142,8 @@ const Login = () => {
           );
         }
       }, 3000);
+
+      sessionStorage.removeItem("prevPage"); // Clean up
 
     } finally {
       setIsLoading(false);
