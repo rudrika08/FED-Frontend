@@ -41,13 +41,12 @@ const EventForm = () => {
       } catch (error) {
         console.error("Error fetching event:", error);
 
-        setAlert({
-          type: "error",
-          message: "There was an error fetching event form. Please try again.",
-          position: "bottom-right",
-          duration: 3000,
-        });
-
+        // setAlert({
+        //   type: "error",
+        //   message: "There was an error fetching event form. Please try again.",
+        //   position: "bottom-right",
+        //   duration: 3000,
+        // });
         // Fallback to local data
         const { events } = FormData;
         const localEventData = events.find((event) => event._id === id);

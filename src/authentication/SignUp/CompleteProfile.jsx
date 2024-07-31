@@ -92,7 +92,7 @@ function CompleteProfile() {
 
     try {
       // API call
-      const response = await api.post("/api/completeProfile", userObject);
+      const response = await api.post("/api/auth/register", userObject);
       if (response.status === 200 || response.status === 201) {
 
         setAlert({

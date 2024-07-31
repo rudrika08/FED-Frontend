@@ -73,7 +73,7 @@ export default function GoogleSignup() {
 
       try {
         // Send a POST request to the backend to check if the user exists
-        const response = await api.post("/api/googleSignUp", {
+        const response = await api.post("/api/auth/googleSignUp", {
           email: googleUserData.email,
         });
 

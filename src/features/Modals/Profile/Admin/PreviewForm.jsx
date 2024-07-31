@@ -2,10 +2,11 @@ import { useEffect, useRef, useState } from "react";
 import styles from "./styles/Preview.module.scss";
 import { Button, Text } from "../../../../components";
 import Section from "./SectionModal";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { X } from "lucide-react";
 import { getOutboundList } from "../../../../sections/Profile/Admin/Form/NewForm/NewForm";
 import Complete from "../../../../assets/images/Complete.svg";
+import { api } from "../../../../services";
 import {
   Alert,
   MicroLoading,
@@ -30,13 +31,15 @@ const PreviewForm = ({
   handleClose,
   showCloseBtn,
 }) => {
+  const navigate = useNavigate();
   const [data, setdata] = useState(sections);
   const [activeSection, setactiveSection] = useState(
     data !== undefined ? data[0] : ""
   );
   const [isCompleted, setisCompleted] = useState([]);
-  const [isLoading, setisLoading] = useState(true);
-  const [isMicroLoading, setIsMicroLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isMicroLoading, setIsMicroLoading] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
   const [alert, setAlert] = useState(null);
   const wrapperRef = useRef(null);
 
@@ -58,7 +61,7 @@ const PreviewForm = ({
 
   useEffect(() => {
     setTimeout(() => {
-      setisLoading(false);
+      setIsLoading(false);
     }, 1000);
   }, []);
 
@@ -73,13 +76,6 @@ const PreviewForm = ({
       document.body.classList.remove(styles.noScroll);
     };
   }, [open]);
-
-  useEffect(() => {
-    window.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      window.removeEventListener("mousedown", handleClickOutside);
-    };
-  });
 
   useEffect(() => {
     constructSections();
@@ -100,13 +96,6 @@ const PreviewForm = ({
     });
     setdata(newSections);
     setactiveSection(newSections[0]);
-  };
-
-  const handleClickOutside = (e) => {
-    const { current: wrap } = wrapperRef;
-    if (wrap && !wrap.contains(e.target)) {
-      handleClose();
-    }
   };
 
   const handleChange = (field, value) => {
@@ -163,7 +152,7 @@ const PreviewForm = ({
     setdata(newSections);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const formData = new FormData();
 
     data.forEach((section) => {
@@ -178,23 +167,82 @@ const PreviewForm = ({
       }
     });
 
-    formData.forEach((value, key) => {
-      console.log(key + " " + value);
-    });
+    // Log the formData content for debugging
+    // formData.forEach((value, key) => {
+    //   console.log(key + " " + value);
+    // });
+
+    try {
+      setIsLoading(true); // Set loading state
+      setIsMicroLoading(true); // Set micro loading state
+      const response = await api.post("/api/form/register", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      if (response.status === 200 || response.status === 201) {
+        setAlert({
+          type: "success",
+          message: "Form submitted successfully!",
+          position: "bottom-right",
+          duration: 3000,
+        });
+        handleClose();
+        setIsSuccess(true);
+      } else {
+        setAlert({
+          type: "error",
+          message: "There was an error submitting the form. Please try again.",
+          position: "bottom-right",
+          duration: 3000,
+        });
+        setIsSuccess(false);
+        throw new Error("Unexpected response status");
+      }
+    } catch (error) {
+      console.error("Form submission error:", error);
+      setAlert({
+        type: "error",
+        message: "There was an error submitting the form. Please try again.",
+        position: "bottom-right",
+        duration: 3000,
+      });
+      setIsSuccess(false);
+    } finally {
+      setIsLoading(false);
+      setIsMicroLoading(false);
+    }
   };
+
+  useEffect(() => {
+    if (isSuccess) {
+      const handleAutoClose = () => {
+        setTimeout(() => {
+          navigate("/Events");
+        }, 5000);
+      };
+
+      handleAutoClose();
+    }
+  }, [isSuccess, navigate]);
 
   const areRequiredFieldsFilled = () => {
     let isFilled = {
       status: true,
-      message: "",
     };
 
     if (currentSection) {
       currentSection.fields.forEach((field) => {
         if (field.isRequired && !field.onChangeValue) {
+          setAlert({
+            type: "error",
+            message: "Please fill all the details",
+            position: "bottom-right",
+            duration: 3000,
+          });
           isFilled = {
             status: false,
-            message: "Please fill all required fields",
           };
           return;
         }
@@ -203,9 +251,14 @@ const PreviewForm = ({
           if (valid.type === "length") {
             if (!matchCondition(field, valid)) {
               const op = operators.find((op) => op.value === valid.operator);
+              setAlert({
+                type: "error",
+                message: `${field.name} should ${op?.label} ${valid.type} ${valid.value}`,
+                position: "bottom-right",
+                duration: 3000,
+              });
               isFilled = {
                 status: false,
-                message: `${field.name} should ${op?.label} ${valid.type} ${valid.value}`,
               };
             }
           }
@@ -214,7 +267,6 @@ const PreviewForm = ({
     }
 
     if (!isFilled.status) {
-      alert(isFilled.message);
       return false;
     }
 
@@ -378,7 +430,8 @@ const PreviewForm = ({
   };
 
   return (
-    open && (
+    <>
+      open && (
       <div className={styles.mainPreview}>
         <div ref={wrapperRef} className={styles.previewContainer}>
           {showCloseBtn && (
@@ -436,13 +489,17 @@ const PreviewForm = ({
                   </Button>
                 )}
                 <Button onClick={onNext}>
-                  {inboundList() && inboundList().nextSection
-                    ? "Next"
-                    : "Submit"}
+                  {inboundList() && inboundList().nextSection ? (
+                    "Next"
+                  ) : isMicroLoading ? (
+                    <MicroLoading />
+                  ) : (
+                    "Submit"
+                  )}
                 </Button>
               </div>
             </div>
-          ) : (
+          ) : isSuccess ? (
             <div
               style={{
                 width: "100%",
@@ -470,10 +527,40 @@ const PreviewForm = ({
                 Form Submitted Successfully! Thank you for your time.
               </Text>
             </div>
+          ) : (
+            <div
+              style={{
+                width: "100%",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+              }}
+            >
+              <Text
+                variant="secondary"
+                style={{
+                  width: "60%",
+                  fontSize: "14px",
+                  alignSelf: "center",
+                  textAlign: "center",
+                  marginTop: "16px",
+                  userSelect: "none",
+                }}
+              >
+                <h2 style={{ marginBottom: "3rem" }}>
+                  Error Submitting your Form
+                </h2>
+                There is an error submitting the form. If you have made any
+                payment, please fill up your payment details again. There is no
+                need to pay again.
+              </Text>
+            </div>
           )}
         </div>
       </div>
-    )
+      )
+      <Alert />
+    </>
   );
 };
 export default PreviewForm;

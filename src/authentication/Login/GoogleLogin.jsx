@@ -50,7 +50,7 @@ export default function GoogleLogin() {
       const googleResponse = await axios.get(
         `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${codeResponse.access_token}`
       );
-  
+
       if (googleResponse.status !== 200) {
         // Handle the case where Google response is not successful
         console.error("Google login failed:", googleResponse);
@@ -62,34 +62,37 @@ export default function GoogleLogin() {
         });
         return;
       }
-  
+
       const googleUserData = {
         email: googleResponse.data.email,
         image: googleResponse.data.picture,
       };
-  
+
       console.log("Google User Data:", googleUserData);
-  
+
       try {
         // Send a POST request to the backend to check if the user exists
-        const response = await api.post("/api/googleLogin", {
+        const response = await api.post("/api/auth/googleLogin", {
           email: googleUserData.email,
         });
-  
+
         if (response.status === 200 || response.status === 201) {
           // User exists in the backend
           const userData = response.data.user;
-  
+
           setAlert({
             type: "success",
             message: "Login successful",
             position: "bottom-right",
-            duration: 3000,
+            duration: 2800,
           });
 
-          sessionStorage.setItem("prevPage", window.location.pathname);
           setNavigatePath(sessionStorage.getItem("prevPage") || "/");
-  
+
+          setTimeout(() => {
+            setShouldNavigate(true);
+          }, 2800);
+
           setTimeout(() => {
             authCtx.login(
               userData.name,
@@ -131,25 +134,29 @@ export default function GoogleLogin() {
       setIsLoading(false);
     }
   };
-  
+
   const handleFallbackOrSignup = async (googleUserData) => {
     // User does not exist in the backend, use fallback local data
     console.log("User not registered in backend, using fallback data");
     const fallbackUser = users.find(
       (user) => user.email === googleUserData.email
     );
-  
-    if (fallbackUser) {
 
+    if (fallbackUser) {
       setAlert({
         type: "success",
-        message: "User not registered in backend, Logging In using fallback data",
+        message:
+          "User not registered in backend, Logging In using fallback data",
         position: "bottom-right",
-        duration: 3000,
+        duration: 2800,
       });
-      sessionStorage.setItem("prevPage", window.location.pathname);
+
       setNavigatePath(sessionStorage.getItem("prevPage") || "/");
-  
+
+      setTimeout(() => {
+        setShouldNavigate(true);
+      }, 2800);
+
       setTimeout(() => {
         authCtx.login(
           fallbackUser.name,
@@ -165,11 +172,9 @@ export default function GoogleLogin() {
           "someToken",
           3600000
         );
-        setShouldNavigate(true);
       }, 3000);
 
       sessionStorage.removeItem("prevPage"); // Clean up
-
     } else {
       setAlert({
         type: "info",
@@ -183,7 +188,6 @@ export default function GoogleLogin() {
       }, 3000);
     }
   };
-  
 
   return (
     <>

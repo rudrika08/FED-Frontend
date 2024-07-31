@@ -57,7 +57,7 @@ const Login = () => {
     }
 
     try {
-      const response = await api.post("/api/login", { email, password });
+      const response = await api.post("/api/auth/login", { email, password });
 
       if (response.status === 200 || response.status === 201) {
         const user = response.data;
@@ -66,10 +66,14 @@ const Login = () => {
           type: "success",
           message: "Login successful",
           position: "bottom-right",
-          duration: 3000,
+          duration: 2800,
         });
-        sessionStorage.setItem("prevPage", window.location.pathname);
+
         setNavigatePath(sessionStorage.getItem("prevPage") || "/");
+
+        setTimeout(() => {
+          setShouldNavigate(true);
+        }, 2800);
 
         setTimeout(() => {
           authCtx.login(
@@ -86,12 +90,9 @@ const Login = () => {
             "someToken",
             3600000
           );
-  
-          setShouldNavigate(true);
         }, 3000);
 
         sessionStorage.removeItem("prevPage"); // Clean up
-
       } else {
         setAlert({
           type: "error",
@@ -101,7 +102,6 @@ const Login = () => {
         });
       }
     } catch (error) {
-      
       setAlert({
         type: "error",
         message: "There was an error logging in. Please try again.",
@@ -115,14 +115,18 @@ const Login = () => {
         (user) => user.email === email && user.password === password
       );
 
-      sessionStorage.setItem("prevPage", window.location.pathname);
-      setNavigatePath(sessionStorage.getItem("prevPage") || "/");
       setAlert({
         type: "success",
         message: "Logging in using fallback data",
         position: "bottom-right",
-        duration: 3000,
+        duration: 2800,
       });
+
+      setNavigatePath(sessionStorage.getItem("prevPage") || "/");
+
+      setTimeout(() => {
+        setShouldNavigate(true);
+      }, 2800);
 
       setTimeout(() => {
         if (user) {
@@ -144,7 +148,6 @@ const Login = () => {
       }, 3000);
 
       sessionStorage.removeItem("prevPage"); // Clean up
-
     } finally {
       setIsLoading(false);
     }
@@ -152,7 +155,7 @@ const Login = () => {
 
   const handleForgot = () => {
     setEmail(email);
-    navigate('/ForgotPassword')
+    navigate("/ForgotPassword");
   };
 
   return (
@@ -185,11 +188,19 @@ const Login = () => {
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
-              gap:"1rem"
+              gap: "1rem",
             }}
           >
             <div className={style.divider} />
-            <p style={{ color: "#fff", textAlign: "center" , marginBottom:"0.2rem" }}>or</p>
+            <p
+              style={{
+                color: "#fff",
+                textAlign: "center",
+                marginBottom: "0.2rem",
+              }}
+            >
+              or
+            </p>
             <div className={style.divider} />
           </div>
           <form className={style.form} onSubmit={handleLogin}>
@@ -228,7 +239,6 @@ const Login = () => {
                 WebkitBackgroundClip: "text",
                 color: "transparent",
               }}
-            
             >
               Forget Password?
             </Text>
@@ -242,7 +252,7 @@ const Login = () => {
                 marginTop: "20px",
                 fontSize: "1rem",
                 cursor: "pointer",
-                marginLeft:"0.4rem"
+                marginLeft: "0.4rem",
               }}
               disabled={isLoading}
             >
