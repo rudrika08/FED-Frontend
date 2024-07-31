@@ -6,6 +6,11 @@ import { Link } from "react-router-dom";
 import { X } from "lucide-react";
 import { getOutboundList } from "../../../../sections/Profile/Admin/Form/NewForm/NewForm";
 import Complete from "../../../../assets/images/Complete.svg";
+import {
+  Alert,
+  MicroLoading,
+  ComponentLoading,
+} from "../../../../microInteraction";
 
 const operators = [
   { label: "match", value: "===" },
@@ -30,13 +35,32 @@ const PreviewForm = ({
     data !== undefined ? data[0] : ""
   );
   const [isCompleted, setisCompleted] = useState([]);
-  const [isLoading, setisLoading] = useState(false);
+  const [isLoading, setisLoading] = useState(true);
+  const [isMicroLoading, setIsMicroLoading] = useState(true);
+  const [alert, setAlert] = useState(null);
   const wrapperRef = useRef(null);
+
+  console.log("data", eventData);
+  console.log("sections", sections);
 
   let currentSection =
     data !== undefined
       ? data.find((section) => section._id === activeSection._id)
       : null;
+
+  useEffect(() => {
+    if (alert) {
+      const { type, message, position, duration } = alert;
+      Alert({ type, message, position, duration });
+      setAlert(null); // Reset alert after displaying it
+    }
+  }, [alert]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setisLoading(false);
+    }, 1000);
+  }, []);
 
   useEffect(() => {
     if (open) {
@@ -157,7 +181,6 @@ const PreviewForm = ({
     formData.forEach((value, key) => {
       console.log(key + " " + value);
     });
-    
   };
 
   const areRequiredFieldsFilled = () => {
@@ -359,34 +382,37 @@ const PreviewForm = ({
       <div className={styles.mainPreview}>
         <div ref={wrapperRef} className={styles.previewContainer}>
           {showCloseBtn && (
-            <Link onClick={handleClose} to={"/Events"}>
+            <Link onClick={handleClose} to="/Events">
               <div className={styles.closeBtn}>
                 <X />
               </div>
             </Link>
           )}
-          <Text style={{ 
-            marginBottom: "20px",
-            width: "100%",
-            display: "flex",
-            justifyContent:"center",
-            fontSize:"25px"
-          }}>
-            {eventData?.title || "Preview Event"}
+          <Text
+            style={{
+              marginBottom: "20px",
+              width: "100%",
+              display: "flex",
+              justifyContent: "center",
+              fontSize: "25px",
+            }}
+          >
+            {eventData?.eventTitle || "Preview Event"}
           </Text>
-          {!isCompleted.includes("Submitted") ? (
-            <div
-              style={{
-                width: "100%",
+          {isLoading ? (
+            <ComponentLoading
+              customStyles={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                marginLeft: "20rem",
+                marginTop: "5rem",
               }}
-            >
+            />
+          ) : !isCompleted.includes("Submitted") ? (
+            <div style={{ width: "100%" }}>
               <div>
-                <Text
-                  style={{
-                    alignSelf: "center",
-                  }}
-                  variant="secondary"
-                >
+                <Text style={{ alignSelf: "center" }} variant="secondary">
                   {currentSection.name}
                 </Text>
                 <Text
@@ -403,18 +429,12 @@ const PreviewForm = ({
               </div>
               {renderPaymentScreen()}
               <Section section={currentSection} handleChange={handleChange} />
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                }}
-              >
+              <div style={{ display: "flex", flexDirection: "row" }}>
                 {inboundList() && inboundList().backSection && (
                   <Button style={{ marginRight: "10px" }} onClick={onBack}>
                     Back
                   </Button>
                 )}
-
                 <Button onClick={onNext}>
                   {inboundList() && inboundList().nextSection
                     ? "Next"
@@ -437,7 +457,7 @@ const PreviewForm = ({
                 style={{ width: "400px", height: "400px", margin: "auto" }}
               />
               <Text
-                variant={"secondary"}
+                variant="secondary"
                 style={{
                   width: "60%",
                   fontSize: "14px",

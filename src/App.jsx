@@ -88,7 +88,7 @@ function App() {
               element={[<Event />, <EventModal onClosePath="/Events" />]}
             />
             <Route
-              path="/pastEvents/:eventId"
+              path="pastEvents/:eventId"
               element={[
                 <PastEvent />,
                 <EventModal onClosePath="/Events/pastEvents" />,

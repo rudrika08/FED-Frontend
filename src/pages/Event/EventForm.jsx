@@ -1,27 +1,27 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import FormData from "../../data/FormData.json";
 import PreviewForm from "../../features/Modals/Profile/Admin/PreviewForm";
 import { api } from "../../services";
-import { Alert, ComponentLoading } from "../../microInteraction";
+import { Alert } from "../../microInteraction";
 
 const EventForm = () => {
   const [showPreview, setShowPreview] = useState(true);
   const [eventData, setEventData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
   const [alert, setAlert] = useState(null);
   const { eventId } = useParams();
+
+  // Ensure eventId is correctly parsed
+  const id = parseInt(eventId, 10);
 
   useEffect(() => {
     if (alert) {
       const { type, message, position, duration } = alert;
       Alert({ type, message, position, duration });
+      setAlert(null); // Reset alert after displaying it
     }
   }, [alert]);
-
-  // Ensure eventId is correctly parsed
-  const id = parseInt(eventId, 10);
 
   useEffect(() => {
     const fetchEvent = async () => {
@@ -32,27 +32,26 @@ const EventForm = () => {
         } else {
           setAlert({
             type: "error",
-            message: "There was an error fetching event. Please try again.",
+            message: "There was an error fetching event form. Please try again.",
             position: "bottom-right",
             duration: 3000,
           });
-          console.error("Error fetching event:", response.data.message);
+          throw new Error(response.data.message || "Error fetching event");
         }
       } catch (error) {
+        console.error("Error fetching event:", error);
+
         setAlert({
           type: "error",
-          message: "There was an error fetching event. Please try again.",
+          message: "There was an error fetching event form. Please try again.",
           position: "bottom-right",
           duration: 3000,
         });
-        
-        console.error("Error fetching event:", error);
 
-        console.log("Getting FallBack Event");
+        // Fallback to local data
         const { events } = FormData;
         const localEventData = events.find((event) => event._id === id);
         setEventData(localEventData);
-
       } finally {
         setIsLoading(false);
       }
@@ -61,30 +60,16 @@ const EventForm = () => {
     fetchEvent();
   }, [id]);
 
-  // Local JSON data fallback
-  // useEffect(() => {
-  //   if (!eventData && !isLoading) {
-  //     console.log("Getting FallBack Event");
-  //     const { events } = FormData;
-  //     const localEventData = events.find((event) => event._id === id);
-  //     setEventData(localEventData);
-  //   }
-  // }, [eventData, isLoading, id]);
-
   return (
     <div>
-      {isLoading ? (
-        <ComponentLoading />
-      ) : (
-        showPreview && (
-          <PreviewForm
-            open={showPreview}
-            handleClose={() => setShowPreview(false)}
-            sections={eventData.sections}
-            eventData={eventData.info} // Pass the correct data prop
-            showCloseBtn={true}
-          />
-        )
+      {!isLoading && showPreview && (
+        <PreviewForm
+          open={showPreview}
+          handleClose={() => setShowPreview(false)}
+          sections={eventData?.sections || []} // Ensure sections is always an array
+          eventData={eventData?.info || {}} // Pass the correct data prop
+          showCloseBtn={true}
+        />
       )}
       <Alert />
     </div>

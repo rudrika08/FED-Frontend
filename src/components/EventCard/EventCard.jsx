@@ -13,7 +13,8 @@ import { IoIosLock } from "react-icons/io";
 import { Button } from "../Core";
 import AuthContext from "../../context/AuthContext";
 import EventCardSkeleton from "../../layouts/Skeleton/EventCard/EventCardSkeleton";
-import { Blurhash } from "react-blurhash"; 
+import { Blurhash } from "react-blurhash";
+import { MicroLoading } from "../../microInteraction";
 
 const EventCard = (props) => {
   const {
@@ -40,6 +41,16 @@ const EventCard = (props) => {
   const navigate = useNavigate();
   const [imageLoaded, setImageLoaded] = useState(false);
   const [showSkeleton, setShowSkeleton] = useState(true);
+  const [isMicroLoading, setIsMicroLoading] = useState(false);
+  const [shouldNavigate, setShouldNavigate] = useState(false);
+  const [navigatePath, setNavigatePath] = useState("/");
+
+  useEffect(() => {
+    if (shouldNavigate) {
+      navigate(navigatePath);
+      setShouldNavigate(false); // Reset state after navigation
+    }
+  }, [shouldNavigate, navigatePath, navigate]);
 
   useEffect(() => {
     if (aosDisable) {
@@ -143,10 +154,27 @@ const EventCard = (props) => {
 
   const handleForm = () => {
     if (authCtx.isLoggedIn) {
-      navigate("/Events/" + data._id + "/Form");
+      setIsMicroLoading(true);
+      setNavigatePath("/Events/" + data._id + "/Form");
+      setTimeout(() => {
+        setShouldNavigate(true);
+      }, 1000);
+
+      setTimeout(() => {
+        setIsMicroLoading(false);
+      }, 3000);
     } else {
-      sessionStorage.setItem('prevPage', window.location.pathname);
-      navigate('/login');
+      setIsMicroLoading(true);
+      sessionStorage.setItem("prevPage", window.location.pathname);
+      setNavigatePath("/login");
+
+      setTimeout(() => {
+        setShouldNavigate(true);
+      }, 1000);
+
+      setTimeout(() => {
+        setIsMicroLoading(false);
+      }, 3000);
     }
   };
 
@@ -183,7 +211,10 @@ const EventCard = (props) => {
           <img
             srcSet={info.eventImg}
             className={style.img}
-            style={{...customStyles.img, display: imageLoaded ? 'block' : 'none'}}
+            style={{
+              ...customStyles.img,
+              display: imageLoaded ? "block" : "none",
+            }}
             alt="Event"
             onLoad={() => setImageLoaded(true)}
           />
@@ -231,7 +262,7 @@ const EventCard = (props) => {
             )}
           </div>
           {type === "ongoing" && showRegisterButton && (
-            <div style={{ fontSize: ".85rem", color: "white" }}>
+            <div style={{ fontSize: ".9rem", color: "white" }}>
               <button
                 className={style.registerbtn}
                 style={{
@@ -239,11 +270,13 @@ const EventCard = (props) => {
                   cursor: btnTxt === "Register Now" ? "pointer" : "not-allowed",
                 }}
                 onClick={handleForm}
-                disabled={btnTxt === "Closed" || btnTxt === "Already Registered"}
+                disabled={
+                  btnTxt === "Closed" || btnTxt === "Already Registered"
+                }
               >
                 {btnTxt === "Closed" ? (
                   <>
-                    <div style={{ fontSize: "0.85rem" }}>Closed</div>{" "}
+                    <div style={{ fontSize: "0.9rem" }}>Closed</div>{" "}
                     <IoIosLock
                       alt=""
                       style={{ marginLeft: "0px", fontSize: "1rem" }}
@@ -251,10 +284,12 @@ const EventCard = (props) => {
                   </>
                 ) : btnTxt === "Already Registered" ? (
                   <>
-                    <div style={{ fontSize: "0.85rem" }}>
-                      Registered
-                    </div>{" "}
+                    <div style={{ fontSize: "0.9rem" }}>Registered</div>{" "}
                   </>
+                ) : isMicroLoading ? (
+                  <div style={{ fontSize: "0.9rem" }}>
+                    <MicroLoading />
+                  </div>
                 ) : (
                   <>
                     {remainingTime ? (
@@ -262,7 +297,7 @@ const EventCard = (props) => {
                         <PiClockCountdownDuotone /> {btnTxt}
                       </>
                     ) : (
-                      "Register Now"
+                      <div style={{ fontSize: "0.9rem" }}>Register Now</div>
                     )}
                   </>
                 )}
@@ -333,7 +368,7 @@ EventCard.propTypes = {
   aosDisable: PropTypes.bool,
   onEdit: PropTypes.func,
   enableEdit: PropTypes.bool,
-  isLoading: PropTypes.bool.isRequired, 
+  isLoading: PropTypes.bool.isRequired,
 };
 
 export default EventCard;
