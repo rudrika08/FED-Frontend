@@ -1,9 +1,5 @@
-import React from "react";
-import styles from "../EventModal/styles/EventModal.module.scss";
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import FormData from "../../../../data/FormData.json";
-import { useEffect } from "react";
 import Skeleton from "react-loading-skeleton";
 import { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
@@ -12,6 +8,8 @@ import { X } from "lucide-react";
 import Text from "../../../../components/Core/Text";
 import defaultImg from "../../../../assets/images/defaultImg.jpg";
 import { api } from "../../../../services";
+import styles from "../EventModal/styles/EventModal.module.scss";
+import FormData from "../../../../data/FormData.json";
 
 const EventStats = ({ onClosePath }) => {
   const navigate = useNavigate();
@@ -20,7 +18,9 @@ const EventStats = ({ onClosePath }) => {
   const [data, setData] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const [alert, setAlert] = useState(null);
-console.log("EventStats", window.location);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [isSearching, setIsSearching] = useState(false);
+
   useEffect(() => {
     const fetchEvent = async () => {
       try {
@@ -43,10 +43,8 @@ console.log("EventStats", window.location);
 
         const { events } = FormData;
         const data = events.find((event) => event._id === parseInt(eventId));
-        console.log(data);
-        const info = data.info;
         setData(data);
-        setInfo(info);
+        setInfo(data.info);
       } finally {
         setIsLoading(false);
       }
@@ -63,11 +61,27 @@ console.log("EventStats", window.location);
     }
   }, [alert]);
 
+  useEffect(() => {
+    if (searchQuery) {
+      setIsSearching(true);
+      const timer = setTimeout(() => {
+        setIsSearching(false);
+      }, 500);
+
+      return () => clearTimeout(timer);
+    } else {
+      setIsSearching(false);
+    }
+  }, [searchQuery]);
+
   const handleModalClose = () => {
     navigate(onClosePath);
   };
 
-  console.log("EventStats", info, isLoading);
+  const filteredUsers = info.registeredUsers?.filter((user) =>
+    user.email.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   return (
     <div
       style={{
@@ -141,30 +155,30 @@ console.log("EventStats", window.location);
                     <button
                       className={styles.closeModal}
                       onClick={handleModalClose}
+                      style={{ paddingTop: "30px", paddingRight: "10px" }}
                     >
                       <X />
                     </button>
-                    <div className={styles.backimg}>
-                      <img
-                        srcSet={info.eventImg}
-                        className={styles.img}
-                        alt="Event"
-                      />
-                    </div>
+
                     <div className={styles.backbtn}>
-                      <div className={styles.eventname}>{info.eventTitle}</div>
+                      <div
+                        className={styles.eventname}
+                        style={{ paddingTop: "15px" }}
+                      >
+                        {info.eventTitle}
+                      </div>
                     </div>
                     <Text
                       style={{
                         color: "#fff",
-                        fontSize: ".8rem",
-                        fontWeight: "bold",
+                        fontSize: "1rem",
+                        fontWeight: "500",
                         textAlign: "left",
                         marginBottom: "1rem",
                         marginLeft: "2rem",
                       }}
                     >
-                      Total Registered Users :{"  "}
+                      Total Registered Users :{" "}
                       <span
                         style={{
                           color: "#FF8A00",
@@ -173,36 +187,52 @@ console.log("EventStats", window.location);
                         {info.registeredUsers.length}
                       </span>
                     </Text>
-                    {info.registeredUsers.length > 0 &&
-                      info.registeredUsers.map((user, index) => (
+                    <input
+                      type="text"
+                      placeholder="Search by email"
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      className={styles.searchInput}
+                    />
+                    <div className={styles.eventEmails}>
+                      {isSearching ? (
+                        <ComponentLoading
+                          customStyles={{
+                            width: "100%",
+                            height: "100%",
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            marginTop: "-0.4rem",
+                          }}
+                        />
+                      ) : filteredUsers.length > 0 ? (
+                        filteredUsers.map((user, index) => (
+                          <div key={index} className={styles.userCard}>
+                            <img
+                              src={user.userImg || defaultImg}
+                              alt="User"
+                              className={styles.userImg}
+                            />
+                            <div className={styles.userEmail}>{user.email}</div>
+                          </div>
+                        ))
+                      ) : (
                         <div
-                          key={index}
                           style={{
                             display: "flex",
-                            flexDirection: "row",
+                            justifyContent: "center",
                             alignItems: "center",
-                            marginLeft: "2rem",
-                            marginBottom: "1rem",
-                            backgroundColor: "#2D2D2D",
-                            padding: "8px 10px",
-                            width: "fit-content",
-                            borderRadius: "4px",
+                            height: "100%",
+                            width: "100%",
+                            color: "#fff",
+                            fontSize: "1rem",
                           }}
                         >
-                          <img
-                            src={user.userImg || defaultImg}
-                            alt="User"
-                            style={{
-                              borderRadius: "50%",
-                              width: "32px",
-                              height: "32px",
-                              objectFit: "cover",
-                              marginRight: "10px",
-                            }}
-                          />
-                          <div>{user.email}</div>
+                          No users found.
                         </div>
-                      ))}
+                      )}
+                    </div>
                   </div>
                 )}
               </div>
