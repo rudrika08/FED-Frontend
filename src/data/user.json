@@ -9,8 +9,11 @@
       "college": "Kalinga Institute of Industrial Technology",
       "mobileNo": "1234567890",
       "year": "3",
+      "github":"link@github.com",
+      "linkedin":"link@linkedin.com",
+      "designation": "Technical Director",
       "access": "DIRECTOR_TECHNICAL",
-      "regForm": [1719947858869, 1719947858871]
+      "regForm": [1719947858855, 1719947858856]
     },
     {
       "email": "22053275@kiit.ac.in",
@@ -22,8 +25,11 @@
       "college": "Kalinga Institute of Industrial Technology",
       "mobileNo": "1234567890",
       "year": "3",
+      "github":"",
+      "linkedin":"",
+      "designation": "",
       "access": "USER",
-      "regForm": []
+      "regForm": [1719947858855, 1719947858856]
     },
     {
       "email": "22053274@kiit.ac.in",
@@ -35,6 +41,9 @@
       "college": "Kalinga Institute of Industrial Technology",
       "mobileNo": "1234567890",
       "year": "other",
+      "github":"link@github.com",
+      "linkedin":"link@linkedin.com",
+      "designation": "",
       "access": "ALUMNI",
       "regForm": []
     },
@@ -48,6 +57,9 @@
       "college": "Kalinga Institute of Industrial Technology",
       "mobileNo": "0987654321",
       "year": "2",
+      "github":"link@github.com",
+      "linkedin":"link@linkedin.com",
+      "designation": "Admin",
       "access": "ADMIN",
       "regForm": []
     },
@@ -61,6 +73,9 @@
       "college": "Kalinga Institute of Industrial Technology",
       "mobileNo": "0987654321",
       "year": "2",
+      "github":"link@github.com",
+      "linkedin":"link@linkedin.com",
+      "designation": "Admin",
       "access": "ADMIN",
       "regForm": []
     }

@@ -186,21 +186,35 @@ const EventModal = (props) => {
   const handleForm = () => {
     if (authCtx.isLoggedIn) {
       setIsMicroLoading(true);
-      setNavigatePath("/Events/" + data._id + "/Form");
-      setTimeout(() => {
-        setShouldNavigate(true);
-      }, 3000);
+      if (authCtx.user.access !== "USER") {
+        setTimeout(() => {
+          setIsMicroLoading(false);
+          setBtnTxt("Already Member");
+        }, 1500);
 
-      setTimeout(() => {
-        setIsMicroLoading(false);
-      }, 3000);
+        // setAlert({
+        //   type: "info",
+        //   message: "Team Members are not allowed to register for the Event",
+        //   position: "bottom-right",
+        //   duration: 3000,
+        // });
+      } else {
+        setNavigatePath("/Events/" + data._id + "/Form");
+        setTimeout(() => {
+          setShouldNavigate(true);
+        }, 3000);
 
-      setAlert({
-        type: "info",
-        message: "Opening Event Registration Form",
-        position: "bottom-right",
-        duration: 3000,
-      });
+        setTimeout(() => {
+          setIsMicroLoading(false);
+        }, 3000);
+
+        setAlert({
+          type: "info",
+          message: "Opening Event Registration Form",
+          position: "bottom-right",
+          duration: 3000,
+        });
+      }
     } else {
       setIsMicroLoading(true);
       sessionStorage.setItem("prevPage", window.location.pathname);
@@ -347,7 +361,8 @@ const EventModal = (props) => {
                           onClick={handleForm}
                           disabled={
                             btnTxt === "Closed" ||
-                            btnTxt === "Already Registered"
+                            btnTxt === "Already Registered" ||
+                            btnTxt === "Already Member"
                           }
                         >
                           {btnTxt === "Closed" ? (
@@ -378,6 +393,12 @@ const EventModal = (props) => {
                               {remainingTime ? (
                                 <>
                                   <PiClockCountdownDuotone /> {btnTxt}
+                                </>
+                              ) : btnTxt === "Already Member" ? (
+                                <>
+                                  <div style={{ fontSize: "0.9rem" }}>
+                                    Already Member
+                                  </div>{" "}
                                 </>
                               ) : (
                                 "Register Now"

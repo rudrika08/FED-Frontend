@@ -16,7 +16,7 @@ const Team = () => {
 
   const [teamMembers, setTeamMembers] = useState([]);
   const [access, setAccess] = useState([]);
-  const [Error, setError] = useState(null);
+  const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const windowWidth = useWindowWidth();
 
@@ -29,9 +29,11 @@ const Team = () => {
           setTeamMembers(response.data);
         } else {
           console.error("Error fetching team members:", response.data.message);
-          // using local JSON data
-          const testMembers = MemberData;
-          setTeamMembers(testMembers);
+          setError({
+            message:
+              "Sorry for the inconvenience, we are having issues fetching our Team Members",
+          });
+          console.error("Error fetching team members:", error);
         }
       } catch (error) {
         setError({
@@ -195,7 +197,7 @@ const Team = () => {
         <ComponentLoading />
       ) : (
         <>
-          {Error && <div className={styles.error}>{Error.message}</div>}
+          {error && <div className={styles.error}>{error.message}</div>}
 
           <TeamSection members={directorsAndAbove} isDirector={true} />
 
@@ -222,7 +224,6 @@ const Team = () => {
           ))}
         </>
       )}
-
 
       <div className={styles.alumniBut}>
         <div className={styles.ulhover}>

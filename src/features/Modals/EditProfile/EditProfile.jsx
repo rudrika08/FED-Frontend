@@ -19,6 +19,8 @@ const EditProfile = ({ handleModalClose }) => {
     school: authCtx.user.school,
     college: authCtx.user.college,
     mobileNo: authCtx.user.mobileNo,
+    github: authCtx.user.github,
+    linkedin: authCtx.user.linkedin,
   });
 
   useEffect(() => {
@@ -33,13 +35,15 @@ const EditProfile = ({ handleModalClose }) => {
         // Assuming your API returns updated user data, update the context or handle accordingly
         authCtx.update(
           data.name,
-          data.email,
+          authCtx.user.email,
           authCtx.user.pic, // Assuming pic remains unchanged in this form
           data.rollNo,
           data.school,
           data.college,
           data.mobileNo,
           data.year,
+          data.github,
+          data.linkedin,
           authCtx.user.access,
           authCtx.user.regForm
         );
@@ -139,22 +143,6 @@ const EditProfile = ({ handleModalClose }) => {
                         />
                       </div>
                       <div className={styles.table}>
-                        <h6 className={styles.dets}>Email</h6>
-                        <Input
-                          style={{
-                            width: "17rem",
-                            margin: "0px",
-                            fontSize: "15px",
-                            cursor: "not-allowed",
-                          }}
-                          placeholder="Enter your email"
-                          type="email"
-                          value={data.email}
-                          className={`${styles.vals} ${styles.email}`}
-                          disabled={true}
-                        />
-                      </div>
-                      <div className={styles.table}>
                         <h6 className={styles.dets}>Roll Number</h6>
                         <Input
                           style={{
@@ -245,6 +233,40 @@ const EditProfile = ({ handleModalClose }) => {
                             setData({ ...data, mobileNo: e.target.value })
                           }
                           className={styles.vals}
+                        />
+                      </div>
+                      <div className={styles.table}>
+                        <h6 className={styles.dets}>Github</h6>
+                        <Input
+                          style={{
+                            width: "17rem",
+                            margin: "0px",
+                            fontSize: "15px",
+                          }}
+                          placeholder="Enter your school"
+                          type="text"
+                          value={data.github}
+                          className={styles.vals}
+                          onChange={(e) =>
+                            setData({ ...data, github: e.target.value })
+                          }
+                        />
+                      </div>
+                      <div className={styles.table}>
+                        <h6 className={styles.dets}>LinkedIn</h6>
+                        <Input
+                          style={{
+                            width: "17rem",
+                            margin: "0px",
+                            fontSize: "15px",
+                          }}
+                          placeholder="Enter your school"
+                          type="text"
+                          value={data.linkedin}
+                          className={styles.vals}
+                          onChange={(e) =>
+                            setData({ ...data, linkedin: e.target.value })
+                          }
                         />
                       </div>
                       <div

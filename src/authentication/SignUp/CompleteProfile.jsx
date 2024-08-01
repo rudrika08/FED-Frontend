@@ -112,7 +112,10 @@ function CompleteProfile() {
             userObject.College,
             userObject.MobileNo,
             userObject.year,
-            "someRegForm",
+            userObject.github,
+            userObject.linkedin,
+            userObject.designation,
+            userObject.regForm,
             "USER",
             "someToken",
             7200000

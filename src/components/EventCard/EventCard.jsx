@@ -14,7 +14,7 @@ import { Button } from "../Core";
 import AuthContext from "../../context/AuthContext";
 import EventCardSkeleton from "../../layouts/Skeleton/EventCard/EventCardSkeleton";
 import { Blurhash } from "react-blurhash";
-import { MicroLoading } from "../../microInteraction";
+import { Alert, MicroLoading } from "../../microInteraction";
 
 const EventCard = (props) => {
   const {
@@ -44,6 +44,7 @@ const EventCard = (props) => {
   const [isMicroLoading, setIsMicroLoading] = useState(false);
   const [shouldNavigate, setShouldNavigate] = useState(false);
   const [navigatePath, setNavigatePath] = useState("/");
+  const [alert, setAlert] = useState(null);
 
   useEffect(() => {
     if (shouldNavigate) {
@@ -51,6 +52,14 @@ const EventCard = (props) => {
       setShouldNavigate(false); // Reset state after navigation
     }
   }, [shouldNavigate, navigatePath, navigate]);
+
+  useEffect(() => {
+    if (alert) {
+      const { type, message, position, duration } = alert;
+      Alert({ type, message, position, duration });
+      setAlert(null); // Reset alert after displaying it
+    }
+  }, [alert]);
 
   useEffect(() => {
     if (aosDisable) {
@@ -155,14 +164,27 @@ const EventCard = (props) => {
   const handleForm = () => {
     if (authCtx.isLoggedIn) {
       setIsMicroLoading(true);
-      setNavigatePath("/Events/" + data._id + "/Form");
-      setTimeout(() => {
-        setShouldNavigate(true);
-      }, 1000);
+      if (authCtx.user.access !== "USER") {
+        setTimeout(() => {
+          setIsMicroLoading(false);
+          setBtnTxt("Already Member");
+        }, 1500);
+        // setAlert({
+        //   type: "info",
+        //   message: "Team Members are not allowed to register for the Event",
+        //   position: "bottom-right",
+        //   duration: 3000,
+        // });
+      } else {
+        setNavigatePath("/Events/" + data._id + "/Form");
+        setTimeout(() => {
+          setShouldNavigate(true);
+        }, 1000);
 
-      setTimeout(() => {
-        setIsMicroLoading(false);
-      }, 3000);
+        setTimeout(() => {
+          setIsMicroLoading(false);
+        }, 3000);
+      }
     } else {
       setIsMicroLoading(true);
       sessionStorage.setItem("prevPage", window.location.pathname);
@@ -271,7 +293,9 @@ const EventCard = (props) => {
                 }}
                 onClick={handleForm}
                 disabled={
-                  btnTxt === "Closed" || btnTxt === "Already Registered"
+                  btnTxt === "Closed" ||
+                  btnTxt === "Already Registered" ||
+                  btnTxt === "Already Member"
                 }
               >
                 {btnTxt === "Closed" ? (
@@ -295,6 +319,10 @@ const EventCard = (props) => {
                     {remainingTime ? (
                       <>
                         <PiClockCountdownDuotone /> {btnTxt}
+                      </>
+                    ) : btnTxt === "Already Member" ? (
+                      <>
+                        <div style={{ fontSize: "0.9rem" }}>Already Member</div>{" "}
                       </>
                     ) : (
                       <div style={{ fontSize: "0.9rem" }}>Register Now</div>
@@ -352,6 +380,7 @@ const EventCard = (props) => {
           <Button variant="secondary">Delete Event</Button>
         </div>
       )}
+      <Alert />
     </>
   );
 };

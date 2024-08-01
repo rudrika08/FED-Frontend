@@ -41,7 +41,7 @@ const Sidebar = ({ activepage, handleChange }) => {
 
   const handleName = () => {
     const maxLength = 20;
-    const name = authCtx.user.name || '';
+    const name = authCtx.user.name || "";
     return name.length > maxLength ? `${name.slice(0, maxLength)}...` : name;
   };
 
@@ -62,21 +62,22 @@ const Sidebar = ({ activepage, handleChange }) => {
   const renderAdminMenu = () => (
     <>
       <div
-        onClick={() => handleChange('Event')}
+        onClick={() => handleChange("Event")}
         style={{
-          background: activepage === 'Event' ? 'var(--primary)' : 'transparent',
-          WebkitBackgroundClip: activepage === 'Event' ? 'text' : 'initial',
-          backgroundClip: activepage === 'Event' ? 'text' : 'initial',
-          color: activepage === 'Event' ? 'transparent' : 'inherit'
+          background: activepage === "Event" ? "var(--primary)" : "transparent",
+          WebkitBackgroundClip: activepage === "Event" ? "text" : "initial",
+          backgroundClip: activepage === "Event" ? "text" : "initial",
+          color: activepage === "Event" ? "transparent" : "inherit",
         }}
       >
         <SlCalender
           size={17}
           style={{
-            color: activepage === 'Event' ? '#FF8A00' : 'white',
-            marginRight: "10px"
+            color: activepage === "Event" ? "#FF8A00" : "white",
+            marginRight: "10px",
           }}
-        /> Event
+        />{" "}
+        Event
       </div>
 
       <div
@@ -126,7 +127,7 @@ const Sidebar = ({ activepage, handleChange }) => {
         <div className={styles.profile}>
           <div
             style={{ width: "auto", position: "relative", cursor: "pointer" }}
-            onClick={()=>handleChange("Profile")}
+            onClick={() => handleChange("Profile")}
           >
             <img
               src={imagePrv || authCtx.user.pic || defaultImg}
@@ -140,23 +141,27 @@ const Sidebar = ({ activepage, handleChange }) => {
                 setimage={setImage}
               />
             )}
-            <div
-              style={{ position: "absolute", bottom: "5px", right: "5px" }}
-              onClick={(e) => {
-                e.stopPropagation();
-                imgRef.current?.click();
-              }}
-            >
-              <img src={camera} alt="camera" />
-            </div>
-            <input
-              style={{
-                display: "none",
-              }}
-              type="file"
-              ref={imgRef}
-              onChange={handleFileChange}
-            />
+            {authCtx.user.access !== "USER" && (
+              <>
+                <div
+                  style={{ position: "absolute", bottom: "5px", right: "5px" }}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    imgRef.current?.click();
+                  }}
+                >
+                  <img src={camera} alt="camera" />
+                </div>
+                <input
+                  style={{
+                    display: "none",
+                  }}
+                  type="file"
+                  ref={imgRef}
+                  onChange={handleFileChange}
+                />
+              </>
+            )}
           </div>
           <div className={styles.profileInfo}>
             <p className={styles.name}>{handleName()}</p>
