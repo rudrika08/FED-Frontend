@@ -57,7 +57,7 @@ export default function Footer() {
               >
                 Manifesto
               </HashLink>
-              <HashLink smooth to="/Partners" className={styles.footerleftlink}>
+              <HashLink smooth to="/#Sponser" className={styles.footerleftlink}>
                 Partners
               </HashLink>
             </div>

@@ -12,7 +12,9 @@ const Home = () => {
       <Hero />
       <ChatBot />
       <About />
-      <Sponser />
+      <section id="Sponser">
+        <Sponser />
+      </section>
       <section id="Contact">
         <Contact />
       </section>
