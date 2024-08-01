@@ -2,7 +2,7 @@ import { useRef, useState, useEffect } from "react";
 import styles from "./styles/ChatBot.module.scss";
 import { BsSend } from "react-icons/bs";
 import { IoCloseOutline } from "react-icons/io5";
-import { GiFox } from "react-icons/gi";
+import { BiSolidMessageSquareDetail } from "react-icons/bi";
 import { apiBot } from "../../services";
 
 export default function ChatBot() {
@@ -31,15 +31,12 @@ export default function ChatBot() {
 
     setTimeout(async () => {
       try {
-        const response = await apiBot.post("/api/chat", {
-          body: JSON.stringify({ message: input }),
-        });
+        const response = await apiBot.post("/chat", { message: input });
 
-        if (response.status === 200) {
-          const data = await response.json();
+        if (response.status === 200 || response.status === 201) {
           setMessages((prevMessages) => [
             ...prevMessages,
-            { bot: data.response },
+            { bot: response.data.response },
           ]);
         } else {
           setMessages((prevMessages) => [
@@ -109,7 +106,7 @@ export default function ChatBot() {
         onClick={handleClick}
       >
         <span>
-          <GiFox />
+          <BiSolidMessageSquareDetail size={45} />
         </span>
       </button>
 

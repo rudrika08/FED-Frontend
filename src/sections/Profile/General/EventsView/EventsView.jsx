@@ -21,14 +21,16 @@ const Events = () => {
         const userEvents = authCtx.user.regForm;
 
         if (response.status === 200) {
+          let fetchedEvents = response.data.events;
           if (authCtx.user.access !== "USER") {
-            setEvents(response.data.events);
+            // Set events for non-users
+            setEvents(sortEventsByDate(fetchedEvents));
           } else {
-            const fetchedEvents = response.data.events;
+            // Filter and then sort events for users
             const filteredEvents = fetchedEvents.filter((event) =>
               userEvents.includes(event._id)
             );
-            setEvents(filteredEvents);
+            setEvents(sortEventsByDate(filteredEvents));
           }
         } else {
           console.error("Error fetching event data:", response.data.message);
@@ -47,14 +49,14 @@ const Events = () => {
 
         const userEvents = authCtx.user.regForm;
         // using local JSON data
+        let localEvents = eventsData.events;
         if (authCtx.user.access !== "USER") {
-          setEvents(eventsData.events);
+          setEvents(sortEventsByDate(localEvents));
         } else {
-          const localEvents = eventsData.events;
           const filteredEvents = localEvents.filter((event) =>
             userEvents.includes(event._id)
           );
-          setEvents(filteredEvents);
+          setEvents(sortEventsByDate(filteredEvents));
         }
       } finally {
         setIsLoading(false);
@@ -63,6 +65,10 @@ const Events = () => {
 
     fetchEventsData();
   }, [authCtx.user.email]);
+
+  const sortEventsByDate = (events) => {
+    return events.sort((a, b) => new Date(b.info.eventDate) - new Date(a.info.eventDate));
+  };
 
   const formatDate = (dateString) => {
     const options = { day: "2-digit", month: "2-digit", year: "numeric" };
@@ -110,7 +116,7 @@ const Events = () => {
 
                 <tbody>
                   {events.map((event) => (
-                    <tr key={event.id}>
+                    <tr key={event._id}>
                       <td style={{ fontWeight: "500" }}>
                         {event.info.eventTitle}
                       </td>
@@ -166,10 +172,3 @@ const Events = () => {
 };
 
 export default Events;
-
-// {isModalOpen && selectedEventId && (
-//   <EventModal
-//     eventId={selectedEventId}
-//     onClose={() => setIsModalOpen(false)}
-//   />
-// )}

@@ -6,14 +6,16 @@ import { X } from "lucide-react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import axios from "axios";
-import { Opacity } from "@mui/icons-material";
+import { Alert, MicroLoading } from "../../../microInteraction";
+import { api } from "../../../services";
 
 const EditProfile = ({ handleModalClose }) => {
   const authCtx = useContext(AuthContext);
+  const [alert, setAlert] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const [data, setData] = useState({
     name: authCtx.user.name,
-    email: authCtx.user.email,
     rollNo: authCtx.user.rollNo,
     year: authCtx.user.year,
     school: authCtx.user.school,
@@ -24,19 +26,28 @@ const EditProfile = ({ handleModalClose }) => {
   });
 
   useEffect(() => {
+    if (alert) {
+      const { type, message, position, duration } = alert;
+      Alert({ type, message, position, duration });
+    }
+  }, [alert]);
+
+  useEffect(() => {
     AOS.init({ duration: 2000 });
   }, []);
 
-  const handleSave = () => {
-    axios
-      .post("/api/user/editDetails", data)
-      .then((response) => {
+  const handleSave = async () => {
+    setIsLoading(true);
+    try {
+      const response = await api.post("/api/user/editDetails", data);
+
+      if (response.status === 200 || response.status === 201) {
         console.log("Profile updated successfully!", response.data);
-        // Assuming your API returns updated user data, update the context or handle accordingly
+
         authCtx.update(
           data.name,
           authCtx.user.email,
-          authCtx.user.pic, // Assuming pic remains unchanged in this form
+          authCtx.user.pic,
           data.rollNo,
           data.school,
           data.college,
@@ -44,30 +55,40 @@ const EditProfile = ({ handleModalClose }) => {
           data.year,
           data.github,
           data.linkedin,
+          authCtx.user.designation,
           authCtx.user.access,
           authCtx.user.regForm
         );
-        handleModalClose(); // Close modal or navigate away after successful update
-        window.location.reload();
-      })
-      .catch((error) => {
-        // authCtx.update(
-        //   data.name,
-        //   data.email,
-        //   authCtx.user.pic, // Assuming pic remains unchanged in this form
-        //   data.rollNo,
-        //   data.school,
-        //   data.college,
-        //   data.mobileNo,
-        //   data.year,
-        //   authCtx.user.access,
-        //   authCtx.user.regForm
-        // );
-        // handleModalClose();
-        // window.location.reload();
-        console.error("Error updating profile:", error);
-        // Handle error scenario, e.g., show error message to the user
+        setTimeout(()=>{
+          handleModalClose();
+          window.location.reload();
+        },2000);
+        setAlert({
+          type: "success",
+          message: "Profile updated successfully.",
+          position: "bottom-right",
+          duration: 3000,
+        });
+      } else {
+        setAlert({
+          type: "error",
+          message:
+            "There was an error updating your profile. Please try again.",
+          position: "bottom-right",
+          duration: 3000,
+        });
+      }
+    } catch (error) {
+      console.error("Error updating profile:", error);
+      setAlert({
+        type: "error",
+        message: "There was an error updating your profile. Please try again.",
+        position: "bottom-right",
+        duration: 3000,
       });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -272,13 +293,18 @@ const EditProfile = ({ handleModalClose }) => {
                       <div
                         style={{ display: "flex", justifyContent: "center" }}
                       >
-                        <Button
-                          type="submit"
-                          onClick={handleSave}
-                          className={styles.submit}
-                        >
-                          Update Changes
-                        </Button>
+                          <Button
+                            type="submit"
+                            onClick={handleSave}
+                            className={styles.submit}
+                          >
+                          {isLoading ? (
+                            <MicroLoading />
+                          ) : (
+                            "Update Changes"
+                          )}
+                          </Button>
+                        
                       </div>
                     </div>
                   </div>
@@ -288,6 +314,7 @@ const EditProfile = ({ handleModalClose }) => {
           </>
         </div>
       </div>
+      <Alert/>
     </div>
   );
 };
