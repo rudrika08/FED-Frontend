@@ -2,16 +2,20 @@ import { useEffect, useRef, useState } from "react";
 import styles from "./styles/Preview.module.scss";
 import { Button, Text } from "../../../../components";
 import Section from "./SectionModal";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { X } from "lucide-react";
 import { getOutboundList } from "../../../../sections/Profile/Admin/Form/NewForm/NewForm";
 import Complete from "../../../../assets/images/Complete.svg";
+import { api } from "../../../../services";
+import {
+  Alert,
+  MicroLoading,
+  ComponentLoading,
+} from "../../../../microInteraction";
 
 const operators = [
   { label: "match", value: "===" },
   { label: "match not", value: "!==" },
-  // { label: "contains", value: "includes" },
-  // { label: "does not contain", value: "!includes" },
   { label: "less than", value: "<" },
   { label: "greater than", value: ">" },
   { label: "less than or equal to", value: "<=" },
@@ -27,13 +31,20 @@ const PreviewForm = ({
   handleClose,
   showCloseBtn,
 }) => {
+  const navigate = useNavigate();
   const [data, setdata] = useState(sections);
   const [activeSection, setactiveSection] = useState(
     data !== undefined ? data[0] : ""
   );
   const [isCompleted, setisCompleted] = useState([]);
-  const [isLoading, setisLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isMicroLoading, setIsMicroLoading] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [alert, setAlert] = useState(null);
   const wrapperRef = useRef(null);
+
+  console.log("data", eventData);
+  console.log("sections", sections);
 
   let currentSection =
     data !== undefined
@@ -41,11 +52,30 @@ const PreviewForm = ({
       : null;
 
   useEffect(() => {
-    window.addEventListener("mousedown", handleClickOutside);
+    if (alert) {
+      const { type, message, position, duration } = alert;
+      Alert({ type, message, position, duration });
+      setAlert(null); // Reset alert after displaying it
+    }
+  }, [alert]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
+  }, []);
+
+  useEffect(() => {
+    if (open) {
+      document.body.classList.add(styles.noScroll);
+    } else {
+      document.body.classList.remove(styles.noScroll);
+    }
+
     return () => {
-      window.removeEventListener("mousedown", handleClickOutside);
+      document.body.classList.remove(styles.noScroll);
     };
-  });
+  }, [open]);
 
   useEffect(() => {
     constructSections();
@@ -66,13 +96,6 @@ const PreviewForm = ({
     });
     setdata(newSections);
     setactiveSection(newSections[0]);
-  };
-
-  const handleClickOutside = (e) => {
-    const { current: wrap } = wrapperRef;
-    if (wrap && !wrap.contains(e.target)) {
-      handleClose();
-    }
   };
 
   const handleChange = (field, value) => {
@@ -129,7 +152,7 @@ const PreviewForm = ({
     setdata(newSections);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const formData = new FormData();
 
     data.forEach((section) => {
@@ -144,23 +167,82 @@ const PreviewForm = ({
       }
     });
 
-    formData.forEach((value, key) => {
-      console.log(key + " " + value);
-    });
+    // Log the formData content for debugging
+    // formData.forEach((value, key) => {
+    //   console.log(key + " " + value);
+    // });
+
+    try {
+      setIsLoading(true); // Set loading state
+      setIsMicroLoading(true); // Set micro loading state
+      const response = await api.post("/api/form/register", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      if (response.status === 200 || response.status === 201) {
+        setAlert({
+          type: "success",
+          message: "Form submitted successfully!",
+          position: "bottom-right",
+          duration: 3000,
+        });
+        handleClose();
+        setIsSuccess(true);
+      } else {
+        setAlert({
+          type: "error",
+          message: "There was an error submitting the form. Please try again.",
+          position: "bottom-right",
+          duration: 3000,
+        });
+        setIsSuccess(false);
+        throw new Error("Unexpected response status");
+      }
+    } catch (error) {
+      console.error("Form submission error:", error);
+      setAlert({
+        type: "error",
+        message: "There was an error submitting the form. Please try again.",
+        position: "bottom-right",
+        duration: 3000,
+      });
+      setIsSuccess(false);
+    } finally {
+      setIsLoading(false);
+      setIsMicroLoading(false);
+    }
   };
+
+  useEffect(() => {
+    if (isSuccess) {
+      const handleAutoClose = () => {
+        setTimeout(() => {
+          navigate("/Events");
+        }, 5000);
+      };
+
+      handleAutoClose();
+    }
+  }, [isSuccess, navigate]);
 
   const areRequiredFieldsFilled = () => {
     let isFilled = {
       status: true,
-      message: "",
     };
 
     if (currentSection) {
       currentSection.fields.forEach((field) => {
         if (field.isRequired && !field.onChangeValue) {
+          setAlert({
+            type: "error",
+            message: "Please fill all the details",
+            position: "bottom-right",
+            duration: 3000,
+          });
           isFilled = {
             status: false,
-            message: "Please fill all required fields",
           };
           return;
         }
@@ -169,9 +251,14 @@ const PreviewForm = ({
           if (valid.type === "length") {
             if (!matchCondition(field, valid)) {
               const op = operators.find((op) => op.value === valid.operator);
+              setAlert({
+                type: "error",
+                message: `${field.name} should ${op?.label} ${valid.type} ${valid.value}`,
+                position: "bottom-right",
+                duration: 3000,
+              });
               isFilled = {
                 status: false,
-                message: `${field.name} should ${op?.label} ${valid.type} ${valid.value}`,
               };
             }
           }
@@ -180,7 +267,6 @@ const PreviewForm = ({
     }
 
     if (!isFilled.status) {
-      alert(isFilled.message);
       return false;
     }
 
@@ -189,8 +275,11 @@ const PreviewForm = ({
 
   const matchCondition = (field, valid) => {
     const fieldLength = hasOptions.includes(field.type)
-      ? field.onChangeValue.split(",").length
+      ? field.type === "checkbox"
+        ? field.onChangeValue.length
+        : field.onChangeValue.split(",").length
       : field.onChangeValue.length;
+
     const operator = valid?.operator;
     const validLength =
       valid.type === "length" ? Number(valid?.value) : valid?.value;
@@ -218,17 +307,12 @@ const PreviewForm = ({
   };
 
   const isMetaExist = () => {
-    
-    if (!Array.isArray(meta) || meta.length === 0) {
-      return false;
-    } else {
-      const paymentSection = meta.find((sec) => sec.name === "Payment Details");
-      if (paymentSection) {
-        paymentSection.isDisabled = false;
-        paymentSection.validations[0].onBack = currentSection._id;
-        return paymentSection;
-      }
-      return null;
+    if (meta?.length === 0) return null;
+    const paymentSection = meta.find((sec) => sec?.name === "Payment Details");
+    if (paymentSection) {
+      paymentSection.isDisabled = false;
+      paymentSection.validations[0].onBack = currentSection._id;
+      return paymentSection;
     }
   };
 
@@ -346,32 +430,42 @@ const PreviewForm = ({
   };
 
   return (
-    open && (
+    <>
+      open && (
       <div className={styles.mainPreview}>
         <div ref={wrapperRef} className={styles.previewContainer}>
           {showCloseBtn && (
-            <Link onClick={handleClose} to={"/Events"}>
+            <Link onClick={handleClose} to="/Events">
               <div className={styles.closeBtn}>
                 <X />
               </div>
             </Link>
           )}
-          <Text style={{ marginBottom: "20px" }}>
-            {eventData?.title || "Preview Event"}
+          <Text
+            style={{
+              marginBottom: "20px",
+              width: "100%",
+              display: "flex",
+              justifyContent: "center",
+              fontSize: "25px",
+            }}
+          >
+            {eventData?.eventTitle || "Preview Event"}
           </Text>
-          {!isCompleted.includes("Submitted") ? (
-            <div
-              style={{
-                width: "100%",
+          {isLoading ? (
+            <ComponentLoading
+              customStyles={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                marginLeft: "20rem",
+                marginTop: "5rem",
               }}
-            >
+            />
+          ) : !isCompleted.includes("Submitted") ? (
+            <div style={{ width: "100%" }}>
               <div>
-                <Text
-                  style={{
-                    alignSelf: "center",
-                  }}
-                  variant="secondary"
-                >
+                <Text style={{ alignSelf: "center" }} variant="secondary">
                   {currentSection.name}
                 </Text>
                 <Text
@@ -388,26 +482,24 @@ const PreviewForm = ({
               </div>
               {renderPaymentScreen()}
               <Section section={currentSection} handleChange={handleChange} />
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                }}
-              >
+              <div style={{ display: "flex", flexDirection: "row" }}>
                 {inboundList() && inboundList().backSection && (
                   <Button style={{ marginRight: "10px" }} onClick={onBack}>
                     Back
                   </Button>
                 )}
-
                 <Button onClick={onNext}>
-                  {inboundList() && inboundList().nextSection
-                    ? "Next"
-                    : "Submit"}
+                  {inboundList() && inboundList().nextSection ? (
+                    "Next"
+                  ) : isMicroLoading ? (
+                    <MicroLoading />
+                  ) : (
+                    "Submit"
+                  )}
                 </Button>
               </div>
             </div>
-          ) : (
+          ) : isSuccess ? (
             <div
               style={{
                 width: "100%",
@@ -422,7 +514,7 @@ const PreviewForm = ({
                 style={{ width: "400px", height: "400px", margin: "auto" }}
               />
               <Text
-                variant={"secondary"}
+                variant="secondary"
                 style={{
                   width: "60%",
                   fontSize: "14px",
@@ -435,10 +527,40 @@ const PreviewForm = ({
                 Form Submitted Successfully! Thank you for your time.
               </Text>
             </div>
+          ) : (
+            <div
+              style={{
+                width: "100%",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+              }}
+            >
+              <Text
+                variant="secondary"
+                style={{
+                  width: "60%",
+                  fontSize: "14px",
+                  alignSelf: "center",
+                  textAlign: "center",
+                  marginTop: "16px",
+                  userSelect: "none",
+                }}
+              >
+                <h2 style={{ marginBottom: "3rem" }}>
+                  Error Submitting your Form
+                </h2>
+                There is an error submitting the form. If you have made any
+                payment, please fill up your payment details again. There is no
+                need to pay again.
+              </Text>
+            </div>
           )}
         </div>
       </div>
-    )
+      )
+      <Alert />
+    </>
   );
 };
 export default PreviewForm;

@@ -8,11 +8,13 @@ import Share from "../../features/Modals/Event/ShareModal/ShareModal";
 import shareOutline from "../../assets/images/shareOutline.svg";
 import groupIcon from "../../assets/images/groups.svg";
 import rupeeIcon from "../../assets/images/rupeeIcon.svg";
-import ciLock from "../../assets/images/lock.svg";
 import { PiClockCountdownDuotone } from "react-icons/pi";
-import { IoIosLock } from "react-icons/io";
+import { IoIosLock, IoIosStats } from "react-icons/io";
 import { Button } from "../Core";
 import AuthContext from "../../context/AuthContext";
+import EventCardSkeleton from "../../layouts/Skeleton/EventCard/EventCardSkeleton";
+import { Blurhash } from "react-blurhash";
+import { Alert, MicroLoading } from "../../microInteraction";
 
 const EventCard = (props) => {
   const {
@@ -27,6 +29,7 @@ const EventCard = (props) => {
     aosDisable,
     onEdit,
     enableEdit,
+    isLoading,
   } = props;
 
   const { info } = data;
@@ -36,6 +39,27 @@ const EventCard = (props) => {
   const [remainingTime, setRemainingTime] = useState("");
   const [btnTxt, setBtnTxt] = useState("Register Now");
   const navigate = useNavigate();
+  const [imageLoaded, setImageLoaded] = useState(false);
+  const [showSkeleton, setShowSkeleton] = useState(true);
+  const [isMicroLoading, setIsMicroLoading] = useState(false);
+  const [shouldNavigate, setShouldNavigate] = useState(false);
+  const [navigatePath, setNavigatePath] = useState("/");
+  const [alert, setAlert] = useState(null);
+
+  useEffect(() => {
+    if (shouldNavigate) {
+      navigate(navigatePath);
+      setShouldNavigate(false); // Reset state after navigation
+    }
+  }, [shouldNavigate, navigatePath, navigate]);
+
+  useEffect(() => {
+    if (alert) {
+      const { type, message, position, duration } = alert;
+      Alert({ type, message, position, duration });
+      setAlert(null); // Reset alert after displaying it
+    }
+  }, [alert]);
 
   useEffect(() => {
     if (aosDisable) {
@@ -44,6 +68,14 @@ const EventCard = (props) => {
       AOS.init({ duration: 2000 });
     }
   }, [aosDisable]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowSkeleton(false);
+    }, 2000); // Show skeleton for 2 seconds
+
+    return () => clearTimeout(timer);
+  }, []);
 
   useEffect(() => {
     if (info.regDateAndTime) {
@@ -131,17 +163,51 @@ const EventCard = (props) => {
 
   const handleForm = () => {
     if (authCtx.isLoggedIn) {
-      navigate("/Events/" + data._id + "/Form");
+      setIsMicroLoading(true);
+      if (authCtx.user.access !== "USER") {
+        setTimeout(() => {
+          setIsMicroLoading(false);
+          setBtnTxt("Already Member");
+        }, 1500);
+        // setAlert({
+        //   type: "info",
+        //   message: "Team Members are not allowed to register for the Event",
+        //   position: "bottom-right",
+        //   duration: 3000,
+        // });
+      } else {
+        setNavigatePath("/Events/" + data._id + "/Form");
+        setTimeout(() => {
+          setShouldNavigate(true);
+        }, 1000);
+
+        setTimeout(() => {
+          setIsMicroLoading(false);
+        }, 3000);
+      }
     } else {
-      sessionStorage.setItem('prevPage', window.location.pathname);
-      navigate('/login');
+      setIsMicroLoading(true);
+      sessionStorage.setItem("prevPage", window.location.pathname);
+      setNavigatePath("/login");
+
+      setTimeout(() => {
+        setShouldNavigate(true);
+      }, 1000);
+
+      setTimeout(() => {
+        setIsMicroLoading(false);
+      }, 3000);
     }
   };
 
   const url = window.location.href;
 
+  if (isLoading || showSkeleton) {
+    return <EventCardSkeleton />;
+  }
+
   return (
-    <>
+    <div>
       <div
         onMouseEnter={() => setisHovered(true)}
         onMouseLeave={() => setisHovered(false)}
@@ -154,11 +220,25 @@ const EventCard = (props) => {
           style={customStyles.backimg}
           onClick={onOpen}
         >
+          {!imageLoaded && (
+            <Blurhash
+              hash="L6AcVvDi56n$C,T0IUbF{K-pNG%M"
+              width={"100%"}
+              height={200}
+              resolutionX={32}
+              resolutionY={32}
+              punch={1}
+            />
+          )}
           <img
             srcSet={info.eventImg}
             className={style.img}
-            style={customStyles.img}
+            style={{
+              ...customStyles.img,
+              display: imageLoaded ? "block" : "none",
+            }}
             alt="Event"
+            onLoad={() => setImageLoaded(true)}
           />
           <div className={style.date} style={customStyles.date}>
             {formattedDate}
@@ -204,7 +284,7 @@ const EventCard = (props) => {
             )}
           </div>
           {type === "ongoing" && showRegisterButton && (
-            <div style={{ fontSize: ".85rem", color: "white" }}>
+            <div style={{ fontSize: ".9rem", color: "white" }}>
               <button
                 className={style.registerbtn}
                 style={{
@@ -212,11 +292,15 @@ const EventCard = (props) => {
                   cursor: btnTxt === "Register Now" ? "pointer" : "not-allowed",
                 }}
                 onClick={handleForm}
-                disabled={btnTxt === "Closed" || btnTxt === "Already Registered"}
+                disabled={
+                  btnTxt === "Closed" ||
+                  btnTxt === "Already Registered" ||
+                  btnTxt === "Already Member"
+                }
               >
                 {btnTxt === "Closed" ? (
                   <>
-                    <div style={{ fontSize: "0.85rem" }}>Closed</div>{" "}
+                    <div style={{ fontSize: "0.9rem" }}>Closed</div>{" "}
                     <IoIosLock
                       alt=""
                       style={{ marginLeft: "0px", fontSize: "1rem" }}
@@ -224,18 +308,24 @@ const EventCard = (props) => {
                   </>
                 ) : btnTxt === "Already Registered" ? (
                   <>
-                    <div style={{ fontSize: "0.85rem" }}>
-                      Registered
-                    </div>{" "}
+                    <div style={{ fontSize: "0.9rem" }}>Registered</div>{" "}
                   </>
+                ) : isMicroLoading ? (
+                  <div style={{ fontSize: "0.9rem" }}>
+                    <MicroLoading />
+                  </div>
                 ) : (
                   <>
                     {remainingTime ? (
                       <>
                         <PiClockCountdownDuotone /> {btnTxt}
                       </>
+                    ) : btnTxt === "Already Member" ? (
+                      <>
+                        <div style={{ fontSize: "0.9rem" }}>Already Member</div>{" "}
+                      </>
                     ) : (
-                      "Register Now"
+                      <div style={{ fontSize: "0.9rem" }}>Register Now</div>
                     )}
                   </>
                 )}
@@ -269,7 +359,7 @@ const EventCard = (props) => {
       {isOpen && type === "ongoing" && (
         <Share onClose={handleShare} urlpath={url + "/" + data._id} />
       )}
-      {enableEdit && isHovered && authCtx.user.access==="ADMIN" && (
+      {enableEdit && isHovered && authCtx.user.access === "ADMIN" && (
         <div
           onMouseEnter={() => setisHovered(true)}
           onMouseLeave={() => setisHovered(false)}
@@ -288,9 +378,17 @@ const EventCard = (props) => {
             Edit Event
           </Button>
           <Button variant="secondary">Delete Event</Button>
+          <IoIosStats
+            size={20}
+            style={{ cursor: "pointer", color: "white" }}
+            onClick={() => {
+              navigate("/profile/Events/Analytics/" + data._id);
+            }}
+          />
         </div>
       )}
-    </>
+      <Alert />
+    </div>
   );
 };
 
@@ -306,6 +404,7 @@ EventCard.propTypes = {
   aosDisable: PropTypes.bool,
   onEdit: PropTypes.func,
   enableEdit: PropTypes.bool,
+  isLoading: PropTypes.bool.isRequired,
 };
 
 export default EventCard;

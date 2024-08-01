@@ -8,8 +8,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import FormData from "../../../../data/FormData.json";
 import shareOutline from "../../../../assets/images/shareOutline.svg";
 import Share from "../../../../features/Modals/Event/ShareModal/ShareModal";
-import AOS from "aos";
-import "aos/dist/aos.css";
+// import AOS from "aos";
+// import "aos/dist/aos.css";
 import { CiLock } from "react-icons/ci";
 import { PiClockCountdownDuotone } from "react-icons/pi";
 import AuthContext from "../../../../context/AuthContext";
@@ -17,26 +17,83 @@ import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { SkeletonTheme } from "react-loading-skeleton";
 import { IoIosLock } from "react-icons/io";
+import {
+  MicroLoading,
+  Alert,
+  ComponentLoading,
+} from "../../../../microInteraction";
+import { api } from "../../../../services";
 
 const EventModal = (props) => {
   const { onClosePath } = props;
   const navigate = useNavigate();
-  const { eventId } = useParams();
-  // console.log(eventId);
-  // console.log(FormData);
-  const { events } = FormData;
-  // console.log(events);
-  const data = events.find((event) => event._id === parseInt(eventId));
-  console.log(data);
-
-  // const buttonText=data.ongoingEvent?'Register Now':'Registration closed';
-  const { info } = data;
-
   const [remainingTime, setRemainingTime] = useState("");
   const [btnTxt, setBtnTxt] = useState("Register Now");
   const authCtx = useContext(AuthContext);
+  const [isMicroLoading, setIsMicroLoading] = useState(false);
+  const [alert, setAlert] = useState(null);
+  const { eventId } = useParams();
+  const [shouldNavigate, setShouldNavigate] = useState(false);
+  const [navigatePath, setNavigatePath] = useState("/");
+  const [isLoading, setIsLoading] = useState(true);
+  const [info, setInfo] = useState({});
+  const [data, setData] = useState({});
 
-  // console.log(info)
+  useEffect(() => {
+    const fetchEvent = async () => {
+      try {
+        const response = await api.get(`/api/form/getEvent/${eventId}`);
+        if (response.status === 200) {
+          setData(response.data);
+          setInfo(response.data.info);
+        } else {
+          setAlert({
+            type: "error",
+            message:
+              "There was an error fetching event details. Please try again.",
+            position: "bottom-right",
+            duration: 3000,
+          });
+          throw new Error(response.data.message || "Error fetching event");
+        }
+      } catch (error) {
+        console.error("Error fetching event:", error);
+
+        // setAlert({
+        //   type: "error",
+        //   message: "There was an error fetching event form. Please try again.",
+        //   position: "bottom-right",
+        //   duration: 3000,
+        // });
+        // Fallback to local data
+        const { events } = FormData;
+        const data = events.find((event) => event._id === parseInt(eventId));
+        console.log(data);
+        const info = data.info;
+        setData(data);
+        setInfo(info);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchEvent();
+  }, [eventId]);
+
+  useEffect(() => {
+    if (shouldNavigate) {
+      navigate(navigatePath);
+      setShouldNavigate(false); // Reset state after navigation
+    }
+  }, [shouldNavigate, navigatePath, navigate]);
+
+  useEffect(() => {
+    if (alert) {
+      const { type, message, position, duration } = alert;
+      Alert({ type, message, position, duration });
+      setAlert(null); // Reset alert after displaying it
+    }
+  }, [alert]);
 
   useEffect(() => {
     if (info.regDateAndTime) {
@@ -116,7 +173,6 @@ const EventModal = (props) => {
     }
   }, [authCtx.isLoggedIn, authCtx.user.regForm, btnTxt, navigate, data._id]);
 
-
   const handleModalClose = () => {
     navigate(onClosePath);
   };
@@ -129,10 +185,48 @@ const EventModal = (props) => {
 
   const handleForm = () => {
     if (authCtx.isLoggedIn) {
-      navigate("/Events/" + data._id + "/Form");
+      setIsMicroLoading(true);
+      if (authCtx.user.access !== "USER") {
+        setTimeout(() => {
+          setIsMicroLoading(false);
+          setBtnTxt("Already Member");
+        }, 1500);
+
+        // setAlert({
+        //   type: "info",
+        //   message: "Team Members are not allowed to register for the Event",
+        //   position: "bottom-right",
+        //   duration: 3000,
+        // });
+      } else {
+        setNavigatePath("/Events/" + data._id + "/Form");
+        setTimeout(() => {
+          setShouldNavigate(true);
+        }, 3000);
+
+        setTimeout(() => {
+          setIsMicroLoading(false);
+        }, 3000);
+
+        setAlert({
+          type: "info",
+          message: "Opening Event Registration Form",
+          position: "bottom-right",
+          duration: 3000,
+        });
+      }
     } else {
-      sessionStorage.setItem('prevPage', window.location.pathname);
-      navigate('/login');
+      setIsMicroLoading(true);
+      sessionStorage.setItem("prevPage", window.location.pathname);
+      setNavigatePath("/login");
+
+      setTimeout(() => {
+        setShouldNavigate(true);
+      }, 3000);
+
+      setTimeout(() => {
+        setIsMicroLoading(false);
+      }, 3000);
     }
   };
 
@@ -190,106 +284,133 @@ const EventModal = (props) => {
               </SkeletonTheme>
               <div
                 className={EventCardModal.card}
-                data-aos="zoom-in-up"
-                data-aos-duration="500"
               >
-                <div
-                  style={{
-                    position: "relative",
-                  }}
-                >
-                  <button
-                    className={EventCardModal.closeModal}
-                    onClick={handleModalClose}
+                {isLoading ? (
+                  <ComponentLoading
+                    customStyles={{
+                      width: "100%",
+                      height: "100%",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  />
+                ) : (
+                  <div
+                    style={{
+                      position: "relative",
+                    }}
                   >
-                    <X />
-                  </button>
-                  <div className={EventCardModal.backimg}>
-                    <img
-                      srcSet={info.eventImg}
-                      className={EventCardModal.img}
-                      alt="Event"
-                    />
-                    <div className={EventCardModal.date}>{formattedDate}</div>
-                    {info.ongoingEvent && (
-                      <div
-                        className={EventCardModal.share}
-                        onClick={handleShare}
-                      >
-                        <img
-                          className={EventCardModal.shareIcon}
-                          src={shareOutline}
-                          alt="Share"
-                        />
-                      </div>
-                    )}
-                  </div>
-                  <div className={EventCardModal.backbtn}>
-                    <div className={EventCardModal.eventname}>
-                      {info.eventTitle}
-                      <div className={EventCardModal.price}>
-                        {info.eventAmount ? (
-                          <p>
-                            <img src={rupeeIcon} alt="Rupee" />
-                            {info.eventAmount}
-                          </p>
-                        ) : (
-                          <p style={{ color: "inherit" }}>Free</p>
-                        )}
-                      </div>
-                      <p>
-                        <img src={groupIcon} alt="Group" />
-                        Team size: {info.minTeamSize}
-                        {" - "}
-                        {info.maxTeamSize}
-                      </p>
+                    <button
+                      className={EventCardModal.closeModal}
+                      onClick={handleModalClose}
+                    >
+                      <X />
+                    </button>
+                    <div className={EventCardModal.backimg}>
+                      <img
+                        srcSet={info.eventImg}
+                        className={EventCardModal.img}
+                        alt="Event"
+                      />
+                      <div className={EventCardModal.date}>{formattedDate}</div>
+                      {info.ongoingEvent && (
+                        <div
+                          className={EventCardModal.share}
+                          onClick={handleShare}
+                        >
+                          <img
+                            className={EventCardModal.shareIcon}
+                            src={shareOutline}
+                            alt="Share"
+                          />
+                        </div>
+                      )}
                     </div>
-                    <div className={EventCardModal.registerbtn}>
-                      <button
-                        className={EventCardModal.registerbtn}
-                        style={{
-                          cursor:
-                            btnTxt === "Register Now"
-                              ? "pointer"
-                              : "not-allowed",
-                        }}
-                        onClick={handleForm}
-                        disabled={
-                          btnTxt === "Closed" || btnTxt === "Already Registered"
-                        }
-                      >
-                        {btnTxt === "Closed" ? (
-                          <>
-                            <div style={{ fontSize: "0.85rem" }}>Registration Closed</div>{" "}
-                            <IoIosLock
-                              alt=""
-                              style={{ marginLeft: "0px", fontSize: "1.2rem" }}
-                            />
-                          </>
-                        ) : btnTxt === "Already Registered" ? (
-                          <>
-                            <div style={{ fontSize: "0.85rem" }}>
-                              Already Registered
-                            </div>{" "}
-                          </>
-                        ) : (
-                          <>
-                            {remainingTime ? (
-                              <>
-                                <PiClockCountdownDuotone /> {btnTxt}
-                              </>
-                            ) : (
-                              "Register Now"
-                            )}
-                          </>
-                        )}
-                      </button>
+                    <div className={EventCardModal.backbtn}>
+                      <div className={EventCardModal.eventname}>
+                        {info.eventTitle}
+                        <div className={EventCardModal.price}>
+                          {info.eventAmount ? (
+                            <p>
+                              <img src={rupeeIcon} alt="Rupee" />
+                              {info.eventAmount}
+                            </p>
+                          ) : (
+                            <p style={{ color: "inherit" }}>Free</p>
+                          )}
+                        </div>
+                        <p>
+                          <img src={groupIcon} alt="Group" />
+                          Team size: {info.minTeamSize}
+                          {" - "}
+                          {info.maxTeamSize}
+                        </p>
+                      </div>
+                      <div className={EventCardModal.registerbtn}>
+                        <button
+                          className={EventCardModal.registerbtn}
+                          style={{
+                            cursor:
+                              btnTxt === "Register Now"
+                                ? "pointer"
+                                : "not-allowed",
+                          }}
+                          onClick={handleForm}
+                          disabled={
+                            btnTxt === "Closed" ||
+                            btnTxt === "Already Registered" ||
+                            btnTxt === "Already Member"
+                          }
+                        >
+                          {btnTxt === "Closed" ? (
+                            <>
+                              <div style={{ fontSize: "0.85rem" }}>
+                                Registration Closed
+                              </div>{" "}
+                              <IoIosLock
+                                alt=""
+                                style={{
+                                  marginLeft: "0px",
+                                  fontSize: "1.2rem",
+                                }}
+                              />
+                            </>
+                          ) : btnTxt === "Already Registered" ? (
+                            <>
+                              <div style={{ fontSize: "0.85rem" }}>
+                                Already Registered
+                              </div>{" "}
+                            </>
+                          ) : isMicroLoading ? (
+                            <div style={{ fontSize: "0.9rem" }}>
+                              <MicroLoading />
+                            </div>
+                          ) : (
+                            <>
+                              {remainingTime ? (
+                                <>
+                                  <PiClockCountdownDuotone /> {btnTxt}
+                                </>
+                              ) : btnTxt === "Already Member" ? (
+                                <>
+                                  <div style={{ fontSize: "0.9rem" }}>
+                                    Already Member
+                                  </div>{" "}
+                                </>
+                              ) : (
+                                "Register Now"
+                              )}
+                            </>
+                          )}
+                        </button>
+                      </div>
+                    </div>
+                    <div className={EventCardModal.backtxt}>
+                      {info.eventdescription}
                     </div>
                   </div>
-                  <div className={EventCardModal.backtxt}>
-                    {info.eventdescription}
-                  </div>
-                </div>
+                )}
               </div>
               {isOpen && <Share onClose={handleShare} urlpath={url} />}
             </>
@@ -297,6 +418,7 @@ const EventModal = (props) => {
         </div>
         {/* </div> */}
       </div>
+      <Alert />
     </div>
   );
 };

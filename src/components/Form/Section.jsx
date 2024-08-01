@@ -18,6 +18,7 @@ const Section = (props) => {
     section,
     sections,
     setsections,
+    meta,
     showAddButton = true,
     disabled = false,
   } = props;
@@ -615,6 +616,7 @@ const Section = (props) => {
           handleClose={() => setshowValidations(false)}
           section={section}
           sections={sections}
+          meta={meta}
           fields={isIncludesOptions()}
           onChangeValidation={handleChangeSectionValidation}
           onRemoveValidation={handleRemoveValidation}

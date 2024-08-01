@@ -1,94 +1,105 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import styles from './styles/Contact.module.scss';
-import contactImg from '../../../assets/images/contact.png';
-import { AnimatedBox } from '../../../assets/animations/AnimatedBox';
-import { Alert, MicroLoading } from '../../../microInteraction';
+import React, { useState, useEffect } from "react";
+import { api } from "../../../services";
+import styles from "./styles/Contact.module.scss";
+import contactImg from "../../../assets/images/contact.png";
+import { Button } from "../../../components";
+import { AnimatedBox } from "../../../assets/animations/AnimatedBox";
+import { Alert, MicroLoading } from "../../../microInteraction";
 
 const ContactForm = () => {
   const [alert, setAlert] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+    if (alert) {
+      const { type, message, position, duration } = alert;
+      Alert({ type, message, position, duration });
+    }
+  }, [alert]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    setLoading(true);
+    setIsLoading(true);
+
     const formData = new FormData(event.target);
     const data = {
-      name: formData.get('name'),
-      email: formData.get('email'),
-      message: formData.get('message')
+      name: formData.get("name"),
+      email: formData.get("email"),
+      message: formData.get("message"),
     };
 
     try {
-      const response = await axios.post('/api/contact', data);
-      console.log('Form submitted successfully:', response.data);
-      console.log('Form submitted successfully:', data);
+      const response = await api.post("/api/contact", data);
 
-      setTimeout(() => {
-        event.target.reset(); // Clear the form fields
-        setLoading(false);
-      }, 2000);
-
-      setAlert({ 
-        type: 'success', 
-        message: 'Your message has been submitted!', 
-        position: 'bottom-right', 
-        duration: 3000 
-      });
-      
+      if (response.status === 200 || response.status === 201) {
+        setAlert({
+          type: "success",
+          message:
+            "Your message has been submitted! We will get back to you soon.",
+          position: "bottom-right",
+          duration: 3000,
+        });
+        event.target.reset();
+      } else {
+        setAlert({
+          type: "error",
+          message:
+            "There was an error submitting your message. Please try again.",
+          position: "bottom-right",
+          duration: 3000,
+        });
+      }
     } catch (error) {
-      console.error('Error submitting form:', error);
-
-      setTimeout(() => {
-        setLoading(false);
-      }, 2000);
-
       setAlert({
-        type: 'error',
-        message: 'There was an error submitting your message. Please try again.',
-        position: 'bottom-right',
-        duration: 3000
+        type: "error",
+        message:
+          "There was an error submitting your message. Please try again.",
+        position: "bottom-right",
+        duration: 3000,
       });
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
     <section id="Contact Us">
       <div className={styles.contactFormContainer}>
-        <h2>GET <span className={styles.highlight}>IN</span> TOUCH</h2>
+        <h2>
+          GET <span className={styles.highlight}>IN</span> TOUCH
+        </h2>
         <div className={styles.bottomLine}></div>
         <div className={styles.formSection}>
           <form className={styles.contactForm} onSubmit={handleSubmit}>
             <div className={styles.formGroup}>
-              <input 
-                type="text" 
-                name="name" 
-                placeholder="Name" 
-                required 
-              />
+              <input type="text" name="name" placeholder="Name" required />
             </div>
             <div className={styles.formGroup}>
-              <input 
-                type="email" 
-                name="email" 
-                placeholder="Email" 
-                required 
-              />
+              <input type="email" name="email" placeholder="Email" required />
             </div>
             <div className={styles.formGroup}>
-              <textarea 
-                name="message" 
-                placeholder="Message" 
-                required>
-              </textarea>
+              <textarea
+                name="message"
+                placeholder="Message"
+                required
+              ></textarea>
             </div>
-            <button type="submit" disabled={loading}>
-              {loading ? <MicroLoading /> : 'Submit'}
-            </button>
+            <Button
+              type="submit"
+              style={{
+                width: "100%",
+                background: "var(--primary)",
+                color: "#fff",
+                height: "40px",
+                marginTop: "20px",
+                fontSize: "1rem",
+                borderRadius: "15px",
+                cursor: "pointer",
+              }}
+              disabled={isLoading}
+            >
+              {isLoading ? <MicroLoading /> : "Submit"}
+            </Button>
           </form>
 
           <div className={styles.imageSection}>
@@ -100,7 +111,7 @@ const ContactForm = () => {
           </div>
         </div>
       </div>
-      {alert && <Alert {...alert} />}
+      <Alert />
     </section>
   );
 };

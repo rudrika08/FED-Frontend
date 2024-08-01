@@ -39,8 +39,8 @@
     right: 35px;
     outline: none;
     border: none;
-    height: 75px;
-    width: 75px;
+    height: 70px;
+    width: 70px;
     z-index:50;
     display: flex;
     cursor: pointer;
@@ -53,6 +53,11 @@
     animation: fade-in 2s;
     backdrop-filter: blur(20px);
     animation: bounce 1s infinite;
+}
+
+.chatbottoggle:hover {
+  transition: .2s linear;
+  background: linear-gradient(260deg, rgba(255, 190, 11, .9) -29.7%, rgba(244, 43, 3, .9) 128.34%);
 }
 
 .chatbottoggle span{

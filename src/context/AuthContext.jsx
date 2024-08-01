@@ -2,8 +2,6 @@ import React, { useState, useEffect, useCallback, useMemo } from "react";
 
 let logoutTimer;
 
-
-
 const AuthContext = React.createContext({
   token: "",
   isLoggedIn: false,
@@ -16,6 +14,9 @@ const AuthContext = React.createContext({
     college: "",
     mobileNo: "",
     year: "",
+    github: "",
+    linkedin: "",
+    designation: "",
     access: "",
     regForm: [],
   },
@@ -26,6 +27,7 @@ const AuthContext = React.createContext({
   settarget: () => {},
   update: () => {},
   eventData: null,
+  memberData: null,
 });
 
 const calculateRemainingTime = (expirationTime) => {
@@ -99,6 +101,9 @@ export const AuthContextProvider = (props) => {
     college,
     mobileNo,
     year,
+    github,
+    linkedin,
+    designation,
     regForm,
     access,
     token,
@@ -114,6 +119,9 @@ export const AuthContextProvider = (props) => {
       college: college,
       mobileNo: mobileNo,
       year: year,
+      github: github,
+      linkedin: linkedin,
+      designation: designation,
       access: access,
       regForm: regForm,
     };
@@ -141,6 +149,9 @@ export const AuthContextProvider = (props) => {
     college,
     mobileNo,
     year,
+    github,
+    linkedin,
+    designation,
     access,
     regForm
   ) => {
@@ -153,6 +164,9 @@ export const AuthContextProvider = (props) => {
       college: college,
       mobileNo: mobileNo,
       year: year,
+      github: github,
+      linkedin: linkedin,
+      designation: designation,
       access: access,
       regForm: regForm,
     };
@@ -182,15 +196,10 @@ export const AuthContextProvider = (props) => {
       settarget: targetHandler,
       update: updateHandler,
       eventData: null,
+      memberData: null,
     }),
     [token, userIsLoggedIn, target, isAdmin]
   );
-
-
-  
-  
-
-  
 
   return (
     <AuthContext.Provider value={contextValue}>
@@ -198,6 +207,5 @@ export const AuthContextProvider = (props) => {
     </AuthContext.Provider>
   );
 };
-
 
 export default AuthContext;

@@ -9,6 +9,7 @@ const SectionValidation = ({
   section,
   sections,
   fields,
+  meta,
   onChangeValidation,
   onRemoveValidation,
 }) => {
@@ -44,7 +45,15 @@ const SectionValidation = ({
       })
       .filter(Boolean);
 
-    return options || [];
+    const metaOptions =
+      meta !== undefined
+        ? meta.map((meta) => ({
+            label: meta.name ? `${meta.name}_${meta._id}` : meta._id,
+            value: meta._id,
+          }))
+        : [];
+
+    return [...options, ...metaOptions] || [];
   };
 
   return (

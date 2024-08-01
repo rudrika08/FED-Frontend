@@ -1,15 +1,18 @@
-import React, { useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { FaLinkedin, FaGithub } from 'react-icons/fa';
+import { Blurhash } from 'react-blurhash';
 import styles from './styles/TeamCard.module.scss';
 import TeamCardSkeleton from '../../layouts/Skeleton/TeamCard/TeamCard';
 import { Button } from '../Core';
+import AuthContext from '../../context/AuthContext';
 
 const TeamCard = ({
   name,
   image,
   social,
   title,
+  data,
   role,
   know,
   customStyles = {},
@@ -18,26 +21,49 @@ const TeamCard = ({
 }) => {
   const [showMore, setShowMore] = useState(false);
   const [contentLoaded, setContentLoaded] = useState(false);
+  const [isImageLoaded, setIsImageLoaded] = useState(false);
+  const [showSkeleton, setShowSkeleton] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowSkeleton(false);
+    }, 2000); // Show skeleton for 2 seconds
+
+    return () => clearTimeout(timer);
+  }, []);
+  const authCtx = useContext(AuthContext);
 
   const isDirectorRole =
     ['PRESIDENT', 'VICEPRESIDENT'].includes(role) || role.startsWith('DIRECTOR_');
 
   const handleImageLoad = () => {
-    setContentLoaded(true);
+    setIsImageLoaded(true);
   };
+  console.log(data);
 
   return (
     <div className={`${styles.teamMember} ${customStyles.teamMember || ''}`}>
-      {!contentLoaded && <TeamCardSkeleton customStyles={customStyles} />}
-      <div className={styles.teamMemberInner} style={{ display: contentLoaded ? 'block' : 'none' }}>
+      {showSkeleton && <TeamCardSkeleton customStyles={customStyles} />}
+      <div className={styles.teamMemberInner} style={{ display: showSkeleton ? 'none' : 'block' }}>
         <div className={`${styles.teamMemberFront} ${customStyles.teamMemberFront || ''}`}>
           <div className={styles.ImgDiv}>
+            {!isImageLoaded && (
+              <Blurhash
+                hash="LEHV6nWB2yk8pyo0adR*.7kCMdnj"
+                width={'100%'}
+                height={'100%'}
+                resolutionX={32}
+                resolutionY={32}
+                punch={1}
+                className={styles.teamMember_blurhash}
+              />
+            )}
             <img
               src={image}
               alt={`Profile of ${name}`}
               className={styles.teamMemberImg}
               onLoad={handleImageLoad}
-              style={{ display: 'block' }}
+              style={{ display: isImageLoaded ? 'block' : 'none' }}
             />
           </div>
           <div className={`${styles.teamMemberInfo} ${customStyles.teamMemberInfo || ''}`}>
@@ -81,10 +107,19 @@ const TeamCard = ({
                   Know More
                 </button>
               )}
-              <div className={`${styles.updatebtn} ${customStyles.updatebtn || ''}`}>
-                <Button onClick={() => onUpdate(name, role, title)}>Update</Button>
+            { onUpdate && authCtx.user.access==="ADMIN"  && <div className={`${styles.updatebtn} ${customStyles.updatebtn || ''}`}>
+                <Button  onClick={(e) => {
+              e.preventDefault();
+              if (onUpdate) {
+              console.log(data);
+                authCtx.memberData = data;
+                onUpdate();
+              }
+            }}>
+                  Update</Button>
                 <Button onClick={() => onRemove(name, role, title)}>Remove</Button>
               </div>
+}
             </>
           ) : (
             <div className={`${styles.knowMoreContent} ${customStyles.knowMoreContent || ''}`}>

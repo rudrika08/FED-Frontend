@@ -1,16 +1,20 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import PropTypes from "prop-types";
 import { useLocation, useNavigate } from "react-router-dom";
 import Input from "../../components/Core/Input";
 import Button from "../../components/Core/Button";
 import Load from "../../microInteraction/Load/Load";
-import axios from "axios";
 import styles from "./style/CompleteProfile.module.scss";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import AuthContext from "../../context/AuthContext";
+import { Alert, MicroLoading } from "../../microInteraction";
+import { api } from "../../services";
 
 function CompleteProfile() {
   const [loadingEffect, setLoad] = useState(false);
+  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
+  const [alert, setAlert] = useState(null);
   const [year, setYear] = useState("");
   const [showUser, setUser] = useState({
     email: "",
@@ -25,7 +29,6 @@ function CompleteProfile() {
   const [errors, setErrors] = useState({});
 
   const authCtx = useContext(AuthContext);
-  const navigate = useNavigate();
   const location = useLocation();
 
   const userData = location.state?.data || {};
@@ -52,11 +55,27 @@ function CompleteProfile() {
     { value: "Passout", text: "Passout" },
   ];
 
+  useEffect(() => {
+    setAlert({
+      type: "info",
+      message: "Kindly complete your profile for registration",
+      position: "bottom-right",
+      duration: 3000,
+    });
+  }, []);
+
+  useEffect(() => {
+    if (alert) {
+      const { type, message, position, duration } = alert;
+      Alert({ type, message, position, duration });
+    }
+  }, [alert]);
+
   const handleCreateProfile = async (e) => {
     e.preventDefault();
     if (!validate()) return;
 
-    setLoad(true);
+    setIsLoading(true);
 
     const { RollNumber, School, College, MobileNo } = showUser;
 
@@ -73,46 +92,56 @@ function CompleteProfile() {
 
     try {
       // API call
-      // const response = await axios.post(`/auth/googleregister`, userObject);
-      // if (response.data.status === true) {
-      //   authCtx.login(
-      //     response.data.user.name,
-      //     response.data.user.email,
-      //     response.data.user.img,
-      //     response.data.user.RollNumber,
-      //     response.data.user.School,
-      //     response.data.user.College,
-      //     response.data.user.MobileNo,
-      //     response.data.user.selected,
-      //     response.data.user.regForm,
-      //     Number(response.data.user.access),
-      //     response.data.token,
-      //     10800000
-      //   );
+      const response = await api.post("/api/auth/register", userObject);
+      if (response.status === 200 || response.status === 201) {
 
-      // userObject for demonstration
-      authCtx.login(
-        userObject.name,
-        userObject.email,
-        userObject.img,
-        userObject.RollNumber,
-        userObject.School,
-        userObject.College,
-        userObject.MobileNo,
-        userObject.year,
-        "someRegForm",
-        "USER",
-        "someToken",
-        7200000
-      );
+        setAlert({
+          type: "success",
+          message: "Profile created successfully",
+          position: "bottom-right",
+          duration: 3000,
+        });
 
-      alert("Profile created successfully");
-      navigate("/profile"); // Navigate to MyProfile after successful registration
+        setTimeout(() => {
+          authCtx.login(
+            userObject.name,
+            userObject.email,
+            userObject.img,
+            userObject.RollNumber,
+            userObject.School,
+            userObject.College,
+            userObject.MobileNo,
+            userObject.year,
+            userObject.github,
+            userObject.linkedin,
+            userObject.designation,
+            userObject.regForm,
+            "USER",
+            "someToken",
+            7200000
+          );
+          navigate("/");
+        }, 3000);
+
+        
+      } else {
+        setAlert({
+          type: "error",
+          message: response.data.message || "An error occurred",
+          position: "bottom-right",
+          duration: 3000,
+        });
+      }
     } catch (error) {
       console.error("Error during profile creation:", error);
-      alert("An error occurred while creating your profile. Please try again.");
+      setAlert({
+        type: "error",
+        message: "An error occurred while creating your profile. Please try again.",
+        position: "bottom-right",
+        duration: 3000,
+      });
     } finally {
-      setLoad(false);
+      setIsLoading(false);
     }
   };
 
@@ -219,12 +248,13 @@ function CompleteProfile() {
                 }}
                 type="submit"
               >
-                {loadingEffect ? <Load /> : "Create Profile"}
+                {isLoading ? <MicroLoading /> : "Create Profile"}
               </Button>
             </div>
           </form>
         </div>
       </div>
+      <Alert />
     </div>
   );
 }

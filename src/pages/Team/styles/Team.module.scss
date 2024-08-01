@@ -20,6 +20,16 @@
   margin-bottom: 15px;
 }
 
+.error{
+  padding: 30px 70px;
+  z-index: 1;
+  text-align: center;
+  margin-top: 4rem;
+  font-size: 1.5rem;
+  font-weight: 400;
+  margin-bottom: 1rem;
+}
+
 .teamSection {
   text-align: left;
   padding: 30px;
@@ -65,9 +75,8 @@ strong {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 32px;
-  margin-top: 1.5rem;
-  margin-bottom: 4rem;
+  gap: 29px;
+  margin-top: -1rem;
 }
 
 
@@ -84,16 +93,6 @@ strong {
   filter: blur(150px);
 }
 
-// .circle2 {
-//   height: 50vh;
-//   width: 30vh;
-//   background-color: rgba(255, 92, 0, 0.19);
-//   position: absolute;
-//   // bottom: -700%;
-//   right: -5%;
-//   border-radius: 50%;
-//   filter: blur(150px);
-// }
 
 .alumniBut{
   display: flex;
@@ -107,7 +106,6 @@ strong {
 }
 
 .alumniBut a{
-  // color: #FF8A00;
   background: var(--primary);
   background-clip: text;
   color: transparent;
@@ -169,6 +167,15 @@ strong {
   //   display: none;
   // }
 
+  .error{
+    padding: 30px 70px;
+    z-index: 1;
+    text-align: center;
+    margin-top: 10px;
+    font-size: 1rem;
+    font-weight: 400;
+    margin-bottom: 10px;
+  }
 
   .Team h2 {
     font-size: 2.5rem;
@@ -180,8 +187,9 @@ strong {
 
 
   .para p{
-    font-size: 13px;
+    font-size: 1rem;
     padding: 30px 30px;
+    line-height: auto;
   }
 }
 
@@ -217,6 +225,20 @@ strong {
 
   .teamSection h3 {
     margin-left: 0px;
+  }
+
+  .error{
+    padding: 30px 70px;
+    z-index: 1;
+    text-align: center;
+    margin-top: 10px;
+    font-size: 1rem;
+    font-weight: 400;
+    margin-bottom: 10px;
+  }
+
+  .lastRowCentered{
+    margin-top: 1rem;
   }
 
   // .circle2 {

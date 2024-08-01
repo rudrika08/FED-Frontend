@@ -1,16 +1,14 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import axios from 'axios';
-
+import { api } from "../../services";
 import style from "./styles/Event.module.scss";
 import { EventCard } from "../../components";
+import { ChatBot } from "../../features";
 // import EventData from "../../data/eventData.json";
-import FormData from "../../data/FormData.json"
+import FormData from "../../data/FormData.json";
 import ring from "../../assets/images/ring.svg";
 import { MdKeyboardArrowRight } from "react-icons/md";
-import EventCardSkeleton from "../../layouts/Skeleton/EventCard/EventCardSkeleton";
-import { SkeletonTheme } from "react-loading-skeleton";
-import { color } from "framer-motion";
+import { ComponentLoading } from "../../microInteraction";
 
 const Event = () => {
   useEffect(() => {
@@ -18,22 +16,34 @@ const Event = () => {
   }, []);
 
   const [eventData, setEventData] = useState([]);
-  const [loading, setLoading] = useState(true);
-
+  const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
   const { events } = FormData;
 
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        // Simulate a loading delay for demonstration purposes
-        setTimeout(() => {
-          const localEventData = events;
-          setEventData(localEventData);
-          setLoading(false);
-        }, 2000); // 2 seconds delay
+        const response = await api.get("/api/form/getAllForms");
+
+        if (response.status === 200) {
+          setEventData(response.data);
+        } else {
+          setError({
+            message:
+              "Sorry for the inconvenience, we are having issues fetching our Events",
+          });
+          console.error("Error fetching events:", response.data.message);
+          setEventData(events);
+        }
       } catch (error) {
-        console.error('Error fetching events:', error);
-        setLoading(false);
+        setError({
+          message:
+            "Sorry for the inconvenience, we are having issues fetching our Events",
+        });
+        console.error("Error fetching events:", error);
+        setEventData(events);
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -45,107 +55,122 @@ const Event = () => {
 
   const customStyles = {
     eventname: {
-      paddingTop: "5px",
       fontSize: "1.2rem",
     },
     registerbtn: {
-      width: "7rem",
+      width: "8rem",
       fontSize: ".721rem",
     },
-
+    eventnamep: {
+      fontSize: "0.7rem",
+    },
   };
 
   return (
-    <div className={style.main}>
-      <div style={{ display: "flex" }}>
-        <div className={style.line}></div>
-        <div className={style.eventwhole}>
-          {loading ? (
-            <SkeletonTheme color="#e0e0e0" highlightColor="#f5f5f5">
-              <div className={style.eventcard}>
-                <div className={style.name}>
-                  <img className={style.ring1} src={ring} alt="ring" />
-                  <span className={style.w1}>Ongoing</span>
-                  <span className={style.w2}>Events</span>
-                </div>
-                <div className={style.cardsin}>
-                  <EventCardSkeleton amount={2} />
-                </div>
-              </div>
-              <div className={style.pasteventcard} style={{ marginTop: "1rem" }}>
-                <div className={style.name}>
-                  <img className={style.ring2} src={ring} alt="ring" />
-                  <span className={style.w1}>Past</span>
-                  <span className={style.w2}>Events</span>
-                </div>
-                <div className={style.cardone}>
-                  <EventCardSkeleton amount={2} />
-                </div>
-              </div>
-            </SkeletonTheme>
-          ) : (
-            <>
-              {ongoingEvents.length > 0 && (
+    <>
+      <ChatBot />
+      <div className={style.main}>
+        <div style={{ display: "flex" }}>
+          <div className={style.line}></div>
+          <div className={style.eventwhole}>
+            {isLoading ? (
+              <>
                 <div className={style.eventcard}>
                   <div className={style.name}>
-                    <img className={style.ring1} src={ring} alt="ring" />
-                    <span className={style.w1}>Ongoing</span>
+                    <img className={style.ringLoad} src={ring} alt="ring" />
+                  </div>
+                </div>
+                <ComponentLoading
+                  customStyles={{
+                    width: "100%",
+                    height: "100%",
+                    display: "flex",
+                    marginTop: "5rem",
+                    marginLeft: "-3rem",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                />
+              </>
+            ) : !error ? (
+              <div className={style.error}>{error.message}</div>
+            ) : (
+              <>
+                {ongoingEvents.length > 0 && (
+                  <div className={style.eventcard}>
+                    <div className={style.name}>
+                      <img className={style.ring1} src={ring} alt="ring" />
+                      <span className={style.w1}>Ongoing</span>
+                      <span className={style.w2}>Events</span>
+                    </div>
+                    <div className={style.cardsin}>
+                      {ongoingEvents.map((event, index) => (
+                        <div
+                          style={{ height: "auto", width: "22rem" }}
+                          key={index}
+                        >
+                          <EventCard
+                            data={event}
+                            onOpen={() => console.log("Event opened")}
+                            type="ongoing"
+                            customStyles={customStyles}
+                            modalpath="/Events/"
+                            aosDisable={false}
+                            isLoading={isLoading} // Pass the loading state to each EventCard
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+                <div
+                  className={style.pasteventcard}
+                  style={{
+                    marginTop: ongoingEvents.length > 0 ? "6rem" : "1rem",
+                  }}
+                >
+                  <div className={style.name}>
+                    <img className={style.ring2} src={ring} alt="ring" />
+                    <span className={style.w1}>Past</span>
                     <span className={style.w2}>Events</span>
                   </div>
-                  <div className={style.cardsin}>
-                    {ongoingEvents.map((event, index) => (
-                      <div style={{ height: "auto", width: "22rem" }} key={index}>
+                  <div className={style.cardone}>
+                    {pastEvents.map((event, index) => (
+                      <div
+                        style={{ height: "auto", width: "22rem" }}
+                        key={index}
+                      >
                         <EventCard
                           data={event}
-                          onOpen={() => console.log("Event opened")}
-                          type="ongoing"
+                          type="past"
                           customStyles={customStyles}
-                          modalpath='/Events/'
-                          aosDisable={false}
-                  />
+                          modalpath="/Events/pastEvents/"
+                          isLoading={isLoading} // Pass the loading state to each EventCard
+                        />
                       </div>
                     ))}
                   </div>
                 </div>
-              )}
-              <div className={style.pasteventcard} style={{ marginTop: ongoingEvents.length > 0 ? "6rem" : "1rem" }}>
-                <div className={style.name}>
-                  <img className={style.ring2} src={ring} alt="ring" />
-                  <span className={style.w1}>Past</span>
-                  <span className={style.w2}>Events</span>
-                </div>
-                <div className={style.cardone}>
-                  {pastEvents.map((event, index) => (
-                    <div style={{ height: "auto", width: "22rem" }} key={index}>
-                      <EventCard
-                        data={event}
-                        type="past"
-                        customStyles={customStyles}
-                        modalpath='/Events/pastEvents/'
-                      />
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </>
-          )}
+              </>
+            )}
+          </div>
         </div>
-      </div>
 
-      <div className={style.bottom}>
-        <Link to="/Events/pastEvents">
-          <button className={style.seeall}>
-            See all <MdKeyboardArrowRight />
-          </button>
-        </Link>
-      </div>
+        <div className={style.bottom}>
+          <Link to="/Events/pastEvents">
+            <button className={style.seeall}>
+              See all <MdKeyboardArrowRight />
+            </button>
+          </Link>
+        </div>
 
-      <div className={style.circle}></div>
-      <div className={style.circleleft}></div>
-      <div className={style.circleone}></div>
-      <div className={style.circletwo}></div>
-      <div className={style.circlethree}></div>
-    </div>
+        <div className={style.circle}></div>
+        <div className={style.circleleft}></div>
+        <div className={style.circleone}></div>
+        <div className={style.circletwo}></div>
+        <div className={style.circlethree}></div>
+      </div>
+    </>
   );
 };
 

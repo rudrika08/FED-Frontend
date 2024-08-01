@@ -1,18 +1,26 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useRef, useEffect } from 'react';
 import AvatarEditor from "react-avatar-editor";
 import { FaUpload } from "react-icons/fa";
 import style from "./styles/editImage.module.scss";
-import { useRef } from 'react';
 import AuthContext from '../../../context/AuthContext';
-import axios from 'axios';
 import { Button } from '../../../components';
 import { X } from 'lucide-react';
+import { Alert, MicroLoading } from "../../../microInteraction";
+import { api } from "../../../services";
 
 const EditImage = ({ selectedFile, closeModal, setimage }) => {
   const [scale, setScale] = useState(1);
+  const [alert, setAlert] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
   const authCtx = useContext(AuthContext);
   const editorRef = useRef(null);
-  console.log(style)
+
+  useEffect(() => {
+    if (alert) {
+      const { type, message, position, duration } = alert;
+      Alert({ type, message, position, duration });
+    }
+  }, [alert]);
 
   const handleScaleChange = (e) => {
     const scaleValue = parseFloat(e.target.value);
@@ -21,42 +29,56 @@ const EditImage = ({ selectedFile, closeModal, setimage }) => {
 
   const handleSave = async () => {
     if (editorRef.current && selectedFile) {
+      setIsLoading(true);
       const canvas = editorRef.current.getImageScaledToCanvas();
       canvas.toBlob(async (blob) => {
         const imageFile = new File([blob], "profile.jpg", { type: "image/jpeg" });
-        console.log(imageFile);
-        // const formData = new FormData();
-        // formData.append('email', authCtx.user.email);
-        // formData.append('image', imageFile);
-        // console.log(formData);
 
         try {
-         
-          const dataToSend = {
-            email: authCtx.user.email,
-            image: imageFile
-          };
-    
-          console.log("FormData:", dataToSend); 
-  
-          // console.log(formData);
+          const formData = new FormData();
+          formData.append('email', authCtx.user.email);
+          formData.append('image', imageFile);
 
-          // const response = await axios.post('/api/updateProfileImage', formData, {
-          //   headers: {
-          //     'Content-Type': 'multipart/form-data'
-          //   }
-          // });
+          const response = await api.post('/api/updateProfileImage', formData, {
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            }
+          });
 
-          // console.log("Response:", response.data);
-         
-      
+          if (response.status === 200 || response.status === 201) {
+            console.log("Profile image updated successfully!", response.data);
+
+            setimage(URL.createObjectURL(blob));
+            setAlert({
+              type: "success",
+              message: "Profile image updated successfully.",
+              position: "bottom-right",
+              duration: 3000,
+            });
+            setTimeout(() => {
+              closeModal();
+              window.location.reload();
+            }, 2000);
+          } else {
+            setAlert({
+              type: "error",
+              message: "There was an error updating your profile image. Please try again.",
+              position: "bottom-right",
+              duration: 3000,
+            });
+          }
         } catch (error) {
-          console.error("Error:", error);
-          // Handle error (show message, retry logic, etc.)
+          console.error("Error updating profile image:", error);
+          setAlert({
+            type: "error",
+            message: "There was an error updating your profile image. Please try again.",
+            position: "bottom-right",
+            duration: 3000,
+          });
+        } finally {
+          setIsLoading(false);
         }
-        setimage(URL.createObjectURL(blob));
-        closeModal();
-      }, "image/jpeg"); 
+      }, "image/jpeg");
     }
   };
 
@@ -90,12 +112,12 @@ const EditImage = ({ selectedFile, closeModal, setimage }) => {
           marginTop: ".3rem",
         }}>
           <div className={style.container}>
-          <button
-                    className={style.closeModal} 
-                    onClick={()=>closeModal()}
-                  >
-                    <X />
-                  </button>
+            <button
+              className={style.closeModal}
+              onClick={closeModal}
+            >
+              <X />
+            </button>
             <AvatarEditor
               ref={editorRef}
               image={selectedFile}
@@ -106,22 +128,32 @@ const EditImage = ({ selectedFile, closeModal, setimage }) => {
               borderRadius={125}
               scale={scale}
             />
-            <div className={style.wrapper}>     <input
-            className={style.rangeInput}
-              type="range"
-              value={scale}
-              min="1"
-              max="2"
-              step="0.01"
-              onChange={handleScaleChange}
-            /></div>
-       
-            <div style={{display:"flex",justifyContent:"center"}}>
-           <Button type='button' onClick={handleSave} className={style.submit}>  <FaUpload /> Update Image</Button>
-                        </div>
+            <div className={style.wrapper}>
+              <input
+                className={style.rangeInput}
+                type="range"
+                value={scale}
+                min="1"
+                max="2"
+                step="0.01"
+                onChange={handleScaleChange}
+              />
+            </div>
+            <div style={{ display: "flex", justifyContent: "center" }}>
+              <Button type='button' onClick={handleSave} className={style.submit}>
+                {isLoading ? (
+                  <MicroLoading />
+                ) : (
+                  <>
+                    <FaUpload /> Update Image
+                  </>
+                )}
+              </Button>
+            </div>
           </div>
         </div>
       </div>
+      <Alert />
     </div>
   );
 };

@@ -36,10 +36,9 @@ function NewForm() {
   const [isVisibility, setisVisibility] = useState(true);
   const authCtx = useContext(AuthContext);
   const [data, setdata] = useState({
-
     _id: nanoid(),
     eventTitle: "",
-    eventdescription:"",
+    eventdescription: "",
     eventImg: "",
     eventDate: "",
     eventType: "Free",
@@ -50,7 +49,7 @@ function NewForm() {
     eventAmount: "",
     eventMaxReg: "",
     relatedEvent: "",
-    participationType : "",
+    participationType: "",
     maxTeamSize: "",
     minTeamSize: "",
     regDateAndTime: "",
@@ -227,15 +226,27 @@ function NewForm() {
 
   const onSaveEvent = () => {
     if (isValidEvent()) {
-      const form = {
-        info: {
-          ...data,
-        },
-        sections,
-      };
+      const newSections = constructForPreview();
+      const form = new FormData();
+
+      Object.keys(data).forEach((key) => {
+        const value = data[key];
+
+        if (typeof value === "object" && value !== null) {
+          if (Array.isArray(value)) {
+            form.append(key, JSON.stringify(value));
+          } else {
+            form.append(key, value);
+          }
+        } else {
+          form.append(key, value);
+        }
+      });
+
+      form.append("sections", JSON.stringify(newSections));
 
       if (authCtx.eventData) {
-        form.id = authCtx.eventData?.id;
+        form.append("id", authCtx.eventData?.id);
       }
 
       console.log("form", form);
@@ -950,7 +961,9 @@ function NewForm() {
               className={styles.formInput}
               label="Event Priority"
               value={data.eventPriority}
-              onChange={(e) => setdata({ ...data, eventPriority: e.target.value })}
+              onChange={(e) =>
+                setdata({ ...data, eventPriority: e.target.value })
+              }
             />
             <Input
               placeholder="Open Date & Time"
@@ -1001,7 +1014,9 @@ function NewForm() {
               type="number"
               value={data.eventMaxReg}
               containerStyle={{ marginTop: "12px" }}
-              onChange={(e) => setdata({ ...data, eventMaxReg: e.target.value })}
+              onChange={(e) =>
+                setdata({ ...data, eventMaxReg: e.target.value })
+              }
             />
           </div>
         </div>
@@ -1037,6 +1052,7 @@ function NewForm() {
               section={section}
               sections={sections}
               setsections={setsections}
+              meta={paymentSection ? [paymentSection] : []}
               showAddButton={!section.isDisabled}
               disabled={section.isDisabled}
             />
@@ -1047,8 +1063,8 @@ function NewForm() {
             section={paymentSection}
             sections={sections}
             setsections={setsections}
-            showAddButton={!paymentSection.isDisabled}
-            disabled={paymentSection.isDisabled}
+            showAddButton={false}
+            disabled={true}
           />
         )}
         {showPreview && (

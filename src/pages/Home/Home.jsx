@@ -1,12 +1,10 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Hero, About, Sponser, Feedback, Contact } from "../../sections";
 import { ChatBot, LiveEventPopup } from "../../features";
 
 const Home = () => {
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+  window.scrollTo(0, 0);
 
   return (
     <>
@@ -14,13 +12,15 @@ const Home = () => {
       <Hero />
       <ChatBot />
       <About />
-      <Sponser />
+      <section id="Sponser">
+        <Sponser />
+      </section>
       <section id="Contact">
         <Contact />
       </section>
       <Feedback />
     </>
   );
-}
+};
 
 export default Home;
