@@ -12,6 +12,7 @@ import { EventModal } from "./features";
 
 // state
 import AuthContext from "./context/AuthContext";
+import EventStats from "./features/Modals/Event/EventStats/EventStats";
 
 // Lazy loading pages
 const Home = lazy(() => import("./pages/Home/Home"));
@@ -78,6 +79,10 @@ function App() {
                 path="/profile/Events/:eventId"
                 element={[<Profile />, <EventModal onClosePath="/profile" />]}
               />,
+              <Route
+                path="/profile/Events/Analytics/:eventId"
+                element={[<Profile />, <EventStats onClosePath="/profile" />]}
+              />,
             ]}
             <Route
               path="/Events/:eventId"
@@ -99,6 +104,7 @@ function App() {
               path="/Events/:eventId/Form"
               element={[<Event />, <EventForm />]}
             />
+
             <Route path="/PrivacyPolicy" element={<PrivacyPolicy />} />
             <Route
               path="/TermsAndConditions"

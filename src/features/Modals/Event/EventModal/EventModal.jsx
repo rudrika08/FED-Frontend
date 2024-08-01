@@ -8,6 +8,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import FormData from "../../../../data/FormData.json";
 import shareOutline from "../../../../assets/images/shareOutline.svg";
 import Share from "../../../../features/Modals/Event/ShareModal/ShareModal";
+// import AOS from "aos";
+// import "aos/dist/aos.css";
 import { CiLock } from "react-icons/ci";
 import { PiClockCountdownDuotone } from "react-icons/pi";
 import AuthContext from "../../../../context/AuthContext";
