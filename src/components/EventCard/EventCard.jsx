@@ -9,7 +9,7 @@ import shareOutline from "../../assets/images/shareOutline.svg";
 import groupIcon from "../../assets/images/groups.svg";
 import rupeeIcon from "../../assets/images/rupeeIcon.svg";
 import { PiClockCountdownDuotone } from "react-icons/pi";
-import { IoIosLock } from "react-icons/io";
+import { IoIosLock, IoIosStats } from "react-icons/io";
 import { Button } from "../Core";
 import AuthContext from "../../context/AuthContext";
 import EventCardSkeleton from "../../layouts/Skeleton/EventCard/EventCardSkeleton";
@@ -207,7 +207,7 @@ const EventCard = (props) => {
   }
 
   return (
-    <>
+    <div>
       <div
         onMouseEnter={() => setisHovered(true)}
         onMouseLeave={() => setisHovered(false)}
@@ -378,10 +378,17 @@ const EventCard = (props) => {
             Edit Event
           </Button>
           <Button variant="secondary">Delete Event</Button>
+          <IoIosStats
+            size={20}
+            style={{ cursor: "pointer", color: "white" }}
+            onClick={() => {
+              navigate("/profile/Events/Analytics/" + data._id);
+            }}
+          />
         </div>
       )}
       <Alert />
-    </>
+    </div>
   );
 };
 

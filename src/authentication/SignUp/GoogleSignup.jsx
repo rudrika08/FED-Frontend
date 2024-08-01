@@ -10,8 +10,8 @@ import users from "../../data/user.json";
 import { Alert, MicroLoading } from "../../microInteraction";
 import { api } from "../../services";
 
-export default function GoogleSignup() {
-  const [alert, setAlert] = useState(null);
+export default function GoogleSignup({setAlert}) {
+  // const [alert, setAlert] = useState(null);
   const [codeResponse, setCodeResponse] = useState(null);
   const [shouldNavigate, setShouldNavigate] = useState(false);
   const [navigatePath, setNavigatePath] = useState("/");
@@ -30,13 +30,13 @@ export default function GoogleSignup() {
     }
   }, [codeResponse]);
 
-  useEffect(() => {
-    if (alert) {
-      const { type, message, position, duration } = alert;
-      Alert({ type, message, position, duration });
-      setAlert(null); // Reset alert after displaying it
-    }
-  }, [alert]);
+  // useEffect(() => {
+  //   // if (alert) {
+  //     // const { type, message, position, duration } = alert;
+  //     // Alert({ type, message, position, duration });
+  //     setAlert(null); // Reset alert after displaying it
+  //   // }
+  // }, []);
 
   useEffect(() => {
     if (shouldNavigate) {
@@ -245,7 +245,6 @@ export default function GoogleSignup() {
           </>
         )}
       </button>
-      <Alert />
     </>
   );
 }
