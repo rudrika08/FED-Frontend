@@ -14,7 +14,7 @@ const Share = ({ onClose, urlpath }) => {
       width: '22rem',
       height: '15rem', 
       boxShadow: '0 6px 10px 3px rgba(24, 15, .3)',
-      color: 'white',
+      color: '#f97507',
       padding: '1rem', 
       position: 'relative', 
       display: 'flex',
@@ -22,7 +22,7 @@ const Share = ({ onClose, urlpath }) => {
       justifyContent: 'center', 
     },
     copyContainer: {
-      border: '1px solid blue',
+      border: '1px solid #f97507',
       background: 'rgba(0, 0, 0, 0.4)',
       borderRadius: '5px',
       padding: '0.5rem',
@@ -34,7 +34,7 @@ const Share = ({ onClose, urlpath }) => {
       msOverflowStyle: 'none', 
     },
     title: {
-      color: 'aquamarine',
+      color: '#f97507',
       fontStyle: 'italic',
       marginBottom: '1rem',
     },
@@ -67,7 +67,9 @@ const Share = ({ onClose, urlpath }) => {
           top: "1.4rem",
           zIndex: "20",
           fontSize: "1.2rem",
-          color: "white",
+          background: "var(--primary)",
+          WebkitBackgroundClip: "text",
+          color: "transparent",
         }}>Share</div>
         <ShareSocial
           url={urlpath}

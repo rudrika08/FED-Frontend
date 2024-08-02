@@ -213,7 +213,7 @@ const EventCard = (props) => {
         onMouseLeave={() => setisHovered(false)}
         className={style.card}
         style={customStyles.card}
-        data-aos={aosDisable ? "" : "fade-up"}
+        // data-aos={aosDisable ? "" : "fade-up"}
       >
         <div
           className={style.backimg}

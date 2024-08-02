@@ -482,7 +482,7 @@ const PreviewForm = ({
               </div>
               {renderPaymentScreen()}
               <Section section={currentSection} handleChange={handleChange} />
-              <div style={{ display: "flex", flexDirection: "row" }}>
+              <div style={{ display: "flex", flexDirection: "row", justifyContent: "center"}}>
                 {inboundList() && inboundList().backSection && (
                   <Button style={{ marginRight: "10px" }} onClick={onBack}>
                     Back

@@ -16,13 +16,20 @@
   display: flex;
   flex-direction: column;
   align-items: start;
-  background: #2e2e2e;
-  border-radius: 10px;
-  width: 70%;
+  background: linear-gradient(
+    90deg,
+    rgba(32, 32, 32, 0.95) -11.52%,
+    rgba(37, 37, 37, 0.95) 106.29%
+  );
+  border-radius: 1.26863rem;
+  backdrop-filter: blur(4px);
+  border: 1.2px solid rgba(214, 214, 214, 0.81);
+  width: 55%;
   padding: 1.6em;
   height: 90%;
   margin: auto;
   z-index: 100;
+  overflow: hidden;
   overflow-y: scroll;
 }
 
@@ -39,7 +46,7 @@
 
 .closeBtn{
   position: absolute;
-  width: 65%;
+  width: 95%;
   display: flex;
   justify-content: flex-end;
   color: #fff;
