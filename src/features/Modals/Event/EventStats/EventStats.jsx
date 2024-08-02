@@ -184,7 +184,7 @@ const EventStats = ({ onClosePath }) => {
                           color: "#FF8A00",
                         }}
                       >
-                        {info.registeredUsers.length}
+                        {info.registeredUsers?.length || 0}
                       </span>
                     </Text>
                     <input

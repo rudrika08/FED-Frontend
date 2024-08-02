@@ -878,7 +878,39 @@
         "successMessage": "Thanks for registering for this event",
         "isPublic": false,
         "isRegistrationClosed": false,
-        "isEventPast": false
+        "isEventPast": false,
+        "registeredUsers": [
+          {
+            "email": "22053276@kiit.ac.in"
+          },
+          {
+            "email": "22053275@kiit.ac.in"
+          },
+          {
+            "email": "22053275@kiit.ac.in"
+          },
+          {
+            "email": "22053275@kiit.ac.in"
+          },
+          {
+            "email": "22053275@kiit.ac.in"
+          },
+          {
+            "email": "22053275@kiit.ac.in"
+          },
+          {
+            "email": "22053276@kiit.ac.in"
+          },
+          {
+            "email": "22053275@kiit.ac.in"
+          },
+          {
+            "email": "22053275@kiit.ac.in"
+          },
+          {
+            "email": "22053275@kiit.ac.in"
+          }
+        ]
       },
       "sections": [
         {
