@@ -79,7 +79,7 @@ const EventStats = ({ onClosePath }) => {
   };
 
   const filteredUsers = info.registeredUsers?.filter((user) =>
-    user.email.toLowerCase().includes(searchQuery.toLowerCase())
+    user.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   return (
@@ -207,14 +207,14 @@ const EventStats = ({ onClosePath }) => {
                           }}
                         />
                       ) : filteredUsers.length > 0 ? (
-                        filteredUsers.map((user, index) => (
+                        filteredUsers.map((email, index) => (
                           <div key={index} className={styles.userCard}>
                             <img
-                              src={user.userImg || defaultImg}
+                              src={defaultImg}
                               alt="User"
                               className={styles.userImg}
                             />
-                            <div className={styles.userEmail}>{user.email}</div>
+                            <div className={styles.userEmail}>{email}</div>
                           </div>
                         ))
                       ) : (

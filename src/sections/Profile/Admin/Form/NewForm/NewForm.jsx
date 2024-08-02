@@ -314,154 +314,154 @@ function NewForm() {
     }
   };
 
-  const handleChangeTeamSize = (value) => {
-    if (value < 1 || !value) {
-      setdata({ ...data, maxTeamSize: "" });
-      setsections(
-        sections.filter((section) => section.name !== "Team Members")
-      );
-    }
-    if (value === 0 || value > 7) {
-      alert("Team size should be between 1 and 7.");
-    } else {
-      if (value > 0 && value <= 7) {
-        setdata({ ...data, maxTeamSize: value });
+  // const handleChangeTeamSize = (value) => {
+  //   if (value < 1 || !value) {
+  //     setdata({ ...data, maxTeamSize: "" });
+  //     setsections(
+  //       sections.filter((section) => section.name !== "Team Members")
+  //     );
+  //   }
+  //   if (value === 0 || value > 7) {
+  //     alert("Team size should be between 1 and 7.");
+  //   } else {
+  //     if (value > 0 && value <= 7) {
+  //       setdata({ ...data, maxTeamSize: value });
 
-        const fields = Array.from({ length: value }, (_, index) => [
-          {
-            _id: nanoid(),
-            name: `Enter ${getOrdinalSuffix(index + 1)} Member Name`,
-            type: "text",
-            value: "Enter Member Name",
-            isRequired: index < data.minTeamSize ? true : false,
-            validations: [],
-          },
-          {
-            _id: nanoid(),
-            name: `Enter ${getOrdinalSuffix(index + 1)} Member Email`,
-            type: "text",
-            value: "Enter Member Email",
-            isRequired: index < data.minTeamSize ? true : false,
-            validations: [],
-          },
-          {
-            _id: nanoid(),
-            name: `Enter ${getOrdinalSuffix(index + 1)} Member Roll Number`,
-            type: "number",
-            value: "Enter Roll Number",
-            isRequired: index < data.minTeamSize ? true : false,
-            validations: [],
-          },
-        ]).flat();
-        const lastSection = sections[sections.length - 1];
-        if (lastSection) {
-          const newSectionID = nanoid();
-          const updatedLastSection = {
-            ...lastSection,
-            validations: [
-              {
-                _id: nanoid(),
-                field_id: null,
-                onNext: newSectionID,
-                onBack: lastSection.validations[0]?.onBack || null,
-                values: null,
-              },
-            ],
-          };
-          const newSection = {
-            _id: newSectionID,
-            name: "Team Members",
-            fields: fields,
-            description: "Enter your team members details here",
-            isDisabled: true,
-            validations: [
-              {
-                _id: nanoid(),
-                field_id: null,
-                onNext: null,
-                onBack: lastSection._id,
-                values: null,
-              },
-            ],
-          };
+  //       const fields = Array.from({ length: value }, (_, index) => [
+  //         {
+  //           _id: nanoid(),
+  //           name: `Enter ${getOrdinalSuffix(index + 1)} Member Name`,
+  //           type: "text",
+  //           value: "Enter Member Name",
+  //           isRequired: index < data.minTeamSize ? true : false,
+  //           validations: [],
+  //         },
+  //         {
+  //           _id: nanoid(),
+  //           name: `Enter ${getOrdinalSuffix(index + 1)} Member Email`,
+  //           type: "text",
+  //           value: "Enter Member Email",
+  //           isRequired: index < data.minTeamSize ? true : false,
+  //           validations: [],
+  //         },
+  //         {
+  //           _id: nanoid(),
+  //           name: `Enter ${getOrdinalSuffix(index + 1)} Member Roll Number`,
+  //           type: "number",
+  //           value: "Enter Roll Number",
+  //           isRequired: index < data.minTeamSize ? true : false,
+  //           validations: [],
+  //         },
+  //       ]).flat();
+  //       const lastSection = sections[sections.length - 1];
+  //       if (lastSection) {
+  //         const newSectionID = nanoid();
+  //         const updatedLastSection = {
+  //           ...lastSection,
+  //           validations: [
+  //             {
+  //               _id: nanoid(),
+  //               field_id: null,
+  //               onNext: newSectionID,
+  //               onBack: lastSection.validations[0]?.onBack || null,
+  //               values: null,
+  //             },
+  //           ],
+  //         };
+  //         const newSection = {
+  //           _id: newSectionID,
+  //           name: "Team Members",
+  //           fields: fields,
+  //           description: "Enter your team members details here",
+  //           isDisabled: true,
+  //           validations: [
+  //             {
+  //               _id: nanoid(),
+  //               field_id: null,
+  //               onNext: null,
+  //               onBack: lastSection._id,
+  //               values: null,
+  //             },
+  //           ],
+  //         };
 
-          const isHavingTeamSection = sections.some(
-            (section) => section.name === "Team Members"
-          );
+  //         const isHavingTeamSection = sections.some(
+  //           (section) => section.name === "Team Members"
+  //         );
 
-          if (isHavingTeamSection) {
-            const updatedSections = sections.map((section) => {
-              if (section.name === "Team Members") {
-                return {
-                  ...section,
-                  fields: fields,
-                };
-              }
-              return section;
-            });
-            setsections(updatedSections);
-          } else {
-            const removed = sections.filter(
-              (section) => section._id !== lastSection._id
-            );
-            setsections([...removed, updatedLastSection, newSection]);
-          }
-        }
-      }
-      setTimeout(() => {
-        scrollRef.current.scrollIntoView({
-          behavior: "smooth",
-          block: "nearest",
-        });
-      }, 100);
-    }
-  };
+  //         if (isHavingTeamSection) {
+  //           const updatedSections = sections.map((section) => {
+  //             if (section.name === "Team Members") {
+  //               return {
+  //                 ...section,
+  //                 fields: fields,
+  //               };
+  //             }
+  //             return section;
+  //           });
+  //           setsections(updatedSections);
+  //         } else {
+  //           const removed = sections.filter(
+  //             (section) => section._id !== lastSection._id
+  //           );
+  //           setsections([...removed, updatedLastSection, newSection]);
+  //         }
+  //       }
+  //     }
+  //     setTimeout(() => {
+  //       scrollRef.current.scrollIntoView({
+  //         behavior: "smooth",
+  //         block: "nearest",
+  //       });
+  //     }, 100);
+  //   }
+  // };
 
-  const getOrdinalSuffix = (num) => {
-    const suffixes = ["th", "st", "nd", "rd"];
-    const remainder = num % 100;
-    const suffix =
-      suffixes[(remainder - 20) % 10] || suffixes[remainder] || suffixes[0];
-    return `${num}${suffix}`;
-  };
+  // const getOrdinalSuffix = (num) => {
+  //   const suffixes = ["th", "st", "nd", "rd"];
+  //   const remainder = num % 100;
+  //   const suffix =
+  //     suffixes[(remainder - 20) % 10] || suffixes[remainder] || suffixes[0];
+  //   return `${num}${suffix}`;
+  // };
 
-  const handleChangeMinSize = (value) => {
-    if (value < 1 || !value) {
-      setdata({ ...data, minTeamSize: "1" });
-    }
-    if (value === 0 || value >= 7) {
-      alert("Team size should be between 1 and 7.");
-      setdata({ ...data, minTeamSize: "1" });
-    }
-    if (data.maxTeamSize > 0 && data.maxTeamSize < value) {
-      alert("Team min size should be less than max");
-      setdata({ ...data, minTeamSize: "1" });
-    } else {
-      const isHavingTeamSection = sections.some(
-        (section) => section.name === "Team Members"
-      );
-      if (isHavingTeamSection) {
-        const updatedSections = sections.map((section) => {
-          if (section.name === "Team Members") {
-            const updatedFields = section.fields.map((fld, idx) => {
-              return {
-                ...fld,
-                isRequired: idx < value * 3 ? true : false,
-              };
-            });
+  // const handleChangeMinSize = (value) => {
+  //   if (value < 1 || !value) {
+  //     setdata({ ...data, minTeamSize: "1" });
+  //   }
+  //   if (value === 0 || value >= 7) {
+  //     alert("Team size should be between 1 and 7.");
+  //     setdata({ ...data, minTeamSize: "1" });
+  //   }
+  //   if (data.maxTeamSize > 0 && data.maxTeamSize < value) {
+  //     alert("Team min size should be less than max");
+  //     setdata({ ...data, minTeamSize: "1" });
+  //   } else {
+  //     const isHavingTeamSection = sections.some(
+  //       (section) => section.name === "Team Members"
+  //     );
+  //     if (isHavingTeamSection) {
+  //       const updatedSections = sections.map((section) => {
+  //         if (section.name === "Team Members") {
+  //           const updatedFields = section.fields.map((fld, idx) => {
+  //             return {
+  //               ...fld,
+  //               isRequired: idx < value * 3 ? true : false,
+  //             };
+  //           });
 
-            return {
-              ...section,
-              fields: updatedFields,
-            };
-          }
-          return section;
-        });
-        setsections(updatedSections);
-      }
-      setdata({ ...data, minTeamSize: value });
-    }
-  };
+  //           return {
+  //             ...section,
+  //             fields: updatedFields,
+  //           };
+  //         }
+  //         return section;
+  //       });
+  //       setsections(updatedSections);
+  //     }
+  //     setdata({ ...data, minTeamSize: value });
+  //   }
+  // };
 
   const handleSaveSection = () => {
     if (isValidSections()) {
@@ -939,7 +939,7 @@ function NewForm() {
                   )}
                   className={styles.formInput}
                   value={data.minTeamSize}
-                  onChange={(value) => handleChangeMinSize(value)}
+                  onChange={(value) => setdata({ ...data, minTeamSize: value }) }
                 />
                 {data.minTeamSize && (
                   <Input
@@ -951,7 +951,7 @@ function NewForm() {
                     )}
                     className={styles.formInput}
                     value={data.maxTeamSize}
-                    onChange={(value) => handleChangeTeamSize(value)}
+                    onChange={(value) => setdata({ ...data, maxTeamSize: value })}
                   />
                 )}
               </div>
