@@ -30,7 +30,7 @@ const Profile = () => {
 
           // console.log(data, authCtx);
           const response = await api.post('/api/user/fetchProfile', data);
-          console.log(response.data);
+          // console.log(response.data);
           if (response.status === 200) {
             authCtx.update(
               response.data.user.name,
@@ -47,7 +47,7 @@ const Profile = () => {
               response.data.user.access,
               response.data.user.regForm
             );
-            console.log(authCtx);
+            // console.log(authCtx);
           } else {
             console.log(response.status);
           }

@@ -76,6 +76,7 @@ const Login = () => {
         }, 2800);
 
         setTimeout(() => {
+          localStorage.setItem("token",response.data.token);
           authCtx.login(
             user.name,
             user.email,
@@ -90,7 +91,6 @@ const Login = () => {
             user.extra?.designation,
             user.regForm,
             user.access,
-            "someToken",
             3600000
           );
         }, 3000);

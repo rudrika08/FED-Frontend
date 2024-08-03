@@ -78,7 +78,7 @@ export default function GoogleLogin() {
 
         if (response.status === 200 || response.status === 201) {
           // User exists in the backend
-          const userData = response.data.user;
+       console.log(response);
 
           setAlert({
             type: "success",
@@ -91,24 +91,21 @@ export default function GoogleLogin() {
 
           setTimeout(() => {
             setShouldNavigate(true);
-          }, 2800);
+          });
 
           setTimeout(() => {
             authCtx.login(
-              userData.name,
-              userData.email,
-              userData.image,
-              userData.rollNumber,
-              userData.school,
-              userData.college,
-              userData.contactNo,
-              userData.year,
-              userData.github,
-              userData.linkedin,
-              userData.designation,
-              userData.regForm,
-              userData.access,
-              "someToken",
+              response.data.user.name,
+              response.data.user.email,
+              response.data.user.image,
+              response.data.user.rollNumber,
+              response.data.user.school,
+              response.data.user.college,
+              response.data.user.contactNo,
+              response.data.user.year,
+              response.data.user.regForm,
+              response.data.user.access,
+              response.data.token,
               3600000
             );
             setShouldNavigate(true);
@@ -118,7 +115,7 @@ export default function GoogleLogin() {
         } else {
           // Handle unexpected response status
           console.log("Unexpected backend response status:", response.status);
-          handleFallbackOrSignup(googleUserData);
+          // handleFallbackOrSignup(googleUserData);
         }
       } catch (error) {
         // API call error, fallback to local data
@@ -170,9 +167,6 @@ export default function GoogleLogin() {
           fallbackUser.college,
           fallbackUser.contactNo,
           fallbackUser.year,
-          fallbackUser.github,
-          fallbackUser.linkedin,
-          fallbackUser.designation,
           fallbackUser.regForm,
           fallbackUser.access,
           "someToken",

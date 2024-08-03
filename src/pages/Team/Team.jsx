@@ -54,7 +54,7 @@ const Team = () => {
         const response = await api.get("/api/user/fetchAccessTypes");
 
         if (response.status === 200) {
-          const filteredAccess = response.data.filter(
+          const filteredAccess = response.data.data.filter(
             (accessType) => !["ADMIN", "USER", "ALUMNI"].includes(accessType)
           );
           setAccess(filteredAccess);
