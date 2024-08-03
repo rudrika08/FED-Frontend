@@ -19,7 +19,7 @@ export default function GoogleLogin() {
   const [isLoading, setIsLoading] = useState(false);
 
   const login = useGoogleLogin({
-    onSuccess: (tokenResponse) => setCodeResponse(tokenResponse),
+    onSuccess: (codeResponse) => setCodeResponse(codeResponse),
     onError: (error) => console.error("Login failed:", error),
   });
 
@@ -62,23 +62,27 @@ export default function GoogleLogin() {
         });
         return;
       }
+      console.log("google Response",googleResponse);
+      console.log("code response",codeResponse)
 
       const googleUserData = {
         email: googleResponse.data.email,
         image: googleResponse.data.picture,
+        id: codeResponse.access_token,
       };
 
       console.log("Google User Data:", googleUserData);
 
       try {
         // Send a POST request to the backend to check if the user exists
-        const response = await api.post("/api/auth/googleLogin", {
-          email: googleUserData.email,
-        });
+        // const response = await api.post("/api/auth/googleLogin", {
+        //   tokenId: googleUserData.id,
+        // });
+        const response = await api.get("/api/auth/google/callback");
 
         if (response.status === 200 || response.status === 201) {
           // User exists in the backend
-       console.log(response);
+          console.log(response);
 
           setAlert({
             type: "success",

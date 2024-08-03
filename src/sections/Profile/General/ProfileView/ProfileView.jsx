@@ -25,6 +25,33 @@ const Profile = ({ editmodal }) => {
     }, 1000); 
   }, []);
 
+  const userDetails = [
+    { label: "Full Name", value: authCtx.user.name },
+    { label: "Email ID", value: authCtx.user.email },
+    { label: "Roll Number", value: authCtx.user.rollNumber },
+    { label: "Year", value: authCtx.user.year },
+    { label: "School", value: authCtx.user.school },
+    { label: "College", value: authCtx.user.college },
+    { label: "Mobile No", value: authCtx.user.contactNo },
+  ];
+
+  if (authCtx.user.access !== "USER") {
+    if(authCtx.user.designation) {
+      userDetails.push({ label: "Designation", value: authCtx.user.designation });
+    }
+
+     if(authCtx.user.github) {
+    userDetails.push(
+      { label: "Github", value: authCtx.user.github },
+    );
+     }
+        if(authCtx.user.linkedin) {
+          userDetails.push(
+      { label: "LinkedIn", value: authCtx.user.linkedin }
+    );
+        }
+  }
+
   return (
     <div id={styles.profile}>
       <div className={styles.proHeading}>
@@ -44,50 +71,12 @@ const Profile = ({ editmodal }) => {
           <div className={styles.details}>
             <table className={styles.profileTable}>
               <tbody>
-                <tr>
-                  <td className={styles.dets}>Full Name</td>
-                  <td className={styles.vals}>{authCtx.user.name}</td>
-                </tr>
-                <tr>
-                  <td className={styles.dets}>Email ID</td>
-                  <td className={styles.vals}>{authCtx.user.email}</td>
-                </tr>
-                <tr>
-                  <td className={styles.dets}>Roll Number</td>
-                  <td className={styles.vals}>{authCtx.user.rollNumber}</td>
-                </tr>
-                <tr>
-                  <td className={styles.dets}>Year</td>
-                  <td className={styles.vals}>{authCtx.user.year}</td>
-                </tr>
-                <tr>
-                  <td className={styles.dets}>School</td>
-                  <td className={styles.vals}>{authCtx.user.school}</td>
-                </tr>
-                <tr>
-                  <td className={styles.dets}>College</td>
-                  <td className={styles.vals}>{authCtx.user.college}</td>
-                </tr>
-                <tr>
-                  <td className={styles.dets}>Mobile No</td>
-                  <td className={styles.vals}>{authCtx.user.contactNo}</td>
-                </tr>
-                {authCtx.user.access !== "USER" && (
-                  <>
-                    <tr>
-                      <td className={styles.dets}>Designation</td>
-                      <td className={styles.vals}>{authCtx.user.designation}</td>
-                    </tr>
-                    <tr>
-                      <td className={styles.dets}>Github</td>
-                      <td className={styles.vals}>{authCtx.user.github}</td>
-                    </tr>
-                    <tr>
-                      <td className={styles.dets}>LinkedIn</td>
-                      <td className={styles.vals}>{authCtx.user.linkedin}</td>
-                    </tr>
-                  </>
-                )}
+                {userDetails.map((detail, index) => (
+                  <tr key={index}>
+                    <td className={styles.dets}>{detail.label}</td>
+                    <td className={styles.vals}>{detail.value}</td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>

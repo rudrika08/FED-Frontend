@@ -59,8 +59,11 @@ const Login = () => {
     try {
       const response = await api.post("/api/auth/login", { email, password });
 
+      console.log("incoming token",response.data.token);
+
       if (response.status === 200 || response.status === 201) {
         const user = response.data.user;
+        console.log("user is ", user)
 
         setAlert({
           type: "success",
@@ -76,7 +79,7 @@ const Login = () => {
         }, 2800);
 
         setTimeout(() => {
-          localStorage.setItem("token",response.data.token);
+          // localStorage.setItem("token",response.data.token);
           authCtx.login(
             user.name,
             user.email,
@@ -91,9 +94,11 @@ const Login = () => {
             user.extra?.designation,
             user.regForm,
             user.access,
+            response.data.token,
             3600000
           );
-        }, 3000);
+        }, 30);
+        console.log(authCtx);
 
         sessionStorage.removeItem("prevPage"); // Clean up
       } else {
@@ -147,7 +152,7 @@ const Login = () => {
             user.designation,
             user.regForm,
             user.access,
-            "someToken",
+            "somedata",
             3600000
           );
         }
