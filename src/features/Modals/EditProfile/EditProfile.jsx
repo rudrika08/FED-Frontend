@@ -39,8 +39,16 @@ const EditProfile = ({ handleModalClose }) => {
   const handleSave = async () => {
     setIsLoading(true);
     try {
-      const response = await api.post("/api/user/editDetails", data);
+      console.log(data)
+      let { linkedin, github , ...modifiedData} = data;
+      modifiedData.extra = {
+        github : data.github,
+        linkedin : data.linkedin
+      }
+      console.log(modifiedData);
+      const response = await api.put("/api/user/editDetails", modifiedData);
 
+      console.log(response.data.user);
       if (response.status === 200 || response.status === 201) {
         console.log("Profile updated successfully!", response.data);
 

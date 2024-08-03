@@ -39,7 +39,7 @@ const EditImage = ({ selectedFile, closeModal, setimage }) => {
           formData.append('email', authCtx.user.email);
           formData.append('image', imageFile);
 
-          const response = await api.post('/api/updateProfileImage', formData, {
+          const response = await api.post('/api/user/editProfileImage', formData, {
             headers: {
               'Content-Type': 'multipart/form-data'
             }

@@ -21,7 +21,12 @@ const Profile = () => {
   const [isLoading ,setLoading]=useState(true);
 
   useEffect(() => {
-    const fetchData = async () => {
+
+    fetchData();
+  },[]);
+
+
+      const fetchData = async () => {
       try {
         if (authCtx.login) {
           const data = {
@@ -58,8 +63,8 @@ const Profile = () => {
         setLoading(false);
       }
     };
-    fetchData();
-  }, );
+
+     
 
   useEffect(() => {
     const access = authCtx.user.access;

@@ -6,6 +6,7 @@ import AddMemberForm from "../../Form/MemberForm/AddMemberForm";
 import localTeamMembers from "../../../../../data/Team.json";
 import AccessTypes from "../../../../../data/Access.json";
 import AuthContext from "../../../../../context/AuthContext";
+import {api} from "../../../../../services"
 
 function ViewMember() {
   const [memberActivePage, setMemberActivePage] = useState("Alumni");
@@ -21,11 +22,14 @@ function ViewMember() {
     // Fetch member data using axios
     const fetchMemberData = async () => {
       try {
-        // const response = await axios.get("/api/user/fetchTeam");
-        // const fetchedMembers = response.data;
-        // setMembers(fetchedMembers);
-        const testMembers = localTeamMembers;
-        setMembers(testMembers);
+        const response = await api.get("/api/user/fetchTeam");
+        
+        const fetchedMembers = response.data.data;
+
+        console.log(fetchedMembers)
+        setMembers(fetchedMembers);
+        // const testMembers = localTeamMembers;
+        // setMembers(testMembers);
       } catch (error) {
         console.error("Error fetching member data:", error);
         setMembers(localTeamMembers); // Fallback to test data
@@ -34,11 +38,13 @@ function ViewMember() {
 
     const fetchAccessTypes = async () => {
       try {
-        // const response = await axios.get("/api/user/fetchAccessTypes");
-        // const fetchedAccess = response.data;
-        // setAccess(fetchedAccess);
-        const testAccess = AccessTypes.data;
-        const filteredAccess = testAccess.filter(accessType => (
+        const response = await api.get("/api/user/fetchAccessTypes");
+        console.log(response);
+        const fetchedAccess = response.data.data;
+        setAccess(fetchedAccess);
+         console.log('fetched access',fetchedAccess);
+        // const testAccess = AccessTypes.data;
+        const filteredAccess = fetchedAccess.filter(accessType => (
           !["ADMIN", "USER", "PRESIDENT", "VICEPRESIDENT"].includes(accessType) &&
           !accessType.startsWith("DIRECTOR_")
         ));
@@ -109,7 +115,7 @@ function ViewMember() {
   };
 
   // const handleUpdate = (name, role, title) => {
-  //   console.log(`Update member: ${name}, ${role}, ${title}`);
+  //   console.log(Update member: ${name}, ${role}, ${title});
   // };
 
   const handleUpdate = member => {
@@ -119,7 +125,7 @@ function ViewMember() {
 
   const handleRemove = async member => {
     try {
-      // await axios.delete(`/api/members/${member.id}`);
+      // await axios.delete(/api/members/${member.id});
       // setMembers(prev => prev.filter(m => m.id !== member.id));
     } catch (error) {
       console.error("Error removing member:", error);
@@ -127,7 +133,7 @@ function ViewMember() {
   };
 
   // const handleRemove = (name, role, title) => {
-  //   console.log(`Remove member: ${name}, ${role}, ${title}`);
+  //   console.log(Remove member: ${name}, ${role}, ${title});
   // };
 
   const membersToDisplay = getMembersByPage();

@@ -78,7 +78,9 @@ export default function GoogleLogin() {
         // const response = await api.post("/api/auth/googleLogin", {
         //   tokenId: googleUserData.id,
         // });
-        const response = await api.get("/api/auth/google/callback");
+        const response = await api.get("/api/auth/googleLogin", {
+          tokenId: googleUserData.id,
+        });
 
         if (response.status === 200 || response.status === 201) {
           // User exists in the backend
