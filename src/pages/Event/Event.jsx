@@ -4,7 +4,6 @@ import { api } from "../../services";
 import style from "./styles/Event.module.scss";
 import { EventCard } from "../../components";
 import { ChatBot } from "../../features";
-// import EventData from "../../data/eventData.json";
 import FormData from "../../data/FormData.json";
 import ring from "../../assets/images/ring.svg";
 import { MdKeyboardArrowRight } from "react-icons/md";
@@ -24,21 +23,20 @@ const Event = () => {
     const fetchEvents = async () => {
       try {
         const response = await api.get("/api/form/getAllForms");
-
+        console.log(response.data);
         if (response.status === 200) {
-          setEventData(response.data);
+          console.log(response.data.events);
+          setEventData(response.data.events);
         } else {
           setError({
-            message:
-              "Sorry for the inconvenience, we are having issues fetching our Events",
+            message: "Sorry for the inconvenience, we are having issues fetching our Events",
           });
           console.error("Error fetching events:", response.data.message);
           setEventData(events);
         }
       } catch (error) {
         setError({
-          message:
-            "Sorry for the inconvenience, we are having issues fetching our Events",
+          message: "Sorry for the inconvenience, we are having issues fetching our Events",
         });
         console.error("Error fetching events:", error);
         setEventData(events);
@@ -48,10 +46,12 @@ const Event = () => {
     };
 
     fetchEvents();
-  }, []);
+  }, [events]);
 
+  // Ensure `eventData` is correctly filtered
   const ongoingEvents = eventData.filter((event) => !event.info.isEventPast);
   const pastEvents = eventData.filter((event) => event.info.isEventPast);
+  console.log(eventData)
 
   const customStyles = {
     eventname: {
@@ -92,7 +92,7 @@ const Event = () => {
                   }}
                 />
               </>
-            ) : !error ? (
+            ) : error ? (
               <div className={style.error}>{error.message}</div>
             ) : (
               <>
