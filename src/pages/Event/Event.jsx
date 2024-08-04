@@ -126,7 +126,7 @@ const Event = () => {
                 <div
                   className={style.pasteventcard}
                   style={{
-                    marginTop: ongoingEvents.length > 0 ? "6rem" : "1rem",
+                    marginTop: ongoingEvents.length > 0 ? "3rem" : "1rem",
                   }}
                 >
                   <div className={style.name}>

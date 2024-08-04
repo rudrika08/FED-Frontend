@@ -78,6 +78,7 @@
 
 .eventGrid {
   display: grid;
+  width: 100%;
   grid-template-columns: repeat(auto-fit, minmax(23rem, 1fr));
   gap: 2rem;
 }
@@ -129,5 +130,18 @@
   }
   .buttonContainer {
     display: none;
+  }
+}
+
+@media (max-width: 540px) {
+  .eventSection {
+    margin: 0rem;
+  }
+}
+
+@media (max-width: 390px) {
+  .container {
+    padding-left: 0rem;
+    padding-right: 0rem;
   }
 }
