@@ -115,6 +115,7 @@ const customStyles = {
     display: "flex",
     alignItems: "center",
     marginTop: "-7px",
+    fontSize:"larger"
   }),
 };
 
