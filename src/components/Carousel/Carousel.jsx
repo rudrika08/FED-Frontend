@@ -4,7 +4,7 @@ import { Blurhash } from "react-blurhash";
 import styles from "./styles/Carousel.module.scss";
 import CarouselSkeleton from "../../layouts/Skeleton/Carousel/Carousel";
 
-function Carousel({ children, images, customStyles = {} }) {
+function Carousel({ children, images, customStyles = {}, showSkeleton = true }) {
   const [current, setCurrent] = useState(0);
   const [autoPlay, setAutoPlay] = useState(true);
   const [isImageLoaded, setImageLoaded] = useState(false);
@@ -41,7 +41,7 @@ function Carousel({ children, images, customStyles = {} }) {
     setImageLoaded(true);
   };
 
-  if (isLoading) {
+  if (isLoading && showSkeleton) {
     return <CarouselSkeleton className="hide_skeleton" />;
   }
 
@@ -119,6 +119,7 @@ Carousel.propTypes = {
     })
   ),
   customStyles: PropTypes.object,
+  showSkeleton: PropTypes.bool,
 };
 
 export default Carousel;
