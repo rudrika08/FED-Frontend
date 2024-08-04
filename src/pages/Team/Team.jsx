@@ -27,6 +27,7 @@ const Team = () => {
 
         if (response.status === 200) {
           setTeamMembers(response.data.data);
+          console.log("incoming response",response.data.data);
         } else {
           console.error("Error fetching team members:", response.data.message);
           setError({
