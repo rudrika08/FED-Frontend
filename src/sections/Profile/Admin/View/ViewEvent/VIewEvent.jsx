@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
 import styles from "./styles/ViewEvent.module.scss";
 import { EventCard } from "../../../../../components";
 import { ComponentLoading } from "../../../../../microInteraction";
 import FormData from "../../../../../data/FormData.json";
+import { api } from "../../../../../services";
 
 function ViewEvent({ handleChangePage }) {
   const [activePage, setActivePage] = useState("View Events");
@@ -16,9 +16,11 @@ function ViewEvent({ handleChangePage }) {
   useEffect(() => {
     const fetchEventData = async () => {
       try {
-        const response = await axios.get("/api/form/getAllForms");
+        const response = await api.get("/api/form/getAllForms");
         if (response.status === 200) {
-          const fetchedEvents = response.data;
+          const fetchedEvents = response.data.events;
+          console.log("incoming response",response.data)
+          console.log("fetched events",fetchedEvents);
           const sortedEvents = fetchedEvents.sort(
             (a, b) => new Date(b.info.eventDate) - new Date(a.info.eventDate)
           );
