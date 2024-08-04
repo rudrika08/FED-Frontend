@@ -7,6 +7,8 @@ import styles from "./styles/NewForm.module.scss";
 import Switch from "react-switch";
 import moment from "moment";
 import { nanoid } from "nanoid";
+import { Alert, MicroLoading } from "../../../../../microInteraction";
+import { api } from "../../../../../services";
 
 export const getOutboundList = (array, index) => {
   const getIndex = array.findIndex((sec) => sec._id === index);
@@ -35,6 +37,8 @@ function NewForm() {
   const scrollRef = useRef(null);
   const [isVisibility, setisVisibility] = useState(true);
   const authCtx = useContext(AuthContext);
+  const [alert, setAlert] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
   const [data, setdata] = useState({
     _id: nanoid(),
     eventTitle: "",
@@ -126,6 +130,13 @@ function NewForm() {
       setsections(authCtx.eventData?.sections);
     }
   }, []);
+
+  useEffect(() => {
+    if (alert) {
+      const { type, message, position, duration } = alert;
+      Alert({ type, message, position, duration });
+    }
+  }, [alert]);
 
   const isValidSections = () => {
     return sections.every((section) =>
@@ -224,14 +235,14 @@ function NewForm() {
     return true;
   };
 
-  const onSaveEvent = () => {
+  const onSaveEvent = async () => {
     if (isValidEvent()) {
       const newSections = constructForPreview();
       const form = new FormData();
-
+  
       Object.keys(data).forEach((key) => {
         const value = data[key];
-
+  
         if (typeof value === "object" && value !== null) {
           if (Array.isArray(value)) {
             form.append(key, JSON.stringify(value));
@@ -242,17 +253,56 @@ function NewForm() {
           form.append(key, value);
         }
       });
-
+  
       form.append("sections", JSON.stringify(newSections));
-
+  
       if (authCtx.eventData) {
         form.append("id", authCtx.eventData?.id);
       }
-
+  
       console.log("form", form);
       console.log("Form Data", data);
+
+      try {
+        const response = await api.post("/api/form/addForm", form, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          }
+        });
+  
+        if (response.status === 200 || response.status === 201) {
+          setAlert({
+            type: "success",
+            message:
+              "Form saved successfully",
+            position: "bottom-right",
+            duration: 3000,
+          });
+          event.target.reset();
+        } else {
+          setAlert({
+            type: "error",
+            message:
+              "There was an error submitting the form. Please try again.",
+            position: "bottom-right",
+            duration: 3000,
+          });
+        }
+      } catch (error) {
+        setAlert({
+          type: "error",
+          message:
+            "There was an error submitting the form. Please try again.",
+          position: "bottom-right",
+          duration: 3000,
+        });
+      } finally {
+        setIsLoading(false);
+      }
+
     }
   };
+  
 
   const onAddSection = () => {
     const lastSection = sections[sections.length - 1];
@@ -1037,7 +1087,9 @@ function NewForm() {
           >
             Sections
           </Text>
-          <Button onClick={handleSaveSection}>Save</Button>
+          <Button onClick={handleSaveSection}>
+          {isLoading ? <MicroLoading /> : "Save"}
+          </Button>
           <Button
             variant="secondary"
             style={{ marginLeft: "12px" }}
@@ -1077,6 +1129,7 @@ function NewForm() {
           />
         )}
       </div>
+      <Alert />
     </div>
   );
 }
