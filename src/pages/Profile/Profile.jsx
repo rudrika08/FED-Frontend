@@ -18,24 +18,27 @@ const Profile = () => {
   const [activePage, setActivePage] = useState("Profile");
   const authCtx = useContext(AuthContext);
   const [designation, setDesignation] = useState("Admin");
-  const [isLoading ,setLoading]=useState(true);
+  const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
 
     fetchData();
-  },[]);
+  }, []);
 
 
-      const fetchData = async () => {
-      try {
-        if (authCtx.login) {
-          const data = {
-            email: authCtx.user.email,
-          };
+  const fetchData = async () => {
+    try {
+      if (authCtx.login) {
+        const data = {
+          email: authCtx.user.email,
+        };
 
-          // console.log(data, authCtx);
+        // console.log(data, authCtx);
+        console.log(window.localStorage.getItem('token'));
+
+        if (window.localStorage.getItem('token')) {
           const response = await api.post('/api/user/fetchProfile', data);
-          // console.log(response.data);
+          console.log(response.data);
           if (response.status === 200) {
             authCtx.update(
               response.data.user.name,
@@ -52,19 +55,21 @@ const Profile = () => {
               response.data.user.access,
               response.data.user.regForm
             );
-            // console.log(authCtx);
+            console.log(authCtx);
           } else {
             console.log(response.status);
           }
         }
-      } catch (error) {
-        console.log(error);
-      }finally{
-        setLoading(false);
-      }
-    };
 
-     
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+
 
   useEffect(() => {
     const access = authCtx.user.access;
@@ -107,8 +112,8 @@ const Profile = () => {
     <ProfileLayout>
       <div className={style.profile}>
         <Sidebar activepage={activePage} handleChange={setActivePage} />
-        {isLoading?<Loading/>:
-        <div className={style.profile__content}>{getActivePage()}</div>}
+        {isLoading ? <Loading /> :
+          <div className={style.profile__content}>{getActivePage()}</div>}
       </div>
     </ProfileLayout>
   );
