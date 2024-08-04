@@ -81,7 +81,9 @@ const Navbar = () => {
               </>
             )}
           </div>
+          <NavLink to="/">
           <div className={styles.logo_text}></div>
+          </NavLink>
         </div>
 
         <ul className={`${styles.navLinks} ${isMobile ? styles.active : ""} ${authCtx.isLoggedIn ? styles.loggedIn : ""}`}>
