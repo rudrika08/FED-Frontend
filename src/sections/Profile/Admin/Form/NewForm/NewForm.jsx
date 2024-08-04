@@ -237,32 +237,43 @@ function NewForm() {
 
   const onSaveEvent = async () => {
     if (isValidEvent()) {
+
+      setIsLoading(true);
       const newSections = constructForPreview();
-      const form = new FormData();
+      console.log(data);
   
+      const form = new FormData();
+      const info = {};
+  
+      // Append data to the info object
       Object.keys(data).forEach((key) => {
         const value = data[key];
   
         if (typeof value === "object" && value !== null) {
           if (Array.isArray(value)) {
-            form.append(key, JSON.stringify(value));
+            info[key] = JSON.stringify(value);
           } else {
-            form.append(key, value);
+            info[key] = value;
           }
         } else {
-          form.append(key, value);
+          info[key] = value;
         }
       });
   
+      // Append info and sections to the form
+      form.append("info", JSON.stringify(info));
       form.append("sections", JSON.stringify(newSections));
   
       if (authCtx.eventData) {
         form.append("id", authCtx.eventData?.id);
       }
+      if (data._id) {
+        delete data._id;
+      }
   
       console.log("form", form);
       console.log("Form Data", data);
-
+  
       try {
         const response = await api.post("/api/form/addForm", form, {
           headers: {
@@ -273,8 +284,7 @@ function NewForm() {
         if (response.status === 200 || response.status === 201) {
           setAlert({
             type: "success",
-            message:
-              "Form saved successfully",
+            message: "Form saved successfully",
             position: "bottom-right",
             duration: 3000,
           });
@@ -282,8 +292,7 @@ function NewForm() {
         } else {
           setAlert({
             type: "error",
-            message:
-              "There was an error submitting the form. Please try again.",
+            message: "There was an error submitting the form. Please try again.",
             position: "bottom-right",
             duration: 3000,
           });
@@ -291,17 +300,16 @@ function NewForm() {
       } catch (error) {
         setAlert({
           type: "error",
-          message:
-            "There was an error submitting the form. Please try again.",
+          message: "There was an error submitting the form. Please try again.",
           position: "bottom-right",
           duration: 3000,
         });
       } finally {
         setIsLoading(false);
       }
-
     }
   };
+  
   
 
   const onAddSection = () => {

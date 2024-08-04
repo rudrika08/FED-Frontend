@@ -71,6 +71,21 @@ function ViewMember() {
     fetchMemberData();
   },[]);
 
+  const handleButtonClick = (menu) => {
+    if (menu === "add member" && enablingUpdate) {
+      authCtx.memberData = null;
+      authCtx.croppedImageFile=null;
+      setenbale(false);
+      setMemberActivePage(""); // Temporarily set to an empty string to trigger re-render
+      setTimeout(() => {
+        setMemberActivePage("add member");
+      }, 0);
+    } else {
+      setMemberActivePage(menu);
+    }
+  };
+
+
   const headerMenu = access.map(accessType => accessType.toLowerCase());
 
   const renderButtons = () =>
@@ -79,7 +94,7 @@ function ViewMember() {
         key={menu}
         className={styles.buttonMember}
         variant={menu === memberActivePage.toLowerCase() ? "primary" : "secondary"}
-        onClick={() => setMemberActivePage(menu)}
+        onClick={() => {handleButtonClick(menu)}}
         style={{
           borderRadius: menu !== "add member" ? "20px" : "10px",
           marginLeft: menu === "add member" ? "0px" : "0px",

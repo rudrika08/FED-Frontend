@@ -7,15 +7,16 @@ import { Button } from '../../../components';
 import { X } from 'lucide-react';
 import { Alert, MicroLoading } from "../../../microInteraction";
 import { api } from "../../../services";
-import { RecoveryContext } from '../../../context/RecoveryContext';
+// import { RecoveryContext } from '../../../context/RecoveryContext';
 
 const EditImage = (props) => {
-  const{selectedFile, closeModal, setimage, updatePfp,setimgprv}=props;
+  const{selectedFile, closeModal, setimage, updatePfp,setimgprv,setFile,fileName}=props;
   const [scale, setScale] = useState(1);
   const [alert, setAlert] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const authCtx = useContext(AuthContext);
   const editorRef = useRef(null);
+
 
   useEffect(() => {
     if (alert) {
@@ -91,8 +92,24 @@ const EditImage = (props) => {
           // For AddMemberForm: Just update the preview image
           // setimage(URL.createObjectURL(blob));
           setimgprv(imageFile,URL.createObjectURL(blob));
+          setFile(imageFile);
           closeModal();
         }
+      }, "image/jpeg");
+    }
+  };
+
+  const handleUpload = () => {
+    if (editorRef.current && selectedFile) {
+      const canvas = editorRef.current.getImageScaledToCanvas();
+      canvas.toBlob(async (blob) => {
+        const imageFile = new File([blob], fileName, { type: "image/jpeg" });
+        console.log("imagefile after crop", imageFile);
+        authCtx.croppedImageFile =imageFile; 
+        console.log("file stored in context:",authCtx.croppedImageFile);
+        console.log("selected file :", selectedFile);
+        setimgprv(URL.createObjectURL(blob));
+        closeModal();
       }, "image/jpeg");
     }
   };

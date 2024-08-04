@@ -24,8 +24,6 @@ const TeamCard = ({
   const [contentLoaded, setContentLoaded] = useState(false);
   const [isImageLoaded, setIsImageLoaded] = useState(false);
   const [showSkeleton, setShowSkeleton] = useState(true);
-  
-
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -110,7 +108,7 @@ const TeamCard = ({
                   Know More
                 </button>
               )}
-             { (onUpdate && authCtx.user.access==="ADMIN") && <div className={`${styles.updatebtn} ${customStyles.updatebtn || ''}`}>
+            { (onUpdate && authCtx.user.access==="ADMIN") && <div className={`${styles.updatebtn} ${customStyles.updatebtn || ''}`}>
                 <Button  onClick={(e) => {
               e.preventDefault();
               if (onUpdate) {
