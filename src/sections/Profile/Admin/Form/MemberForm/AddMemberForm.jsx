@@ -43,7 +43,7 @@ function AddMemberForm() {
 
   const fetchAccessTypes = async () => {
     try {
-      const response = await axios.get("/api/user/fetchAccessTypes"); // Uncomment and use actual API
+      const response = await api.get("/api/user/fetchAccessTypes"); // Uncomment and use actual API
       const fetchedAccessTypes = response.data.data;
       setAccessTypes(fetchedAccessTypes);
       // setAccessTypes(AccessTypes.data);
