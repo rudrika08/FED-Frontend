@@ -114,6 +114,24 @@ const EditImage = (props) => {
     }
   };
 
+  const handleUpload=()=>{
+
+    if (editorRef.current && selectedFile) {
+      setIsLoading(true);
+      const canvas = editorRef.current.getImageScaledToCanvas();
+      canvas.toBlob(async (blob) => {
+        const imageFile = new File([blob], "profile.jpg", { type: "image/jpeg" });
+      
+
+
+    setimgprv(URL.createObjectURL(blob));
+    closeModal();
+      }
+    );
+  }
+   
+  }
+
   return (
     <div style={{
       position: "fixed",

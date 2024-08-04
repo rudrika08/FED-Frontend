@@ -74,7 +74,7 @@ const Sponser = () => {
       <div className={styles.bottom_line}></div>
       <div className={styles.sponser_container}>
         <div className={styles.sponser_div}>
-          <Carousel className={styles.customCarousel} customStyles={{ carousel_card: styles.customCarouselCard }}>
+          <Carousel className={styles.customCarousel} customStyles={{ carousel_card: styles.customCarouselCard }} showSkeleton={false}>
             {groupedSponserCards.map((group, index) => (
               <div key={index} className={styles.sponser_all}>
                 {group.map((image, idx) => (

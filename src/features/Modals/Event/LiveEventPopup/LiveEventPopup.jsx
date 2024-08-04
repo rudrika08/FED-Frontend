@@ -3,8 +3,6 @@ import axios from 'axios';
 import styles from './styles/LiveEventPopup.module.scss';
 import eventData from '../../../../data/eventData.json';
 
-let popupCount = 0;
-
 const LiveEventPopup = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [isEventOngoing, setIsEventOngoing] = useState(false);
@@ -18,13 +16,13 @@ const LiveEventPopup = () => {
         const events = eventData;
 
         const currentEvent = events.find(event => event.ongoingEvent);
-        if (currentEvent && popupCount === 0) {
+        if (currentEvent && !sessionStorage.getItem('popupDisplayed')) {
           setIsEventOngoing(true);
           setEventImage(currentEvent.imageURL);
 
           const timer = setTimeout(() => {
             setIsVisible(true);
-            popupCount++;
+            sessionStorage.setItem('popupDisplayed', 'true');
           }, 2500);
 
           return () => clearTimeout(timer);
