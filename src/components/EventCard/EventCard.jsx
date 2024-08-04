@@ -145,7 +145,7 @@ const EventCard = (props) => {
   }, [info.isRegistrationClosed, remainingTime]);
 
   useEffect(() => {
-    if (authCtx.isLoggedIn) {
+    if (authCtx.isLoggedIn && authCtx.user.regForm ) {
       const isRegistered = authCtx.user.regForm.includes(data.id);
       if (isRegistered) {
         setBtnTxt("Already Registered");

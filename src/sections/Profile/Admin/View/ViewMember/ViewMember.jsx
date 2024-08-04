@@ -6,7 +6,8 @@ import AddMemberForm from "../../Form/MemberForm/AddMemberForm";
 import localTeamMembers from "../../../../../data/Team.json";
 import AccessTypes from "../../../../../data/Access.json";
 import AuthContext from "../../../../../context/AuthContext";
-import {api} from "../../../../../services"
+import { api } from "../../../../../services"
+import { Alert } from "../../../../../microInteraction";
 
 function ViewMember() {
   const [memberActivePage, setMemberActivePage] = useState("Alumni");
@@ -14,8 +15,15 @@ function ViewMember() {
   const [access, setAccess] = useState([]);
   const [selectedMember, setSelectedMember] = useState(null);
   const authCtx = useContext(AuthContext);
-  const [enablingUpdate,setenbale]=useState(false);
-
+  const [enablingUpdate, setenbale] = useState(false);
+  const [alert, setAlert] = useState(null);
+  // const [fetchData,setfet]
+  useEffect(() => {
+    if (alert) {
+      const { type, message, position, duration } = alert;
+      Alert({ type, message, position, duration });
+    }
+  }, [alert]);
 
 
   useEffect(() => {
@@ -23,7 +31,7 @@ function ViewMember() {
     const fetchMemberData = async () => {
       try {
         const response = await api.get("/api/user/fetchTeam");
-        
+
         const fetchedMembers = response.data.data;
 
         console.log(fetchedMembers)
@@ -42,13 +50,13 @@ function ViewMember() {
         console.log(response);
         const fetchedAccess = response.data.data;
         setAccess(fetchedAccess);
-         console.log('fetched access',fetchedAccess);
+        console.log('fetched access', fetchedAccess);
         // const testAccess = AccessTypes.data;
         const filteredAccess = fetchedAccess.filter(accessType => (
           !["ADMIN", "USER", "PRESIDENT", "VICEPRESIDENT"].includes(accessType) &&
           !accessType.startsWith("DIRECTOR_")
         ));
-        
+
         // Adding "Directors" and "Add Member" to the filteredAccess array
         filteredAccess.push("Directors", "Add Member");
 
@@ -61,7 +69,7 @@ function ViewMember() {
 
     fetchAccessTypes();
     fetchMemberData();
-  }, []);
+  },[]);
 
   const headerMenu = access.map(accessType => accessType.toLowerCase());
 
@@ -82,7 +90,7 @@ function ViewMember() {
     ));
 
   const getMembersByPage = () => {
-    if (memberActivePage.toLowerCase() === "add member" && !enablingUpdate){
+    if (memberActivePage.toLowerCase() === "add member" && !enablingUpdate) {
       authCtx.memberData = null;
     };
 
@@ -99,7 +107,7 @@ function ViewMember() {
       const accessCategory = member.access.startsWith("DIRECTOR_")
         ? member.access.split('_')[1].toLowerCase() + 's'
         : member.access.toLowerCase();
-      
+
       return accessCategory === memberActivePage.toLowerCase();
     });
   };
@@ -123,10 +131,27 @@ function ViewMember() {
     setenbale(true);
   };
 
-  const handleRemove = async member => {
+  const handleRemove = async () => {
     try {
-      // await axios.delete(/api/members/${member.id});
-      // setMembers(prev => prev.filter(m => m.id !== member.id));
+      // console.log("deleting member",member);
+      const id = authCtx.memberData.id;
+      console.log("deleting member id ", id);
+      console.log(members);
+      const response = await api.delete(`/api/user/deleteMember/${id}`);
+      console.log(response.status);
+      if (response.status === 200 || response.status === 201) {
+
+        setAlert({
+          type: "success",
+          message: "Member deleted successfully.",
+          position: "bottom-right",
+          duration: 3000,
+        });
+        // fetchMemberData();
+        setMembers(members => members.filter(m => m.id !== response.data.user.id));
+        fetchMemberData();
+
+      }
     } catch (error) {
       console.error("Error removing member:", error);
     }
@@ -141,12 +166,12 @@ function ViewMember() {
   return (
     <div className={styles.mainMember}>
       <div className={styles.eventmember}>
-        <div className={styles.right}> 
-            <div className={styles.buttonContainer}>
-              <h3 className={styles.headInnerText}>
-                <span>View</span> Member
-              </h3>
-            </div>   
+        <div className={styles.right}>
+          <div className={styles.buttonContainer}>
+            <h3 className={styles.headInnerText}>
+              <span>View</span> Member
+            </h3>
+          </div>
           <div className={styles.buttons}>{renderButtons()}</div>
           {memberActivePage.toLowerCase() === "add member" ? (
             <AddMemberForm />
@@ -155,7 +180,7 @@ function ViewMember() {
               {membersToDisplay.map((member, idx) => (
                 <TeamCard
                   key={idx}
-                  data= {member}
+                  data={member}
                   name={member.name}
                   image={member.img}
                   social={member.extra}
@@ -171,6 +196,7 @@ function ViewMember() {
           )}
         </div>
       </div>
+      <Alert />
     </div>
   );
 }

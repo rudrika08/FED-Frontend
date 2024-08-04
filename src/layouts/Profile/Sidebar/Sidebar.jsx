@@ -130,7 +130,7 @@ const Sidebar = ({ activepage, handleChange }) => {
             onClick={() => handleChange("Profile")}
           >
             <img
-              src={imagePrv || authCtx.user.img || defaultImg}
+              src={ authCtx.user.img||imagePrv || defaultImg}
               alt="Profile"
               className={styles.profilePhoto}
             />
@@ -139,6 +139,7 @@ const Sidebar = ({ activepage, handleChange }) => {
                 selectedFile={selectedFile}
                 closeModal={closeModal}
                 setimage={setImage}
+                updatePfp={true}
               />
             )}
             {authCtx.user.access !== "USER" && (
