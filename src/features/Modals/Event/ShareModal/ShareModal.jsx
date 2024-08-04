@@ -5,7 +5,8 @@ import { X } from 'lucide-react';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 
-const Share = ({ onClose, urlpath }) => {
+const Share = (props) => {
+  const{onClose,urlpath,teamData}=props;
   const sharestyle = {
     root: {
       background: 'rgba(42, 42, 42, 0.9)', 

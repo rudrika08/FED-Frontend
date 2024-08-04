@@ -1,38 +1,26 @@
 import React, { createContext, useState, useEffect } from 'react';
-import SendOtp from '../authentication/Login/ForgotPassword/SendOtp';
-import OTPInput from '../authentication/Login/ForgotPassword/OTPInput';
-
 
 export const RecoveryContext = createContext();
 
-const componentMap = {
-  SendOtp: SendOtp,
-  otp: OTPInput,
-};
-
 const initialContext = {
-  // page: 'SendOtp', // Initial page to render
   email: '',
   otp: '',
+  teamCode: '',
+  teamName: ''
 };
 
 const RecoveryContextProvider = ({ children }) => {
   const [state, setState] = useState(() => {
     const storedEmail = localStorage.getItem('recoveryEmail') || '';
     const storedOTP = localStorage.getItem('recoveryOTP') || '';
-    // const storedPage = localStorage.getItem('recoveryPage') ;
     return {
       ...initialContext,
       email: storedEmail,
       otp: storedOTP,
-      // page: storedPage,
+      teamCode: '',
+      teamName: ''
     };
   });
-
-  // const setPage = (newPage) => {
-  //   localStorage.setItem('recoveryPage', newPage);
-  //   setState(prevState => ({ ...prevState, page: newPage }));
-  // };
 
   const setEmail = (newEmail) => {
     localStorage.setItem('recoveryEmail', newEmail);
@@ -44,16 +32,23 @@ const RecoveryContextProvider = ({ children }) => {
     setState(prevState => ({ ...prevState, otp: newOTP }));
   };
 
+  const setTeamCode = (newTeamCode) => {
+    setState(prevState => ({ ...prevState, teamCode: newTeamCode }));
+  };
+
+  const setTeamName = (newTeamName) => {
+    setState(prevState => ({ ...prevState, teamName: newTeamName }));
+  };
+
   useEffect(() => {
     return () => {
       localStorage.removeItem('recoveryEmail');
       localStorage.removeItem('recoveryOTP');
-      // localStorage.removeItem('recoveryPage');
     };
   }, []);
 
   return (
-    <RecoveryContext.Provider value={{ ...state, setEmail, setOTP }}>
+    <RecoveryContext.Provider value={{ ...state, setEmail, setOTP, setTeamCode, setTeamName }}>
       {children}
     </RecoveryContext.Provider>
   );
