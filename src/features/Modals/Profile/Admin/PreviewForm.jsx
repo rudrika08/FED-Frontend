@@ -46,6 +46,10 @@ const PreviewForm = ({
   const wrapperRef = useRef(null);
   const recoveryCtx = useContext(RecoveryContext);
   const{setTeamCode,setTeamName}=recoveryCtx;
+  const [teamCodeData,SetTeamCodeData]=useState({
+    teamCode :'',
+    teamName:'' 
+  })
 
   // console.log("data", eventData);
   // console.log("sections", sections);
@@ -174,13 +178,9 @@ const PreviewForm = ({
         });
       }
     });
-    setTeamCode('38902839');
-    setTeamName("Dead Squad");
+
 console.log("team code in recovery context:",recoveryCtx.teamCode)
-    // Log the formData content for debugging
-    // formData.forEach((value, key) => {
-    //   console.log(key + " " + value);
-    // });
+
 
     try {
       setIsLoading(true); // Set loading state
@@ -192,12 +192,7 @@ console.log("team code in recovery context:",recoveryCtx.teamCode)
       });
 
       if (response.status === 200 || response.status === 201) {
-        if(response.data.team){
-          const {teamName,teamCode}=response.data.team;
-           
-           setTeamCode(teamCode);
-           setTeamName(teamName);
-        }
+     
         setAlert({
           type: "success",
           message: "Form submitted successfully!",
@@ -206,6 +201,16 @@ console.log("team code in recovery context:",recoveryCtx.teamCode)
         });
         handleClose();
         setIsSuccess(true);
+        if (response.data.team) {
+          const { teamName, teamCode } = response.data.team;
+        
+          SetTeamCodeData((prevData) => ({
+            ...prevData,
+            teamCode: teamCode,
+            teamName: teamName
+          }));
+        }
+  
       } else {
         setAlert({
           type: "error",
@@ -235,6 +240,8 @@ console.log("team code in recovery context:",recoveryCtx.teamCode)
     if (isSuccess) {
       const handleAutoClose = () => {
         setTimeout(() => {
+          setTeamCode(teamCode);
+          setTeamName(teamName);
           navigate("/Events");
         }, 5000);
       };
