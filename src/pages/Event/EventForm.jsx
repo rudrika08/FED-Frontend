@@ -49,7 +49,7 @@ const EventForm = () => {
         // });
         // Fallback to local data
         const { events } = FormData;
-        const localEventData = events.find((event) => event._id === id);
+        const localEventData = events.find((event) => event.id === id);
         setEventData(localEventData);
       } finally {
         setIsLoading(false);
