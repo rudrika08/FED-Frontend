@@ -23,6 +23,7 @@ const Social = lazy(() => import("./pages/Social/Social"));
 const Team = lazy(() => import("./pages/Team/Team"));
 const Alumni = lazy(() => import("./pages/Alumni/Alumni"));
 const Profile = lazy(() => import("./pages/Profile/Profile"));
+const Omega = lazy(() => import("./pages/Omega/Omega"));
 
 // const Login = lazy(() => import("./pages/Authentication/Login/Login"));
 const Signup = lazy(() => import("./pages/Authentication/Signup/Signup"));
@@ -72,6 +73,7 @@ function App() {
             <Route path="/Social" element={<Social />} />
             <Route path="/Team" element={<Team />} />
             <Route path="/Alumni" element={<Alumni />} />
+            <Route path="/Omega" element={<Omega />} />
 
             {authCtx.isLoggedIn && [
               <Route path="/profile" element={<Profile />} />,

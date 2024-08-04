@@ -333,6 +333,12 @@ const EventModal = (props) => {
                     <div className={EventCardModal.backbtn}>
                       <div className={EventCardModal.eventname}>
                         {info.eventTitle}
+                        <p>
+                          <img src={groupIcon} alt="Group" />
+                          Team size: {info.minTeamSize}
+                          {" - "}
+                          {info.maxTeamSize}
+                        </p>
                         <div className={EventCardModal.price}>
                           {info.eventAmount ? (
                             <p>
@@ -343,12 +349,6 @@ const EventModal = (props) => {
                             <p style={{ color: "inherit" }}>Free</p>
                           )}
                         </div>
-                        <p>
-                          <img src={groupIcon} alt="Group" />
-                          Team size: {info.minTeamSize}
-                          {" - "}
-                          {info.maxTeamSize}
-                        </p>
                       </div>
                       <div className={EventCardModal.registerbtn}>
                         <button
