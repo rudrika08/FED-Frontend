@@ -177,7 +177,7 @@ const EventCard = (props) => {
         //   duration: 3000,
         // });
       } else {
-        setNavigatePath("/Events/" + data._id + "/Form");
+        setNavigatePath("/Events/" + data.id + "/Form");
         setTimeout(() => {
           setShouldNavigate(true);
         }, 1000);
@@ -339,7 +339,7 @@ const EventCard = (props) => {
             <div className={style.EventDesc} style={customStyles.EventDesc}>
               {info.eventdescription}
             </div>
-            <Link to={modalpath + data._id}>
+            <Link to={modalpath + data.id}>
               <span
                 onClick={handleCloseShare}
                 className={style.seeMore}
@@ -358,7 +358,7 @@ const EventCard = (props) => {
         </div>
       </div>
       {isOpen && type === "ongoing" && (
-        <Share onClose={handleShare} urlpath={url + "/" + data._id} />
+        <Share onClose={handleShare} urlpath={url + "/" + data.id} />
       )}
       {enableEdit && isHovered && authCtx.user.access === "ADMIN" && (
         <div
@@ -389,7 +389,7 @@ const EventCard = (props) => {
             size={20}
             style={{ cursor: "pointer", color: "white" }}
             onClick={() => {
-              navigate("/profile/Events/Analytics/" + data._id);
+              navigate("/profile/Events/Analytics/" + data.id);
             }}
           />
         </div>
