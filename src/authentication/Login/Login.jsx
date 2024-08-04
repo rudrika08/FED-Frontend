@@ -59,7 +59,7 @@ const Login = () => {
     try {
       const response = await api.post("/api/auth/login", { email, password });
 
-      console.log("incoming token",response.data.token);
+      console.log("incoming response",response.data);
 
       if (response.status === 200 || response.status === 201) {
         const user = response.data.user;
@@ -95,7 +95,7 @@ const Login = () => {
             user.regForm,
             user.access,
             response.data.token,
-            3600000
+            9600000
           );
         }, 30);
         console.log(authCtx);
