@@ -10,7 +10,10 @@
   background: rgba(7, 7, 7, 0.33);
   z-index: 50;
   backdrop-filter: blur(2px);
+  overflow: hidden;
 }
+
+
 
 .previewContainer {
   display: flex;
@@ -35,6 +38,7 @@
 
 .previewContainer::-webkit-scrollbar {
   width: 6px;
+  // overflow: hidden;
 }
 .previewContainer::-webkit-scrollbar-thumb {
   background: #888;
@@ -61,7 +65,10 @@
 
 .formFieldContainer {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  flex-wrap: wrap;
+  // justify-content: space-evenly;
+  column-gap: 3rem;
   width: 100%;
   padding: 1em;
   border-radius: 8px;

@@ -38,14 +38,17 @@ const EventModal = (props) => {
   const [isLoading, setIsLoading] = useState(true);
   const [info, setInfo] = useState({});
   const [data, setData] = useState({});
+  const [eventData,setEventData]=useState({});
 
   useEffect(() => {
     const fetchEvent = async () => {
       try {
-        const response = await api.get(`/api/form/getEvent/${eventId}`);
+        const response = await api.get("/api/form/getAllForms");
         if (response.status === 200) {
-          setData(response.data);
-          setInfo(response.data.info);
+          const eventData = response.data.events.find((e)=>e.id===eventId);
+          console.log("fetched event modal:",eventData);
+          setData(eventData);
+          setInfo(eventData.info);
         } else {
           setAlert({
             type: "error",
@@ -309,7 +312,7 @@ const EventModal = (props) => {
                     </button>
                     <div className={EventCardModal.backimg}>
                       <img
-                        srcSet={info.eventImg}
+                        src=  "https://www.politics.ox.ac.uk/themes/custom/olamalu_dpir_emulsify/images/fb_event_image.png"
                         className={EventCardModal.img}
                         alt="Event"
                       />
