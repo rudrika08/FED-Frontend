@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { api } from "../../services";
 import style from "./styles/Event.module.scss";
@@ -8,16 +8,31 @@ import FormData from "../../data/FormData.json";
 import ring from "../../assets/images/ring.svg";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import { ComponentLoading } from "../../microInteraction";
+import { RecoveryContext } from "../../context/RecoveryContext";
+import Share from "../../features/Modals/Event/ShareModal/ShareModal";
 
 const Event = () => {
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+
 
   const [eventData, setEventData] = useState([]);
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const { events } = FormData;
+  const [isOpen ,setOpenModal]=useState(false);
+  const recoveryCtx=useContext(RecoveryContext);
+
+  useEffect(()=>{
+    if(recoveryCtx.teamCode && recoveryCtx.teamName){
+      if(!isOpen){
+        setOpenModal(true)
+      }
+    }
+  },[recoveryCtx.teamCode]);
 
   useEffect(() => {
     const fetchEvents = async () => {
@@ -53,6 +68,16 @@ const Event = () => {
   const pastEvents = eventData.filter((event) => event.info.isEventPast);
   console.log(eventData)
 
+
+  const handleShare=()=>{
+    if(recoveryCtx.teamCode && recoveryCtx.teamName){
+     const{setTeamCode,setTeamName}=recoveryCtx;
+     setTeamCode(null);
+     setTeamName(null);
+     setOpenModal(false);
+    }
+  }
+
   const customStyles = {
     eventname: {
       fontSize: "1.2rem",
@@ -66,9 +91,15 @@ const Event = () => {
     },
   };
 
+  const teamCodeAndName ={
+    teamCode:recoveryCtx.teamCode,
+    teamName:recoveryCtx.teamName
+  };
+
   return (
     <>
       <ChatBot />
+      {isOpen && <Share onClose={handleShare} teamData={teamCodeAndName} />}
       <div className={style.main}>
         <div style={{ display: "flex" }}>
           <div className={style.line}></div>

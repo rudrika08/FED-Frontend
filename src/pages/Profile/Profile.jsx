@@ -1,14 +1,6 @@
 import { useState, useContext, useEffect } from "react";
-
 import { ProfileLayout, Sidebar } from "../../layouts";
-import {
-  ProfileView,
-  EventsView,
-  NewForm,
-  ViewMember,
-  ViewEvent,
-} from "../../sections";
-
+import { ProfileView, EventsView, NewForm, ViewMember, ViewEvent } from "../../sections";
 import AuthContext from "../../context/AuthContext";
 import { api } from "../../services";
 import style from "./styles/Profile.module.scss";
@@ -21,46 +13,44 @@ const Profile = () => {
   const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
-
-    fetchData();
-  }, []);
-
+    if (authCtx.isLoggedIn && window.localStorage.getItem('token')) {
+      fetchData();
+    }
+  }, [authCtx.isLoggedIn]);
 
   const fetchData = async () => {
     try {
-      if (authCtx.login) {
-        const data = {
-          email: authCtx.user.email,
-        };
+      const data = {
+        email: authCtx.user.email,
+      };
 
-        // console.log(data, authCtx);
-        console.log(window.localStorage.getItem('token'));
+      const token = window.localStorage.getItem('token');
+      if (token) {
+        const response = await api.post('/api/user/fetchProfile', data, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
 
-        if (window.localStorage.getItem('token')) {
-          const response = await api.post('/api/user/fetchProfile', data);
-          console.log(response.data);
-          if (response.status === 200) {
-            authCtx.update(
-              response.data.user.name,
-              response.data.user.email,
-              response.data.user.img,
-              response.data.user.rollNumber,
-              response.data.user.school,
-              response.data.user.college,
-              response.data.user.contactNo,
-              response.data.user.year,
-              response.data.user.extra?.github,
-              response.data.user.extra?.linkedin,
-              response.data.user.extra?.designation,
-              response.data.user.access,
-              response.data.user.regForm
-            );
-            console.log(authCtx);
-          } else {
-            console.log(response.status);
-          }
+        if (response.status === 200) {
+          authCtx.update(
+            response.data.user.name,
+            response.data.user.email,
+            response.data.user.img,
+            response.data.user.rollNumber,
+            response.data.user.school,
+            response.data.user.college,
+            response.data.user.contactNo,
+            response.data.user.year,
+            response.data.user.extra?.github,
+            response.data.user.extra?.linkedin,
+            response.data.user.extra?.designation,
+            response.data.user.access,
+            response.data.user.regForm
+          );
+        } else {
+          console.log(response.status);
         }
-
       }
     } catch (error) {
       console.log(error);
@@ -68,8 +58,6 @@ const Profile = () => {
       setLoading(false);
     }
   };
-
-
 
   useEffect(() => {
     const access = authCtx.user.access;
@@ -86,9 +74,7 @@ const Profile = () => {
 
   const getActivePage = () => {
     if (designation === "Admin") {
-      console.log(activePage);
       switch (activePage) {
-
         case "Event":
           return <ViewEvent handleChangePage={(page) => setActivePage(page)} />;
         case "Form":
@@ -112,8 +98,7 @@ const Profile = () => {
     <ProfileLayout>
       <div className={style.profile}>
         <Sidebar activepage={activePage} handleChange={setActivePage} />
-        {isLoading ? <Loading /> :
-          <div className={style.profile__content}>{getActivePage()}</div>}
+        {isLoading ? <Loading /> : <div className={style.profile__content}>{getActivePage()}</div>}
       </div>
     </ProfileLayout>
   );

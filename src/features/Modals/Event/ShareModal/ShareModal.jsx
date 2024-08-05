@@ -5,7 +5,8 @@ import { X } from 'lucide-react';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 
-const Share = ({ onClose, urlpath }) => {
+const Share = (props) => {
+  const{onClose,urlpath,teamData}=props;
   const sharestyle = {
     root: {
       background: 'rgba(42, 42, 42, 0.9)', 
@@ -44,7 +45,7 @@ const Share = ({ onClose, urlpath }) => {
     <div className={style.shareContainer}>
       <div className={style.overlay}></div>
       <div data-aos="zoom-in-up" data-aos-duration="500" className={style.maindiv}>
-        <div style={{
+      {urlpath ?  <div style={{
           position:"relative"
         }}><div
           onClick={onClose}
@@ -77,6 +78,41 @@ const Share = ({ onClose, urlpath }) => {
           socialTypes={['facebook', 'twitter', 'whatsapp', 'reddit', 'linkedin']}
           onSocialButtonClicked={data => console.log(data)}
         /></div>
+        :
+        <div style={{
+          position:"relative"
+        }}><div
+          onClick={onClose}
+          className={style.closebtn}
+          style={{
+            cursor: "pointer",
+            position: "absolute",
+            right: "1.5rem",
+            top: "1.4rem",
+            zIndex: "20",
+            fontSize: "1.2rem",
+          }}
+        >
+          <X />
+        </div>
+        <div style={{
+          cursor: "pointer",
+          position: "absolute",
+          left: "1.5rem",
+          top: "1.4rem",
+          zIndex: "20",
+          fontSize: "1.2rem",
+          background: "var(--primary)",
+          WebkitBackgroundClip: "text",
+          color: "transparent",
+        }}>{teamData.teamName}</div>
+        <ShareSocial
+          url={teamData.teamCode}
+          style={sharestyle}
+          socialTypes={['facebook', 'twitter', 'whatsapp', 'reddit', 'linkedin']}
+          onSocialButtonClicked={data => console.log(data)}
+        /></div>
+        }
         
       </div>
     </div>
