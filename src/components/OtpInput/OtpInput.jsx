@@ -19,7 +19,7 @@ const OtpInput = (props) => {
   const navigate = useNavigate();
   const [password, setPassword] = useState("");
   const [cnfPassword, setCnfPassword] = useState("");
-  // const [error, setError] = useState("");
+  const [error, setError] = useState("");
   const [alert,setAlert]=useState(null);
   const [loading,setLoading]=useState(false);
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -121,6 +121,7 @@ if (disable) return;
             position: "bottom-right",
             duration: 2800,
           });
+          setError(response.data.message);
         }
    } catch (error) {
     console.log(error);

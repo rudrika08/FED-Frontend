@@ -22,7 +22,7 @@ const Profile = ({ editmodal }) => {
   useEffect(() => {
     setTimeout(() => {
       setIsLoading(false);
-    }, 1000); 
+    }, 1000);
   }, []);
 
   const userDetails = [
@@ -35,22 +35,11 @@ const Profile = ({ editmodal }) => {
     { label: "Mobile No", value: authCtx.user.contactNo },
   ];
 
-  if (authCtx.user.access !== "USER") {
-    if(authCtx.user.designation) {
-      userDetails.push({ label: "Designation", value: authCtx.user.designation });
-    }
-
-     if(authCtx.user.github) {
-    userDetails.push(
-      { label: "Github", value: authCtx.user.github },
-    );
-     }
-        if(authCtx.user.linkedin) {
-          userDetails.push(
-      { label: "LinkedIn", value: authCtx.user.linkedin }
-    );
-        }
-  }
+  const extraDetails = [
+    { label: "Github", value: authCtx.user.extra.github },
+    { label: "LinkedIn", value: authCtx.user.extra.linkedin },
+    { label: "Designation", value: authCtx.user.extra.designation },
+  ];
 
   return (
     <div id={styles.profile}>
@@ -76,6 +65,19 @@ const Profile = ({ editmodal }) => {
                     <td className={styles.dets}>{detail.label}</td>
                     <td className={styles.vals}>{detail.value}</td>
                   </tr>
+                ))}
+                {authCtx.user.access !== "USER" && extraDetails.map((detail, index) => (
+                  (detail.value) ? (
+                    <tr key={index}>
+                      <td className={styles.dets}>{detail.label}</td>
+                      <td className={styles.vals}>{detail.value}</td>
+                    </tr>
+                  ) : (
+                    <tr key={index}>
+                      <td className={styles.dets}>{detail.label}</td>
+                      <td className={styles.vals}>N/A</td>
+                    </tr>
+                  )
                 ))}
               </tbody>
             </table>

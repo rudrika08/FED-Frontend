@@ -94,6 +94,7 @@ const Login = () => {
             user.extra?.designation,
             user.regForm,
             user.access,
+            user.editProfileCount,
             response.data.token,
             9600000
           );
@@ -152,6 +153,7 @@ const Login = () => {
             user.designation,
             user.regForm,
             user.access,
+            user.editProfileCount,
             "somedata",
             3600000
           );
