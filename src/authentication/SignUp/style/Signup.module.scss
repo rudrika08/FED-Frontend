@@ -40,6 +40,15 @@
   flex-direction: column;
   margin-inline: auto;
 }
+
+.signin h1{
+  padding-top: 10px;
+  background: var(--primary);
+  width: 20%;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
 .sideImage {
   width: 100%;
   height: auto;
@@ -224,5 +233,11 @@
   .ArrowBackIcon {
     top: 10%;
     left: 7%;
+  }
+}
+
+@media (max-width: 460px){
+  .signin h1{
+    width: 24%;
   }
 }

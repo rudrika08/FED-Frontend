@@ -334,15 +334,7 @@ const SignUp = () => {
           }}
         >
           <div className={styles.signin}>
-            <h1
-              style={{
-                paddingTop: "10px",
-                background: "var(--primary)",
-                width: "20%",
-                WebkitBackgroundClip: "text",
-                color: "transparent",
-              }}
-            >
+            <h1>
               SignUp
             </h1>
             <GoogleSignup setAlert={setAlert} />
