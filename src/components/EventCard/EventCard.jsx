@@ -28,6 +28,7 @@ const EventCard = (props) => {
     additionalContent,
     aosDisable,
     onEdit,
+    onDelete,
     enableEdit,
     isLoading,
   } = props;
@@ -378,7 +379,13 @@ const EventCard = (props) => {
           >
             Edit Event
           </Button>
-          <Button variant="secondary">Delete Event</Button>
+          <Button onClick={(e)=>{
+            e.preventDefault();
+            if(onDelete){
+              authCtx.eventData=data;
+              onDelete();
+            }
+          }} variant="secondary">Delete Event</Button>
           <IoIosStats
             size={20}
             style={{ cursor: "pointer", color: "white" }}
