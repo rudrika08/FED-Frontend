@@ -50,6 +50,7 @@ const EventModal = (props) => {
           setData(eventData);
           console.log("dadddddddd",data);
           setInfo(eventData.info);
+         
         } else {
           setAlert({
             type: "error",
@@ -170,13 +171,15 @@ const EventModal = (props) => {
 
   useEffect(() => {
     if (authCtx.isLoggedIn) {
-      console.log("_idL",data._id)
-      const isRegistered = authCtx.user.regForm.includes(data._id);
+      console.log("_idL",data.id)
+      if(authCtx.user.regForm){
+      const isRegistered = authCtx.user.regForm.includes(data.id);
       if (isRegistered) {
         setBtnTxt("Already Registered");
       }
     }
-  }, [authCtx.isLoggedIn, authCtx.user.regForm, btnTxt, navigate, data._id]);
+    }
+  }, [authCtx.isLoggedIn, authCtx.user.regForm, btnTxt, navigate, data.id]);
 
   const handleModalClose = () => {
     navigate(onClosePath);
@@ -313,11 +316,11 @@ const EventModal = (props) => {
                       <X />
                     </button>
                     <div className={EventCardModal.backimg}>
-                      <img
-                        src=  "https://www.politics.ox.ac.uk/themes/custom/olamalu_dpir_emulsify/images/fb_event_image.png"
+                     {!info.eventImg===null? <img
+                        src=  {info.eventImg}
                         className={EventCardModal.img}
                         alt="Event"
-                      />
+                      />:"Error in loading Image "}
                       <div className={EventCardModal.date}>{formattedDate}</div>
                       {info.ongoingEvent && (
                         <div

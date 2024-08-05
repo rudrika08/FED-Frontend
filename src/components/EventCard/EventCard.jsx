@@ -260,7 +260,8 @@ const EventCard = (props) => {
         </div>
         <div className={style.backbtn} style={customStyles.backbtn}>
           <div className={style.eventname} style={customStyles.eventname}>
-            {info.eventTitle}
+          <span className={style.eventTitle}>{info.eventTitle}</span>
+            
             {type === "ongoing" && (
               <p>
                 <img src={groupIcon} alt="Group" />
