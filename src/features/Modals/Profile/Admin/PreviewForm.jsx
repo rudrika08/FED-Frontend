@@ -45,11 +45,11 @@ const PreviewForm = ({
   const [alert, setAlert] = useState(null);
   const wrapperRef = useRef(null);
   const recoveryCtx = useContext(RecoveryContext);
-  const{setTeamCode,setTeamName}=recoveryCtx;
-  const [teamCodeData,SetTeamCodeData]=useState({
-    teamCode :'',
-    teamName:'' 
-  })
+  const { setTeamCode, setTeamName } = recoveryCtx;
+  const [teamCodeData, SetTeamCodeData] = useState({
+    teamCode: "",
+    teamName: "",
+  });
 
   // console.log("data", eventData);
   // console.log("sections", sections);
@@ -179,8 +179,7 @@ const PreviewForm = ({
       }
     });
 
-console.log("team code in recovery context:",recoveryCtx.teamCode)
-
+    console.log("team code in recovery context:", recoveryCtx.teamCode);
 
     try {
       setIsLoading(true); // Set loading state
@@ -192,7 +191,6 @@ console.log("team code in recovery context:",recoveryCtx.teamCode)
       });
 
       if (response.status === 200 || response.status === 201) {
-     
         setAlert({
           type: "success",
           message: "Form submitted successfully!",
@@ -203,14 +201,13 @@ console.log("team code in recovery context:",recoveryCtx.teamCode)
         setIsSuccess(true);
         if (response.data.team) {
           const { teamName, teamCode } = response.data.team;
-        
+
           SetTeamCodeData((prevData) => ({
             ...prevData,
             teamCode: teamCode,
-            teamName: teamName
+            teamName: teamName,
           }));
         }
-  
       } else {
         setAlert({
           type: "error",
@@ -400,7 +397,7 @@ console.log("team code in recovery context:",recoveryCtx.teamCode)
 
   const renderPaymentScreen = () => {
     const { eventType, receiverDetails, eventAmount } = eventData;
-    console.log(receiverDetails.media)
+    console.log(receiverDetails.media);
 
     const getMediaUrl = (media) => {
       if (media instanceof File) {
@@ -423,7 +420,6 @@ console.log("team code in recovery context:",recoveryCtx.teamCode)
           }}
         >
           {receiverDetails.media && (
-           
             <img
               src={getMediaUrl(receiverDetails.media)}
               alt={"QR-Code"}
@@ -469,13 +465,18 @@ console.log("team code in recovery context:",recoveryCtx.teamCode)
       open && (
       <div className={styles.mainPreview}>
         <div ref={wrapperRef} className={styles.previewContainer}>
-          {showCloseBtn && (
-            <Link onClick={handleClose} to="/Events">
-              <div className={styles.closeBtn}>
+          {showCloseBtn &&
+            (handleClose ? (
+              <div onClick={handleClose} className={styles.closeBtn}>
                 <X />
               </div>
-            </Link>
-          )}
+            ) : (
+              <Link onClick={handleClose} to="/Events">
+                <div className={styles.closeBtn}>
+                  <X />
+                </div>
+              </Link>
+            ))}
           <Text
             style={{
               marginBottom: "20px",
@@ -517,7 +518,13 @@ console.log("team code in recovery context:",recoveryCtx.teamCode)
               </div>
               {renderPaymentScreen()}
               <Section section={currentSection} handleChange={handleChange} />
-              <div style={{ display: "flex", flexDirection: "row", justifyContent: "center"}}>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "center",
+                }}
+              >
                 {inboundList() && inboundList().backSection && (
                   <Button style={{ marginRight: "10px" }} onClick={onBack}>
                     Back

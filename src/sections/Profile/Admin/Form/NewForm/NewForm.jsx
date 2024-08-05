@@ -9,6 +9,7 @@ import moment from "moment";
 import { nanoid } from "nanoid";
 import { Alert, MicroLoading } from "../../../../../microInteraction";
 import { api } from "../../../../../services";
+import dummyForms from "../../../../../data/FormData.json";
 
 export const getOutboundList = (array, index) => {
   const getIndex = array.findIndex((sec) => sec._id === index);
@@ -39,6 +40,7 @@ function NewForm() {
   const authCtx = useContext(AuthContext);
   const [alert, setAlert] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [isEditing, setisEditing] = useState(false);
   const [data, setdata] = useState({
     _id: nanoid(),
     eventTitle: "",
@@ -128,7 +130,12 @@ function NewForm() {
     if (authCtx.eventData) {
       setdata(authCtx.eventData?.info);
       setsections(authCtx.eventData?.sections);
+      setisEditing(true);
     }
+
+    const { info, sections } = dummyForms.events[0];
+    setdata(info);
+    setsections(sections);
   }, []);
 
   useEffect(() => {
@@ -160,6 +167,10 @@ function NewForm() {
       })
     );
   };
+
+  const handleSaveData = async () => {};
+
+  const handleEditData = async () => {};
 
   const isValidEvent = () => {
     if (!data.eventTitle) {
@@ -237,80 +248,126 @@ function NewForm() {
 
   const onSaveEvent = async () => {
     if (isValidEvent()) {
-
       setIsLoading(true);
       const newSections = constructForPreview();
-      console.log(data);
-  
       const form = new FormData();
-      const info = {};
-  
-      // Append data to the info object
+
+      if (data.eventImg && data.eventImg instanceof File) {
+        form.append("eventImg", data.eventImg);
+      }
+      if (
+        data.receiverDetails.media &&
+        data.receiverDetails.media instanceof File
+      ) {
+        form.append("media", data.receiverDetails.media);
+      }
+
+      form.append("upi", data.receiverDetails.upi);
+
       Object.keys(data).forEach((key) => {
         const value = data[key];
-  
-        if (typeof value === "object" && value !== null) {
-          if (Array.isArray(value)) {
-            info[key] = JSON.stringify(value);
-          } else {
-            info[key] = value;
-          }
-        } else {
-          info[key] = value;
+        if (key !== "eventImg") {
+          form.append(key, value);
         }
       });
-  
-      // Append info and sections to the form
-      form.append("info", JSON.stringify(info));
+
+      if (typeof data.eventImg === "string") {
+        form.delete("eventImg");
+      }
+
+      if (typeof data.receiverDetails.media === "string") {
+        form.delete("media");
+      }
+
+      if (data.receiverDetails) {
+        form.delete("receiverDetails");
+      }
+
       form.append("sections", JSON.stringify(newSections));
-  
-      if (authCtx.eventData) {
+
+      if (isEditing) {
         form.append("id", authCtx.eventData?.id);
       }
       if (data._id) {
         delete data._id;
       }
-  
-      console.log("form", form);
-      console.log("Form Data", data);
-  
-      try {
-        const response = await api.post("/api/form/addForm", form, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
+
+      if (isEditing) {
+        try {
+          const response = await api.put(
+            `/api/form/editForm/${authCtx.eventData?.id}`,
+            form,
+            {
+              headers: {
+                "Content-Type": "multipart/form-data",
+              },
+            }
+          );
+
+          if (response.status === 200) {
+            setAlert({
+              type: "success",
+              message: "Form updated successfully",
+              position: "bottom-right",
+              duration: 3000,
+            });
+          } else {
+            setAlert({
+              type: "error",
+              message: "There was an error editing the form. Please try again.",
+              position: "bottom-right",
+              duration: 3000,
+            });
           }
-        });
-  
-        if (response.status === 200 || response.status === 201) {
-          setAlert({
-            type: "success",
-            message: "Form saved successfully",
-            position: "bottom-right",
-            duration: 3000,
-          });
-          event.target.reset();
-        } else {
+        } catch (error) {
           setAlert({
             type: "error",
-            message: "There was an error submitting the form. Please try again.",
+            message:
+              "There was an error submitting the form. Please try again.",
             position: "bottom-right",
             duration: 3000,
           });
+        } finally {
+          setIsLoading(false);
         }
-      } catch (error) {
-        setAlert({
-          type: "error",
-          message: "There was an error submitting the form. Please try again.",
-          position: "bottom-right",
-          duration: 3000,
-        });
-      } finally {
-        setIsLoading(false);
+      } else {
+        try {
+          const response = await api.post("/api/form/addForm", form, {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          });
+
+          if (response.status === 200) {
+            setAlert({
+              type: "success",
+              message: "Form saved successfully",
+              position: "bottom-right",
+              duration: 3000,
+            });
+          } else {
+            setAlert({
+              type: "error",
+              message:
+                "There was an error submitting the form. Please try again.",
+              position: "bottom-right",
+              duration: 3000,
+            });
+          }
+        } catch (error) {
+          setAlert({
+            type: "error",
+            message:
+              "There was an error submitting the form. Please try again.",
+            position: "bottom-right",
+            duration: 3000,
+          });
+        } finally {
+          setIsLoading(false);
+        }
       }
     }
   };
-  
-  
 
   const onAddSection = () => {
     const lastSection = sections[sections.length - 1];
@@ -569,7 +626,15 @@ function NewForm() {
             _id: nanoid(),
             name: "Transaction ID",
             type: "text",
-            value: "Enter Transaction ID",
+            value: "Last 4 digits of Transaction ID",
+            isRequired: true,
+            validations: [],
+          },
+          {
+            _id: nanoid(),
+            name: "Payment Screenshot",
+            type: "image",
+            value: "Upload Payment Screenshot",
             isRequired: true,
             validations: [],
           },
@@ -722,7 +787,7 @@ function NewForm() {
             )}
           </div>
 
-          <Button onClick={onSaveEvent}>Save</Button>
+          <Button onClick={onSaveEvent}>{isEditing ? "Update" : "Save"}</Button>
           <Button isLoading={false} onClick={handlePreview} variant="secondary">
             {showPreview ? "Hide" : "Preview"}
           </Button>
@@ -997,7 +1062,7 @@ function NewForm() {
                   )}
                   className={styles.formInput}
                   value={data.minTeamSize}
-                  onChange={(value) => setdata({ ...data, minTeamSize: value }) }
+                  onChange={(value) => setdata({ ...data, minTeamSize: value })}
                 />
                 {data.minTeamSize && (
                   <Input
@@ -1009,7 +1074,9 @@ function NewForm() {
                     )}
                     className={styles.formInput}
                     value={data.maxTeamSize}
-                    onChange={(value) => setdata({ ...data, maxTeamSize: value })}
+                    onChange={(value) =>
+                      setdata({ ...data, maxTeamSize: value })
+                    }
                   />
                 )}
               </div>
@@ -1096,7 +1163,7 @@ function NewForm() {
             Sections
           </Text>
           <Button onClick={handleSaveSection}>
-          {isLoading ? <MicroLoading /> : "Save"}
+            {isLoading ? <MicroLoading /> : "Save"}
           </Button>
           <Button
             variant="secondary"
@@ -1134,6 +1201,7 @@ function NewForm() {
             sections={constructForPreview()}
             eventData={data}
             meta={paymentSection ? [paymentSection] : []}
+            showCloseBtn={true}
           />
         )}
       </div>
