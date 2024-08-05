@@ -168,10 +168,6 @@ function NewForm() {
     );
   };
 
-  const handleSaveData = async () => {};
-
-  const handleEditData = async () => {};
-
   const isValidEvent = () => {
     if (!data.eventTitle) {
       alert("Title is required.");
