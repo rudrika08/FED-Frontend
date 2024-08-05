@@ -28,7 +28,7 @@ const AuthContext = React.createContext({
   update: () => {},
   eventData: null,
   memberData: null,
-  croppedImageFile:null,
+  croppedImageFile: null,
 });
 
 const calculateRemainingTime = (expirationTime) => {
@@ -199,9 +199,9 @@ export const AuthContextProvider = (props) => {
       update: updateHandler,
       eventData: null,
       memberData: null,
-      croppedImageFile:null,
+      croppedImageFile: null,
     }),
-    [token, userIsLoggedIn, target, isAdmin]
+    [token, userIsLoggedIn, user, target, isAdmin, loginHandler, logoutHandler]
   );
 
   return (

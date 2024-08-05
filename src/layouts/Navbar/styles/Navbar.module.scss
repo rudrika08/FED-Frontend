@@ -81,6 +81,13 @@
   color: transparent;
 }
 
+.navLinks .omegaHover:hover {
+  background: #38ccff;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
 .navLinks li a {
   position: relative;
   text-decoration: none;

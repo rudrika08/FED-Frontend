@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import { MdOutlineLogout } from "react-icons/md";
-import AuthContext from '../../context/AuthContext';
+import AuthContext from "../../context/AuthContext";
 import styles from "./styles/Navbar.module.scss";
 import logo from "../../assets/images/Logo/logo.svg";
 import defaultImg from "../../assets/images/defaultImg.jpg";
@@ -66,10 +66,17 @@ const Navbar = () => {
   const isOmegaActive = activeLink === "/Omega";
 
   return (
-    <nav className={`${styles.navbar} ${isVisible ? styles.visible : styles.hidden}`}>
+    <nav
+      className={`${styles.navbar} ${
+        isVisible ? styles.visible : styles.hidden
+      }`}
+    >
       <div className={styles.navbarContent} style={{ height: navbarHeight }}>
         <div className={styles.mobNav}>
-          <div className={`${styles.menuToggle} ${isMobile ? styles.active : ""}`} onClick={toggleMobileMenu}>
+          <div
+            className={`${styles.menuToggle} ${isMobile ? styles.active : ""}`}
+            onClick={toggleMobileMenu}
+          >
             {isMobile ? (
               <div className={styles.cross}>
                 <div className={styles.crossBar}></div>
@@ -88,9 +95,17 @@ const Navbar = () => {
           </NavLink>
         </div>
 
-        <ul className={`${styles.navLinks} ${isMobile ? styles.active : ""} ${authCtx.isLoggedIn ? styles.loggedIn : ""}`}>
+        <ul
+          className={`${styles.navLinks} ${isMobile ? styles.active : ""} ${
+            authCtx.isLoggedIn ? styles.loggedIn : ""
+          }`}
+        >
           {authCtx.isLoggedIn && windowWidth <= 768 && (
-            <NavLink to="/profile" className="LinkStyle" onClick={closeMobileMenu}>
+            <NavLink
+              to="/profile"
+              className="LinkStyle"
+              onClick={closeMobileMenu}
+            >
               <div className={styles.profileImgdiv}>
                 <img
                   src={authCtx.user.img || defaultImg}
@@ -112,7 +127,9 @@ const Navbar = () => {
             <li>
               <NavLink
                 to="/"
-                className={`${styles.link} ${activeLink === "/" ? styles.activeLink : ""}`}
+                className={`${styles.link} ${
+                  activeLink === "/" ? styles.activeLink : ""
+                } ${activeLink === "/Omega" ? styles.omegaHover : ""}`}
                 onClick={closeMobileMenu}
               >
                 Home
@@ -121,7 +138,9 @@ const Navbar = () => {
             <li>
               <NavLink
                 to="/Events"
-                className={`${styles.link} ${activeLink === "/Events" ? styles.activeLink : ""}`}
+                className={`${styles.link} ${
+                  activeLink === "/Events" ? styles.activeLink : ""
+                } ${activeLink === "/Omega" ? styles.omegaHover : ""}`}
                 onClick={closeMobileMenu}
               >
                 Event
@@ -130,7 +149,9 @@ const Navbar = () => {
             <li>
               <NavLink
                 to="/Omega"
-                className={`${styles.link} ${activeLink === "/Omega" ? styles.activeLinkOmega : ""}`}
+                className={`${styles.link} ${
+                  activeLink === "/Omega" ? styles.activeLinkOmega : ""
+                } ${activeLink === "/Omega" ? styles.omegaHover : ""}`}
                 onClick={closeMobileMenu}
               >
                 Omega
@@ -139,7 +160,9 @@ const Navbar = () => {
             <li>
               <NavLink
                 to="/Social"
-                className={`${styles.link} ${activeLink === "/Social" ? styles.activeLink : ""}`}
+                className={`${styles.link} ${
+                  activeLink === "/Social" ? styles.activeLink : ""
+                } ${activeLink === "/Omega" ? styles.omegaHover : ""}`}
                 onClick={closeMobileMenu}
               >
                 Social
@@ -148,7 +171,9 @@ const Navbar = () => {
             <li>
               <NavLink
                 to="/Team"
-                className={`${styles.link} ${activeLink === "/Team" ? styles.activeLink : ""}`}
+                className={`${styles.link} ${
+                  activeLink === "/Team" ? styles.activeLink : ""
+                } ${activeLink === "/Omega" ? styles.omegaHover : ""}`}
                 onClick={closeMobileMenu}
               >
                 Team
@@ -159,13 +184,19 @@ const Navbar = () => {
           {authCtx.isLoggedIn ? (
             windowWidth <= 768 ? (
               <button
-                className={`${styles.authButton} ${isOmegaActive ? styles.omegaButton : ""}`}
+                className={`${styles.authButton} ${
+                  isOmegaActive ? styles.omegaButton : ""
+                }`}
                 onClick={handleLogout}
               >
                 Logout <MdOutlineLogout size={25} />
               </button>
             ) : (
-              <NavLink to="/profile" className="LinkStyle" onClick={closeMobileMenu}>
+              <NavLink
+                to="/profile"
+                className="LinkStyle"
+                onClick={closeMobileMenu}
+              >
                 <div className={styles.profileImgdiv}>
                   <img
                     src={authCtx.user.img || defaultImg}
@@ -177,7 +208,13 @@ const Navbar = () => {
             )
           ) : (
             <NavLink to="/Login" onClick={closeMobileMenu}>
-              <button className={`${styles.authButton} ${isOmegaActive ? styles.omegaButton : ""}`}>Login</button>
+              <button
+                className={`${styles.authButton} ${
+                  isOmegaActive ? styles.omegaButton : ""
+                }`}
+              >
+                Login
+              </button>
             </NavLink>
           )}
         </ul>

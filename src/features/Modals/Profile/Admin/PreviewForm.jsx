@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import styles from "./styles/Preview.module.scss";
 import { Button, Text } from "../../../../components";
 import Section from "./SectionModal";
@@ -12,6 +12,8 @@ import {
   MicroLoading,
   ComponentLoading,
 } from "../../../../microInteraction";
+// import AuthContext from "../../../../context/AuthContext";
+import { RecoveryContext } from "../../../../context/RecoveryContext";
 
 const operators = [
   { label: "match", value: "===" },
@@ -42,9 +44,19 @@ const PreviewForm = ({
   const [isSuccess, setIsSuccess] = useState(false);
   const [alert, setAlert] = useState(null);
   const wrapperRef = useRef(null);
+  const recoveryCtx = useContext(RecoveryContext);
+  const{setTeamCode,setTeamName}=recoveryCtx;
+  const [teamCodeData,SetTeamCodeData]=useState({
+    teamCode :'',
+    teamName:'' 
+  })
 
-  console.log("data", eventData);
-  console.log("sections", sections);
+  // console.log("data", eventData);
+  // console.log("sections", sections);
+
+  // if(!eventData && !sections.length()==0){
+  //   return ;
+  // }
 
   let currentSection =
     data !== undefined
@@ -167,10 +179,8 @@ const PreviewForm = ({
       }
     });
 
-    // Log the formData content for debugging
-    // formData.forEach((value, key) => {
-    //   console.log(key + " " + value);
-    // });
+console.log("team code in recovery context:",recoveryCtx.teamCode)
+
 
     try {
       setIsLoading(true); // Set loading state
@@ -182,6 +192,7 @@ const PreviewForm = ({
       });
 
       if (response.status === 200 || response.status === 201) {
+     
         setAlert({
           type: "success",
           message: "Form submitted successfully!",
@@ -190,6 +201,16 @@ const PreviewForm = ({
         });
         handleClose();
         setIsSuccess(true);
+        if (response.data.team) {
+          const { teamName, teamCode } = response.data.team;
+        
+          SetTeamCodeData((prevData) => ({
+            ...prevData,
+            teamCode: teamCode,
+            teamName: teamName
+          }));
+        }
+  
       } else {
         setAlert({
           type: "error",
@@ -219,6 +240,8 @@ const PreviewForm = ({
     if (isSuccess) {
       const handleAutoClose = () => {
         setTimeout(() => {
+          setTeamCode(teamCode);
+          setTeamName(teamName);
           navigate("/Events");
         }, 5000);
       };
@@ -377,6 +400,17 @@ const PreviewForm = ({
 
   const renderPaymentScreen = () => {
     const { eventType, receiverDetails, eventAmount } = eventData;
+    console.log(receiverDetails.media)
+
+    const getMediaUrl = (media) => {
+      if (media instanceof File) {
+        // If media is a File, create an object URL
+        return URL.createObjectURL(media);
+      } else {
+        // Otherwise, assume media is a URL or handle it accordingly
+        return media;
+      }
+    };
     if (eventType === "Paid" && currentSection.name === "Payment Details") {
       return (
         <div
@@ -389,8 +423,9 @@ const PreviewForm = ({
           }}
         >
           {receiverDetails.media && (
+           
             <img
-              src={URL.createObjectURL(receiverDetails.media)}
+              src={getMediaUrl(receiverDetails.media)}
               alt={"QR-Code"}
               style={{
                 width: 200,
