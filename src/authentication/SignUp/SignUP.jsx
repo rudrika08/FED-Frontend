@@ -108,6 +108,13 @@ const SignUp = () => {
       setUserObject(user);
 
       try {
+        setAlert(
+          {
+          type: "info",
+          message: "Generating Verification OTP.",
+          position: "bottom-right",
+          duration: 3000,}
+        )
         const response = await api.post('/api/auth/verifyEmail',
           { email: user.email },
           { headers: { 'Content-Type': 'application/json' } }
@@ -115,33 +122,33 @@ const SignUp = () => {
 
         if (response.status === 200 || response.status === 201) {
           console.log("otp generated", response);
-          // setAlert(
-          //   {
-          //   type: "success",
-          //   message: "Otp Sent to Email",
-          //   position: "bottom-right",
-          //   duration: 3000,}
-          // )
+          setAlert(
+            {
+            type: "success",
+            message: "Otp Sent to Email",
+            position: "bottom-right",
+            duration: 3000,}
+          )
           setShowModal(true);
         } else {
           console.log("failed to generate Otp");
-          // setAlert(
-          //   {
-          //   type: "error",
-          //   message:response.data.message|| "error in sending otp",
-          //   position: "bottom-right",
-          //   duration: 3000,}
-          // )
+          setAlert(
+            {
+            type: "error",
+            message:response.data.message|| "error in sending otp",
+            position: "bottom-right",
+            duration: 3000,}
+          )
         }
 
       } catch (error) {
-        // setAlert(
-        //   {
-        //   type: "error",
-        //   message: "Failed to send OTP. Please try again.",
-        //   position: "bottom-right",
-        //   duration: 3000,}
-        // );
+        setAlert(
+          {
+          type: "error",
+          message: "Failed to send OTP. Please try again.",
+          position: "bottom-right",
+          duration: 3000,}
+        );
         console.log("otp from frontend")
         const OTP = Math.floor(Math.random() * 9000 + 1000);
         setOTP(OTP);
@@ -151,45 +158,6 @@ const SignUp = () => {
         setIsLoading(false);
       }
 
-      // if (email) {
-      //   setEmail(email);
-      //   // if (!emailRegex.test(email)) {
-      //   // toast.error("please enter a valid email address");
-      //   //   return;
-      //   // }
-      //   const OTP = Math.floor(Math.random() * 9000 + 1000);
-      //   console.log(OTP);
-      //   // setOTP(OTP); // Set OTP in context and local storage
-
-      //   // setLoading(true);
-
-      //   // await axios.post('/api/send_otp', { email: user.email, OTP: generatedOTP });
-      //   setShowModal(true);
-      //   console.log(showModal);
-
-      //   // navigate('/otp')
-      //   // setLoading(false);
-
-      //   // axios
-      //   //   .post("http://localhost:5000/send_recovery_email", { OTP, recipient_email: email })
-      //   //   .then(() => {
-      //   //     setPage("otp");
-      //   //     toast.success("otp is sent to your email")
-      //   //     setLoading(false);
-      //   //   })
-      //   //   .catch(error => {
-      //   //     console.error("Error sending recovery email:", error);
-      //   //     alert("Failed to send recovery email. Please try again later.");
-      //   //     setLoading(false);
-      //   //   });
-      // } else {
-      //   setAlert({
-      //     type: "error",
-      //     message: "Enter a Valid Email Address",
-      //     position: "bottom-right",
-      //     duration: 3000,
-      //   });
-      // }
     } else {
       setAlert({
         type: "error",
@@ -209,41 +177,6 @@ const SignUp = () => {
     }
   };
 
-  // const handleVerifyOTP = async (enteredOTP) => {
-  //   console.log(userObject);
-  //   console.log(enteredOTP);
-  //   // console.log(password);
-  //   console.log(enteredOTP === String(OTP));
-  //   setShowModal(false);
-  //   navigate("/profile");
-  //   if (enteredOTP === String(OTP)) {
-  //     try {
-  //       // const response = await axios.post('/api/verify_otp_signup', { email, OTP: enteredOTP, password,data:userObject });
-  //       // console.log(response);
-  //       // if (response.status == 200) {
-  //       //   setLoad(false);
-  //       //   console.log("verifiatin Link has been sent");
-  //       // }
-  //     } catch (error) {
-  //       //  setLoad(false);
-  //       // if (error.response.data.code === 1) {
-  //       //   console.log("user already axist");
-  //       //   return;
-  //       // }
-  //       // if (error.response.data.code === 2) {
-  //       //   console.log("invalid email format");
-  //       //   return;
-  //       // } else {
-  //       //   console.log("An unexpected error occured");
-  //       //   return;
-  //       // }
-  //     }
-
-  //     // Handle successful verification
-  //   } else {
-  //     // Handle incorrect OTP
-  //   }
-  // };
   const handleVerifyOTP = async (enteredOTP) => {
     // console.log(userObject);
     // console.log(enteredOTP);
@@ -274,6 +207,7 @@ const SignUp = () => {
             response.data.user.extra?.linkedin,
             response.data.user.extra?.designation,
             response.data.user.regForm,
+            response.data.user.editProfileCount,
             response.data.user.access,
             response.data.token,
             10800000
@@ -285,19 +219,7 @@ const SignUp = () => {
         }
       } catch (error) {
         console.log(error);
-        //  setLoad(false);
 
-        // if (error.response.data.code === 1) {
-        //   console.log("user already axist");
-        //   return;
-        // }
-        // if (error.response.data.code === 2) {
-        //   console.log("invalid email format");
-        //   return;
-        // } else {
-        //   console.log("An unexpected error occured");
-        //   return;
-        // }
       }
 
       // Handle successful verification

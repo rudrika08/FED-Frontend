@@ -48,6 +48,7 @@ const EventModal = (props) => {
           const eventData = response.data.events.find((e)=>e.id===eventId);
           console.log("fetched event modal:",eventData);
           setData(eventData);
+          console.log("dadddddddd",data);
           setInfo(eventData.info);
         } else {
           setAlert({
@@ -169,6 +170,7 @@ const EventModal = (props) => {
 
   useEffect(() => {
     if (authCtx.isLoggedIn) {
+      console.log("_idL",data._id)
       const isRegistered = authCtx.user.regForm.includes(data._id);
       if (isRegistered) {
         setBtnTxt("Already Registered");
