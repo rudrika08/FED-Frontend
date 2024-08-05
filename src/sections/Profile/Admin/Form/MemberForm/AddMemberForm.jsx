@@ -81,7 +81,7 @@ function AddMemberForm() {
 
     // Extract and add fields to `extra` if they are present and not empty
     if (data.title.trim() !== "") {
-      extra.title = data.title;
+      title = data.title;
     }
     if (data.github.trim() !== "") {
       extra.github = data.github;
