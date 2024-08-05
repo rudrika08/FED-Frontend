@@ -11,6 +11,7 @@ import { Alert, MicroLoading } from "../../microInteraction";
 import { RecoveryContext } from "../../context/RecoveryContext";
 import { api } from "../../services";
 import AuthContext from "../../context/AuthContext";
+// import { validateData } from "../../utils/hooks/validation/validateSignupData";
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -78,7 +79,8 @@ const SignUp = () => {
 
     // setEmail(showUser.email);
     const name = FirstName + " " + LastName;
-
+// const validationResult =validateData(showUser,isTandChecked,Password);
+// console.log(validationResult);
     if (
       name !== "" &&
       rollNumber !== "" &&
@@ -92,7 +94,7 @@ const SignUp = () => {
       year !== "" &&
       isTandChecked
     ) {
-      // setLoad(true);
+     
       const password = bcrypt.hashSync(Password, import.meta.env.VITE_BCRYPT);
       const user = {
         name,
@@ -125,7 +127,7 @@ const SignUp = () => {
           setAlert(
             {
             type: "success",
-            message: "Otp Sent to Email",
+            message: response.data.message||"Otp Sent to Email",
             position: "bottom-right",
             duration: 3000,}
           )
@@ -145,44 +147,59 @@ const SignUp = () => {
         setAlert(
           {
           type: "error",
-          message: "Failed to send OTP. Please try again.",
+          message: error?.response?.data?.message||"Failed to send OTP. Please try again.",
           position: "bottom-right",
           duration: 3000,}
         );
-        console.log("otp from frontend")
-        const OTP = Math.floor(Math.random() * 9000 + 1000);
-        setOTP(OTP);
-        setShowModal(true);
+        console.log("eror in sending otp :",error)
+        // console.log("otp from frontend")
+        // const OTP = Math.floor(Math.random() * 9000 + 1000);
+        // setOTP(OTP);
+        // setShowModal(true);
       }
       finally {
-        setIsLoading(false);
+       setIsLoading(false);
       }
 
     } else {
-      setAlert({
-        type: "error",
-        message: "Invalid Details! Enter Again",
-        position: "bottom-right",
-        duration: 3000,
-      });
-
-      if (!isTandChecked) {
+      if(  Password !== ""){
+        setAlert({
+          type: "error",
+          message: "Password field can't be empty",
+          position: "bottom-right",
+          duration: 3000,
+        });
+      }else if( contactNo.length <= 12 ||
+        contactNo.length >= 10 ){
+          setAlert({
+            type: "error",
+            message: "Contact Number must be between 10 and 12 digits!",
+            position: "bottom-right",
+            duration: 3000,
+          });
+        }else if (!isTandChecked) {
         setAlert({
           type: "error",
           message: "Please check the terms and conditions",
           position: "bottom-right",
           duration: 3000,
         });
+      }else{
+
+        setAlert({
+          type: "error",
+          message: "Enter valid Details",
+          position: "bottom-right",
+          duration: 3000,
+        });
+       
       }
+
+      setIsLoading(false);
     }
   };
 
   const handleVerifyOTP = async (enteredOTP) => {
-    // console.log(userObject);
-    // console.log(enteredOTP);
-    // console.log(password);
-    // console.log(enteredOTP === String(OTP))
-    // setShowModal(false);
 
     if (enteredOTP) {
       console.log(userObject);
@@ -213,12 +230,17 @@ const SignUp = () => {
             10800000
           );
           console.log(authCtx);
-          navigate('/profile');
+          navigate('/');
 
 
         }
       } catch (error) {
-        console.log(error);
+        setAlert({
+          type: "error",
+          message: error?.response?.data?.message||"Enter valid Details",
+          position: "bottom-right",
+          duration: 3000,
+        });
 
       }
 

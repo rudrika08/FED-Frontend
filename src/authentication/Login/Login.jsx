@@ -76,7 +76,7 @@ const Login = () => {
 
         setTimeout(() => {
           setShouldNavigate(true);
-        }, 1800);
+        }, 800);
 
         setTimeout(() => {
           // localStorage.setItem("token",response.data.token);
@@ -98,7 +98,7 @@ const Login = () => {
             response.data.token,
             9600000
           );
-        }, 30);
+        }, 800);
         console.log(authCtx);
 
         sessionStorage.removeItem("prevPage"); // Clean up
@@ -113,11 +113,11 @@ const Login = () => {
     } catch (error) {
       setAlert({
         type: "error",
-        message: "There was an error logging in. Please try again.",
+        message:error?.response?.data?.message|| "There was an error logging in. Please try again.",
         position: "bottom-right",
         duration: 3000,
       });
-      console.error("Error logging in:", error);
+      console.error("Error logging in:", error?.response?.data?.message);
     } finally {
       setIsLoading(false);
     }
