@@ -65,6 +65,7 @@ const EditProfile = ({ handleModalClose }) => {
           data.linkedin,
           authCtx.user.extra.designation,
           authCtx.user.access,
+          authCtx.user.editPorfileCount,
           authCtx.user.regForm
         );
         setTimeout(()=>{
