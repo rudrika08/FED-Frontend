@@ -10,24 +10,35 @@
   background: rgba(7, 7, 7, 0.33);
   z-index: 50;
   backdrop-filter: blur(2px);
+  overflow: hidden;
 }
+
+
 
 .previewContainer {
   display: flex;
   flex-direction: column;
   align-items: start;
-  background: #2e2e2e;
-  border-radius: 10px;
-  width: 70%;
+  background: linear-gradient(
+    90deg,
+    rgba(32, 32, 32, 0.95) -11.52%,
+    rgba(37, 37, 37, 0.95) 106.29%
+  );
+  border-radius: 1.26863rem;
+  backdrop-filter: blur(4px);
+  border: 1.2px solid rgba(214, 214, 214, 0.81);
+  width: 40%;
   padding: 1.6em;
   height: 90%;
   margin: auto;
   z-index: 100;
+  overflow: hidden;
   overflow-y: scroll;
 }
 
 .previewContainer::-webkit-scrollbar {
   width: 6px;
+  // overflow: hidden;
 }
 .previewContainer::-webkit-scrollbar-thumb {
   background: #888;
@@ -39,7 +50,7 @@
 
 .closeBtn{
   position: absolute;
-  width: 65%;
+  width: 95%;
   display: flex;
   justify-content: flex-end;
   color: #fff;
@@ -54,7 +65,10 @@
 
 .formFieldContainer {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  flex-wrap: wrap;
+  // justify-content: space-evenly;
+  column-gap: 3rem;
   width: 100%;
   padding: 1em;
   border-radius: 8px;

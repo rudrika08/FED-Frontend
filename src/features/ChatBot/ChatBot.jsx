@@ -106,7 +106,7 @@ export default function ChatBot() {
         onClick={handleClick}
       >
         <span>
-          <BiSolidMessageSquareDetail size={43} />
+          <BiSolidMessageSquareDetail size={42} />
         </span>
       </button>
 

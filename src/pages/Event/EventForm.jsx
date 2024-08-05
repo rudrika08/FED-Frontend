@@ -13,7 +13,8 @@ const EventForm = () => {
   const { eventId } = useParams();
 
   // Ensure eventId is correctly parsed
-  const id = parseInt(eventId, 10);
+  const id = eventId;
+  console.log("event id in eventForm is :",id);
 
   useEffect(() => {
     if (alert) {
@@ -26,9 +27,11 @@ const EventForm = () => {
   useEffect(() => {
     const fetchEvent = async () => {
       try {
-        const response = await api.get(`/api/form/getEvent/${id}`);
+        const response = await api.get("/api/form/getAllForms");
+        console.log("registerForm",response.data)
         if (response.status === 200) {
-          setEventData(response.data);
+          const fetchedEvents = response.data.events;
+          setEventData(fetchedEvents[0]);
         } else {
           setAlert({
             type: "error",
@@ -49,7 +52,7 @@ const EventForm = () => {
         // });
         // Fallback to local data
         const { events } = FormData;
-        const localEventData = events.find((event) => event._id === id);
+        const localEventData = events.find((event) => event.id === id);
         setEventData(localEventData);
       } finally {
         setIsLoading(false);

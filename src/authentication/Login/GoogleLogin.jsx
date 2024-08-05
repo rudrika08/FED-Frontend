@@ -19,7 +19,7 @@ export default function GoogleLogin() {
   const [isLoading, setIsLoading] = useState(false);
 
   const login = useGoogleLogin({
-    onSuccess: (tokenResponse) => setCodeResponse(tokenResponse),
+    onSuccess: (codeResponse) => setCodeResponse(codeResponse),
     onError: (error) => console.error("Login failed:", error),
   });
 
@@ -62,23 +62,29 @@ export default function GoogleLogin() {
         });
         return;
       }
+      console.log("google Response",googleResponse);
+      console.log("code response",codeResponse)
 
       const googleUserData = {
         email: googleResponse.data.email,
         image: googleResponse.data.picture,
+        id: codeResponse.access_token,
       };
 
       console.log("Google User Data:", googleUserData);
 
       try {
         // Send a POST request to the backend to check if the user exists
-        const response = await api.post("/api/auth/googleLogin", {
-          email: googleUserData.email,
+        // const response = await api.post("/api/auth/googleLogin", {
+        //   tokenId: googleUserData.id,
+        // });
+        const response = await api.get("/api/auth/googleLogin", {
+          tokenId: googleUserData.id,
         });
 
         if (response.status === 200 || response.status === 201) {
           // User exists in the backend
-          const userData = response.data.user;
+          console.log(response);
 
           setAlert({
             type: "success",
@@ -91,24 +97,21 @@ export default function GoogleLogin() {
 
           setTimeout(() => {
             setShouldNavigate(true);
-          }, 2800);
+          });
 
           setTimeout(() => {
             authCtx.login(
-              userData.name,
-              userData.email,
-              userData.image,
-              userData.rollNo,
-              userData.school,
-              userData.college,
-              userData.mobileNo,
-              userData.year,
-              userData.github,
-              userData.linkedin,
-              userData.designation,
-              userData.regForm,
-              userData.access,
-              "someToken",
+              response.data.user.name,
+              response.data.user.email,
+              response.data.user.image,
+              response.data.user.rollNumber,
+              response.data.user.school,
+              response.data.user.college,
+              response.data.user.contactNo,
+              response.data.user.year,
+              response.data.user.regForm,
+              response.data.user.access,
+              response.data.token,
               3600000
             );
             setShouldNavigate(true);
@@ -118,7 +121,7 @@ export default function GoogleLogin() {
         } else {
           // Handle unexpected response status
           console.log("Unexpected backend response status:", response.status);
-          handleFallbackOrSignup(googleUserData);
+          // handleFallbackOrSignup(googleUserData);
         }
       } catch (error) {
         // API call error, fallback to local data
@@ -165,14 +168,11 @@ export default function GoogleLogin() {
           fallbackUser.name,
           fallbackUser.email,
           googleUserData.image,
-          fallbackUser.rollNo,
+          fallbackUser.rollNumber,
           fallbackUser.school,
           fallbackUser.college,
-          fallbackUser.mobileNo,
+          fallbackUser.contactNo,
           fallbackUser.year,
-          fallbackUser.github,
-          fallbackUser.linkedin,
-          fallbackUser.designation,
           fallbackUser.regForm,
           fallbackUser.access,
           "someToken",

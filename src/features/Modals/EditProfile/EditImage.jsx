@@ -7,13 +7,16 @@ import { Button } from '../../../components';
 import { X } from 'lucide-react';
 import { Alert, MicroLoading } from "../../../microInteraction";
 import { api } from "../../../services";
+// import { RecoveryContext } from '../../../context/RecoveryContext';
 
-const EditImage = ({ selectedFile, closeModal, setimage }) => {
+const EditImage = (props) => {
+  const{selectedFile, closeModal, setimage, updatePfp,setimgprv,setFile,fileName}=props;
   const [scale, setScale] = useState(1);
   const [alert, setAlert] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const authCtx = useContext(AuthContext);
   const editorRef = useRef(null);
+
 
   useEffect(() => {
     if (alert) {
@@ -33,51 +36,94 @@ const EditImage = ({ selectedFile, closeModal, setimage }) => {
       const canvas = editorRef.current.getImageScaledToCanvas();
       canvas.toBlob(async (blob) => {
         const imageFile = new File([blob], "profile.jpg", { type: "image/jpeg" });
+      
 
-        try {
-          const formData = new FormData();
-          formData.append('email', authCtx.user.email);
-          formData.append('image', imageFile);
+        if (updatePfp) {
+          try {
+            const formData = new FormData();
+            formData.append('email', authCtx.user.email);
+            formData.append('image', imageFile);
 
-          const response = await api.post('/api/updateProfileImage', formData, {
-            headers: {
-              'Content-Type': 'multipart/form-data'
-            }
-          });
-
-          if (response.status === 200 || response.status === 201) {
-            console.log("Profile image updated successfully!", response.data);
-
-            setimage(URL.createObjectURL(blob));
-            setAlert({
-              type: "success",
-              message: "Profile image updated successfully.",
-              position: "bottom-right",
-              duration: 3000,
+            const response = await api.post('/api/user/editProfileImage', formData, {
+              headers: {
+                'Content-Type': 'multipart/form-data'
+              }
             });
-            setTimeout(() => {
-              closeModal();
-              window.location.reload();
-            }, 2000);
-          } else {
+
+            if (response.status === 200 || response.status === 201) {
+              console.log("Profile image updated successfully!", response.data);
+              if(response.data.url){
+           
+                authCtx.update(
+                  authCtx.user.name,
+                  authCtx.user.email,
+                  response.data.url,
+                  authCtx.user.rollNumber,
+                  authCtx.user.school,
+                  authCtx.user.college,
+                  authCtx.user.contactNo,
+                  authCtx.user.year,
+                  authCtx.user.extra.github,
+                  authCtx.user.extra.linkedin,
+                  authCtx.user.extra.designation,
+                  authCtx.user.access,
+                  authCtx.user.editPorfileCount,
+                  authCtx.user.regForm
+                );
+              }
+              setimage(URL.createObjectURL(blob));
+              // setimage(response.data.url)
+              setAlert({
+                type: "success",
+                message: "Profile image updated successfully.",
+                position: "bottom-right",
+                duration: 3000,
+              });
+              setTimeout(() => {
+                closeModal();
+                // window.location.reload();
+              }, 2000);
+            } else {
+              setAlert({
+                type: "error",
+                message: "There was an error updating your profile image. Please try again.",
+                position: "bottom-right",
+                duration: 3000,
+              });
+            }
+          } catch (error) {
+            console.error("Error updating profile image:", error);
             setAlert({
               type: "error",
               message: "There was an error updating your profile image. Please try again.",
               position: "bottom-right",
               duration: 3000,
             });
+          } finally {
+            setIsLoading(false);
           }
-        } catch (error) {
-          console.error("Error updating profile image:", error);
-          setAlert({
-            type: "error",
-            message: "There was an error updating your profile image. Please try again.",
-            position: "bottom-right",
-            duration: 3000,
-          });
-        } finally {
-          setIsLoading(false);
+        } else {
+          // For AddMemberForm: Just update the preview image
+          // setimage(URL.createObjectURL(blob));
+          setimgprv(imageFile,URL.createObjectURL(blob));
+          setFile(imageFile);
+          closeModal();
         }
+      }, "image/jpeg");
+    }
+  };
+
+  const handleUpload = () => {
+    if (editorRef.current && selectedFile) {
+      const canvas = editorRef.current.getImageScaledToCanvas();
+      canvas.toBlob(async (blob) => {
+        const imageFile = new File([blob], fileName, { type: "image/jpeg" });
+        console.log("imagefile after crop", imageFile);
+        authCtx.croppedImageFile =imageFile; 
+        console.log("file stored in context:",authCtx.croppedImageFile);
+        console.log("selected file :", selectedFile);
+        setimgprv(URL.createObjectURL(blob));
+        closeModal();
       }, "image/jpeg");
     }
   };
@@ -140,15 +186,29 @@ const EditImage = ({ selectedFile, closeModal, setimage }) => {
               />
             </div>
             <div style={{ display: "flex", justifyContent: "center" }}>
-              <Button type='button' onClick={handleSave} className={style.submit}>
+
+            {updatePfp?  <Button type='button' onClick={handleSave} className={style.submit}>
                 {isLoading ? (
                   <MicroLoading />
                 ) : (
                   <>
-                    <FaUpload /> Update Image
+                  <FaUpload /> Update Image
+                
+                  
                   </>
-                )}
-              </Button>
+                )
+              }
+              </Button>: <Button type='button' onClick={handleUpload} className={style.submit}>
+              {isLoading ? (
+                <MicroLoading />
+              ) : (
+                <>
+              <FaUpload /> Upload Image
+                </>
+              )
+            }
+            </Button>
+}
             </div>
           </div>
         </div>

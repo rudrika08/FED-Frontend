@@ -1,44 +1,57 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { api } from "../../services";
 import style from "./styles/Event.module.scss";
 import { EventCard } from "../../components";
 import { ChatBot } from "../../features";
-// import EventData from "../../data/eventData.json";
 import FormData from "../../data/FormData.json";
 import ring from "../../assets/images/ring.svg";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import { ComponentLoading } from "../../microInteraction";
+import { RecoveryContext } from "../../context/RecoveryContext";
+import Share from "../../features/Modals/Event/ShareModal/ShareModal";
 
 const Event = () => {
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+
 
   const [eventData, setEventData] = useState([]);
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const { events } = FormData;
+  const [isOpen ,setOpenModal]=useState(false);
+  const recoveryCtx=useContext(RecoveryContext);
+
+  useEffect(()=>{
+    if(recoveryCtx.teamCode && recoveryCtx.teamName){
+      if(!isOpen){
+        setOpenModal(true)
+      }
+    }
+  },[recoveryCtx.teamCode]);
 
   useEffect(() => {
     const fetchEvents = async () => {
       try {
         const response = await api.get("/api/form/getAllForms");
-
+        console.log(response.data);
         if (response.status === 200) {
-          setEventData(response.data);
+          console.log(response.data.events);
+          setEventData(response.data.events);
         } else {
           setError({
-            message:
-              "Sorry for the inconvenience, we are having issues fetching our Events",
+            message: "Sorry for the inconvenience, we are having issues fetching our Events",
           });
           console.error("Error fetching events:", response.data.message);
           setEventData(events);
         }
       } catch (error) {
         setError({
-          message:
-            "Sorry for the inconvenience, we are having issues fetching our Events",
+          message: "Sorry for the inconvenience, we are having issues fetching our Events",
         });
         console.error("Error fetching events:", error);
         setEventData(events);
@@ -48,10 +61,22 @@ const Event = () => {
     };
 
     fetchEvents();
-  }, []);
+  }, [events]);
 
+  // Ensure `eventData` is correctly filtered
   const ongoingEvents = eventData.filter((event) => !event.info.isEventPast);
   const pastEvents = eventData.filter((event) => event.info.isEventPast);
+  console.log(eventData)
+
+
+  const handleShare=()=>{
+    if(recoveryCtx.teamCode && recoveryCtx.teamName){
+     const{setTeamCode,setTeamName}=recoveryCtx;
+     setTeamCode(null);
+     setTeamName(null);
+     setOpenModal(false);
+    }
+  }
 
   const customStyles = {
     eventname: {
@@ -66,9 +91,15 @@ const Event = () => {
     },
   };
 
+  const teamCodeAndName ={
+    teamCode:recoveryCtx.teamCode,
+    teamName:recoveryCtx.teamName
+  };
+
   return (
     <>
       <ChatBot />
+      {isOpen && <Share onClose={handleShare} teamData={teamCodeAndName} />}
       <div className={style.main}>
         <div style={{ display: "flex" }}>
           <div className={style.line}></div>
@@ -92,7 +123,7 @@ const Event = () => {
                   }}
                 />
               </>
-            ) : !error ? (
+            ) : error ? (
               <div className={style.error}>{error.message}</div>
             ) : (
               <>
@@ -126,7 +157,7 @@ const Event = () => {
                 <div
                   className={style.pasteventcard}
                   style={{
-                    marginTop: ongoingEvents.length > 0 ? "6rem" : "1rem",
+                    marginTop: ongoingEvents.length > 0 ? "3rem" : "1rem",
                   }}
                 >
                   <div className={style.name}>

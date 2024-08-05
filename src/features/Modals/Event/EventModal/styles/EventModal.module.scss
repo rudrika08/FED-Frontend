@@ -40,6 +40,7 @@
   margin-inline: auto;
   margin-top: 6%;
   height: auto;
+  // min-height: 10rem;
 }
 
 .date {
@@ -62,7 +63,8 @@
 
 .backtxt {
   width: 87%;
-  height: 6.8rem;
+  height: auto;
+  max-height: 6.8rem;
   overflow-y: scroll;
   -ms-overflow-style: none; /* Internet Explorer 10+ */
   scrollbar-width: none; /* Firefox */
@@ -145,6 +147,10 @@
   cursor: pointer;
   top: -8%;
   right: 1.8%;
+}
+
+.closeModal:hover {
+  color: #f97507;
 }
 
 .card button {
@@ -304,8 +310,8 @@
   }
 
   .closeModal {
-    top: -1.6rem;
-    right: 0.5rem;
+    top: -1.9rem;
+    right: 0.2rem;
   }
 }
 

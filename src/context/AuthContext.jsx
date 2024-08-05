@@ -7,17 +7,20 @@ const AuthContext = React.createContext({
   isLoggedIn: false,
   user: {
     name: "",
-    pic: "",
+    img: "",
     email: "",
-    rollNo: "",
+    rollNumber: "",
     school: "",
     college: "",
-    mobileNo: "",
+    contactNo: "",
     year: "",
-    github: "",
-    linkedin: "",
-    designation: "",
+    extra:{
+      github: "",
+      linkedin: "",
+      designation: "",
+    },
     access: "",
+    editPorfileCount: "",
     regForm: [],
   },
   target: null,
@@ -28,6 +31,7 @@ const AuthContext = React.createContext({
   update: () => {},
   eventData: null,
   memberData: null,
+  croppedImageFile: null,
 });
 
 const calculateRemainingTime = (expirationTime) => {
@@ -95,34 +99,38 @@ export const AuthContextProvider = (props) => {
   const loginHandler = (
     name,
     email,
-    pic,
-    rollNo,
+    img,
+    rollNumber,
     school,
     college,
-    mobileNo,
+    contactNo,
     year,
     github,
     linkedin,
     designation,
     regForm,
     access,
+    editPorfileCount,
     token,
     expirationTime
   ) => {
     localStorage.setItem("token", token);
     const setuserdata = {
       name: name,
-      pic: pic,
+      img: img,
       email: email,
-      rollNo: rollNo,
+      rollNumber: rollNumber,
       school: school,
       college: college,
-      mobileNo: mobileNo,
+      contactNo: contactNo,
       year: year,
-      github: github,
-      linkedin: linkedin,
-      designation: designation,
+      extra:{
+        github: github,
+        linkedin:linkedin,
+        designation: designation,
+      },
       access: access,
+      editPorfileCount: editPorfileCount,
       regForm: regForm,
     };
 
@@ -143,31 +151,36 @@ export const AuthContextProvider = (props) => {
   const updateHandler = (
     name,
     email,
-    pic,
-    rollNo,
+    img,
+    rollNumber,
     school,
     college,
-    mobileNo,
+    contactNo,
     year,
     github,
     linkedin,
     designation,
     access,
+    editPorfileCount,
     regForm
   ) => {
+    console.log("update handler is called");
     const setuserdata = {
       name: name,
-      pic: pic,
+      img: img,
       email: email,
-      rollNo: rollNo,
+      rollNumber: rollNumber,
       school: school,
       college: college,
-      mobileNo: mobileNo,
+      contactNo: contactNo,
       year: year,
-      github: github,
-      linkedin: linkedin,
-      designation: designation,
+      extra:{
+        github: github,
+        linkedin:linkedin,
+        designation: designation,
+      },
       access: access,
+      editPorfileCount: editPorfileCount,
       regForm: regForm,
     };
 
@@ -197,8 +210,9 @@ export const AuthContextProvider = (props) => {
       update: updateHandler,
       eventData: null,
       memberData: null,
+      croppedImageFile: null,
     }),
-    [token, userIsLoggedIn, target, isAdmin]
+    [token, userIsLoggedIn, user, target, isAdmin, loginHandler, logoutHandler]
   );
 
   return (

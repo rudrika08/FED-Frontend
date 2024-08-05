@@ -14,6 +14,18 @@ const Events = () => {
   const viewPath = "/profile/Events";
   const analyticsPath = "/profile/Events/Analytics";
 
+  const analyticsAccessRoles = [
+    "PRESIDENT",
+    "VICEPRESIDENT",
+    "DIRECTOR_CREATIVE",
+    "DIRECTOR_TECHNICAL",
+    "DIRECTOR_MARKETING",
+    "DIRECTOR_OPERATIONS",
+    "DIRECTOR_SPONSORSHIP",
+    "ADMIN",
+    "GUEST"
+  ];
+
   useEffect(() => {
     const fetchEventsData = async () => {
       try {
@@ -38,7 +50,6 @@ const Events = () => {
             message:
               "Sorry for the inconvenience, we are having issues fetching your Events",
           });
-          console.error("Error fetching team members:", error);
         }
       } catch (error) {
         setError({
@@ -107,7 +118,7 @@ const Events = () => {
                     <th>Event Name</th>
                     <th>Event Date</th>
                     <th className={styles.mobilewidth}>Details</th>
-                    {authCtx.user.access !== "USER" && (
+                    {analyticsAccessRoles.includes(authCtx.user.access) && (
                       <th className={styles.mobilewidth}>Registrations</th>
                     )}
                     {/* Add more headers */}
@@ -139,7 +150,7 @@ const Events = () => {
                           </button>
                         </Link>
                       </td>
-                      {authCtx.user.access !== "USER" && (
+                      {analyticsAccessRoles.includes(authCtx.user.access) && (
                         <td className={styles.mobilewidthtd}>
                           <Link to={`${analyticsPath}/${event._id}`}>
                             <button

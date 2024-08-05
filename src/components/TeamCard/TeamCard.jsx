@@ -15,6 +15,7 @@ const TeamCard = ({
   data,
   role,
   know,
+  blurhash,
   customStyles = {},
   onUpdate,
   onRemove,
@@ -31,6 +32,7 @@ const TeamCard = ({
 
     return () => clearTimeout(timer);
   }, []);
+  
   const authCtx = useContext(AuthContext);
 
   const isDirectorRole =
@@ -39,7 +41,6 @@ const TeamCard = ({
   const handleImageLoad = () => {
     setIsImageLoaded(true);
   };
-  console.log(data);
 
   return (
     <div className={`${styles.teamMember} ${customStyles.teamMember || ''}`}>
@@ -47,9 +48,9 @@ const TeamCard = ({
       <div className={styles.teamMemberInner} style={{ display: showSkeleton ? 'none' : 'block' }}>
         <div className={`${styles.teamMemberFront} ${customStyles.teamMemberFront || ''}`}>
           <div className={styles.ImgDiv}>
-            {!isImageLoaded && (
+            {!isImageLoaded && blurhash && (
               <Blurhash
-                hash="LEHV6nWB2yk8pyo0adR*.7kCMdnj"
+                hash={blurhash}
                 width={'100%'}
                 height={'100%'}
                 resolutionX={32}
@@ -107,7 +108,7 @@ const TeamCard = ({
                   Know More
                 </button>
               )}
-            { onUpdate && authCtx.user.access==="ADMIN"  && <div className={`${styles.updatebtn} ${customStyles.updatebtn || ''}`}>
+            { (onUpdate && authCtx.user.access==="ADMIN") && <div className={`${styles.updatebtn} ${customStyles.updatebtn || ''}`}>
                 <Button  onClick={(e) => {
               e.preventDefault();
               if (onUpdate) {
@@ -117,8 +118,18 @@ const TeamCard = ({
               }
             }}>
                   Update</Button>
-                <Button onClick={() => onRemove(name, role, title)}>Remove</Button>
+
+                <Button onClick={(e) =>{ e.preventDefault()
+                  if(onRemove){
+                    console.log(data);
+                    authCtx.memberData=data;
+                    onRemove();
+                  }
+                }
+                }>Remove</Button>
+                     {/* }} */}
               </div>
+
 }
             </>
           ) : (
@@ -151,6 +162,7 @@ TeamCard.propTypes = {
   title: PropTypes.string.isRequired,
   role: PropTypes.string.isRequired,
   know: PropTypes.string.isRequired,
+  blurhash: PropTypes.string, // Add this line
   customStyles: PropTypes.object,
   onUpdate: PropTypes.func.isRequired,
   onRemove: PropTypes.func.isRequired,

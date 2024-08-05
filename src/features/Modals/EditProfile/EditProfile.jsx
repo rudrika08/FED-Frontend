@@ -16,13 +16,13 @@ const EditProfile = ({ handleModalClose }) => {
 
   const [data, setData] = useState({
     name: authCtx.user.name,
-    rollNo: authCtx.user.rollNo,
+    rollNumber: authCtx.user.rollNumber,
     year: authCtx.user.year,
     school: authCtx.user.school,
     college: authCtx.user.college,
-    mobileNo: authCtx.user.mobileNo,
-    github: authCtx.user.github,
-    linkedin: authCtx.user.linkedin,
+    contactNo: authCtx.user.contactNo,
+    github: authCtx.user.extra.github,
+    linkedin: authCtx.user.extra.linkedin,
   });
 
   useEffect(() => {
@@ -39,24 +39,33 @@ const EditProfile = ({ handleModalClose }) => {
   const handleSave = async () => {
     setIsLoading(true);
     try {
-      const response = await api.post("/api/user/editDetails", data);
+      console.log(data)
+      let { linkedin, github , ...modifiedData} = data;
+      modifiedData.extra = {
+        github : data.github,
+        linkedin : data.linkedin
+      }
+      console.log(modifiedData);
+      const response = await api.put("/api/user/editDetails", modifiedData);
 
+      console.log(response.data.user);
       if (response.status === 200 || response.status === 201) {
         console.log("Profile updated successfully!", response.data);
 
         authCtx.update(
           data.name,
           authCtx.user.email,
-          authCtx.user.pic,
-          data.rollNo,
+          authCtx.user.img,
+          data.rollNumber,
           data.school,
           data.college,
-          data.mobileNo,
+          data.contactNo,
           data.year,
           data.github,
           data.linkedin,
-          authCtx.user.designation,
+          authCtx.user.extra.designation,
           authCtx.user.access,
+          authCtx.user.editPorfileCount,
           authCtx.user.regForm
         );
         setTimeout(()=>{
@@ -173,10 +182,10 @@ const EditProfile = ({ handleModalClose }) => {
                           }}
                           placeholder="Enter your roll"
                           type="number"
-                          value={data.rollNo}
+                          value={data.rollNumber}
                           className={styles.vals}
                           onChange={(e) =>
-                            setData({ ...data, rollNo: e.target.value })
+                            setData({ ...data, rollNumber: e.target.value })
                           }
                         />
                       </div>
@@ -249,9 +258,9 @@ const EditProfile = ({ handleModalClose }) => {
                           }}
                           placeholder="Enter Phone number"
                           type="number"
-                          value={data.mobileNo}
+                          value={data.contactNo}
                           onChange={(e) =>
-                            setData({ ...data, mobileNo: e.target.value })
+                            setData({ ...data, contactNo: e.target.value })
                           }
                           className={styles.vals}
                         />

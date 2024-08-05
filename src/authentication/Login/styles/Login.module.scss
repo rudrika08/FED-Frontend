@@ -75,12 +75,16 @@
   // overflow: hidden;
 }
 
+
 .ArrowBackIcon {
   position: absolute;
-  top: 5%;
-  left: 30px;
+  top: 1.5%;
+  left: 15px;
   color: #fff;
   cursor: pointer;
+  padding-top: 10px;
+  padding-left: -10px;
+  margin-right: 20px;
 }
 
 .divider{

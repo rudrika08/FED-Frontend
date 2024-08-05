@@ -17,7 +17,7 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  margin-left: 10px;
+  margin-left: 5px;
   gap:10px;
 }
 
@@ -31,6 +31,7 @@
 .logo_text {
   width: 4.9rem;
   height: 2.3rem;
+  margin-right: -1.6rem;
   background: url("../../../assets/images/Logo/FED.svg") no-repeat;
 }
 
@@ -76,6 +77,13 @@
 
 .navLinks .activeLink {
   background: var(--primary);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.navLinks .omegaHover:hover {
+  background: #38ccff;
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -176,8 +184,8 @@
   justify-content: space-between;
   height: 3.5rem;
   list-style: none;
-  padding: 20px;
-  margin-left: -10px;
+  padding: 5px;
+  margin-left: -1.5rem;
 }
 
 .authButton {
@@ -186,7 +194,7 @@
   align-items: center;
   justify-content: center;
   border-radius: 1.65rem;
-  height: 3.3rem;
+  height: 3rem;
   font-size: 1.2rem;
   background: linear-gradient(
     260deg,
@@ -194,7 +202,8 @@
     rgba(244, 43, 3, 0.84) 128.34%
   );
   font-weight: 600;
-  padding: 8px 30px;
+  padding: 5px 20px;
+  padding-bottom: 1vh;
   border: none;
   color: #fff;
   cursor: pointer;
@@ -204,6 +213,29 @@
   transition: .2s linear;
   background: linear-gradient(260deg, rgba(255, 190, 11, .9) -29.7%, rgba(244, 43, 3, .9) 128.34%);
 }
+
+.activeLinkOmega {
+  color: #38ccff !important;
+}
+
+.omegaButton {
+  background-color: #38ccff !important;
+  background: linear-gradient(
+    260deg,
+    rgba(22, 175, 143, 0.84) -29.7%,
+    rgba(1, 113, 227, 0.84) 128.34%
+  );
+}
+
+.omegaButton:hover {
+  transition: .2s linear;
+  background: linear-gradient(
+    260deg,
+    rgba(22, 175, 143, 0.9) -29.7%,
+    rgba(1, 113, 227, 0.9) 128.34%
+  );
+}
+
 
 .profileImgdiv {
   height: 60px;
@@ -215,7 +247,7 @@
 }
 
 .profileImgdiv img {
-  height: 100%;
+  height: 90%;
   width: auto;
   border-radius: 50%;
 }
@@ -256,6 +288,8 @@
     background: none;
     border: none;
     gap: 10px;
+    padding-top:  2vh;
+    padding-bottom: 2vh;
   }
 
   .navLinks {
@@ -270,6 +304,7 @@
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.8s ease, visibility 0.8s ease;
+    padding-bottom: 2vh;
   }
 
   .profileImgdiv {
@@ -288,5 +323,9 @@
 
   .menuToggle {
     display: flex;
+  }
+
+  .authButton{
+    margin-right: 1.4rem;
   }
 }

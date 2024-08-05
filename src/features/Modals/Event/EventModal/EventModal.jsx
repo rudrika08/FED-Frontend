@@ -38,14 +38,18 @@ const EventModal = (props) => {
   const [isLoading, setIsLoading] = useState(true);
   const [info, setInfo] = useState({});
   const [data, setData] = useState({});
+  const [eventData,setEventData]=useState({});
 
   useEffect(() => {
     const fetchEvent = async () => {
       try {
-        const response = await api.get(`/api/form/getEvent/${eventId}`);
+        const response = await api.get("/api/form/getAllForms");
         if (response.status === 200) {
-          setData(response.data);
-          setInfo(response.data.info);
+          const eventData = response.data.events.find((e)=>e.id===eventId);
+          console.log("fetched event modal:",eventData);
+          setData(eventData);
+          console.log("dadddddddd",data);
+          setInfo(eventData.info);
         } else {
           setAlert({
             type: "error",
@@ -166,6 +170,7 @@ const EventModal = (props) => {
 
   useEffect(() => {
     if (authCtx.isLoggedIn) {
+      console.log("_idL",data._id)
       const isRegistered = authCtx.user.regForm.includes(data._id);
       if (isRegistered) {
         setBtnTxt("Already Registered");
@@ -309,7 +314,7 @@ const EventModal = (props) => {
                     </button>
                     <div className={EventCardModal.backimg}>
                       <img
-                        srcSet={info.eventImg}
+                        src=  "https://www.politics.ox.ac.uk/themes/custom/olamalu_dpir_emulsify/images/fb_event_image.png"
                         className={EventCardModal.img}
                         alt="Event"
                       />
@@ -330,6 +335,12 @@ const EventModal = (props) => {
                     <div className={EventCardModal.backbtn}>
                       <div className={EventCardModal.eventname}>
                         {info.eventTitle}
+                        <p>
+                          <img src={groupIcon} alt="Group" />
+                          Team size: {info.minTeamSize}
+                          {" - "}
+                          {info.maxTeamSize}
+                        </p>
                         <div className={EventCardModal.price}>
                           {info.eventAmount ? (
                             <p>
@@ -340,12 +351,6 @@ const EventModal = (props) => {
                             <p style={{ color: "inherit" }}>Free</p>
                           )}
                         </div>
-                        <p>
-                          <img src={groupIcon} alt="Group" />
-                          Team size: {info.minTeamSize}
-                          {" - "}
-                          {info.maxTeamSize}
-                        </p>
                       </div>
                       <div className={EventCardModal.registerbtn}>
                         <button
