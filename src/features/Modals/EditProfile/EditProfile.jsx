@@ -21,8 +21,8 @@ const EditProfile = ({ handleModalClose }) => {
     school: authCtx.user.school,
     college: authCtx.user.college,
     contactNo: authCtx.user.contactNo,
-    github: authCtx.user.github,
-    linkedin: authCtx.user.linkedin,
+    github: authCtx.user.extra.github,
+    linkedin: authCtx.user.extra.linkedin,
   });
 
   useEffect(() => {
@@ -63,8 +63,9 @@ const EditProfile = ({ handleModalClose }) => {
           data.year,
           data.github,
           data.linkedin,
-          authCtx.user.designation,
+          authCtx.user.extra.designation,
           authCtx.user.access,
+          authCtx.user.editPorfileCount,
           authCtx.user.regForm
         );
         setTimeout(()=>{

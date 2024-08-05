@@ -31,6 +31,7 @@
 .logo_text {
   width: 4.9rem;
   height: 2.3rem;
+  margin-right: -1.6rem;
   background: url("../../../assets/images/Logo/FED.svg") no-repeat;
 }
 
@@ -322,5 +323,9 @@
 
   .menuToggle {
     display: flex;
+  }
+
+  .authButton{
+    margin-right: 1.4rem;
   }
 }
