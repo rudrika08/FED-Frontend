@@ -14,10 +14,13 @@ const AuthContext = React.createContext({
     college: "",
     contactNo: "",
     year: "",
-    github: "",
-    linkedin: "",
-    designation: "",
+    extra:{
+      github: "",
+      linkedin: "",
+      designation: "",
+    },
     access: "",
+    editPorfileCount: "",
     regForm: [],
   },
   target: null,
@@ -107,6 +110,7 @@ export const AuthContextProvider = (props) => {
     designation,
     regForm,
     access,
+    editPorfileCount,
     token,
     expirationTime
   ) => {
@@ -120,10 +124,13 @@ export const AuthContextProvider = (props) => {
       college: college,
       contactNo: contactNo,
       year: year,
-      github: github,
-      linkedin: linkedin,
-      designation: designation,
+      extra:{
+        github: github,
+        linkedin:linkedin,
+        designation: designation,
+      },
       access: access,
+      editPorfileCount: editPorfileCount,
       regForm: regForm,
     };
 
@@ -154,6 +161,7 @@ export const AuthContextProvider = (props) => {
     linkedin,
     designation,
     access,
+    editPorfileCount,
     regForm
   ) => {
     console.log("update handler is called");
@@ -166,10 +174,13 @@ export const AuthContextProvider = (props) => {
       college: college,
       contactNo: contactNo,
       year: year,
-      github: github,
-      linkedin: linkedin,
-      designation: designation,
+      extra:{
+        github: github,
+        linkedin:linkedin,
+        designation: designation,
+      },
       access: access,
+      editPorfileCount: editPorfileCount,
       regForm: regForm,
     };
 

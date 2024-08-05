@@ -54,8 +54,22 @@ const EditImage = (props) => {
               console.log("Profile image updated successfully!", response.data);
               if(response.data.url){
            
-                authCtx.user.img = response.data.url;
-                     console.log("iamge in Authcontext:",authCtx.user.img);
+                authCtx.update(
+                  authCtx.user.name,
+                  authCtx.user.email,
+                  response.data.url,
+                  authCtx.user.rollNumber,
+                  authCtx.user.school,
+                  authCtx.user.college,
+                  authCtx.user.contactNo,
+                  authCtx.user.year,
+                  authCtx.user.extra.github,
+                  authCtx.user.extra.linkedin,
+                  authCtx.user.extra.designation,
+                  authCtx.user.access,
+                  authCtx.user.editPorfileCount,
+                  authCtx.user.regForm
+                );
               }
               setimage(URL.createObjectURL(blob));
               // setimage(response.data.url)
