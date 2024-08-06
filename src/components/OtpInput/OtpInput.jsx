@@ -124,11 +124,11 @@ if (disable) return;
           setError(response.data.message);
         }
    } catch (error) {
-    console.log(error);
+    console.log("error in input field:",error);
     // toast.error(response.error);
     setAlert({
       type: "error",
-      message: error.message,
+      message: error?.response?.message||"Error in generating otp",
       position: "bottom-right",
       duration: 2800,
     });
@@ -196,7 +196,7 @@ if (disable) return;
  } catch (error) {
   setAlert({
     type: "error",
-    message: error.message,
+    message: error?.response?.data?.message||"Changing Password Failed",
     position: "bottom-right",
     duration: 2800,
   });
