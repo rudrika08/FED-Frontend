@@ -21,8 +21,6 @@ function ViewEvent({ handleChangePage }) {
         const response = await api.get("/api/form/getAllForms");
         if (response.status === 200) {
           const fetchedEvents = response.data.events;
-          console.log("incoming response",response.data)
-          console.log("fetched events",fetchedEvents);
           const sortedEvents = fetchedEvents.sort(
             (a, b) => new Date(b.info.eventDate) - new Date(a.info.eventDate)
           );
@@ -37,20 +35,20 @@ function ViewEvent({ handleChangePage }) {
         }
       } catch (error) {
         console.error("Error fetching event data:", error);
-        // setError({
-        //   message:
-        //     "Sorry for the inconvenience, we are having issues fetching our Events",
-        // });
-        const testEvents = FormData.events || [];
-        const sortedTestEvents = testEvents.sort(
-          (a, b) => new Date(b.info.eventDate) - new Date(a.info.eventDate)
-        );
-        const ongoing = sortedTestEvents.filter(
-          (event) => !event.info.isEventPast
-        );
-        const past = sortedTestEvents.filter((event) => event.info.isEventPast);
-        setOngoingEvents(ongoing);
-        setPastEvents(past);
+        setError({
+          message:
+            "Sorry for the inconvenience, we are having issues fetching our Events",
+        });
+        // const testEvents = FormData.events || [];
+        // const sortedTestEvents = testEvents.sort(
+        //   (a, b) => new Date(b.info.eventDate) - new Date(a.info.eventDate)
+        // );
+        // const ongoing = sortedTestEvents.filter(
+        //   (event) => !event.info.isEventPast
+        // );
+        // const past = sortedTestEvents.filter((event) => event.info.isEventPast);
+        // setOngoingEvents(ongoing);
+        // setPastEvents(past);
       } finally {
         setIsLoading(false);
       }

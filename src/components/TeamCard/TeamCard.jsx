@@ -43,6 +43,9 @@ const TeamCard = ({
   };
 
   const handleLink=(url)=>{
+    console.log("Social: ",social);
+    console.log("URL: ",url);
+
     if(url.startsWith('http://') || url.startsWith('https://')){
       return url;
     }else{

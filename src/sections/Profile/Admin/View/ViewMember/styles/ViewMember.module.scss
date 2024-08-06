@@ -9,6 +9,21 @@
   padding: 2em 3em;
   padding-right: 1em;
 }
+.searchContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.searchInput {
+  width: 90%;
+  padding: 10px;
+  border-radius: 15px;
+  border: 1px solid #ffffff;
+  background-color: transparent;
+  color: #ffffff;
+}
+
 
 .buttonContainer {
   font-size: 30px;
@@ -56,6 +71,7 @@
   font-size: 0.9rem;
   margin-left: 10px;
   cursor: pointer;
+  text-align: center;
 }
 
 .teamGrid {
@@ -93,8 +109,11 @@
 
 /* Custom styles for TeamCard component */
 .teamMemberCustom {
-  height: 16rem;
-  width: 13rem;
+  height: 18rem;
+  width: 16rem;
+  padding: 2rem;
+  padding-top: 0;
+
 }
 .teamMemberBackh5Custom {
   font-size: smaller;

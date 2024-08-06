@@ -73,17 +73,9 @@ const OtpInput = (props) => {
   const resendOTP = async() => {
     
     console.log("inside resendOtp");
-    // axios
-    //   .post("http://localhost:5000/send_recovery_email", { OTP: otp, recipient_email: email })
-    //   .then(() => {
-    //     setDisable(true);
-    //     alert("A new OTP has been sent to your email.");
-    //     setTimer(60);
-    //   })
-    //   .catch(console.error);
-
-    // e.preventDefault(); // Prevent default form submission behavior
 if (disable) return;
+console.log("email",email);
+
 
     if (email) {
 
@@ -136,15 +128,7 @@ if (disable) return;
    }finally{
     setLoading(false);
    }
-
-    } else {
-      setAlert({
-        type: "error",
-        message: "Please Enter valid Otp",
-        position: "bottom-right",
-        duration: 2800,
-      });
-    }
+  } 
   };
 
   const verifyOTP = () => {
