@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { MdOutlineLogout } from "react-icons/md";
 import AuthContext from "../../context/AuthContext";
 import styles from "./styles/Navbar.module.scss";
@@ -15,6 +15,7 @@ const Navbar = () => {
   const lastScrollY = useRef(0);
   const authCtx = useContext(AuthContext);
   const location = useLocation(); // Hook to get the current location
+  const navigate = useNavigate();
 
   const handleScroll = () => {
     if (window.scrollY > lastScrollY.current) {
@@ -60,6 +61,7 @@ const Navbar = () => {
 
   const handleLogout = () => {
     authCtx.logout();
+    navigate("/")
     closeMobileMenu();
   };
 

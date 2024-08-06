@@ -1,6 +1,12 @@
 import { useState, useContext, useEffect } from "react";
 import { ProfileLayout, Sidebar } from "../../layouts";
-import { ProfileView, EventsView, NewForm, ViewMember, ViewEvent } from "../../sections";
+import {
+  ProfileView,
+  EventsView,
+  NewForm,
+  ViewMember,
+  ViewEvent,
+} from "../../sections";
 import AuthContext from "../../context/AuthContext";
 import { api } from "../../services";
 import style from "./styles/Profile.module.scss";
@@ -13,7 +19,7 @@ const Profile = () => {
   const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (authCtx.isLoggedIn && window.localStorage.getItem('token')) {
+    if (authCtx.isLoggedIn && window.localStorage.getItem("token")) {
       fetchData();
     }
   }, [authCtx.isLoggedIn]);
@@ -24,9 +30,9 @@ const Profile = () => {
         email: authCtx.user.email,
       };
 
-      const token = window.localStorage.getItem('token');
+      const token = window.localStorage.getItem("token");
       if (token) {
-        const response = await api.post('/api/user/fetchProfile', data, {
+        const response = await api.post("/api/user/fetchProfile", data, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -48,7 +54,11 @@ const Profile = () => {
             response.data.user.access,
             response.data.user.regForm
           );
-        } else {
+        }
+        else if(response.status === 404) {
+          // log out the user
+        }
+        else {
           console.log(response.status);
         }
       }
@@ -97,8 +107,18 @@ const Profile = () => {
   return (
     <ProfileLayout>
       <div className={style.profile}>
-        <Sidebar activepage={activePage} handleChange={setActivePage} />
-        {isLoading ? <Loading /> : <div className={style.profile__content}>{getActivePage()}</div>}
+        <Sidebar
+          activepage={activePage}
+          handleChange={(page) => {
+            setActivePage(page);
+            authCtx.eventData = null;
+          }}
+        />
+        {isLoading ? (
+          <Loading />
+        ) : (
+          <div className={style.profile__content}>{getActivePage()}</div>
+        )}
       </div>
     </ProfileLayout>
   );

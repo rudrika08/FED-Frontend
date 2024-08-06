@@ -7,8 +7,8 @@
 }
 
 .errorImage img {
-    height: 30%;
-    width: 100%;
+    height: auto; 
+    max-width: 100%; 
     border-radius: 20px 20px 0 0;
     border: none; 
     display: block;
@@ -16,14 +16,13 @@
     margin: 0;
 }
 
-.errorImage p{
+.errorImage p {
     text-align: center;
-    margin: 0 20px;
-    margin-top: 10px;
+    margin: 10px 20px; 
     font-size: 18px;
 }
 
-.box{
+.box {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -31,6 +30,7 @@
     width: 50%;
     border-radius: 20px;
     background-color: #2f2f2f;
+    padding: 20px; 
 }
 
 .errorImage button {
@@ -50,27 +50,52 @@
 }
 
 @media (max-width: 768px) {
-    .errorImage p{
-        font-size: 10px;
+    .errorImage {
+        height: 100vh; 
+        width: 100vw;  
+        margin: 0;
+    }
+
+    .errorImage p {
+        font-size: 14px; 
     }
 
     .errorImage button {
         margin: 20px 0;
         padding: 8px 17px;
-        font-size: 0.8rem; 
+        font-size: 0.9rem; 
+    }
+
+    .box {
+        width: 80%; 
+        height: auto; 
+        padding: 10px; 
     }
 }
 
-// Add media query for screens smaller than 480px
 @media (max-width: 480px) {
-    .errorImage p{
-        font-size: 8px;
+    .errorImage p {
+        font-size: 12px; 
+    }
+
+    .errorImage{
+        height: 82vh;
+    }
+
+    .box{
+        height: 70%;
+        width: 90%;
     }
 
     .errorImage button {
         margin: 20px 0;
         padding: 5px 12px;
-        font-size: 0.6rem; 
+        font-size: 0.8rem;
+    }
+
+    .box {
+        width: 90%; 
+        height: auto; 
+        padding: 10px; 
     }
 }
-

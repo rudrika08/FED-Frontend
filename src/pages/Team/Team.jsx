@@ -26,24 +26,31 @@ const Team = () => {
         const response = await api.get("/api/user/fetchTeam");
 
         if (response.status === 200) {
-          setTeamMembers(response.data.data);
-          console.log("incoming response",response.data.data);
+          const validMembers = response.data.data.filter(
+            (member) => member.name !== null
+          );
+          const sortedMembers = validMembers.sort((a, b) =>
+            a.name.localeCompare(b.name)
+          );
+          setTeamMembers(sortedMembers);
+          console.log("incoming response", response.data.data);
         } else {
           console.error("Error fetching team members:", response.data.message);
           setError({
             message:
               "Sorry for the inconvenience, we are having issues fetching our Team Members",
           });
-          console.error("Error fetching team members:", error);
         }
       } catch (error) {
+        console.error("Error fetching team members:", error);
         setError({
           message:
             "Sorry for the inconvenience, we are having issues fetching our Team Members",
         });
-        console.error("Error fetching team members:", error);
         // using local JSON data
-        const testMembers = MemberData;
+        const testMembers = MemberData.sort((a, b) =>
+          a.name.localeCompare(b.name)
+        );
         setTeamMembers(testMembers);
       } finally {
         setIsLoading(false);
@@ -83,14 +90,16 @@ const Team = () => {
     fetchTeamMembers();
   }, []);
 
-  console.log(access);
+  const directorAccessCodes = [
+    "PRESIDENT",
+    "VICEPRESIDENT",
+    "DIRECTOR_TECHNICAL",
+    "DIRECTOR_CREATIVE",
+    "DIRECTOR_MARKETING",
+    "DIRECTOR_OPERATIONS",
+    "DIRECTOR_SPONSORSHIP"
+  ];
 
-  const directorAccessCodes = access.filter(
-    (code) =>
-      code.startsWith("PRESIDENT") ||
-      code.startsWith("VICEPRESIDENT") ||
-      code.startsWith("DIRECTOR_")
-  );
   const roleMap = access.reduce((map, code) => {
     if (!directorAccessCodes.includes(code)) {
       let role = code
@@ -106,13 +115,19 @@ const Team = () => {
     return map;
   }, {});
 
-  const directorsAndAbove = teamMembers.filter((member) =>
-    directorAccessCodes.includes(member.access)
-  );
+  const directorsAndAbove = directorAccessCodes.map((code) =>
+    teamMembers.find((member) => member.access === code)
+  ).filter(Boolean);
+
   const teamByRole = Object.keys(roleMap).map((role) => ({
     role,
     members: teamMembers.filter((member) => member.access === roleMap[role]),
   }));
+
+  const sortedTeamByRole = teamByRole.sort((a, b) => {
+    const order = ["Technical", "Creative", "Operations","Marketing", "Sponsorship & PR"];
+    return order.indexOf(a.role) - order.indexOf(b.role);
+  });
 
   const TeamSection = ({ title, members, isDirector }) => {
     const membersPerRow = windowWidth < 500 ? 2 : 4;
@@ -143,7 +158,7 @@ const Team = () => {
               name={member.name}
               image={member.img}
               social={member.extra}
-              title={member.extra.title}
+              title={member.extra.designation}
               role={member.access}
               know={member.extra.know}
             />
@@ -158,7 +173,7 @@ const Team = () => {
                 name={member.name}
                 image={member.img}
                 social={member.extra}
-                title={member.extra.title}
+                title={member.extra.designation}
                 role={member.access}
                 know={member.extra.know}
               />
@@ -202,7 +217,7 @@ const Team = () => {
 
           <TeamSection members={directorsAndAbove} isDirector={true} />
 
-          {teamByRole.map((section, index) => (
+          {sortedTeamByRole.map((section, index) => (
             <TeamSection
               key={index}
               title={

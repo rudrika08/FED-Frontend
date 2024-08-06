@@ -10,7 +10,7 @@ import users from "../../data/user.json";
 import { Alert, MicroLoading } from "../../microInteraction";
 import { api } from "../../services";
 
-export default function GoogleSignup({setAlert}) {
+export default function GoogleSignup({ setAlert }) {
   // const [alert, setAlert] = useState(null);
   const [codeResponse, setCodeResponse] = useState(null);
   const [shouldNavigate, setShouldNavigate] = useState(false);
@@ -20,7 +20,7 @@ export default function GoogleSignup({setAlert}) {
   const [isLoading, setIsLoading] = useState(false);
 
   const signUp = useGoogleLogin({
-    onSuccess: (tokenResponse) => setCodeResponse(tokenResponse),
+    onSuccess: (codeResponse) => setCodeResponse(codeResponse),
     onError: (error) => console.error("SignUp failed:", error),
   });
 
@@ -48,42 +48,42 @@ export default function GoogleSignup({setAlert}) {
   const handleSignUpSuccess = async () => {
     setIsLoading(true);
     try {
-      const googleResponse = await axios.get(
-        `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${codeResponse.access_token}`
-      );
+      // const googleResponse = await axios.get(
+      //   `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${codeResponse.access_token}`
+      // );
 
-      if (googleResponse.status !== 200) {
-        // Handle the case where Google response is not successful
-        console.error("Google SignUp failed:", googleResponse);
-        setAlert({
-          type: "error",
-          message: "Google SignUp failed. Please try again.",
-          position: "bottom-right",
-          duration: 3000,
-        });
-        return;
-      }
+      // if (googleResponse.status !== 200) {
+      //   // Handle the case where Google response is not successful
+      //   console.error("Google SignUp failed:", googleResponse);
+      //   setAlert({
+      //     type: "error",
+      //     message: "Google SignUp failed. Please try again.",
+      //     position: "bottom-right",
+      //     duration: 3000,
+      //   });
+      //   return;
+      // }
 
-      const googleUserData = {
-        email: googleResponse.data.email,
-        image: googleResponse.data.picture,
-      };
+      // const googleUserData = {
+      //   email: googleResponse.data.email,
+      //   image: googleResponse.data.picture,
+      // };
 
-      console.log("Google User Data:", googleUserData);
+      // console.log("Google User Data:", googleUserData);
 
       try {
         // Send a POST request to the backend to check if the user exists
-        const response = await api.post("/api/auth/googleSignUp", {
-          email: googleUserData.email,
+        const response = await api.post("/api/auth/googleAuth", {
+          access_token: codeResponse.access_token,
         });
 
         if (response.status === 200 || response.status === 201) {
           // User exists in the backend
-          const userData = response.data.user;
+          const user = response.data.user;
 
           setAlert({
             type: "success",
-            message: "User Already Registered! Logged In successfully",
+            message: response.status === 200 ?"User Already Registered! Logged In successfully":"User Registered! Logged In successfully",
             position: "bottom-right",
             duration: 3000,
           });
@@ -91,34 +91,36 @@ export default function GoogleSignup({setAlert}) {
           sessionStorage.removeItem("prevPage"); // Clean up
 
           setTimeout(() => {
+            localStorage.setItem("token",response.data.token);
             authCtx.login(
-              userData.name,
-              userData.email,
-              userData.image,
-              userData.rollNumber,
-              userData.school,
-              userData.college,
-              userData.contactNo,
-              userData.year,
-              userData.github,
-              userData.linkedin,
-              userData.designation,
-              userData.regForm,
-              userData.access,
-              "someToken",
-              3600000
+              user.name,
+              user.email,
+              user.img,
+              user.rollNumber,
+              user.school,
+              user.college,
+              user.contactNo,
+              user.year,
+              user.extra?.github,
+              user.extra?.linkedin,
+              user.extra?.designation,
+              user.regForm,
+              user.access,
+              user.editProfileCount,
+              user.blurhash,
+              response.data.token,
+              9600000
             );
-            setShouldNavigate(true);
-          }, 3000);
+          }, 800);
         } else {
           // Handle unexpected response status
           console.log("Unexpected backend response status:", response.status);
-          handleFallbackOrCompleteProfile(googleUserData, googleResponse);
+          // handleFallbackOrCompleteProfile(googleUserData, googleResponse);
         }
       } catch (error) {
         // API call error, fallback to local data
         console.error("Backend API call failed:", error);
-        handleFallbackOrCompleteProfile(googleUserData, googleResponse);
+        // handleFallbackOrCompleteProfile(googleUserData, googleResponse);
       }
     } catch (error) {
       console.error("SignUp error:", error);
@@ -133,53 +135,53 @@ export default function GoogleSignup({setAlert}) {
     }
   };
 
-  const handleFallbackOrCompleteProfile = async (
-    googleUserData,
-    googleResponse
-  ) => {
-    // User does not exist in the backend, use fallback local data
-    console.log("User not registered in backend, using fallback data");
-    const fallbackUser = users.find(
-      (user) => user.email === googleUserData.email
-    );
+  // const handleFallbackOrCompleteProfile = async (
+  //   googleUserData,
+  //   googleResponse
+  // ) => {
+  //   // User does not exist in the backend, use fallback local data
+  //   console.log("User not registered in backend, using fallback data");
+  //   const fallbackUser = users.find(
+  //     (user) => user.email === googleUserData.email
+  //   );
 
-    if (fallbackUser) {
+  //   if (fallbackUser) {
 
-      setAlert({
-        type: "success",
-        message: "User already Registered, Logging In using fallback data",
-        position: "bottom-right",
-        duration: 3000,
-      });
-      setNavigatePath("/");
-      sessionStorage.removeItem("prevPage");
+  //     setAlert({
+  //       type: "success",
+  //       message: "User already Registered, Logging In using fallback data",
+  //       position: "bottom-right",
+  //       duration: 3000,
+  //     });
+  //     setNavigatePath("/");
+  //     sessionStorage.removeItem("prevPage");
 
-      setTimeout(() => {
-        authCtx.login(
-          fallbackUser.name,
-          fallbackUser.email,
-          googleUserData.image,
-          fallbackUser.rollNumber,
-          fallbackUser.school,
-          fallbackUser.college,
-          fallbackUser.contactNo,
-          fallbackUser.year,
-          fallbackUser.github,
-          fallbackUser.linkedin,
-          fallbackUser.designation,
-          fallbackUser.regForm,
-          fallbackUser.access,
-          "someToken",
-          3600000
-        );
-        setShouldNavigate(true);
-      }, 3000);
-    } else {
-      navigate("/completeProfile", {
-        state: { data: googleResponse.data },
-      });
-    }
-  };
+  //     setTimeout(() => {
+  //       authCtx.login(
+  //         fallbackUser.name,
+  //         fallbackUser.email,
+  //         googleUserData.image,
+  //         fallbackUser.rollNumber,
+  //         fallbackUser.school,
+  //         fallbackUser.college,
+  //         fallbackUser.contactNo,
+  //         fallbackUser.year,
+  //         fallbackUser.github,
+  //         fallbackUser.linkedin,
+  //         fallbackUser.designation,
+  //         fallbackUser.regForm,
+  //         fallbackUser.access,
+  //         "someToken",
+  //         3600000
+  //       );
+  //       setShouldNavigate(true);
+  //     }, 3000);
+  //   } else {
+  //     navigate("/completeProfile", {
+  //       state: { data: googleResponse.data },
+  //     });
+  //   }
+  // };
 
   //     console.log("Google User Data:", data);
   //     const user = users.find((user) => user.email === data.email);

@@ -45,11 +45,11 @@ const PreviewForm = ({
   const [alert, setAlert] = useState(null);
   const wrapperRef = useRef(null);
   const recoveryCtx = useContext(RecoveryContext);
-  const{setTeamCode,setTeamName}=recoveryCtx;
-  const [teamCodeData,SetTeamCodeData]=useState({
-    teamCode :'',
-    teamName:'' 
-  })
+  const { setTeamCode, setTeamName } = recoveryCtx;
+  const [teamCodeData, SetTeamCodeData] = useState({
+    teamCode: "",
+    teamName: "",
+  });
 
   // console.log("data", eventData);
   // console.log("sections", sections);
@@ -164,9 +164,10 @@ const PreviewForm = ({
     setdata(newSections);
   };
 
+  console.log(data);
   const handleSubmit = async () => {
     const formData = new FormData();
-
+    console.log("filled form data::", data);
     data.forEach((section) => {
       if (isCompleted.includes(section._id)) {
         formData.append(`_id`, section._id);
@@ -178,62 +179,61 @@ const PreviewForm = ({
         });
       }
     });
+    console.log("filled Form data is :::::", formData);
 
-console.log("team code in recovery context:",recoveryCtx.teamCode)
+    console.log("team code in recovery context:", recoveryCtx.teamCode);
 
+    // try {
+    //   setIsLoading(true); // Set loading state
+    //   setIsMicroLoading(true); // Set micro loading state
 
-    try {
-      setIsLoading(true); // Set loading state
-      setIsMicroLoading(true); // Set micro loading state
-      const response = await api.post("/api/form/register", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+    //   const response = await api.post("/api/form/register", formData, {
+    //     headers: {
+    //       "Content-Type": "multipart/form-data",
+    //     },
+    //   });
 
-      if (response.status === 200 || response.status === 201) {
-     
-        setAlert({
-          type: "success",
-          message: "Form submitted successfully!",
-          position: "bottom-right",
-          duration: 3000,
-        });
-        handleClose();
-        setIsSuccess(true);
-        if (response.data.team) {
-          const { teamName, teamCode } = response.data.team;
-        
-          SetTeamCodeData((prevData) => ({
-            ...prevData,
-            teamCode: teamCode,
-            teamName: teamName
-          }));
-        }
-  
-      } else {
-        setAlert({
-          type: "error",
-          message: "There was an error submitting the form. Please try again.",
-          position: "bottom-right",
-          duration: 3000,
-        });
-        setIsSuccess(false);
-        throw new Error("Unexpected response status");
-      }
-    } catch (error) {
-      console.error("Form submission error:", error);
-      setAlert({
-        type: "error",
-        message: "There was an error submitting the form. Please try again.",
-        position: "bottom-right",
-        duration: 3000,
-      });
-      setIsSuccess(false);
-    } finally {
-      setIsLoading(false);
-      setIsMicroLoading(false);
-    }
+    //   if (response.status === 200 || response.status === 201) {
+    //     setAlert({
+    //       type: "success",
+    //       message: "Form submitted successfully!",
+    //       position: "bottom-right",
+    //       duration: 3000,
+    //     });
+    //     handleClose();
+    //     setIsSuccess(true);
+    //     if (response.data.team) {
+    //       const { teamName, teamCode } = response.data.team;
+
+    //       SetTeamCodeData((prevData) => ({
+    //         ...prevData,
+    //         teamCode: teamCode,
+    //         teamName: teamName,
+    //       }));
+    //     }
+    //   } else {
+    //     setAlert({
+    //       type: "error",
+    //       message: "There was an error submitting the form. Please try again.",
+    //       position: "bottom-right",
+    //       duration: 3000,
+    //     });
+    //     setIsSuccess(false);
+    //     throw new Error("Unexpected response status");
+    //   }
+    // } catch (error) {
+    //   console.error("Form submission error:", error);
+    //   setAlert({
+    //     type: "error",
+    //     message: "There was an error submitting the form. Please try again.",
+    //     position: "bottom-right",
+    //     duration: 3000,
+    //   });
+    //   setIsSuccess(false);
+    // } finally {
+    //   setIsLoading(false);
+    //   setIsMicroLoading(false);
+    // }
   };
 
   useEffect(() => {
@@ -350,10 +350,9 @@ console.log("team code in recovery context:",recoveryCtx.teamCode)
     if (isHavingFieldValidations.length > 0) {
       const isMatched = isHavingFieldValidations.find((valid) => {
         return currentSection.fields?.find((fld) => {
-          return fld.onChangeValue === valid.values;
+          return fld?.onChangeValue?.trim() === valid?.values?.trim();
         });
       });
-
       nextSection = isMatched ? isMatched?.onNext : nextSection;
       backSection = isMatched ? isMatched?.onBack : backSection;
     }
@@ -379,6 +378,7 @@ console.log("team code in recovery context:",recoveryCtx.teamCode)
     }
 
     const { nextSection } = inboundList();
+
     if (nextSection) {
       setisCompleted((prev) => [...prev, currentSection._id]);
       setactiveSection(nextSection);
@@ -400,7 +400,6 @@ console.log("team code in recovery context:",recoveryCtx.teamCode)
 
   const renderPaymentScreen = () => {
     const { eventType, receiverDetails, eventAmount } = eventData;
-    console.log(receiverDetails.media)
 
     const getMediaUrl = (media) => {
       if (media instanceof File) {
@@ -423,7 +422,6 @@ console.log("team code in recovery context:",recoveryCtx.teamCode)
           }}
         >
           {receiverDetails.media && (
-           
             <img
               src={getMediaUrl(receiverDetails.media)}
               alt={"QR-Code"}
@@ -468,14 +466,20 @@ console.log("team code in recovery context:",recoveryCtx.teamCode)
     <>
       open && (
       <div className={styles.mainPreview}>
+      <div className={styles.previewContainerWrapper}>
         <div ref={wrapperRef} className={styles.previewContainer}>
-          {showCloseBtn && (
-            <Link onClick={handleClose} to="/Events">
-              <div className={styles.closeBtn}>
+          {showCloseBtn &&
+            (handleClose ? (
+              <div onClick={handleClose} className={styles.closeBtn}>
                 <X />
               </div>
-            </Link>
-          )}
+            ) : (
+              <Link onClick={handleClose} to="/Events">
+                <div className={styles.closeBtn}>
+                  <X />
+                </div>
+              </Link>
+            ))}
           <Text
             style={{
               marginBottom: "20px",
@@ -517,7 +521,13 @@ console.log("team code in recovery context:",recoveryCtx.teamCode)
               </div>
               {renderPaymentScreen()}
               <Section section={currentSection} handleChange={handleChange} />
-              <div style={{ display: "flex", flexDirection: "row", justifyContent: "center"}}>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "center",
+                }}
+              >
                 {inboundList() && inboundList().backSection && (
                   <Button style={{ marginRight: "10px" }} onClick={onBack}>
                     Back
@@ -591,6 +601,7 @@ console.log("team code in recovery context:",recoveryCtx.teamCode)
               </Text>
             </div>
           )}
+        </div>
         </div>
       </div>
       )

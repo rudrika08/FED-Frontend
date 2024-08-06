@@ -181,7 +181,7 @@ const EditProfile = ({ handleModalClose }) => {
                             fontSize: "15px",
                           }}
                           placeholder="Enter your roll"
-                          type="number"
+                          type="text"
                           value={data.rollNumber}
                           className={styles.vals}
                           onChange={(e) =>
@@ -201,11 +201,11 @@ const EditProfile = ({ handleModalClose }) => {
                           name={data.year}
                           className={styles.vals}
                           options={[
-                            { label: "1st Year", value: "1" },
-                            { label: "2nd Year", value: "2" },
-                            { label: "3rd Year", value: "3" },
-                            { label: "4th Year", value: "4" },
-                            { label: "5th Year", value: "5" },
+                            { label: "1st Year", value: "1st" },
+                            { label: "2nd Year", value: "2nd" },
+                            { label: "3rd Year", value: "3rd" },
+                            { label: "4th Year", value: "4th" },
+                            { label: "5th Year", value: "5th" },
                             { label: "Passout", value: "Passout" },
                           ]}
                           value={data.year}

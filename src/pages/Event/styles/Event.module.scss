@@ -59,7 +59,7 @@
 }
 
 .ring2 {
-  left: -6.4rem;
+  left: -6.5rem;
   top: 0.6rem;
 }
 
@@ -142,7 +142,7 @@
   // justify-content: space-around;
   // margin-left: -4rem;
   // margin-top: -5rem;
-  column-gap:5.5rem;
+  column-gap:3.5rem;
   row-gap: 5.5rem;
 }
 
@@ -183,10 +183,10 @@
   color: transparent;
   background-clip: text;
   cursor: pointer;
-  margin-left:2rem;
+  margin-left:-7rem;
   // margin-right: 1rem;
   // margin-top: 1rem;
-  // margin-bottom: 1rem;
+  // margin-bottom: 5rem;
 }
 
 .seeall {
@@ -324,6 +324,16 @@
     font-weight: 400;
     margin-bottom: 10px;
   }
+
+  .seeall{
+    text-align: center;
+    margin-left: 1rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .bottom{
+    height: 4rem;
+  }
 }
 
 @media (min-width: 600px) {
@@ -357,5 +367,13 @@
   .cardone{
     margin-left: 2rem;
   }
+
+
   
+}
+
+@media (max-width: 560px) {
+  .seeall{
+    margin-top: 1.5rem;
+  }
 }

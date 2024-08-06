@@ -22,6 +22,8 @@ const AuthContext = React.createContext({
     access: "",
     editPorfileCount: "",
     regForm: [],
+    blurhash: "",
+    token: "",
   },
   target: null,
   isAdmin: false,
@@ -111,6 +113,7 @@ export const AuthContextProvider = (props) => {
     regForm,
     access,
     editPorfileCount,
+    blurhash,
     token,
     expirationTime
   ) => {
@@ -132,6 +135,8 @@ export const AuthContextProvider = (props) => {
       access: access,
       editPorfileCount: editPorfileCount,
       regForm: regForm,
+      blurhash: blurhash,
+      token: token,
     };
 
     localStorage.setItem("user", JSON.stringify(setuserdata));
@@ -162,7 +167,9 @@ export const AuthContextProvider = (props) => {
     designation,
     access,
     editPorfileCount,
-    regForm
+    regForm,
+    blurhash,
+    token
   ) => {
     console.log("update handler is called");
     const setuserdata = {
@@ -182,6 +189,8 @@ export const AuthContextProvider = (props) => {
       access: access,
       editPorfileCount: editPorfileCount,
       regForm: regForm,
+      blurhash: blurhash,
+      token: token
     };
 
     localStorage.setItem("user", JSON.stringify(setuserdata));

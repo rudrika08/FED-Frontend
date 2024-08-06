@@ -144,6 +144,18 @@
   background-clip: text;
   margin-bottom: 10px;
   margin-top: 10px;
+  white-space: nowrap; /* Prevent line breaks */
+  // overflow: hidden; /* Hide overflow */
+  // text-overflow:ellipsis;
+}
+
+.eventTitle{
+  // width: 10rem;
+  font-size: 1.2rem;
+  // margin-left: -5px;
+  white-space: nowrap; /* Prevent line breaks */
+  overflow: hidden; /* Hide overflow */
+  text-overflow:ellipsis;
 }
 
 .eventname p {
