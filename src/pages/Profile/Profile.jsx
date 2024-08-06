@@ -48,7 +48,11 @@ const Profile = () => {
             response.data.user.access,
             response.data.user.regForm
           );
-        } else {
+        }
+        else if(response.status === 404) {
+          // log out the user
+        }
+        else {
           console.log(response.status);
         }
       }
