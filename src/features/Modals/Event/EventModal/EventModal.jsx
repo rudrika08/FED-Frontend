@@ -23,6 +23,8 @@ import {
   ComponentLoading,
 } from "../../../../microInteraction";
 import { api } from "../../../../services";
+import eventDefaultImg from "../../../../assets/images/defaultEventModal.png"
+import { parse, formatDistanceToNow } from 'date-fns';
 
 const EventModal = (props) => {
   const { onClosePath } = props;
@@ -133,29 +135,37 @@ const EventModal = (props) => {
 
   const formattedDate = `${dayWithSuffix} ${month}`;
 
+ 
+
   const calculateRemainingTime = () => {
-    const regStartDate = new Date(info.regDateAndTime);
+    // Example date string in your format
+    if(info.regDateAndTime){
+  
+    // Parse the date string into a Date object
+    const regStartDate = parse(dateStr, "MMMM d'th' yyyy, hh:mm:ss a", new Date());
+  
     const now = new Date();
     const timeDifference = regStartDate - now;
-
+  
     if (timeDifference <= 0) {
       setRemainingTime(null);
       return;
     }
-
+  
     const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
     const hours = Math.floor((timeDifference / (1000 * 60 * 60)) % 24);
     const minutes = Math.floor((timeDifference / (1000 * 60)) % 60);
     const seconds = Math.floor((timeDifference / 1000) % 60);
-
+  
     const remaining = [
       days > 0 ? `${days}d ` : "",
       hours > 0 ? `${hours}h ` : "",
       minutes > 0 ? `${minutes}m ` : "",
       seconds > 0 ? `${seconds}s` : "",
     ].join("");
-
+  
     setRemainingTime(remaining.trim());
+  }
   };
 
   // Update button text based on registration status and remaining time
@@ -320,7 +330,11 @@ const EventModal = (props) => {
                         src=  {info.eventImg}
                         className={EventCardModal.img}
                         alt="Event"
-                      />:"Error in loading Image "}
+                      />:<img
+                      src=  {eventDefaultImg}
+                      className={EventCardModal.img}
+                      alt="Event"
+                    />}
                       <div className={EventCardModal.date}>{formattedDate}</div>
                       {info.ongoingEvent && (
                         <div

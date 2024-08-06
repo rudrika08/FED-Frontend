@@ -470,6 +470,7 @@ console.log("team code in recovery context:",recoveryCtx.teamCode)
     <>
       open && (
       <div className={styles.mainPreview}>
+      <div className={styles.previewContainerWrapper}>
         <div ref={wrapperRef} className={styles.previewContainer}>
           {showCloseBtn && (
             <Link onClick={handleClose} to="/Events">
@@ -593,6 +594,7 @@ console.log("team code in recovery context:",recoveryCtx.teamCode)
               </Text>
             </div>
           )}
+        </div>
         </div>
       </div>
       )
