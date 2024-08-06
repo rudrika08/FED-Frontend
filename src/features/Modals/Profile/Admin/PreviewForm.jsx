@@ -520,7 +520,7 @@ const PreviewForm = ({
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
-                marginLeft: "20rem",
+                marginLeft: "0rem",
                 marginTop: "5rem",
               }}
             />
