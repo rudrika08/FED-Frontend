@@ -354,6 +354,7 @@ function NewForm() {
       if (isEditing) {
         form.append("id", authCtx.eventData?.id);
       }
+
       if (data._id) {
         delete data._id;
       }
@@ -370,7 +371,7 @@ function NewForm() {
             }
           );
 
-          if (response.status === 200) {
+          if (response.status === 200 || response.status === 201) {
             setAlert({
               type: "success",
               message: "Form updated successfully",
@@ -404,7 +405,7 @@ function NewForm() {
             },
           });
 
-          if (response.status === 200) {
+          if (response.status === 200 || response.status === 201) {
             setAlert({
               type: "success",
               message: "Form saved successfully",
@@ -702,6 +703,13 @@ function NewForm() {
             value: "Upload Payment Screenshot",
             isRequired: true,
             validations: [],
+          },
+          {
+            _id: nanoid(),
+            name: "T&C Acceptance",
+            type: "checkbox",
+            value: "Accept Terms & Conditions",
+            isRequired: true,
           },
         ],
       });
@@ -1229,12 +1237,9 @@ function NewForm() {
           >
             Sections
           </Text>
-          <Button onClick={handleSaveSection}>
-            {isLoading ? <MicroLoading /> : "Save"}
-          </Button>
           <Button
             variant="secondary"
-            style={{ marginLeft: "12px" }}
+            style={{ marginLeft: "auto" }}
             onClick={onAddSection}
           >
             Add Section
@@ -1266,7 +1271,7 @@ function NewForm() {
             open={showPreview}
             handleClose={() => setshowPreview(false)}
             sections={constructForPreview()}
-            eventData={data}
+            eventData={{ ...data, _id: authCtx.eventData?.id }}
             meta={paymentSection ? [paymentSection] : []}
             showCloseBtn={true}
           />
