@@ -75,16 +75,12 @@
   // overflow: hidden;
 }
 
-
 .ArrowBackIcon {
   position: absolute;
-  top: 1.5%;
-  left: 15px;
+  top: 5%;
+  left: 30px;
   color: #fff;
   cursor: pointer;
-  padding-top: 10px;
-  padding-left: -10px;
-  margin-right: 20px;
 }
 
 .divider{
@@ -148,6 +144,24 @@
   }
 }
 
+@media (max-width: 800px) {
+  .circle {
+    height: 15rem;
+    width: 8rem;
+    top: 30%;
+    left: 0%;
+    z-index: 0;
+  }
+
+  .circle1 {
+    height: 15rem;
+    width: 10rem;
+    top: 10%;
+    right: -10%;
+
+    // overflow: hidden;
+  }
+}
 @media (max-width: 500px) {
   .container {
     flex-direction: column;
@@ -164,7 +178,7 @@
 
   .circle {
     height: 15rem;
-    width: 15rem;
+    width: 8rem;
     top: 30%;
     left: 0%;
     z-index: 0;
@@ -172,7 +186,7 @@
 
   .circle1 {
     height: 15rem;
-    width: 15rem;
+    width: 10rem;
     top: 10%;
     right: -10%;
 
