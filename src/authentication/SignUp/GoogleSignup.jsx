@@ -83,7 +83,7 @@ export default function GoogleSignup({ setAlert }) {
 
           setAlert({
             type: "success",
-            message: "User Already Registered! Logged In successfully",
+            message: response.status === 200 ?"User Already Registered! Logged In successfully":"User Registered! Logged In successfully",
             position: "bottom-right",
             duration: 3000,
           });

@@ -86,11 +86,11 @@ export default function GoogleLogin() {
           console.log(response);
           const user = response.data.user;
 
-          setAlert({
+           setAlert({
             type: "success",
-            message: "Login successful",
+            message: response.status === 200 ?"Login successful":"Registration successful",
             position: "bottom-right",
-            duration: 2800,
+            duration: 3000,
           });
 
           setNavigatePath(sessionStorage.getItem("prevPage") || "/");
