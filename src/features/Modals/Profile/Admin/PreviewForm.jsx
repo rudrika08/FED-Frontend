@@ -164,78 +164,7 @@ const PreviewForm = ({
     setdata(newSections);
   };
 
-  console.log(data);
-  const handleSubmit = async () => {
-    const formData = new FormData();
-    console.log("filled form data::", data);
-    data.forEach((section) => {
-      if (isCompleted.includes(section._id)) {
-        formData.append(`_id`, section._id);
-        formData.append(`name`, section.name);
-        section.fields.forEach((fld) => {
-          formData.append("field_id", fld._id);
-          formData.append("field_name", fld.name);
-          formData.append("field_value", fld.onChangeValue);
-        });
-      }
-    });
-    console.log("filled Form data is :::::", formData);
-
-    console.log("team code in recovery context:", recoveryCtx.teamCode);
-
-    // try {
-    //   setIsLoading(true); // Set loading state
-    //   setIsMicroLoading(true); // Set micro loading state
-
-    //   const response = await api.post("/api/form/register", formData, {
-    //     headers: {
-    //       "Content-Type": "multipart/form-data",
-    //     },
-    //   });
-
-    //   if (response.status === 200 || response.status === 201) {
-    //     setAlert({
-    //       type: "success",
-    //       message: "Form submitted successfully!",
-    //       position: "bottom-right",
-    //       duration: 3000,
-    //     });
-    //     handleClose();
-    //     setIsSuccess(true);
-    //     if (response.data.team) {
-    //       const { teamName, teamCode } = response.data.team;
-
-    //       SetTeamCodeData((prevData) => ({
-    //         ...prevData,
-    //         teamCode: teamCode,
-    //         teamName: teamName,
-    //       }));
-    //     }
-    //   } else {
-    //     setAlert({
-    //       type: "error",
-    //       message: "There was an error submitting the form. Please try again.",
-    //       position: "bottom-right",
-    //       duration: 3000,
-    //     });
-    //     setIsSuccess(false);
-    //     throw new Error("Unexpected response status");
-    //   }
-    // } catch (error) {
-    //   console.error("Form submission error:", error);
-    //   setAlert({
-    //     type: "error",
-    //     message: "There was an error submitting the form. Please try again.",
-    //     position: "bottom-right",
-    //     duration: 3000,
-    //   });
-    //   setIsSuccess(false);
-    // } finally {
-    //   setIsLoading(false);
-    //   setIsMicroLoading(false);
-    // }
-  };
-
+  // console.log(data);
   useEffect(() => {
     if (isSuccess) {
       const handleAutoClose = () => {
@@ -368,6 +297,100 @@ const PreviewForm = ({
     };
   };
 
+  const constructToSave = () => {
+    const newSections = [...data, ...meta];
+    return newSections.map((section) => {
+      if (
+        (section !== null && isCompleted.includes(section._id)) ||
+        (section !== null && currentSection._id === section._id)
+      ) {
+        return {
+          _id: section._id,
+          name: section.name,
+          fields: section.fields.map((field) => {
+            return {
+              _id: field._id,
+              name: field.name,
+              type: field.type,
+              value: field.onChangeValue,
+            };
+          }),
+        };
+      }
+    });
+  };
+
+  const handleSubmit = async () => {
+    const formData = new FormData();
+    const isCreateTeam = data.some(
+      (sec) =>
+        (sec.name === "Create Team" && currentSection._id === sec._id) ||
+        (sec.name === "Create Team" && isCompleted.includes(sec._id))
+    );
+    const isJoinTeam = data.some(
+      (sec) =>
+        (sec.name === "Join Team" && currentSection._id === sec._id) ||
+        (sec.name === "Join Team" && isCompleted.includes(sec._id))
+    );
+
+    formData.append("_id", eventData._id);
+    formData.append("sections", JSON.stringify(constructToSave()));
+    formData.append("createTeam", isCreateTeam);
+    formData.append("joinTeam", isJoinTeam);
+
+    try {
+      setIsLoading(true); // Set loading state
+      setIsMicroLoading(true); // Set micro loading state
+
+      const response = await api.post("/api/form/register", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      if (response.status === 200 || response.status === 201) {
+        setAlert({
+          type: "success",
+          message: "Form submitted successfully!",
+          position: "bottom-right",
+          duration: 3000,
+        });
+        handleClose();
+        setIsSuccess(true);
+        if (response.data.team) {
+          const { teamName, teamCode } = response.data.team;
+
+          SetTeamCodeData((prevData) => ({
+            ...prevData,
+            teamCode: teamCode,
+            teamName: teamName,
+          }));
+        }
+      } else {
+        setAlert({
+          type: "error",
+          message: "There was an error submitting the form. Please try again.",
+          position: "bottom-right",
+          duration: 3000,
+        });
+        setIsSuccess(false);
+        throw new Error("Unexpected response status");
+      }
+    } catch (error) {
+      console.error("Form submission error:", error);
+      setAlert({
+        type: "error",
+        message: "There was an error submitting the form. Please try again.",
+        position: "bottom-right",
+        duration: 3000,
+      });
+      setIsSuccess(false);
+    } finally {
+      setIsLoading(false);
+      setIsMicroLoading(false);
+    }
+  };
+
   const onNext = () => {
     if (!currentSection) {
       return false;
@@ -497,7 +520,7 @@ const PreviewForm = ({
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
-                marginLeft: "20rem",
+                marginLeft: "0rem",
                 marginTop: "5rem",
               }}
             />
