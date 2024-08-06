@@ -91,7 +91,7 @@ export default function GoogleSignup({ setAlert }) {
           sessionStorage.removeItem("prevPage"); // Clean up
 
           setTimeout(() => {
-            // localStorage.setItem("token",response.data.token);
+            localStorage.setItem("token",response.data.token);
             authCtx.login(
               user.name,
               user.email,
