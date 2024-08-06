@@ -24,7 +24,7 @@ import {
 } from "../../../../microInteraction";
 import { api } from "../../../../services";
 import eventDefaultImg from "../../../../assets/images/defaultEventModal.png"
-import { parse, formatDistanceToNow } from 'date-fns';
+// import { parse, formatDistanceToNow } from 'date-fns';
 
 const EventModal = (props) => {
   const { onClosePath } = props;
