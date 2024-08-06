@@ -23,6 +23,7 @@ import {
   ComponentLoading,
 } from "../../../../microInteraction";
 import { api } from "../../../../services";
+import eventDefaultImg from "../../../../assets/images/defaultEventModal.png"
 
 const EventModal = (props) => {
   const { onClosePath } = props;
@@ -320,7 +321,11 @@ const EventModal = (props) => {
                         src=  {info.eventImg}
                         className={EventCardModal.img}
                         alt="Event"
-                      />:"Error in loading Image "}
+                      />:<img
+                      src=  {eventDefaultImg}
+                      className={EventCardModal.img}
+                      alt="Event"
+                    />}
                       <div className={EventCardModal.date}>{formattedDate}</div>
                       {info.ongoingEvent && (
                         <div

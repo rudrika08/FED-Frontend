@@ -223,6 +223,7 @@ const SignUp = () => {
 
         if (response.status == 200 || response.status == 201) {
           // setLoad(false);
+          localStorage.setItem("token",response.data.token);
           console.log(response);
           authCtx.login(
             response.data.user.name,
@@ -257,6 +258,12 @@ const SignUp = () => {
 
       // Handle successful verification
     } else {
+      setAlert({
+        type: "error",
+        message: "Validation Failed! Enter Valid OTP",
+        position: "bottom-right",
+        duration: 3000,
+      });
       console.log("Enter valid Otp");
     }
   };

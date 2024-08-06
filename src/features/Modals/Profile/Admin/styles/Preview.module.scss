@@ -15,10 +15,7 @@
 
 
 
-.previewContainer {
-  display: flex;
-  flex-direction: column;
-  align-items: start;
+.previewContainerWrapper {
   background: linear-gradient(
     90deg,
     rgba(32, 32, 32, 0.95) -11.52%,
@@ -28,29 +25,46 @@
   backdrop-filter: blur(4px);
   border: 1.2px solid rgba(214, 214, 214, 0.81);
   width: 35rem;
-  padding: 1.6em;
   height: 90%;
   margin: auto;
   z-index: 100;
   overflow: hidden;
-  overflow-y: scroll;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.previewContainer {
+  width: 100%;
+  height: 100%;
+  padding: 1.6em;
+  overflow-y: auto;
+  overflow-x: hidden; /* Added to prevent horizontal overflow */
 }
 
 .previewContainer::-webkit-scrollbar {
   width: 6px;
-  // overflow: hidden;
 }
+
 .previewContainer::-webkit-scrollbar-thumb {
   background: #888;
   border-radius: 10px;
 }
+
 .previewContainer::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
 
+/* Optional: Add padding to the content to avoid overlapping with the scrollbar */
+.previewContainer > * {
+  padding-right: 1rem; /* Adjust as needed */
+}
+
+
 .closeBtn{
   position: absolute;
   width: 95%;
+  right: 15px;
   display: flex;
   justify-content: flex-end;
   color: #fff;
@@ -67,11 +81,13 @@
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: center;
+  // justify-content: center;
   // justify-content: space-evenly;
   column-gap: 3rem;
   width: 100%;
   padding: 1em;
+  padding-left: 2rem;
+  row-gap: 1rem;
   border-radius: 8px;
   border: 0.5px solid transparent;
   background-color: rgba(128, 127, 126, 0.066);
