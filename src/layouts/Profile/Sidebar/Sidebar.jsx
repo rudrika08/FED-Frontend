@@ -35,7 +35,7 @@ const Sidebar = ({ activepage, handleChange }) => {
   }, [authCtx.user.access]);
 
   const handleLogout = () => {
-    navigate("/Login");
+    navigate("/");
     authCtx.logout();
   };
 

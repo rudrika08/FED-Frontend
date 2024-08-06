@@ -6,7 +6,7 @@ let headers = {
 };
 
 if (localStorage.token) {
-    headers.Authorization = `Bearer ${localStorage.token}`;
+    headers.Authorization = `Bearer ${localStorage.getItem('token')}`;
 }
 
 const axiosClient = axios.create({
