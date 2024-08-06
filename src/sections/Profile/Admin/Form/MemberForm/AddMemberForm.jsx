@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext,useRef } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import axios from "axios";
 import styles from "./styles/AddMemberForm.module.scss";
 import { Button, Input } from "../../../../../components";
@@ -6,6 +6,10 @@ import AccessTypes from "../../../../../data/Access.json";
 import AuthContext from "../../../../../context/AuthContext";
 import { api } from "../../../../../services";
 import { EditImage } from "../../../../../features";
+import {
+  ComponentLoading,
+  MicroLoading,
+} from "../../../../../microInteraction";
 // import {api} from "../../../../../services"
 
 function AddMemberForm() {
@@ -17,19 +21,21 @@ function AddMemberForm() {
     img: "",
     linkedin: "",
     github: "",
-    title: "",
-    know: ""
+    designation: "",
+    know: "",
   });
-  const [selectedFileName,setFileName]=useState(null);
-  const [croppedImageFile,setCroppedFile]=useState(null);
+  const [selectedFileName, setFileName] = useState(null);
+  const [croppedImageFile, setCroppedFile] = useState(null);
   const [selectedFile, setSelectedFile] = useState(null);
   const [imagePrv, setImagePrv] = useState(null);
+  const [isloading, setIsLoading] = useState(false);
+  const [isMicroLoading, setIsMicroLoading] = useState(false);
+  const [accessTypes, setAccessTypes] = useState([]);
   const imgRef = useRef(null);
   const [openModal, setOpenModal] = useState(false);
 
   useEffect(() => {
     if (authCtx.memberData) {
-
       setData({
         name: authCtx.memberData.name || "",
         email: authCtx.memberData.email || "",
@@ -37,22 +43,20 @@ function AddMemberForm() {
         img: authCtx.memberData.img || "",
         linkedin: authCtx.memberData?.extra?.linkedin || "",
         github: authCtx.memberData?.extra?.github || "",
-        title: authCtx.memberData?.extra?.title || "",
-        know: authCtx.memberData?.extra?.know || ""
+        designation: authCtx.memberData?.extra?.designation || "",
+        know: authCtx.memberData?.extra?.know || "",
       });
     }
   }, [authCtx.memberData]);
 
-  useEffect(()=>{
-    if(authCtx.croppedImageFile){
+  useEffect(() => {
+    if (authCtx.croppedImageFile) {
       // setSelectedFile(authCtx.croppedImageFile);
       const file = authCtx.croppedImageFile;
       setCroppedFile(authCtx.croppedImageFile);
       setData({ ...data, img: file.name });
     }
-  },[authCtx.croppedImageFile])
-
-  const [accessTypes, setAccessTypes] = useState([]);
+  }, [authCtx.croppedImageFile]);
 
   useEffect(() => {
     fetchAccessTypes();
@@ -78,10 +82,10 @@ function AddMemberForm() {
   const filterData = (data) => {
     const filteredData = {};
     const extra = {};
-
+  
     // Extract and add fields to `extra` if they are present and not empty
-    if (data.title.trim() !== "") {
-      extra.title = data.title;
+    if (data.designation.trim() !== "") {
+      extra.designation = data.designation;
     }
     if (data.github.trim() !== "") {
       extra.github = data.github;
@@ -92,37 +96,42 @@ function AddMemberForm() {
     if (data.know.trim() !== "") {
       extra.know = data.know;
     }
-
+  
     // Add `extra` to `filteredData` if it's not empty
     if (Object.keys(extra).length > 0) {
-      filteredData.extra = extra;
+      filteredData.extra = JSON.stringify(extra); // Convert to JSON string
     }
-
+  
     // Add other fields to `filteredData` if they are present and not empty
     Object.keys(data).forEach((key) => {
-      if (key !== "title" && key !== "github" && key !== "linkedin" && key !== "know" && data[key].trim() !== "") {
+      if (
+        key !== "designation" &&
+        key !== "github" &&
+        key !== "linkedin" &&
+        key !== "know" &&
+        data[key].trim() !== ""
+      ) {
         filteredData[key] = data[key];
       }
     });
-
+  
     return filteredData;
   };
+  
 
   const onAddOrUpdateMember = async () => {
+    setIsMicroLoading(true);
     if (isFormFilled()) {
       try {
-        // setLoading(true);
         const filteredData = filterData(data);
         const formData = new FormData();
   
-       
         for (const key in filteredData) {
           if (key !== "img") {
             formData.append(key, filteredData[key]);
           }
         }
   
-      
         if (croppedImageFile) {
           formData.append("image", croppedImageFile);
         }
@@ -130,8 +139,8 @@ function AddMemberForm() {
         console.log("Member Data", filteredData);
         const response = await api.post("/api/user/addMember", formData, {
           headers: {
-            'Content-Type': 'multipart/form-data'
-          }
+            "Content-Type": "multipart/form-data",
+          },
         });
         console.log("Member added successfully:", response.data.user);
         setData({
@@ -141,15 +150,15 @@ function AddMemberForm() {
           img: "",
           linkedin: "",
           github: "",
-          title: "",
-          know: ""
+          designation: "",
+          know: "",
         });
         alert("Member Added Successfully");
       } catch (error) {
         console.error("Error adding member:", error);
         alert("Failed to add member. Please try again.");
       } finally {
-        setLoading(false);
+        setIsMicroLoading(false);
       }
     } else {
       alert("Please fill all the fields");
@@ -162,29 +171,26 @@ function AddMemberForm() {
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setImagePrv(reader.result); 
+        setImagePrv(reader.result);
       };
       reader.readAsDataURL(file);
       setSelectedFile(file);
-      console.log("File in addmember comp:",croppedImageFile);
+      console.log("File in addmember comp:", croppedImageFile);
       setData({ ...data, img: file.name });
       setFileName(file.name);
       setOpenModal(true);
     }
   };
 
-
   const closeModal = () => {
     setSelectedFile(null);
     setOpenModal(false);
   };
 
-
   const updateImagePreview = (url) => {
     setImagePrv(url);
     // selectedFile(imageFile);
-  }
-  
+  };
 
   return (
     <div className={styles.main}>
@@ -219,26 +225,26 @@ function AddMemberForm() {
           value={data.access}
           onChange={(value) => setData({ ...data, access: value })}
         />
-           <div className={styles.imageInputContainer}>
+        <div className={styles.imageInputContainer}>
           {selectedFile && (
             <EditImage
               selectedFile={selectedFile}
               setFile={setCroppedFile}
               closeModal={closeModal}
               setimgprv={updateImagePreview} // Pass the updated function
-              fileName = {selectedFileName}
+              fileName={selectedFileName}
               // setImgFile={setCroppedFile}
             />
           )}
 
-{imagePrv &&
-          <div className={styles.imagePreview}>
-             <img src={imagePrv} alt="Preview" className={styles.image} />
-          </div>
-        }
+          {imagePrv && (
+            <div className={styles.imagePreview}>
+              <img src={imagePrv} alt="Preview" className={styles.image} />
+            </div>
+          )}
           <Input
             placeholder="Enter Member Image File"
-            style={{"cursor":"pointer"}}
+            style={{ cursor: "pointer" }}
             onClick={(e) => {
               e.stopPropagation();
               imgRef.current?.click();
@@ -246,7 +252,7 @@ function AddMemberForm() {
             type="text"
             label="Image"
             className={styles.memberInput}
-            containerStyle={{ width: imagePrv?"90%":"100%" }}
+            containerStyle={{ width: imagePrv ? "90%" : "100%" }}
             value={data.img}
             onChange={(e) => setData({ ...data, img: croppedImageFile })}
           />
@@ -280,11 +286,11 @@ function AddMemberForm() {
       </div>
       <div className={styles.formHead}>
         <Input
-          placeholder="Enter Title"
+          placeholder="Enter Designation"
           type="text"
-          label="Title"
-          value={data.title}
-          onChange={(e) => setData({ ...data, title: e.target.value })}
+          label="Designation"
+          value={data.designation}
+          onChange={(e) => setData({ ...data, designation: e.target.value })}
           className={styles.memberInput}
           containerStyle={{ width: "100%" }}
         />
@@ -300,7 +306,13 @@ function AddMemberForm() {
       </div>
       <div className={styles.formHead}>
         <Button onClick={onAddOrUpdateMember}>
-          {authCtx.memberData ? "Update Member" : "Add Member"}
+          {isMicroLoading ? (
+            <MicroLoading />
+          ) : authCtx.memberData ? (
+            "Update Member"
+          ) : (
+            "Add Member"
+          )}
         </Button>
       </div>
     </div>

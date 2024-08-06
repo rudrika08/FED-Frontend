@@ -166,7 +166,7 @@ const PreviewForm = ({
 
   const handleSubmit = async () => {
     const formData = new FormData();
-
+    console.log("filled form data::",data);
     data.forEach((section) => {
       if (isCompleted.includes(section._id)) {
         formData.append(`_id`, section._id);
@@ -178,12 +178,14 @@ const PreviewForm = ({
         });
       }
     });
+    console.log("filled Form data is :::::",formData)
 
     console.log("team code in recovery context:", recoveryCtx.teamCode);
 
     try {
       setIsLoading(true); // Set loading state
       setIsMicroLoading(true); // Set micro loading state
+    
       const response = await api.post("/api/form/register", formData, {
         headers: {
           "Content-Type": "multipart/form-data",

@@ -4,7 +4,7 @@
   border-radius: 10px;
   background: linear-gradient(
     90deg,
-    rgba(32, 32, 32, 0.95) -11.52%,
+    hsla(0, 0%, 13%, 0.95) -11.52%,
     rgba(37, 37, 37, 0.95) 106.29%
   );
   padding: 20px;
@@ -96,6 +96,29 @@
   border: 1px solid #fff;
 }
 
+.dropdown {
+  position: relative;
+  width: 96%;
+  margin-top: 5px;
+  background-color: white;
+  border: 1px solid #ccc;
+  color: black;
+  border-radius: 4px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 2;
+  margin-left: 5px;
+}
+
+.dropdownItem {
+  padding: 10px;
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+}
+
+.dropdownItem:hover {
+  background-color: #202020;
+  color:#f97507;
+}
 
 // @media(min-width:800px){
 //   .container{

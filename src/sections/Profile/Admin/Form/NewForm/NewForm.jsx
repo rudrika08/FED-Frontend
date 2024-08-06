@@ -132,10 +132,6 @@ function NewForm() {
       setsections(authCtx.eventData?.sections);
       setisEditing(true);
     }
-
-    const { info, sections } = dummyForms.events[0];
-    setdata(info);
-    setsections(sections);
   }, []);
 
   useEffect(() => {
@@ -170,72 +166,147 @@ function NewForm() {
 
   const isValidEvent = () => {
     if (!data.eventTitle) {
-      alert("Title is required.");
+      setAlert({
+        type: "error",
+        message: "Event title is required.",
+        position: "bottom-right",
+        duration: 3000,
+      });
       return false;
     }
 
     if (!data.eventImg) {
-      alert("Image is required.");
+      setAlert({
+        type: "error",
+        message: "Event image is required.",
+        position: "bottom-right",
+        duration: 3000,
+      });
       return false;
     }
     if (!data.eventDate) {
-      alert("Event date is required.");
+      setAlert({
+        type: "error",
+        message: "Event date is required.",
+        position: "bottom-right",
+        duration: 3000,
+      });
       return false;
     }
     if (!data.eventType) {
-      alert("Event type is required.");
+      setAlert({
+        type: "error",
+        message: "Event type is required.",
+        position: "bottom-right",
+        duration: 3000,
+      });
       return false;
     }
     if (!data.relatedEvent) {
-      alert("Related event is required.");
+      setAlert({
+        type: "error",
+        message: "Related event is required.",
+        position: "bottom-right",
+        duration: 3000,
+      });
       return false;
     }
     if (!data.participationType) {
-      alert("Participation type is required.");
+      setAlert({
+        type: "error",
+        message: "Participation type is required.",
+        position: "bottom-right",
+        duration: 3000,
+      });
       return false;
     }
     if (!data.eventPriority) {
-      alert("Priority is required.");
+      setAlert({
+        type: "error",
+        message: "Event priority is required.",
+        position: "bottom-right",
+        duration: 3000,
+      });
       return false;
     }
     if (!data.eventdescription) {
-      alert("Description is required.");
+      setAlert({
+        type: "error",
+        message: "Event description is required.",
+        position: "bottom-right",
+        duration: 3000,
+      });
       return false;
     }
     if (!data.successMessage) {
-      alert("Success message is required.");
+      setAlert({
+        type: "error",
+        message: "Success message is required.",
+        position: "bottom-right",
+        duration: 3000,
+      });
       return false;
     }
     if (!data.eventMaxReg) {
-      alert("Maximum registration is required.");
+      setAlert({
+        type: "error",
+        message: "Maximum registration is required.",
+        position: "bottom-right",
+        duration: 3000,
+      });
       return false;
     }
 
     if (data.eventType === "Paid") {
       if (!data.eventAmount) {
-        alert("Amount is required.");
+        setAlert({
+          type: "error",
+          message: "Event amount is required.",
+          position: "bottom-right",
+          duration: 3000,
+        });
         return false;
       }
 
       if (!data.receiverDetails.media) {
-        alert("Media is required.");
+        setAlert({
+          type: "error",
+          message: "Media is required.",
+          position: "bottom-right",
+          duration: 3000,
+        });
         return false;
       }
 
       if (!data.receiverDetails.upi) {
-        alert("UPI is required.");
+        setAlert({
+          type: "error",
+          message: "UPI is required.",
+          position: "bottom-right",
+          duration: 3000,
+        });
         return false;
       }
     }
 
     if (data.participationType === "Team") {
       if (!data.maxTeamSize) {
-        alert("Maximum team size is required.");
+        setAlert({
+          type: "error",
+          message: "Maximum team size is required.",
+          position: "bottom-right",
+          duration: 3000,
+        });
         return false;
       }
 
       if (!data.minTeamSize) {
-        alert("Minimum team size is required.");
+        setAlert({
+          type: "error",
+          message: "Minimum team size is required.",
+          position: "bottom-right",
+          duration: 3000,
+        });
         return false;
       }
     }
@@ -783,7 +854,9 @@ function NewForm() {
             )}
           </div>
 
-          <Button onClick={onSaveEvent}>{isEditing ? "Update" : "Save"}</Button>
+          <Button isLoading={isLoading} onClick={onSaveEvent}>
+            {isEditing ? "Update" : "Save"}
+          </Button>
           <Button isLoading={false} onClick={handlePreview} variant="secondary">
             {showPreview ? "Hide" : "Preview"}
           </Button>

@@ -11,6 +11,7 @@ import { Alert, MicroLoading } from "../../microInteraction";
 import { RecoveryContext } from "../../context/RecoveryContext";
 import { api } from "../../services";
 import AuthContext from "../../context/AuthContext";
+// import { validateData } from "../../utils/hooks/validation/validateSignupData";
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -23,6 +24,7 @@ const SignUp = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [shouldNavigate, setShouldNavigate] = useState(false);
   const [navigatePath, setNavigatePath] = useState("/");
+  const [showDropdown, setShowDropdown] = useState(false);
   const authCtx = useContext(AuthContext);
 
   const [showUser, setUser] = useState({
@@ -57,12 +59,85 @@ const SignUp = () => {
   }, [shouldNavigate, navigatePath, navigate]);
 
   const DataInp = (name, value) => {
+    if (name === "college" && value.toLowerCase().startsWith("k")) {
+      setShowDropdown(true);
+    } else {
+      setShowDropdown(false);
+    }
     setUser({ ...showUser, [name]: value });
+  };
+
+  const handleSelectCollege = () => {
+    setUser({
+      ...showUser,
+      college: "Kalinga Institute of Industrial Technology",
+    });
+    setShowDropdown(false);
+  };
+
+  const validateData = (data, isTandChecked) => {
+    const errors = [];
+
+    if (!data.FirstName) {
+      errors.push("First Name is required.");
+    }
+
+    if (!data.LastName) {
+      errors.push("Last Name is required.");
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(data.email)) {
+      errors.push("Enter a valid email address.");
+    }
+
+    if (data.contactNo.length < 10 || data.contactNo.length > 12) {
+      errors.push("Contact Number must be between 10 and 12 digits.");
+    }
+
+    if (!data.college) {
+      errors.push("College is required.");
+    }
+
+    if (!data.school) {
+      errors.push("School is required.");
+    }
+
+    if (!data.rollNumber) {
+      errors.push("Roll Number is required.");
+    }
+
+    if (!data.year) {
+      errors.push("Year is required.");
+    }
+
+    if (!data.Password) {
+      errors.push("Password is required.");
+    }
+
+    if (!isTandChecked) {
+      errors.push("Please check the terms and conditions.");
+    }
+
+    return errors;
   };
 
   const handleSignUp = async (e) => {
     e.preventDefault();
     setIsLoading(true);
+
+    const validationResult = validateData(showUser, isTandChecked);
+
+    if (validationResult.length > 0) {
+      setAlert({
+        type: "error",
+        message: validationResult.join(" "),
+        position: "bottom-right",
+        duration: 3000,
+      });
+      setIsLoading(false);
+      return;
+    }
 
     const {
       email,
@@ -76,122 +151,77 @@ const SignUp = () => {
       year,
     } = showUser;
 
-    // setEmail(showUser.email);
     const name = FirstName + " " + LastName;
+    const password = bcrypt.hashSync(Password, import.meta.env.VITE_BCRYPT);
+    const user = {
+      name,
+      email,
+      password,
+      rollNumber,
+      school,
+      college,
+      contactNo,
+      year,
+    };
 
-    if (
-      name !== "" &&
-      rollNumber !== "" &&
-      school !== "" &&
-      college !== "" &&
-      contactNo !== "" &&
-      contactNo.length <= 12 &&
-      contactNo.length >= 10 &&
-      email !== "" &&
-      Password !== "" &&
-      year !== "" &&
-      isTandChecked
-    ) {
-      // setLoad(true);
-      const password = bcrypt.hashSync(Password, import.meta.env.VITE_BCRYPT);
-      const user = {
-        name,
-        email,
-        password,
-        rollNumber,
-        school,
-        college,
-        contactNo,
-        year,
-      };
+    setUserObject(user);
 
-      setUserObject(user);
-
-      try {
-        setAlert(
-          {
-          type: "info",
-          message: "Generating Verification OTP.",
-          position: "bottom-right",
-          duration: 3000,}
-        )
-        const response = await api.post('/api/auth/verifyEmail',
-          { email: user.email },
-          { headers: { 'Content-Type': 'application/json' } }
-        );
-
-        if (response.status === 200 || response.status === 201) {
-          console.log("otp generated", response);
-          setAlert(
-            {
-            type: "success",
-            message: "Otp Sent to Email",
-            position: "bottom-right",
-            duration: 3000,}
-          )
-          setShowModal(true);
-        } else {
-          console.log("failed to generate Otp");
-          setAlert(
-            {
-            type: "error",
-            message:response.data.message|| "error in sending otp",
-            position: "bottom-right",
-            duration: 3000,}
-          )
-        }
-
-      } catch (error) {
-        setAlert(
-          {
-          type: "error",
-          message: "Failed to send OTP. Please try again.",
-          position: "bottom-right",
-          duration: 3000,}
-        );
-        console.log("otp from frontend")
-        const OTP = Math.floor(Math.random() * 9000 + 1000);
-        setOTP(OTP);
-        setShowModal(true);
-      }
-      finally {
-        setIsLoading(false);
-      }
-
-    } else {
+    try {
       setAlert({
-        type: "error",
-        message: "Invalid Details! Enter Again",
+        type: "info",
+        message: "Generating Verification OTP. Wait a moment...",
         position: "bottom-right",
         duration: 3000,
       });
 
-      if (!isTandChecked) {
+      setTimeout(() => {
+        setShowModal(true);
+      }, 3000);
+
+      const response = await api.post(
+        "/api/auth/verifyEmail",
+        { email: user.email },
+        { headers: { "Content-Type": "application/json" } }
+      );
+
+      if (response.status === 200 || response.status === 201) {
+        setAlert({
+          type: "success",
+          message: response.data.message || "Otp Sent to Email",
+          position: "bottom-right",
+          duration: 3000,
+        });
+      } else {
         setAlert({
           type: "error",
-          message: "Please check the terms and conditions",
+          message: response.data.message || "Error in sending OTP",
           position: "bottom-right",
           duration: 3000,
         });
       }
+    } catch (error) {
+      setAlert({
+        type: "error",
+        message:
+          error?.response?.data?.message ||
+          "Failed to send OTP. Please try again.",
+        position: "bottom-right",
+        duration: 3000,
+      });
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const handleVerifyOTP = async (enteredOTP) => {
-    // console.log(userObject);
-    // console.log(enteredOTP);
-    // console.log(password);
-    // console.log(enteredOTP === String(OTP))
-    // setShowModal(false);
-
     if (enteredOTP) {
-      console.log(userObject);
-      console.log(enteredOTP);
       try {
-        const response = await api.post('/api/auth/register', { ...userObject, otp: enteredOTP });
+        const response = await api.post("/api/auth/register", {
+          ...userObject,
+          otp: enteredOTP,
+        });
 
         if (response.status == 200 || response.status == 201) {
-
           // setLoad(false);
           console.log(response);
           authCtx.login(
@@ -207,19 +237,22 @@ const SignUp = () => {
             response.data.user.extra?.linkedin,
             response.data.user.extra?.designation,
             response.data.user.regForm,
-            response.data.user.editProfileCount,
             response.data.user.access,
+            response.data.user.editProfileCount,
+            response.data.user.blurhash,
             response.data.token,
             10800000
           );
           console.log(authCtx);
-          navigate('/profile');
-
-
+          navigate("/");
         }
       } catch (error) {
-        console.log(error);
-
+        setAlert({
+          type: "error",
+          message: error?.response?.data?.message || "Enter valid Details",
+          position: "bottom-right",
+          duration: 3000,
+        });
       }
 
       // Handle successful verification
@@ -322,7 +355,7 @@ const SignUp = () => {
                 </div>
                 <div style={{ width: "48%" }}>
                   <Input
-                    type="text"
+                    type="number"
                     placeholder="1234567890"
                     label="Mobile"
                     name="contactNo"
@@ -343,22 +376,26 @@ const SignUp = () => {
               >
                 <div style={{ width: "46%" }}>
                   <Input
-                    type="select"
-                    placeholder="college Name"
+                    type="text"
+                    placeholder="College Name"
                     label="college"
                     name="college"
                     className={styles.input}
-                    options={[
-                      {
-                        label: "Kalinga Institute of Industrial Technology",
-                        value: "Kalinga Institute of Industrial Technology",
-                      },
-                    ]}
                     value={showUser.college}
-                    onChange={(value) => DataInp("college", value)}
+                    onChange={(e) => DataInp(e.target.name, e.target.value)}
                     required
                     style={{ width: "96%" }}
                   />
+                  {showDropdown && (
+                    <div className={styles.dropdown}>
+                      <div
+                        className={styles.dropdownItem}
+                        onClick={handleSelectCollege}
+                      >
+                        Kalinga Institute of Industrial Technology
+                      </div>
+                    </div>
+                  )}
                 </div>
                 <div style={{ width: "48%" }}>
                   <Input

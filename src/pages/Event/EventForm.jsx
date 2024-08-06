@@ -31,7 +31,12 @@ const EventForm = () => {
         console.log("registerForm",response.data)
         if (response.status === 200) {
           const fetchedEvents = response.data.events;
-          setEventData(fetchedEvents[0]);
+        
+          console.log("event id i want ::",id);
+        const filteredEvent = fetchedEvents.find((e)=>e.id===id);
+          
+          setEventData(filteredEvent);
+          console.log("fetched all events:",filteredEvent);
         } else {
           setAlert({
             type: "error",
