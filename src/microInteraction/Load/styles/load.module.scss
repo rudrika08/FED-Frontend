@@ -1,9 +1,8 @@
-// load.module.scss
 @import "../../../assets/styles/Global.scss";
 
-.pageload {
+.pageLoad {
   position: fixed;
-  top: 60%;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 1000;
@@ -12,17 +11,21 @@
   justify-content: center;
   align-items: center;
   width: 100vw;
-  height: 90vh;
+  height: 100vh;
+  overflow: hidden;
   background-color: #1c1c1c; /* Semi-transparent background */
 }
 
-
 @media (max-width: 768px) {
-    .pageload {
-        top: 52%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 100vw;
-        height: 90vh;
-    }
+  .pageLoad {
+    top: 52%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100vw;
+    height: 90vh;
+  }
+}
+
+.noScroll {
+  overflow: hidden;
 }
