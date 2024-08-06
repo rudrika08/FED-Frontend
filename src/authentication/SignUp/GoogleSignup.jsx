@@ -107,6 +107,7 @@ export default function GoogleSignup({ setAlert }) {
               user.regForm,
               user.access,
               user.editProfileCount,
+              user.blurhash,
               response.data.token,
               9600000
             );
@@ -114,12 +115,12 @@ export default function GoogleSignup({ setAlert }) {
         } else {
           // Handle unexpected response status
           console.log("Unexpected backend response status:", response.status);
-          handleFallbackOrCompleteProfile(googleUserData, googleResponse);
+          // handleFallbackOrCompleteProfile(googleUserData, googleResponse);
         }
       } catch (error) {
         // API call error, fallback to local data
         console.error("Backend API call failed:", error);
-        handleFallbackOrCompleteProfile(googleUserData, googleResponse);
+        // handleFallbackOrCompleteProfile(googleUserData, googleResponse);
       }
     } catch (error) {
       console.error("SignUp error:", error);
@@ -134,53 +135,53 @@ export default function GoogleSignup({ setAlert }) {
     }
   };
 
-  const handleFallbackOrCompleteProfile = async (
-    googleUserData,
-    googleResponse
-  ) => {
-    // User does not exist in the backend, use fallback local data
-    console.log("User not registered in backend, using fallback data");
-    const fallbackUser = users.find(
-      (user) => user.email === googleUserData.email
-    );
+  // const handleFallbackOrCompleteProfile = async (
+  //   googleUserData,
+  //   googleResponse
+  // ) => {
+  //   // User does not exist in the backend, use fallback local data
+  //   console.log("User not registered in backend, using fallback data");
+  //   const fallbackUser = users.find(
+  //     (user) => user.email === googleUserData.email
+  //   );
 
-    if (fallbackUser) {
+  //   if (fallbackUser) {
 
-      setAlert({
-        type: "success",
-        message: "User already Registered, Logging In using fallback data",
-        position: "bottom-right",
-        duration: 3000,
-      });
-      setNavigatePath("/");
-      sessionStorage.removeItem("prevPage");
+  //     setAlert({
+  //       type: "success",
+  //       message: "User already Registered, Logging In using fallback data",
+  //       position: "bottom-right",
+  //       duration: 3000,
+  //     });
+  //     setNavigatePath("/");
+  //     sessionStorage.removeItem("prevPage");
 
-      setTimeout(() => {
-        authCtx.login(
-          fallbackUser.name,
-          fallbackUser.email,
-          googleUserData.image,
-          fallbackUser.rollNumber,
-          fallbackUser.school,
-          fallbackUser.college,
-          fallbackUser.contactNo,
-          fallbackUser.year,
-          fallbackUser.github,
-          fallbackUser.linkedin,
-          fallbackUser.designation,
-          fallbackUser.regForm,
-          fallbackUser.access,
-          "someToken",
-          3600000
-        );
-        setShouldNavigate(true);
-      }, 3000);
-    } else {
-      navigate("/completeProfile", {
-        state: { data: googleResponse.data },
-      });
-    }
-  };
+  //     setTimeout(() => {
+  //       authCtx.login(
+  //         fallbackUser.name,
+  //         fallbackUser.email,
+  //         googleUserData.image,
+  //         fallbackUser.rollNumber,
+  //         fallbackUser.school,
+  //         fallbackUser.college,
+  //         fallbackUser.contactNo,
+  //         fallbackUser.year,
+  //         fallbackUser.github,
+  //         fallbackUser.linkedin,
+  //         fallbackUser.designation,
+  //         fallbackUser.regForm,
+  //         fallbackUser.access,
+  //         "someToken",
+  //         3600000
+  //       );
+  //       setShouldNavigate(true);
+  //     }, 3000);
+  //   } else {
+  //     navigate("/completeProfile", {
+  //       state: { data: googleResponse.data },
+  //     });
+  //   }
+  // };
 
   //     console.log("Google User Data:", data);
   //     const user = users.find((user) => user.email === data.email);

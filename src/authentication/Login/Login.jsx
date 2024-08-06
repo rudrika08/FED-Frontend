@@ -95,6 +95,7 @@ const Login = () => {
             user.regForm,
             user.access,
             user.editProfileCount,
+            user.blurhash,
             response.data.token,
             9600000
           );

@@ -164,7 +164,6 @@ function ViewMember() {
           duration: 3000,
         });
         setMembers(members => members.filter(m => m.id !== response.data.user.id));
-        fetchMemberData();
       }
     } catch (error) {
       console.error("Error removing member:", error);

@@ -237,8 +237,9 @@ const SignUp = () => {
             response.data.user.extra?.linkedin,
             response.data.user.extra?.designation,
             response.data.user.regForm,
-            response.data.user.editProfileCount,
             response.data.user.access,
+            response.data.user.editProfileCount,
+            response.data.user.blurhash,
             response.data.token,
             10800000
           );
