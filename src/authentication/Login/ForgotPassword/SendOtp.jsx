@@ -82,7 +82,7 @@ export default function Login() {
     // toast.error(response.error);
     setAlert({
       type: "error",
-      message: error.message,
+      message: error?.response?.data?.message,
       position: "bottom-right",
       duration: 2800,
     });

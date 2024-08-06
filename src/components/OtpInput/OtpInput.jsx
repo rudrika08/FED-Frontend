@@ -73,17 +73,9 @@ const OtpInput = (props) => {
   const resendOTP = async() => {
     
     console.log("inside resendOtp");
-    // axios
-    //   .post("http://localhost:5000/send_recovery_email", { OTP: otp, recipient_email: email })
-    //   .then(() => {
-    //     setDisable(true);
-    //     alert("A new OTP has been sent to your email.");
-    //     setTimer(60);
-    //   })
-    //   .catch(console.error);
-
-    // e.preventDefault(); // Prevent default form submission behavior
 if (disable) return;
+console.log("email",email);
+
 
     if (email) {
 
@@ -124,11 +116,11 @@ if (disable) return;
           setError(response.data.message);
         }
    } catch (error) {
-    console.log(error);
+    console.log("error in input field:",error);
     // toast.error(response.error);
     setAlert({
       type: "error",
-      message: error.message,
+      message: error?.response?.message||"Error in generating otp",
       position: "bottom-right",
       duration: 2800,
     });
@@ -136,15 +128,7 @@ if (disable) return;
    }finally{
     setLoading(false);
    }
-
-    } else {
-      setAlert({
-        type: "error",
-        message: "Please Enter valid Otp",
-        position: "bottom-right",
-        duration: 2800,
-      });
-    }
+  } 
   };
 
   const verifyOTP = () => {
@@ -196,7 +180,7 @@ if (disable) return;
  } catch (error) {
   setAlert({
     type: "error",
-    message: error.message,
+    message: error?.response?.data?.message||"Changing Password Failed",
     position: "bottom-right",
     duration: 2800,
   });

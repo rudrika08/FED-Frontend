@@ -1,13 +1,10 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
-
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import style from "./styles/PastEvent.module.scss";
 import { ChatBot } from "../../features";
 import { EventCard } from "../../components";
 import { api } from "../../services";
-// import EventData from '../../data/eventData.json';
 import FormData from "../../data/FormData.json";
 import { ComponentLoading } from "../../microInteraction";
 
@@ -23,33 +20,34 @@ const PastEvent = () => {
     const fetchPastEvents = async () => {
       try {
         const response = await api.get("/api/form/getAllForms");
-
         if (response.status === 200) {
-          const pastEventData = response.data.filter(
-            (event) => event.info.isEventPast
-          );
-          setPastEvents(pastEventData);
+          const allEvents = response.data.events;
+          // Filter and sort past events
+          const sortedPastEvents = allEvents
+            .filter((event) => event.info.isEventPast)
+            .sort((a, b) => new Date(b.info.eventDate) - new Date(a.info.eventDate));
+          setPastEvents(sortedPastEvents);
         } else {
           setError({
-            message:
-              "Sorry for the inconvenience, we are having issues fetching our Events",
+            message: "Sorry for the inconvenience, we are having issues fetching our Events",
           });
           console.error("Error fetching events:", response.data.message);
-          // using local JSON data
-          const pastEventData = events.filter(
-            (event) => event.info.isEventPast
-          );
-          setPastEvents(pastEventData);
+          // Fallback to local JSON data
+          const sortedPastEvents = events
+            .filter((event) => event.info.isEventPast)
+            .sort((a, b) => new Date(b.info.eventDate) - new Date(a.info.eventDate));
+          setPastEvents(sortedPastEvents);
         }
       } catch (error) {
         setError({
-          message:
-            "Sorry for the inconvenience, we are having issues fetching our Events",
+          message: "Sorry for the inconvenience, we are having issues fetching our Events",
         });
         console.error("Error fetching events:", error);
-        // using local JSON data
-        const pastEventData = events.filter((event) => event.info.isEventPast);
-        setPastEvents(pastEventData);
+        // Fallback to local JSON data
+        const sortedPastEvents = events
+          .filter((event) => event.info.isEventPast)
+          .sort((a, b) => new Date(b.info.eventDate) - new Date(a.info.eventDate));
+        setPastEvents(sortedPastEvents);
       } finally {
         setIsLoading(false);
       }
@@ -84,7 +82,7 @@ const PastEvent = () => {
           <div className={style.eventwhole}>
             {isLoading ? (
               <ComponentLoading />
-            ) : !error ? (
+            ) : error ? (
               <div className={style.error}>{error.message}</div>
             ) : (
               <div className={style.pasteventCard}>
