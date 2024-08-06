@@ -15,3 +15,11 @@
     border-radius: 1.42075rem 1.42075rem 1.4rem 1.4rem;
   }
   
+
+  @media (max-width:390px) {
+    .cardskeleton {
+      width: 20.5rem;
+      margin-left: 0.75rem;
+      margin-right: 0.75rem;
+    }
+  }
