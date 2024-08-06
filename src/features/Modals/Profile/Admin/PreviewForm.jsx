@@ -164,9 +164,10 @@ const PreviewForm = ({
     setdata(newSections);
   };
 
+  console.log(data);
   const handleSubmit = async () => {
     const formData = new FormData();
-    console.log("filled form data::",data);
+    console.log("filled form data::", data);
     data.forEach((section) => {
       if (isCompleted.includes(section._id)) {
         formData.append(`_id`, section._id);
@@ -178,61 +179,61 @@ const PreviewForm = ({
         });
       }
     });
-    console.log("filled Form data is :::::",formData)
+    console.log("filled Form data is :::::", formData);
 
     console.log("team code in recovery context:", recoveryCtx.teamCode);
 
-    try {
-      setIsLoading(true); // Set loading state
-      setIsMicroLoading(true); // Set micro loading state
-    
-      const response = await api.post("/api/form/register", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+    // try {
+    //   setIsLoading(true); // Set loading state
+    //   setIsMicroLoading(true); // Set micro loading state
 
-      if (response.status === 200 || response.status === 201) {
-        setAlert({
-          type: "success",
-          message: "Form submitted successfully!",
-          position: "bottom-right",
-          duration: 3000,
-        });
-        handleClose();
-        setIsSuccess(true);
-        if (response.data.team) {
-          const { teamName, teamCode } = response.data.team;
+    //   const response = await api.post("/api/form/register", formData, {
+    //     headers: {
+    //       "Content-Type": "multipart/form-data",
+    //     },
+    //   });
 
-          SetTeamCodeData((prevData) => ({
-            ...prevData,
-            teamCode: teamCode,
-            teamName: teamName,
-          }));
-        }
-      } else {
-        setAlert({
-          type: "error",
-          message: "There was an error submitting the form. Please try again.",
-          position: "bottom-right",
-          duration: 3000,
-        });
-        setIsSuccess(false);
-        throw new Error("Unexpected response status");
-      }
-    } catch (error) {
-      console.error("Form submission error:", error);
-      setAlert({
-        type: "error",
-        message: "There was an error submitting the form. Please try again.",
-        position: "bottom-right",
-        duration: 3000,
-      });
-      setIsSuccess(false);
-    } finally {
-      setIsLoading(false);
-      setIsMicroLoading(false);
-    }
+    //   if (response.status === 200 || response.status === 201) {
+    //     setAlert({
+    //       type: "success",
+    //       message: "Form submitted successfully!",
+    //       position: "bottom-right",
+    //       duration: 3000,
+    //     });
+    //     handleClose();
+    //     setIsSuccess(true);
+    //     if (response.data.team) {
+    //       const { teamName, teamCode } = response.data.team;
+
+    //       SetTeamCodeData((prevData) => ({
+    //         ...prevData,
+    //         teamCode: teamCode,
+    //         teamName: teamName,
+    //       }));
+    //     }
+    //   } else {
+    //     setAlert({
+    //       type: "error",
+    //       message: "There was an error submitting the form. Please try again.",
+    //       position: "bottom-right",
+    //       duration: 3000,
+    //     });
+    //     setIsSuccess(false);
+    //     throw new Error("Unexpected response status");
+    //   }
+    // } catch (error) {
+    //   console.error("Form submission error:", error);
+    //   setAlert({
+    //     type: "error",
+    //     message: "There was an error submitting the form. Please try again.",
+    //     position: "bottom-right",
+    //     duration: 3000,
+    //   });
+    //   setIsSuccess(false);
+    // } finally {
+    //   setIsLoading(false);
+    //   setIsMicroLoading(false);
+    // }
   };
 
   useEffect(() => {
@@ -349,10 +350,9 @@ const PreviewForm = ({
     if (isHavingFieldValidations.length > 0) {
       const isMatched = isHavingFieldValidations.find((valid) => {
         return currentSection.fields?.find((fld) => {
-          return fld.onChangeValue === valid.values;
+          return fld?.onChangeValue?.trim() === valid?.values?.trim();
         });
       });
-
       nextSection = isMatched ? isMatched?.onNext : nextSection;
       backSection = isMatched ? isMatched?.onBack : backSection;
     }
@@ -378,6 +378,7 @@ const PreviewForm = ({
     }
 
     const { nextSection } = inboundList();
+
     if (nextSection) {
       setisCompleted((prev) => [...prev, currentSection._id]);
       setactiveSection(nextSection);
@@ -399,7 +400,6 @@ const PreviewForm = ({
 
   const renderPaymentScreen = () => {
     const { eventType, receiverDetails, eventAmount } = eventData;
-    console.log(receiverDetails.media);
 
     const getMediaUrl = (media) => {
       if (media instanceof File) {

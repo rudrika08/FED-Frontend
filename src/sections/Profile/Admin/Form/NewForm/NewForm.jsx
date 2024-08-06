@@ -9,7 +9,6 @@ import moment from "moment";
 import { nanoid } from "nanoid";
 import { Alert, MicroLoading } from "../../../../../microInteraction";
 import { api } from "../../../../../services";
-import dummyForms from "../../../../../data/FormData.json";
 
 export const getOutboundList = (array, index) => {
   const getIndex = array.findIndex((sec) => sec._id === index);
@@ -647,7 +646,6 @@ function NewForm() {
 
   const handleSaveSection = () => {
     if (isValidSections()) {
-      console.log("Sections", sections);
     } else {
       alert("Fill all the form fields, including conditions");
     }
