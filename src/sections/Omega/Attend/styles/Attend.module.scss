@@ -1,9 +1,11 @@
 .main{
-    height: 80vh;
+    margin-top: 70px;
+    height: auto;
     width: 100%;
+    gap: 15px;
     background-color: black;
-    position: relative;
-    padding: 5vw;
+    display: flex;
+    flex-direction: column;
 }
 
 .attend{
@@ -26,15 +28,14 @@
     
 }
 
-.boxmain{
-    height: 50vh;
+.boxmain {
     width: 100%;
-    margin-top: 5vh;
-    display: flex;
-    align-items: center;
+    height: auto;
+    display:flex ;
     flex-wrap: wrap;
-    justify-content: space-around;
-    
+    align-items: center;
+    margin: auto;
+    justify-content: space-evenly;
 }
 
 .box{
@@ -67,13 +68,6 @@ img{
     width: auto;
 }
 
-
-
-
-
-
-
-
 .circle1{
     position: absolute;
     z-index: 2;
@@ -98,6 +92,67 @@ img{
     height: 50vh;
     width: 20vw;
 }
+
+.card {
+    display: flex;
+    margin-bottom: 15px;
+    margin-top: 30px;
+    width:650px;
+    height: 85px;
+    justify-content: space-evenly;
+    backdrop-filter: blur(10px);
+    background: #0b0b0b11;
+    border: solid;
+    border-color: white;
+    border-width: 2px;
+  }
+
+  @media (max-width:670px){
+    .boxmain{
+        display: flex;
+        flex-direction: column;
+    }
+    .card{
+        width:330px;
+        height: 50px;
+        margin-bottom: 0px;
+        margin-top: 30px;
+    }
+    .heading{
+        font-size: 15px;
+    }
+  }
+  
+  .card_content h2 {
+    font-size: 120%;
+  }
+  
+  .card_img img {
+    object-fit:contain;
+    width: 130%;
+    height: 100%;
+    top: 0;
+    left: 0;
+  }
+  
+  .card_content {
+    margin-left: 20px;
+    width: 100%;
+    align-items: center;
+    display: flex;
+    padding: 10px;
+    box-sizing: border-box;
+  }
+
+//   @media (max-width: 1025px) {
+//     .card {
+//       width: 43%;
+//       height: 30%;
+//     }
+//     .card_content h2 {
+//       font-size: 80%;
+//     }
+//   }
 
 // .square1{
 //     position: absolute;

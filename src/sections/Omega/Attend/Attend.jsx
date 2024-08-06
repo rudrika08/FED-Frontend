@@ -1,18 +1,35 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable no-unused-vars */
 import style from "./styles/Attend.module.scss"
 
-
+function Card( img, title) {
+    return (
+      <div className={`${style.card}`}>
+        <div className={`${style.card_img}`}>
+          <img src={img} alt="Event Image" />
+        </div>
+        <div className={`${style.card_content}`}>
+          <h2>{title}</h2>
+        </div>
+      </div>
+    );
+  }
 function Attend(){
     return(
         <>
         <div className={style.main}>
-            <div className={style.attend}>
                 <div className={style.heading}>
                     <div className={style.why}><h1>WHY ATTEND</h1></div>
                     <div className={style.omega}><h1>OMEGA?</h1></div>
                 </div>
 
                 <div className={style.boxmain}>
-                    <div className={style.box}>
+                    {Card("https://i.ibb.co/RvVwPxK/66.jpg","I am FED")}
+                    {Card("https://i.ibb.co/RvVwPxK/66.jpg","I am FED")}
+                    {Card("https://i.ibb.co/RvVwPxK/66.jpg","I am FED")}
+                    {Card("https://i.ibb.co/RvVwPxK/66.jpg","I am FED")}
+
+                    {/* <div className={style.box}>
                         <div className={style.icon}><img src="https://i.ibb.co/RvVwPxK/66.jpg"/></div>
                         <div className={style.text}>Inspiration and Knowledge</div>
                     </div>
@@ -27,13 +44,12 @@ function Attend(){
                     <div className={style.box}>
                         <div className={style.icon}><img src="https://i.ibb.co/djkxNSq/Frame-1116606599.jpg"/></div>
                         <div className={style.text}>Inspiration and Knowledge</div>
-                    </div>
+                    </div> */}
                 </div>
-            </div>
         </div>
         
-        <div className={style.circle1}></div>
-        <div className={style.circle2}></div>
+        {/* <div className={style.circle1}></div>
+        <div className={style.circle2}></div> */}
 
         {/* <div className={style.square1}></div>
         <div className={style.square2}></div>
