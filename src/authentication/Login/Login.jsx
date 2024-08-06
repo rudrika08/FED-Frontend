@@ -76,7 +76,7 @@ const Login = () => {
 
         setTimeout(() => {
           setShouldNavigate(true);
-        }, 800);
+        }, 750);
 
         setTimeout(() => {
           // localStorage.setItem("token",response.data.token);

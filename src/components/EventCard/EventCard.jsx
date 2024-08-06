@@ -6,15 +6,19 @@ import "aos/dist/aos.css";
 import { Link, useNavigate } from "react-router-dom";
 import Share from "../../features/Modals/Event/ShareModal/ShareModal";
 import shareOutline from "../../assets/images/shareOutline.svg";
-import groupIcon from "../../assets/images/groups.svg";
-import rupeeIcon from "../../assets/images/rupeeIcon.svg";
+// import groupIcon from "../../assets/images/groups.svg";
+// import rupeeIcon from "../../assets/images/rupeeIcon.svg";
 import { PiClockCountdownDuotone } from "react-icons/pi";
-import { IoIosLock, IoIosStats } from "react-icons/io";
+import { IoIosLock, IoIosStats} from "react-icons/io";
+import { MdGroups } from "react-icons/md";
+import { FaUser, FaRupeeSign } from "react-icons/fa";
+  
 import { Button } from "../Core";
 import AuthContext from "../../context/AuthContext";
 import EventCardSkeleton from "../../layouts/Skeleton/EventCard/EventCardSkeleton";
 import { Blurhash } from "react-blurhash";
 import { Alert, MicroLoading } from "../../microInteraction";
+import { color } from "framer-motion";
 
 const EventCard = (props) => {
   const {
@@ -146,7 +150,7 @@ const EventCard = (props) => {
   }, [info.isRegistrationClosed, remainingTime]);
 
   useEffect(() => {
-    if (authCtx.isLoggedIn && authCtx.user.regForm ) {
+    if (authCtx.isLoggedIn && authCtx.user.regForm) {
       const isRegistered = authCtx.user.regForm.includes(data.id);
       if (isRegistered) {
         setBtnTxt("Already Registered");
@@ -261,25 +265,40 @@ const EventCard = (props) => {
         </div>
         <div className={style.backbtn} style={customStyles.backbtn}>
           <div className={style.eventname} style={customStyles.eventname}>
-          <span className={style.eventTitle}>{info.eventTitle}</span>
-            
+            <span className={style.eventTitle}>
+              {info.eventTitle && info.eventTitle.length > 14
+                ? `${info.eventTitle.substring(0, 14)}...`
+                : info.eventTitle || "No title available"}
+            </span>
+
             {type === "ongoing" && (
               <p>
-                <img src={groupIcon} alt="Group" />
-                <span style={{ color: "white", paddingRight: "5px" }}>
-                  Team size:
-                </span>{" "}
-                {info.minTeamSize}
-                {"-"}
-                {info.maxTeamSize} {" | "}
+                {info.participationType === "Team" ? (
+                  <>
+                    <MdGroups color="#f97507" size={25}/>
+                    <span style={{ color: "white", paddingRight: "2px", paddingLeft:"3px" }}>{" "}
+                      Team size:
+                    </span>{" "}
+                    {info.minTeamSize} - {info.maxTeamSize} {" | "}
+                  </>
+                ) : (
+                  <>
+                    <FaUser color="#f97507" size={13}/>
+                    <span style={{ color: "white", paddingRight: "2px", paddingLeft:"3px" }}>
+                      Individual 
+                    </span>
+                    {" | "}
+                  </>
+                )}
+
                 <div className={style.price} style={customStyles.price}>
                   {info.eventAmount ? (
-                    <p style={customStyles.eventnamep}>
-                      <img src={rupeeIcon} alt="Rupee" />
+                    <p style={{ font: "2rem" }}>
+                      <FaRupeeSign color="#f97507" size={15}/>
                       {info.eventAmount}
                     </p>
                   ) : (
-                    <p style={{ color: "inherit" }}>Free</p>
+                    <p style={{ color: "white", marginTop:"-1px" }}>Free</p>
                   )}
                 </div>
               </p>
@@ -379,13 +398,18 @@ const EventCard = (props) => {
           >
             Edit Event
           </Button>
-          <Button onClick={(e)=>{
-            e.preventDefault();
-            if(onDelete){
-              authCtx.eventData=data;
-              onDelete();
-            }
-          }} variant="secondary">Delete Event</Button>
+          <Button
+            onClick={(e) => {
+              e.preventDefault();
+              if (onDelete) {
+                authCtx.eventData = data;
+                onDelete();
+              }
+            }}
+            variant="secondary"
+          >
+            Delete Event
+          </Button>
           <IoIosStats
             size={20}
             style={{ cursor: "pointer", color: "white" }}

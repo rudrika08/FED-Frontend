@@ -181,7 +181,7 @@ const EditProfile = ({ handleModalClose }) => {
                             fontSize: "15px",
                           }}
                           placeholder="Enter your roll"
-                          type="number"
+                          type="text"
                           value={data.rollNumber}
                           className={styles.vals}
                           onChange={(e) =>
