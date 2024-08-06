@@ -21,8 +21,8 @@ const EditProfile = ({ handleModalClose }) => {
     school: authCtx.user.school,
     college: authCtx.user.college,
     contactNo: authCtx.user.contactNo,
-    github: authCtx.user.github,
-    linkedin: authCtx.user.linkedin,
+    github: authCtx.user.extra.github,
+    linkedin: authCtx.user.extra.linkedin,
   });
 
   useEffect(() => {
@@ -63,8 +63,9 @@ const EditProfile = ({ handleModalClose }) => {
           data.year,
           data.github,
           data.linkedin,
-          authCtx.user.designation,
+          authCtx.user.extra.designation,
           authCtx.user.access,
+          authCtx.user.editPorfileCount,
           authCtx.user.regForm
         );
         setTimeout(()=>{
@@ -180,7 +181,7 @@ const EditProfile = ({ handleModalClose }) => {
                             fontSize: "15px",
                           }}
                           placeholder="Enter your roll"
-                          type="number"
+                          type="text"
                           value={data.rollNumber}
                           className={styles.vals}
                           onChange={(e) =>
@@ -200,11 +201,11 @@ const EditProfile = ({ handleModalClose }) => {
                           name={data.year}
                           className={styles.vals}
                           options={[
-                            { label: "1st Year", value: "1" },
-                            { label: "2nd Year", value: "2" },
-                            { label: "3rd Year", value: "3" },
-                            { label: "4th Year", value: "4" },
-                            { label: "5th Year", value: "5" },
+                            { label: "1st Year", value: "1st" },
+                            { label: "2nd Year", value: "2nd" },
+                            { label: "3rd Year", value: "3rd" },
+                            { label: "4th Year", value: "4th" },
+                            { label: "5th Year", value: "5th" },
                             { label: "Passout", value: "Passout" },
                           ]}
                           value={data.year}

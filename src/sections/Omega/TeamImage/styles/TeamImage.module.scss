@@ -7,3 +7,9 @@
 .teamImage img{
     width: 98%;
 }
+
+@media (max-width: 480px){
+    .teamImage img{
+        width: 50%;
+    }
+}

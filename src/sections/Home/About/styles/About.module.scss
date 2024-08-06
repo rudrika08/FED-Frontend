@@ -18,6 +18,9 @@
     // margin-bottom: -3rem;
 }
 
+.boxflex{
+    margin-top: -3rem;
+}
 
 
 .bottomLine {
@@ -40,7 +43,7 @@
 
 .box{
     // height: 14rem;
-   height : 35vh ;
+    height : 35vh ;
     width: 65%;
     padding: 2rem;
     background: transparent;
@@ -79,11 +82,11 @@
 }
 
 .box2{
-    padding-top: 0.1rem;
+    padding-top: 2rem;
 }
 
 .box3{
-    padding-top: 0.1rem;
+    padding-top: 2rem;
     // padding-bottom: -9rem;
 }
 
@@ -168,6 +171,10 @@
         // height: 9rem;
         width: 55%;
     }
+
+.howfed, .whatfed,.whyfed{
+    height: 10rem;
+}
 
     .box1{
         align-items: center;
@@ -681,11 +688,23 @@
         width: 80%;
         font-size: 2.3rem;
     }
+
+    .howfed, .whyfed, .whatfed{
+        height: 15rem;
+    }
 }
 
 @media screen and (min-width: 2496px){
     .box{
-        width: 110%;
         font-size: 2.3rem;
+    }
+}
+
+@media screen and (min-width: 1256px){
+    .box{
+        font-size: 2.3rem;
+    }
+    .howfed, .whyfed, .whatfed{
+        height: 15rem;
     }
 }

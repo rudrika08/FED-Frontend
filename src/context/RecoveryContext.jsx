@@ -40,12 +40,12 @@ const RecoveryContextProvider = ({ children }) => {
     setState(prevState => ({ ...prevState, teamName: newTeamName }));
   };
 
-  useEffect(() => {
-    return () => {
-      localStorage.removeItem('recoveryEmail');
-      localStorage.removeItem('recoveryOTP');
-    };
-  }, []);
+  // useEffect(() => {
+  //   return () => {
+  //     localStorage.removeItem('recoveryEmail');
+  //     localStorage.removeItem('recoveryOTP');
+  //   };
+  // }, []);
 
   return (
     <RecoveryContext.Provider value={{ ...state, setEmail, setOTP, setTeamCode, setTeamName }}>

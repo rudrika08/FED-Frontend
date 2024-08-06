@@ -23,6 +23,7 @@ import {
   ComponentLoading,
 } from "../../../../microInteraction";
 import { api } from "../../../../services";
+import eventDefaultImg from "../../../../assets/images/defaultEventModal.png"
 
 const EventModal = (props) => {
   const { onClosePath } = props;
@@ -48,7 +49,9 @@ const EventModal = (props) => {
           const eventData = response.data.events.find((e)=>e.id===eventId);
           console.log("fetched event modal:",eventData);
           setData(eventData);
+          console.log("dadddddddd",data);
           setInfo(eventData.info);
+         
         } else {
           setAlert({
             type: "error",
@@ -169,12 +172,15 @@ const EventModal = (props) => {
 
   useEffect(() => {
     if (authCtx.isLoggedIn) {
-      const isRegistered = authCtx.user.regForm.includes(data._id);
+      console.log("_idL",data.id)
+      if(authCtx.user.regForm){
+      const isRegistered = authCtx.user.regForm.includes(data.id);
       if (isRegistered) {
         setBtnTxt("Already Registered");
       }
     }
-  }, [authCtx.isLoggedIn, authCtx.user.regForm, btnTxt, navigate, data._id]);
+    }
+  }, [authCtx.isLoggedIn, authCtx.user.regForm, btnTxt, navigate, data.id]);
 
   const handleModalClose = () => {
     navigate(onClosePath);
@@ -311,11 +317,15 @@ const EventModal = (props) => {
                       <X />
                     </button>
                     <div className={EventCardModal.backimg}>
-                      <img
-                        src=  "https://www.politics.ox.ac.uk/themes/custom/olamalu_dpir_emulsify/images/fb_event_image.png"
+                     {!info.eventImg===null? <img
+                        src=  {info.eventImg}
                         className={EventCardModal.img}
                         alt="Event"
-                      />
+                      />:<img
+                      src=  {eventDefaultImg}
+                      className={EventCardModal.img}
+                      alt="Event"
+                    />}
                       <div className={EventCardModal.date}>{formattedDate}</div>
                       {info.ongoingEvent && (
                         <div

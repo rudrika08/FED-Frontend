@@ -12,71 +12,71 @@ import { RecoveryContext } from "../../context/RecoveryContext";
 import Share from "../../features/Modals/Event/ShareModal/ShareModal";
 
 const Event = () => {
-
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-
-
 
   const [eventData, setEventData] = useState([]);
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const { events } = FormData;
-  const [isOpen ,setOpenModal]=useState(false);
-  const recoveryCtx=useContext(RecoveryContext);
+  const [isOpen, setOpenModal] = useState(false);
+  const [pastEvents, setPastEvents] = useState([]);
+  const [ongoingEvents, setOngoingEvents] = useState([]);
+  const recoveryCtx = useContext(RecoveryContext);
 
-  useEffect(()=>{
-    if(recoveryCtx.teamCode && recoveryCtx.teamName){
-      if(!isOpen){
-        setOpenModal(true)
+  useEffect(() => {
+    if (recoveryCtx.teamCode && recoveryCtx.teamName) {
+      if (!isOpen) {
+        setOpenModal(true);
       }
     }
-  },[recoveryCtx.teamCode]);
+  }, [recoveryCtx.teamCode]);
 
   useEffect(() => {
     const fetchEvents = async () => {
       try {
         const response = await api.get("/api/form/getAllForms");
-        console.log(response.data);
         if (response.status === 200) {
-          console.log(response.data.events);
-          setEventData(response.data.events);
+          const fetchedEvents = response.data.events;
+          const sortedEvents = fetchedEvents.sort(
+            (a, b) => new Date(b.info.eventDate) - new Date(a.info.eventDate)
+          );
+          const ongoing = sortedEvents.filter(
+            (event) => !event.info.isEventPast
+          );
+          const past = sortedEvents.filter((event) => event.info.isEventPast);
+          setOngoingEvents(ongoing);
+          setPastEvents(past);
         } else {
           setError({
-            message: "Sorry for the inconvenience, we are having issues fetching our Events",
+            message:
+              "Sorry for the inconvenience, we are having issues fetching our Events",
           });
           console.error("Error fetching events:", response.data.message);
-          setEventData(events);
         }
       } catch (error) {
         setError({
-          message: "Sorry for the inconvenience, we are having issues fetching our Events",
+          message:
+            "Sorry for the inconvenience, we are having issues fetching our Events",
         });
         console.error("Error fetching events:", error);
-        setEventData(events);
       } finally {
         setIsLoading(false);
       }
     };
 
     fetchEvents();
-  }, [events]);
+  }, []);
 
-  // Ensure `eventData` is correctly filtered
-  const ongoingEvents = eventData.filter((event) => !event.info.isEventPast);
-  const pastEvents = eventData.filter((event) => event.info.isEventPast);
-  console.log(eventData)
-
-
-  const handleShare=()=>{
-    if(recoveryCtx.teamCode && recoveryCtx.teamName){
-     const{setTeamCode,setTeamName}=recoveryCtx;
-     setTeamCode(null);
-     setTeamName(null);
-     setOpenModal(false);
+  const handleShare = () => {
+    if (recoveryCtx.teamCode && recoveryCtx.teamName) {
+      const { setTeamCode, setTeamName } = recoveryCtx;
+      setTeamCode(null);
+      setTeamName(null);
+      setOpenModal(false);
     }
-  }
+  };
 
   const customStyles = {
     eventname: {
@@ -91,10 +91,13 @@ const Event = () => {
     },
   };
 
-  const teamCodeAndName ={
-    teamCode:recoveryCtx.teamCode,
-    teamName:recoveryCtx.teamName
+  const teamCodeAndName = {
+    teamCode: recoveryCtx.teamCode,
+    teamName: recoveryCtx.teamName,
   };
+
+  // Slice the pastEvents array to show only the first 4 events
+  const displayedPastEvents = pastEvents.slice(0, 4);
 
   return (
     <>
@@ -154,45 +157,48 @@ const Event = () => {
                     </div>
                   </div>
                 )}
-                <div
-                  className={style.pasteventcard}
-                  style={{
-                    marginTop: ongoingEvents.length > 0 ? "6rem" : "1rem",
-                  }}
-                >
-                  <div className={style.name}>
-                    <img className={style.ring2} src={ring} alt="ring" />
-                    <span className={style.w1}>Past</span>
-                    <span className={style.w2}>Events</span>
-                  </div>
-                  <div className={style.cardone}>
-                    {pastEvents.map((event, index) => (
-                      <div
-                        style={{ height: "auto", width: "22rem" }}
-                        key={index}
-                      >
-                        <EventCard
-                          data={event}
-                          type="past"
-                          customStyles={customStyles}
-                          modalpath="/Events/pastEvents/"
-                          isLoading={isLoading} // Pass the loading state to each EventCard
-                        />
+                {pastEvents.length > 0 && (
+                  <div
+                    className={style.pasteventcard}
+                    style={{
+                      marginTop: ongoingEvents.length > 0 ? "3rem" : "1rem",
+                    }}
+                  >
+                    <div className={style.name}>
+                      <img className={style.ring2} src={ring} alt="ring" />
+                      <span className={style.w1}>Past</span>
+                      <span className={style.w2}>Events</span>
+                    </div>
+                    <div className={style.cardone}>
+                      {displayedPastEvents.map((event, index) => (
+                        <div
+                          style={{ height: "auto", width: "22rem" }}
+                          key={index}
+                        >
+                          <EventCard
+                            data={event}
+                            type="past"
+                            customStyles={customStyles}
+                            modalpath="/Events/pastEvents/"
+                            isLoading={isLoading} // Pass the loading state to each EventCard
+                          />
+                        </div>
+                      ))}
+                    </div>
+                    {pastEvents.length > 4 && (
+                      <div className={style.bottom}>
+                        <Link to="/Events/pastEvents">
+                          <button className={style.seeall}>
+                            See all <MdKeyboardArrowRight />
+                          </button>
+                        </Link>
                       </div>
-                    ))}
+                    )}
                   </div>
-                </div>
+                )}
               </>
             )}
           </div>
-        </div>
-
-        <div className={style.bottom}>
-          <Link to="/Events/pastEvents">
-            <button className={style.seeall}>
-              See all <MdKeyboardArrowRight />
-            </button>
-          </Link>
         </div>
 
         <div className={style.circle}></div>

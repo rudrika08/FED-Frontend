@@ -42,6 +42,17 @@ const TeamCard = ({
     setIsImageLoaded(true);
   };
 
+  const handleLink=(url)=>{
+    console.log("Social: ",social);
+    console.log("URL: ",url);
+
+    if(url.startsWith('http://') || url.startsWith('https://')){
+      return url;
+    }else{
+      return 'https://'+url;
+    }
+  }
+
   return (
     <div className={`${styles.teamMember} ${customStyles.teamMember || ''}`}>
       {showSkeleton && <TeamCardSkeleton customStyles={customStyles} />}
@@ -80,7 +91,7 @@ const TeamCard = ({
               <div className={`${styles.socialLinks} ${customStyles.socialLinks || ''}`}>
                 {social.linkedin && (
                   <a
-                    href={social.linkedin}
+                    href={handleLink(social.linkedin)}
                     target="_blank"
                     rel="noopener noreferrer"
                     className={`${styles.socialLinksa} ${customStyles.socialLinksa || ''}`}
@@ -90,7 +101,7 @@ const TeamCard = ({
                 )}
                 {social.github && (
                   <a
-                    href={social.github}
+                    href={handleLink(social.github)}
                     target="_blank"
                     rel="noopener noreferrer"
                     className={`${styles.socialLinksa} ${customStyles.socialLinksa || ''}`}
