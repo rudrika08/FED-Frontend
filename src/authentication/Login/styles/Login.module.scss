@@ -2,11 +2,7 @@
   background-color: #2f2f2f90;
   border: 1px solid #ffffff61;
   border-radius: 10px;
-  background: linear-gradient(
-    90deg,
-    rgba(32, 32, 32, 0.95) -11.52%,
-    rgba(37, 37, 37, 0.95) 106.29%
-  );
+  background: linear-gradient(90deg, rgba(32, 32, 32, 0.16) -11.52%, rgba(37, 37, 37, 0.22) 106.29%);
   padding: 15px;
   justify-content: center;
   align-items: center;
@@ -195,6 +191,6 @@
 
   .ArrowBackIcon {
     top: 2%;
-    left:8%
+    left:4%
   }
 }
