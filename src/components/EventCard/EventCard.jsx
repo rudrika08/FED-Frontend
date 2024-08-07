@@ -260,7 +260,7 @@ const EventCard = (props) => {
             <Blurhash
               hash="L6AcVvDi56n$C,T0IUbF{K-pNG%M"
               width={"100%"}
-              height={200}
+              height={"100%"}
               resolutionX={32}
               resolutionY={32}
               punch={1}

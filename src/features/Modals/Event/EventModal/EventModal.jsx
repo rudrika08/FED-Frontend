@@ -230,7 +230,7 @@ const calculateRemainingTime = () => {
         //   duration: 3000,
         // });
       } else {
-        setNavigatePath("/Events/" + data._id + "/Form");
+        setNavigatePath("/Events/" + data.id + "/Form");
         setTimeout(() => {
           setShouldNavigate(true);
         }, 3000);

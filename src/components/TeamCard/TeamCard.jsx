@@ -59,7 +59,7 @@ const TeamCard = ({
       <div className={styles.teamMemberInner} style={{ display: showSkeleton ? 'none' : 'block' }}>
         <div className={`${styles.teamMemberFront} ${customStyles.teamMemberFront || ''}`}>
           <div className={styles.ImgDiv}>
-            {!isImageLoaded && blurhash && (
+            {!isImageLoaded && (
               <Blurhash
                 hash="L6AcVvDi56n$C,T0IUbF{K-pNG%M"
                 width={'100%'}
