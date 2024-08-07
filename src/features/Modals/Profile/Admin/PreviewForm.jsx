@@ -51,7 +51,7 @@ const PreviewForm = ({
     teamName: "",
   });
 
-  // console.log("data", eventData);
+  console.log("data", eventData);
   // console.log("sections", sections);
 
   // if(!eventData && !sections.length()==0){
@@ -62,14 +62,6 @@ const PreviewForm = ({
     data !== undefined
       ? data.find((section) => section._id === activeSection._id)
       : null;
-
-  useEffect(() => {
-    if (alert) {
-      const { type, message, position, duration } = alert;
-      Alert({ type, message, position, duration });
-      setAlert(null); // Reset alert after displaying it
-    }
-  }, [alert]);
 
   useEffect(() => {
     setTimeout(() => {
@@ -92,6 +84,14 @@ const PreviewForm = ({
   useEffect(() => {
     constructSections();
   }, [sections]);
+
+  useEffect(() => {
+    if (alert) {
+      const { type, message, position, duration } = alert;
+      Alert({ type, message, position, duration });
+      setAlert(null); // Reset alert after displaying it
+    }
+  }, [alert]);
 
   const constructSections = () => {
     const newSections = data.map((section) => {
@@ -333,7 +333,7 @@ const PreviewForm = ({
         (sec.name === "Join Team" && isCompleted.includes(sec._id))
     );
 
-    formData.append("_id", eventData._id);
+    formData.append("_id", eventData.id);
     formData.append("sections", JSON.stringify(constructToSave()));
     formData.append("createTeam", isCreateTeam);
     formData.append("joinTeam", isJoinTeam);
@@ -551,7 +551,13 @@ const PreviewForm = ({
                       Back
                     </Button>
                   )}
-                  <Button onClick={onNext}>
+                  <Button
+                    onClick={
+                      inboundList() && inboundList().nextSection
+                        ? onNext
+                        : handleSubmit
+                    }
+                  >
                     {inboundList() && inboundList().nextSection ? (
                       "Next"
                     ) : isMicroLoading ? (
@@ -623,7 +629,7 @@ const PreviewForm = ({
         </div>
       </div>
       )
-      <Alert />
+      <Alert/>
     </>
   );
 };
