@@ -1,7 +1,5 @@
-/* eslint-disable no-unused-vars */
 import React from 'react';
-import { Slide, ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { Toaster, toast } from 'react-hot-toast';
 import PropTypes from 'prop-types';
 
 const Alert = ({ type, message, position, duration, style }) => {
@@ -18,77 +16,72 @@ const Alert = ({ type, message, position, duration, style }) => {
     } : {};
 
     const options = {
-      position: position || 'top-right',
-      autoClose: duration || 5000,
+      duration: duration || 5000,
       style: { ...defaultStyle, ...style, ...mobileStyle },
-      hideProgressBar: true,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
+      position: position || 'top-right',
     };
 
-    const toastId = "custom-id";
-
-    if (!toast.isActive(toastId)) {
-      switch (type) {
-        case 'success':
-          toast.success(message, { 
-            ...options, 
-            style: { 
-              ...defaultStyle, 
-              ...style, 
-              ...mobileStyle,
-              border: '1.5px solid green',
-              backgroundColor: '#d3f9d3', 
-              color: '#198754' 
-            },  
-            toastId });
-          break;
-        case 'error':
-          toast.error(message, { 
-            ...options, 
-            style: { 
-              ...defaultStyle, 
-              ...style, 
-              ...mobileStyle,
-              border: '1.5px solid red',
-              backgroundColor: '#FADADD', 
-              color: 'red' 
-            },
-            toastId });
-          break;
-        case 'info':
-          toast.info(message, { 
-            ...options, 
-            style: { 
-              ...defaultStyle, 
-              ...style, 
-              ...mobileStyle 
-            }, 
-            toastId });
-          break;
-        case 'warning':
-          toast.warning(message, { 
-            ...options, 
-            style: { 
-              ...defaultStyle, 
-              ...style, 
-              ...mobileStyle 
-            }, 
-            toastId });
-          break;
-        default:
-          toast(message, { 
-            ...options, 
-            style: { 
-              ...defaultStyle, 
-              ...style, 
-              ...mobileStyle 
-            }, 
-            toastId });
-          break;
-      }
+    // Directly show the appropriate toast
+    switch (type) {
+      case 'success':
+        toast.success(message, { 
+          ...options, 
+          style: { 
+            ...defaultStyle, 
+            ...style, 
+            ...mobileStyle,
+            border: '1.5px solid green',
+            backgroundColor: '#d3f9d3', 
+            color: '#198754' 
+          } 
+        });
+        break;
+      case 'error':
+        toast.error(message, { 
+          ...options, 
+          style: { 
+            ...defaultStyle, 
+            ...style, 
+            ...mobileStyle,
+            border: '1.5px solid red',
+            backgroundColor: '#FADADD', 
+            color: 'red' 
+          } 
+        });
+        break;
+      case 'info':
+        toast(message, { 
+          ...options, 
+          style: { 
+            ...defaultStyle, 
+            ...style, 
+            ...mobileStyle 
+          } 
+        });
+        break;
+      case 'warning':
+        toast(message, { 
+          ...options, 
+          style: { 
+            ...defaultStyle, 
+            ...style, 
+            ...mobileStyle,
+            border: '1.5px solid orange',
+            backgroundColor: '#fff3cd', 
+            color: '#856404' 
+          } 
+        });
+        break;
+      default:
+        toast(message, { 
+          ...options, 
+          style: { 
+            ...defaultStyle, 
+            ...style, 
+            ...mobileStyle 
+          } 
+        });
+        break;
     }
   };
 
@@ -96,7 +89,7 @@ const Alert = ({ type, message, position, duration, style }) => {
     notify();
   }
 
-  return <ToastContainer transition={Slide} />;
+  return <Toaster position={position || 'top-right'} />;
 };
 
 Alert.propTypes = {

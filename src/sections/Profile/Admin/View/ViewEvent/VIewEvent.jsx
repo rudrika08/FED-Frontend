@@ -176,7 +176,7 @@ function ViewEvent({ handleChangePage }) {
                                   modalpath="/profile/Events/"
                                   isPastpage={true}
                                   aosDisable={true}
-                                  onEdit={() => handleChangePage("Form")}
+                                  onEdit={() => navigate('/profile/Form')}
                                      onDelete={handleDeleteEvent}
                                   enableEdit={true}
                                   onHover={() =>
