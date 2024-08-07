@@ -79,7 +79,7 @@ const Login = () => {
         }, 750);
 
         setTimeout(() => {
-          // localStorage.setItem("token",response.data.token);
+          localStorage.setItem("token",response.data.token);
           authCtx.login(
             user.name,
             user.email,
