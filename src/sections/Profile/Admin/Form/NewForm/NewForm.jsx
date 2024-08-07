@@ -354,6 +354,7 @@ function NewForm() {
       if (isEditing) {
         form.append("id", authCtx.eventData?.id);
       }
+
       if (data._id) {
         delete data._id;
       }
@@ -370,7 +371,7 @@ function NewForm() {
             }
           );
 
-          if (response.status === 200) {
+          if (response.status === 200 || response.status === 201) {
             setAlert({
               type: "success",
               message: "Form updated successfully",
@@ -404,7 +405,7 @@ function NewForm() {
             },
           });
 
-          if (response.status === 200) {
+          if (response.status === 200 || response.status === 201) {
             setAlert({
               type: "success",
               message: "Form saved successfully",
@@ -690,10 +691,18 @@ function NewForm() {
           {
             _id: nanoid(),
             name: "Transaction ID",
-            type: "text",
+            type: "number",
             value: "Last 4 digits of Transaction ID",
             isRequired: true,
-            validations: [],
+            validations: [
+              {
+                _id: nanoid(),
+                type: "length",
+                value: "4",
+                operator: "<=",
+                message: "Transaction ID should be at most 4 digits long",
+              },
+            ],
           },
           {
             _id: nanoid(),
@@ -702,6 +711,13 @@ function NewForm() {
             value: "Upload Payment Screenshot",
             isRequired: true,
             validations: [],
+          },
+          {
+            _id: nanoid(),
+            name: "T&C Acceptance",
+            type: "checkbox",
+            value: "Accept Terms & Conditions",
+            isRequired: true,
           },
         ],
       });
@@ -887,7 +903,7 @@ function NewForm() {
                 transition: "all .4s",
               }}
             >
-              Public Mode (Public/Private)
+              Event Form Privacy (Private/Public)
             </label>
             <Switch
               checked={data.isPublic}
@@ -924,7 +940,7 @@ function NewForm() {
                 transition: "all .4s",
               }}
             >
-              Close Event Registration
+              Event Form Registration (Open/Close)
             </label>
             <Switch
               checked={data.isRegistrationClosed}
@@ -960,7 +976,7 @@ function NewForm() {
                 transition: "all .4s",
               }}
             >
-              Event Past/Ongoing
+              Event Form Status (Ongoing/Past)
             </label>
             <Switch
               checked={data.isEventPast}
@@ -1229,12 +1245,9 @@ function NewForm() {
           >
             Sections
           </Text>
-          <Button onClick={handleSaveSection}>
-            {isLoading ? <MicroLoading /> : "Save"}
-          </Button>
           <Button
             variant="secondary"
-            style={{ marginLeft: "12px" }}
+            style={{ marginLeft: "auto" }}
             onClick={onAddSection}
           >
             Add Section
@@ -1266,7 +1279,7 @@ function NewForm() {
             open={showPreview}
             handleClose={() => setshowPreview(false)}
             sections={constructForPreview()}
-            eventData={data}
+            eventData={{ ...data, _id: authCtx.eventData?.id }}
             meta={paymentSection ? [paymentSection] : []}
             showCloseBtn={true}
           />

@@ -63,13 +63,14 @@
 
 .closeBtn{
   position: absolute;
-  width: 95%;
-  right: 15px;
+  width: 100%;
+  right: 3px;
   display: flex;
   justify-content: flex-end;
   color: #fff;
   cursor: pointer;
   z-index: 5;
+  top: 0.7rem;
   
 }
 
@@ -104,19 +105,36 @@
 
 @media (min-width: 481px) and (max-width:800px){
   .previewContainer{
-    height: 65%;
-    width: 70%;
+    height: 100%;
+    width: 100%;
   }
 }
 
 @media (max-width: 480px){
+  .previewContainerWrapper{
+    height: 90%;
+    width: 80%;
+  }
     .previewContainer{
-      height: 65%;
-      width: 90%;
+      height: 100%;
+      width: 100%;
+      margin-left: 2rem;
     }
 
     .closeBtn{
       width: 80%;
     }
 
+}
+
+@media (max-width: 380px) {
+  .previewContainerWrapper{
+    height: 80%;
+    width: 90%;
+  }
+    .previewContainer{
+      height: 100%;
+      width: 100%;
+      margin-left: 1rem;
+    }  
 }

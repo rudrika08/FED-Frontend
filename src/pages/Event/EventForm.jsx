@@ -74,7 +74,7 @@ const EventForm = () => {
           open={showPreview}
           handleClose={() => setShowPreview(false)}
           sections={eventData?.sections || []} // Ensure sections is always an array
-          eventData={eventData?.info || {}} // Pass the correct data prop
+          eventData={eventData || {}} // Pass the correct data prop
           showCloseBtn={true}
         />
       )}

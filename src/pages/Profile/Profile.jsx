@@ -11,6 +11,8 @@ import AuthContext from "../../context/AuthContext";
 import { api } from "../../services";
 import style from "./styles/Profile.module.scss";
 import { Loading } from "../../microInteraction";
+import { Outlet } from "react-router-dom";
+import {Navbar,Footer} from "../../layouts";
 
 const Profile = () => {
   const [activePage, setActivePage] = useState("Profile");
@@ -114,11 +116,12 @@ const Profile = () => {
             authCtx.eventData = null;
           }}
         />
-        {isLoading ? (
+        {isLoading ? <Loading /> : <div className={style.profile__content}>   <Outlet/> </div>}
+        {/* {isLoading ? (
           <Loading />
         ) : (
           <div className={style.profile__content}>{getActivePage()}</div>
-        )}
+        )} */}
       </div>
     </ProfileLayout>
   );

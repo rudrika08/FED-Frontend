@@ -6,7 +6,7 @@
     align-items: center;
     flex-direction: column;
     overflow: hidden;
-    margin-top: 30px;
+    margin-top: 20px;
   }
   .circle{
     position: absolute;
@@ -41,13 +41,12 @@
     border: 1px solid #fff;
     padding: 10px;
     border-radius: 20px;
-    margin-left: 20px;
   }
 
   .hero img {
-    margin-left: -2rem;
+    margin-left: -2.5rem;
     height: 300px;
-    margin-top: -1.5rem;
+    margin-top: -2rem;
   //   width: 70%;
   }
   
@@ -61,6 +60,7 @@
 
     p:first-child {
       font-size: 1.2rem;
+      margin: 20px 0;
     }
   
 
@@ -78,9 +78,13 @@
       --color: blue;
       font-size: 80%;
       padding: 1em 1.8em;
-      border-bottom: rgb(0, 136, 255) solid 3px;
-      border-right: rgb(0, 136, 255) solid 3px;
+      border-bottom: rgb(0, 136, 255) solid 5px;
+      border-right: rgb(0, 136, 255) solid 5px;
       font-weight: bold;
+
+      transition: border 0.2s ease-in 0.5s, font-size 0.3s ease-in-out;
+
+
       position: relative;
       color: black;
       background: #e9e5e5;
@@ -91,7 +95,10 @@
                          calc(100% - var(--slant)) 100%, 0 100%, 0 var(--slant));
       
       &:hover {
-        background-color: #007acc;
+        font-size: 15px;
+        transition: border 0.5 ease-out 0.5 , font-size 0.5s ease-in-out 0.5s;
+        border: none;
+        
       }
   
       &::after {
@@ -110,15 +117,30 @@
   }
 
   @media (max-width: 480px){
+    .circle2{display: none;}
+
+    .hero{
+      margin-top: 45px;
+    }
     .hero img{
         height: 200px;
-        margin-top: 20px;
+        margin-top: 30px;
     }
 
     .text{
         width: 50%;
         text-align: center;
         margin: 30px 10px;
+    }
+
+    .text p{
+      width: 70%;
+      white-space: wrap;
+    }
+
+    .text button{
+      margin-top: 40px;
+      font-size: 85%;
     }
   }
   
