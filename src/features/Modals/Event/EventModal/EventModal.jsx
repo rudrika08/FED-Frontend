@@ -228,14 +228,14 @@ const EventModal = (props) => {
         setTimeout(() => {
           setIsMicroLoading(false);
           setBtnTxt("Already Member");
-        }, 1500);
+        }, 1000);
 
-        // setAlert({
-        //   type: "info",
-        //   message: "Team Members are not allowed to register for the Event",
-        //   position: "bottom-right",
-        //   duration: 3000,
-        // });
+        setAlert({
+          type: "info",
+          message: "Team Members are not allowed to register for the Event",
+          position: "bottom-right",
+          duration: 3000,
+        });
       } else {
         setNavigatePath("/Events/" + data.id + "/Form");
         setTimeout(() => {

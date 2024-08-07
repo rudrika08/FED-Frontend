@@ -382,7 +382,7 @@ const calculateRemainingTime = () => {
                       </>
                     ) : btnTxt === "Already Member" ? (
                       <>
-                        <div style={{ fontSize: "0.9rem" }}>Already Member</div>{" "}
+                        <div style={{ fontSize: "0.7rem" }}>Already Member</div>{" "}
                       </>
                     ) : (
                       <div style={{ fontSize: "0.9rem" }}>Register Now</div>
@@ -430,6 +430,7 @@ const calculateRemainingTime = () => {
               e.preventDefault();
               if (onEdit) {
                 authCtx.eventData = data;
+                console.log("data of past event is sent to form:",authCtx.eventData);
                 onEdit();
               }
             }}
