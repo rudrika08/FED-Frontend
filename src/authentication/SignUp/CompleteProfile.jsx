@@ -116,6 +116,8 @@ function CompleteProfile() {
             userObject.linkedin,
             userObject.designation,
             userObject.regForm,
+            userObject.access,
+            userObject.editProfileCount,
             "USER",
             "someToken",
             7200000

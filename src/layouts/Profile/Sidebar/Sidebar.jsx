@@ -133,7 +133,7 @@ const Sidebar = ({ activepage, handleChange }) => {
     <>
       <div className={styles.sidebar}>
         <div className={styles.profile}>
-        <NavLink to={'/profile'}>
+        {/* <NavLink to={'/profile'}> */}
           <div
             style={{ width: "auto", position: "relative", cursor: "pointer" }}
             onClick={() => handleChange("Profile")}
@@ -173,7 +173,7 @@ const Sidebar = ({ activepage, handleChange }) => {
               </>
             )}
           </div>
-          </NavLink>
+      
           <div className={styles.profileInfo}>
           <NavLink to={'/profile'}>
             <p className={styles.name}>{handleName()}</p>
