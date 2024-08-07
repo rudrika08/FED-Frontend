@@ -430,6 +430,7 @@ const calculateRemainingTime = () => {
               e.preventDefault();
               if (onEdit) {
                 authCtx.eventData = data;
+                console.log("data of past event is sent to form:",authCtx.eventData);
                 onEdit();
               }
             }}
