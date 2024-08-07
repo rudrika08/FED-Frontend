@@ -73,7 +73,7 @@ const EventModal = (props) => {
         // });
         // Fallback to local data
         const { events } = FormData;
-        const data = events.find((event) => event._id === parseInt(eventId));
+        const data = events.find((event) => event.id === parseInt(eventId));
         console.log(data);
         const info = data.info;
         setData(data);
@@ -237,7 +237,7 @@ const EventModal = (props) => {
         //   duration: 3000,
         // });
       } else {
-        setNavigatePath("/Events/" + data._id + "/Form");
+        setNavigatePath("/Events/" + data.id + "/Form");
         setTimeout(() => {
           setShouldNavigate(true);
         }, 3000);
