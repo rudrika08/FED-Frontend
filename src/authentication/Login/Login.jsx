@@ -94,9 +94,9 @@ const Login = () => {
             user.extra?.github,
             user.extra?.linkedin,
             user.extra?.designation,
-            user.regForm,
             user.access,
             user.editProfileCount,
+            user.regForm,
             user.blurhash,
             response.data.token,
             9600000

@@ -131,35 +131,39 @@ const EventCard = (props) => {
     return isoDateStr;
 };
 
-  // Function to calculate remaining time
-  const calculateRemainingTime = () => {
-    // Parse the regDateAndTime received from backend
-    const regStartDate = parse(info.regDateAndTime, "MMMM do yyyy, h:mm:ss a", new Date());
-    const now = new Date();
-  
-    // Calculate the time difference in milliseconds
-    const timeDifference = differenceInMilliseconds(regStartDate, now);
-  
-    if (timeDifference <= 0) {
-        setRemainingTime(null);
-        return;
-    }
-  
-    // Calculate the days, hours, minutes, and seconds remaining
-    const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((timeDifference / (1000 * 60 * 60)) % 24);
-    const minutes = Math.floor((timeDifference / (1000 * 60)) % 60);
-    const seconds = Math.floor((timeDifference / 1000) % 60);
-  
-    const remaining = [
-      days > 0 ? `${days}d ` : "",
+const calculateRemainingTime = () => {
+  // Parse the regDateAndTime received from backend
+  const regStartDate = parse(info.regDateAndTime, "MMMM do yyyy, h:mm:ss a", new Date());
+  const now = new Date();
+
+  // Calculate the time difference in milliseconds
+  const timeDifference = differenceInMilliseconds(regStartDate, now);
+
+  if (timeDifference <= 0) {
+    setRemainingTime(null);
+    return;
+  }
+
+  // Calculate the days, hours, minutes, and seconds remaining
+  const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((timeDifference / (1000 * 60 * 60)) % 24);
+  const minutes = Math.floor((timeDifference / (1000 * 60)) % 60);
+  const seconds = Math.floor((timeDifference / 1000) % 60);
+
+  let remaining;
+
+  if (days > 0) {
+    remaining = `${days} day${days > 1 ? 's' : ''} left`;
+  } else {
+    remaining = [
       hours > 0 ? `${hours}h ` : "",
       minutes > 0 ? `${minutes}m ` : "",
       seconds > 0 ? `${seconds}s` : "",
-    ].join("");
-  
-    setRemainingTime(remaining.trim());
-  };
+    ].join("").trim();
+  }
+
+  setRemainingTime(remaining);
+};
   
   // Example usage in a React component with useEffect to update every second
   useEffect(() => {
@@ -370,12 +374,15 @@ const EventCard = (props) => {
                 ) : (
                   <>
                     {remainingTime ? (
-                      <>
-                        <PiClockCountdownDuotone /> {btnTxt}
+                    <>
+                      <PiClockCountdownDuotone size={20}/>
+                      <div style={{ fontSize: "0.8rem" }}>
+                         {btnTxt}
+                      </div>
                       </>
                     ) : btnTxt === "Already Member" ? (
                       <>
-                        <div style={{ fontSize: "0.9rem" }}>Already Member</div>{" "}
+                        <div style={{ fontSize: "0.7rem" }}>Already Member</div>{" "}
                       </>
                     ) : (
                       <div style={{ fontSize: "0.9rem" }}>Register Now</div>
@@ -423,6 +430,7 @@ const EventCard = (props) => {
               e.preventDefault();
               if (onEdit) {
                 authCtx.eventData = data;
+                console.log("data of past event is sent to form:",authCtx.eventData);
                 onEdit();
               }
             }}

@@ -46,7 +46,8 @@ const EditImage = (props) => {
 
             const response = await api.post('/api/user/editProfileImage', formData, {
               headers: {
-                'Content-Type': 'multipart/form-data'
+                'Content-Type': 'multipart/form-data',
+                "Authorization": `Bearer ${window.localStorage.getItem("token")}`,
               }
             });
 
