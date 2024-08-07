@@ -5,11 +5,13 @@ import style from "./styles/Attend.module.scss"
 function Card( img, title) {
     return (
       <div className={`${style.card}`}>
+        <div className={`${style.cut}`}></div>
         <div className={`${style.card_img}`}>
           <img src={img} alt="Event Image" />
         </div>
         <div className={`${style.card_content}`}>
           <h2>{title}</h2>
+          <div className={`${style.cut2}`}></div>
         </div>
       </div>
     );
