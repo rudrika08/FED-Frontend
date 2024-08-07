@@ -367,6 +367,7 @@ function NewForm() {
             {
               headers: {
                 "Content-Type": "multipart/form-data",
+                 "Authorization": `Bearer ${window.localStorage.getItem("token")}`,
               },
             }
           );
@@ -402,6 +403,7 @@ function NewForm() {
           const response = await api.post("/api/form/addForm", form, {
             headers: {
               "Content-Type": "multipart/form-data",
+              "Authorization": `Bearer ${window.localStorage.getItem("token")}`,
             },
           });
 

@@ -181,8 +181,8 @@ const SignUp = () => {
         setShowModal(true);
       }, 3000);
 
-      const response = await api.post(
-        "/api/auth/verifyEmail",
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_URL}/api/auth/verifyEmail`,
         { email: user.email },
         { headers: { "Content-Type": "application/json" } }
       );
@@ -240,9 +240,9 @@ const SignUp = () => {
             response.data.user.extra?.github,
             response.data.user.extra?.linkedin,
             response.data.user.extra?.designation,
-            response.data.user.regForm,
             response.data.user.access,
             response.data.user.editProfileCount,
+            response.data.user.regForm,
             response.data.user.blurhash,
             response.data.token,
             10800000
