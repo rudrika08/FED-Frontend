@@ -2,11 +2,7 @@
   background-color: #2f2f2f90;
   border: 1px solid #ffffff61;
   border-radius: 10px;
-  background: linear-gradient(
-    90deg,
-    hsla(0, 0%, 13%, 0.95) -11.52%,
-    rgba(37, 37, 37, 0.95) 106.29%
-  );
+  background: linear-gradient(90deg, rgba(32, 32, 32, 0.32) -11.52%, rgba(37, 37, 37, 0.43) 106.29%);
   padding: 20px;
   width: 30rem;
   display: flex;
@@ -254,13 +250,13 @@
   }
 
   .ArrowBackIcon {
-    top: 10%;
+    top: 3%;
     left: 7%;
   }
 }
 
 @media (max-width: 460px){
   .signin h1{
-    width: 24%;
+    width: 30%;
   }
 }

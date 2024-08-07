@@ -489,142 +489,137 @@ const PreviewForm = ({
     <>
       open && (
       <div className={styles.mainPreview}>
-      <div className={styles.previewContainerWrapper}>
-        <div ref={wrapperRef} className={styles.previewContainer}>
-          {showCloseBtn &&
-            (handleClose ? (
-              <div onClick={handleClose} className={styles.closeBtn}>
-                <X />
-              </div>
-            ) : (
-              <Link onClick={handleClose} to="/Events">
+        <div className={styles.previewContainerWrapper}>
+          <div ref={wrapperRef} className={styles.previewContainer}>
+            {showCloseBtn && (
+              <Link to="/Events" onClick={handleClose}>
                 <div className={styles.closeBtn}>
                   <X />
                 </div>
               </Link>
-            ))}
-          <Text
-            style={{
-              marginBottom: "20px",
-              width: "100%",
-              display: "flex",
-              justifyContent: "center",
-              fontSize: "25px",
-            }}
-          >
-            {eventData?.eventTitle || "Preview Event"}
-          </Text>
-          {isLoading ? (
-            <ComponentLoading
-              customStyles={{
+            )}
+            <Text
+              style={{
+                marginBottom: "20px",
+                width: "100%",
                 display: "flex",
                 justifyContent: "center",
-                alignItems: "center",
-                marginLeft: "0rem",
-                marginTop: "5rem",
+                fontSize: "25px",
               }}
-            />
-          ) : !isCompleted.includes("Submitted") ? (
-            <div style={{ width: "100%" }}>
-              <div>
-                <Text style={{ alignSelf: "center" }} variant="secondary">
-                  {currentSection.name}
-                </Text>
-                <Text
+            >
+              {eventData?.eventTitle || "Preview Event"}
+            </Text>
+            {isLoading ? (
+              <ComponentLoading
+                customStyles={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  marginLeft: "0rem",
+                  marginTop: "5rem",
+                }}
+              />
+            ) : !isCompleted.includes("Submitted") ? (
+              <div style={{ width: "100%" }}>
+                <div>
+                  <Text style={{ alignSelf: "center" }} variant="secondary">
+                    {currentSection.name}
+                  </Text>
+                  <Text
+                    style={{
+                      cursor: "pointer",
+                      padding: "6px 0",
+                      fontSize: "11px",
+                      opacity: "0.4",
+                      marginBottom: "8px",
+                    }}
+                  >
+                    {currentSection.description}
+                  </Text>
+                </div>
+                {renderPaymentScreen()}
+                <Section section={currentSection} handleChange={handleChange} />
+                <div
                   style={{
-                    cursor: "pointer",
-                    padding: "6px 0",
-                    fontSize: "11px",
-                    opacity: "0.4",
-                    marginBottom: "8px",
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "center",
                   }}
                 >
-                  {currentSection.description}
-                </Text>
+                  {inboundList() && inboundList().backSection && (
+                    <Button style={{ marginRight: "10px" }} onClick={onBack}>
+                      Back
+                    </Button>
+                  )}
+                  <Button onClick={onNext}>
+                    {inboundList() && inboundList().nextSection ? (
+                      "Next"
+                    ) : isMicroLoading ? (
+                      <MicroLoading />
+                    ) : (
+                      "Submit"
+                    )}
+                  </Button>
+                </div>
               </div>
-              {renderPaymentScreen()}
-              <Section section={currentSection} handleChange={handleChange} />
+            ) : isSuccess ? (
               <div
                 style={{
+                  width: "100%",
                   display: "flex",
-                  flexDirection: "row",
+                  flexDirection: "column",
                   justifyContent: "center",
                 }}
               >
-                {inboundList() && inboundList().backSection && (
-                  <Button style={{ marginRight: "10px" }} onClick={onBack}>
-                    Back
-                  </Button>
-                )}
-                <Button onClick={onNext}>
-                  {inboundList() && inboundList().nextSection ? (
-                    "Next"
-                  ) : isMicroLoading ? (
-                    <MicroLoading />
-                  ) : (
-                    "Submit"
-                  )}
-                </Button>
+                <img
+                  src={Complete}
+                  alt="Complete"
+                  style={{ width: "400px", height: "400px", margin: "auto" }}
+                />
+                <Text
+                  variant="secondary"
+                  style={{
+                    width: "60%",
+                    fontSize: "14px",
+                    alignSelf: "center",
+                    textAlign: "center",
+                    marginTop: "16px",
+                    userSelect: "none",
+                  }}
+                >
+                  Form Submitted Successfully! Thank you for your time.
+                </Text>
               </div>
-            </div>
-          ) : isSuccess ? (
-            <div
-              style={{
-                width: "100%",
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-              }}
-            >
-              <img
-                src={Complete}
-                alt="Complete"
-                style={{ width: "400px", height: "400px", margin: "auto" }}
-              />
-              <Text
-                variant="secondary"
+            ) : (
+              <div
                 style={{
-                  width: "60%",
-                  fontSize: "14px",
-                  alignSelf: "center",
-                  textAlign: "center",
-                  marginTop: "16px",
-                  userSelect: "none",
+                  width: "100%",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
                 }}
               >
-                Form Submitted Successfully! Thank you for your time.
-              </Text>
-            </div>
-          ) : (
-            <div
-              style={{
-                width: "100%",
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-              }}
-            >
-              <Text
-                variant="secondary"
-                style={{
-                  width: "60%",
-                  fontSize: "14px",
-                  alignSelf: "center",
-                  textAlign: "center",
-                  marginTop: "16px",
-                  userSelect: "none",
-                }}
-              >
-                <h2 style={{ marginBottom: "3rem" }}>
-                  Error Submitting your Form
-                </h2>
-                There is an error submitting the form. If you have made any
-                payment, please fill up your payment details again. There is no
-                need to pay again.
-              </Text>
-            </div>
-          )}
-        </div>
+                <Text
+                  variant="secondary"
+                  style={{
+                    width: "60%",
+                    fontSize: "14px",
+                    alignSelf: "center",
+                    textAlign: "center",
+                    marginTop: "16px",
+                    userSelect: "none",
+                  }}
+                >
+                  <h2 style={{ marginBottom: "3rem" }}>
+                    Error Submitting your Form
+                  </h2>
+                  There is an error submitting the form. If you have made any
+                  payment, please fill up your payment details again. There is
+                  no need to pay again.
+                </Text>
+              </div>
+            )}
+          </div>
         </div>
       </div>
       )

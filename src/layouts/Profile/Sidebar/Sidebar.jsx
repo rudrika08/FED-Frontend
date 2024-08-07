@@ -10,6 +10,8 @@ import styles from "./styles/Sidebar.module.scss";
 import defaultImg from "../../../assets/images/defaultImg.jpg";
 import camera from "../../../assets/images/camera.svg";
 import { EditImage } from "../../../features";
+import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 const Sidebar = ({ activepage, handleChange }) => {
   const [designation, setDesignation] = useState("");
@@ -77,8 +79,11 @@ const Sidebar = ({ activepage, handleChange }) => {
             marginRight: "10px",
           }}
         />{" "}
+        <NavLink to='/profile/events'>
         Event
+        </NavLink>
       </div>
+   
 
       <div
         onClick={() => handleChange("Form")}
@@ -96,7 +101,9 @@ const Sidebar = ({ activepage, handleChange }) => {
             marginRight: "10px",
           }}
         />{" "}
+          <Link to={'/profile/Form'}>
         Form
+        </Link>
       </div>
       <div
         onClick={() => handleChange("Members")}
@@ -116,7 +123,8 @@ const Sidebar = ({ activepage, handleChange }) => {
             marginRight: "10px",
           }}
         />{" "}
-        Members
+          <Link to={'/profile/members'}>   Members</Link>
+     
       </div>
     </>
   );
@@ -125,6 +133,7 @@ const Sidebar = ({ activepage, handleChange }) => {
     <>
       <div className={styles.sidebar}>
         <div className={styles.profile}>
+        <NavLink to={'/profile'}>
           <div
             style={{ width: "auto", position: "relative", cursor: "pointer" }}
             onClick={() => handleChange("Profile")}
@@ -164,8 +173,11 @@ const Sidebar = ({ activepage, handleChange }) => {
               </>
             )}
           </div>
+          </NavLink>
           <div className={styles.profileInfo}>
+          <NavLink to={'/profile'}>
             <p className={styles.name}>{handleName()}</p>
+            </NavLink>
             <p className={styles.role}>{designation}</p>
           </div>
         </div>
@@ -176,7 +188,9 @@ const Sidebar = ({ activepage, handleChange }) => {
               onClick={() => handleChange("Event")}
               style={{ color: activepage === "Event" ? "#FF8A00" : "white" }}
             >
+                <NavLink to={'/profile/events'}>
               <SlCalender size={17} style={{ marginRight: "10px" }} /> Event
+              </NavLink>
             </div>
           )}
           <div

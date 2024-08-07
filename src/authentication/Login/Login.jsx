@@ -1,3 +1,5 @@
+/* eslint-disable react/no-unescaped-entities */
+/* eslint-disable no-unused-vars */
 import React, { useState, useContext, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import style from "./styles/Login.module.scss";
@@ -205,7 +207,8 @@ const Login = () => {
               style={{
                 fontSize: "0.7rem",
                 cursor: "pointer",
-                width: "30%",
+                width: "40%",
+                marginLeft:"0.4rem",
                 background: "var(--primary)",
                 WebkitBackgroundClip: "text",
                 color: "transparent",

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React from 'react';
 import { Slide, ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -5,10 +6,21 @@ import PropTypes from 'prop-types';
 
 const Alert = ({ type, message, position, duration, style }) => {
   const notify = () => {
+    const defaultStyle = {
+      borderRadius: '5px',
+      padding: '10px',
+      boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)',
+      fontSize: '16px',
+    };
+
+    const mobileStyle = window.innerWidth <= 768 ? {
+      marginBottom: '2rem',
+    } : {};
+
     const options = {
       position: position || 'top-right',
       autoClose: duration || 5000,
-      style: style || {},
+      style: { ...defaultStyle, ...style, ...mobileStyle },
       hideProgressBar: true,
       closeOnClick: true,
       pauseOnHover: true,
@@ -17,16 +29,16 @@ const Alert = ({ type, message, position, duration, style }) => {
     };
 
     const toastId = "custom-id";
-    
-    // setTimeout(() => toast.dismiss(toastId), options.autoClose);
-   
 
     if (!toast.isActive(toastId)) {
       switch (type) {
         case 'success':
           toast.success(message, { 
             ...options, 
-            style : { 
+            style: { 
+              ...defaultStyle, 
+              ...style, 
+              ...mobileStyle,
               border: '1.5px solid green',
               backgroundColor: '#d3f9d3', 
               color: '#198754' 
@@ -37,6 +49,9 @@ const Alert = ({ type, message, position, duration, style }) => {
           toast.error(message, { 
             ...options, 
             style: { 
+              ...defaultStyle, 
+              ...style, 
+              ...mobileStyle,
               border: '1.5px solid red',
               backgroundColor: '#FADADD', 
               color: 'red' 
@@ -44,13 +59,34 @@ const Alert = ({ type, message, position, duration, style }) => {
             toastId });
           break;
         case 'info':
-          toast.info(message, { ...options, toastId });
+          toast.info(message, { 
+            ...options, 
+            style: { 
+              ...defaultStyle, 
+              ...style, 
+              ...mobileStyle 
+            }, 
+            toastId });
           break;
         case 'warning':
-          toast.warning(message, { ...options, toastId });
+          toast.warning(message, { 
+            ...options, 
+            style: { 
+              ...defaultStyle, 
+              ...style, 
+              ...mobileStyle 
+            }, 
+            toastId });
           break;
         default:
-          toast(message, { ...options, toastId });
+          toast(message, { 
+            ...options, 
+            style: { 
+              ...defaultStyle, 
+              ...style, 
+              ...mobileStyle 
+            }, 
+            toastId });
           break;
       }
     }
@@ -60,7 +96,7 @@ const Alert = ({ type, message, position, duration, style }) => {
     notify();
   }
 
-  return <ToastContainer transition={Slide}/>;
+  return <ToastContainer transition={Slide} />;
 };
 
 Alert.propTypes = {
