@@ -181,8 +181,8 @@ const SignUp = () => {
         setShowModal(true);
       }, 3000);
 
-      const response = await api.post(
-        "/api/auth/verifyEmail",
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_URL}/api/auth/verifyEmail`,
         { email: user.email },
         { headers: { "Content-Type": "application/json" } }
       );

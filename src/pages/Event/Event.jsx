@@ -188,18 +188,20 @@ const Event = () => {
                       </div>
                       <div className={style.cardone}>
                         {displayedPastEvents.map((event, index) => (
-                          <div
-                            style={{ height: "auto", width: "22rem" }}
-                            key={index}
-                          >
-                            <EventCard
-                              data={event}
-                              type="past"
-                              customStyles={customStyles}
-                              modalpath="/Events/pastEvents/"
-                              isLoading={isLoading} // Pass the loading state to each EventCard
-                            />
-                          </div>
+                          event.info.isPublic ? (
+                            <div
+                              style={{ height: "auto", width: "22rem" }}
+                              key={index}
+                            >
+                              <EventCard
+                                data={event}
+                                type="past"
+                                customStyles={customStyles}
+                                modalpath="/Events/pastEvents/"
+                                isLoading={isLoading} // Pass the loading state to each EventCard
+                              />
+                            </div>
+                          ) : null
                         ))}
                       </div>
                     </div>

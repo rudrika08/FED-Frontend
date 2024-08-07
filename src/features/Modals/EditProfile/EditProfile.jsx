@@ -46,7 +46,11 @@ const EditProfile = ({ handleModalClose }) => {
         linkedin: data.linkedin,
       };
       console.log(modifiedData);
-      const response = await api.put("/api/user/editDetails", modifiedData);
+      const response = await api.put("/api/user/editDetails", modifiedData,{
+        headers: {
+          Authorization: `Bearer ${window.localStorage.getItem("token")}`,
+        },
+      });
 
       console.log(response.data.user);
       if (response.status === 200 || response.status === 201) {

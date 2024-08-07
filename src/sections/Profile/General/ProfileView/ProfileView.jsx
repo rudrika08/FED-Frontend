@@ -24,7 +24,7 @@ const Profile = ({ editmodal }) => {
   const handleOpen = () => {
     console.log("editProfileCount", authCtx.user);
     console.log("editProfileCount", authCtx.user.editProfileCount);
-    if (authCtx.user.editProfileCount > 0) {
+    if (authCtx.user.access!=="USER" || authCtx.user.editProfileCount > 0) {
       setIsOpen(true);
     } else {
       setAlert({
