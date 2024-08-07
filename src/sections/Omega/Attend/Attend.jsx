@@ -50,17 +50,8 @@ function Attend(){
                 </div>
         </div>
         
-        {/* <div className={style.circle1}></div>
-        <div className={style.circle2}></div> */}
-
-        {/* <div className={style.square1}></div>
-        <div className={style.square2}></div>
-        <div className={style.square3}></div>                   
-        <div className={style.square4}></div>
-        <div className={style.square5}></div>
-        <div className={style.square6}></div>
-        <div className={style.square7}></div>                   
-        <div className={style.square8}></div> */}
+        <div className={style.circle1}></div>
+        <div className={style.circle2}></div>
 
         </>
     )
