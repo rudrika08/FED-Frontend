@@ -19,6 +19,7 @@ import EventCardSkeleton from "../../layouts/Skeleton/EventCard/EventCardSkeleto
 import { Blurhash } from "react-blurhash";
 import { Alert, MicroLoading } from "../../microInteraction";
 import { color } from "framer-motion";
+// import useUnixTimestamp from "../../utils/hooks/useUnixTimeStamp";
 
 const EventCard = (props) => {
   const {
@@ -114,6 +115,22 @@ const EventCard = (props) => {
 
   const formattedDate = `${dayWithSuffix} ${month}`;
 
+  const modifyDateFormat = (dateStr) => {
+    // Remove the ordinal suffix from the day
+    const ordinalSuffixes = ['st', 'nd', 'rd', 'th'];
+    ordinalSuffixes.forEach(suffix => {
+        dateStr = dateStr.replace(suffix, '');
+    });
+
+    // Parse the date string to a JavaScript Date object
+    const regDate = new Date(Date.parse(dateStr));
+
+    // Convert the date to the desired ISO format (UTC)
+    const isoDateStr = regDate.toISOString();
+
+    return isoDateStr;
+};
+
   // Function to calculate remaining time
   const calculateRemainingTime = () => {
     // Parse the regDateAndTime received from backend
@@ -124,8 +141,8 @@ const EventCard = (props) => {
     const timeDifference = differenceInMilliseconds(regStartDate, now);
   
     if (timeDifference <= 0) {
-      setRemainingTime(null);
-      return;
+        setRemainingTime(null);
+        return;
     }
   
     // Calculate the days, hours, minutes, and seconds remaining
