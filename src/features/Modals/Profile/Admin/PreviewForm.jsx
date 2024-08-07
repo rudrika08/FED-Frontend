@@ -162,11 +162,13 @@ const PreviewForm = ({
   // console.log(data);
   useEffect(() => {
     if (isSuccess) {
-   
+      const participationType = eventData?.info?.participationType;
       const handleAutoClose = () => {
         setTimeout(() => {
+          if(participationType==='Team'){
          setTeamCode(code);
          setTeamName(team);
+          }
           navigate("/Events");
        
         }, 1000);
@@ -364,10 +366,10 @@ const PreviewForm = ({
           //   teamName: teamName,
           // }));
           const participationType = eventData?.info?.participationType;
-          if(participationType){
+          if(participationType==="Team"){
             setTeam(teamName)
             setcode(teamCode);
-            console.log("saved context teamCode:",recoveryCtx.teamCode)
+            // console.log("saved context teamCode:",recoveryCtx.teamCode)
           }
           console.log("consoling teamdata:",teamName,teamCode)
         }
