@@ -12,7 +12,7 @@ import { PiClockCountdownDuotone } from "react-icons/pi";
 import { IoIosLock, IoIosStats} from "react-icons/io";
 import { MdGroups } from "react-icons/md";
 import { FaUser, FaRupeeSign } from "react-icons/fa";
-  
+import { parse, differenceInMilliseconds, formatDistanceToNow } from "date-fns";
 import { Button } from "../Core";
 import AuthContext from "../../context/AuthContext";
 import EventCardSkeleton from "../../layouts/Skeleton/EventCard/EventCardSkeleton";
@@ -114,30 +114,44 @@ const EventCard = (props) => {
 
   const formattedDate = `${dayWithSuffix} ${month}`;
 
+  // Function to calculate remaining time
   const calculateRemainingTime = () => {
-    const regStartDate = new Date(info.regDateAndTime);
+    // Parse the regDateAndTime received from backend
+    const regStartDate = parse(info.regDateAndTime, "MMMM do yyyy, h:mm:ss a", new Date());
     const now = new Date();
-    const timeDifference = regStartDate - now;
-
+  
+    // Calculate the time difference in milliseconds
+    const timeDifference = differenceInMilliseconds(regStartDate, now);
+  
     if (timeDifference <= 0) {
       setRemainingTime(null);
       return;
     }
-
+  
+    // Calculate the days, hours, minutes, and seconds remaining
     const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
     const hours = Math.floor((timeDifference / (1000 * 60 * 60)) % 24);
     const minutes = Math.floor((timeDifference / (1000 * 60)) % 60);
     const seconds = Math.floor((timeDifference / 1000) % 60);
-
+  
     const remaining = [
       days > 0 ? `${days}d ` : "",
       hours > 0 ? `${hours}h ` : "",
       minutes > 0 ? `${minutes}m ` : "",
       seconds > 0 ? `${seconds}s` : "",
     ].join("");
-
+  
     setRemainingTime(remaining.trim());
   };
+  
+  // Example usage in a React component with useEffect to update every second
+  useEffect(() => {
+    calculateRemainingTime(); // Initial calculation
+    const intervalId = setInterval(calculateRemainingTime, 1000); // Update every second
+  
+    return () => clearInterval(intervalId); // Cleanup on component unmount
+  }, []);
+  
 
   useEffect(() => {
     if (info.isRegistrationClosed) {
@@ -316,7 +330,8 @@ const EventCard = (props) => {
                 disabled={
                   btnTxt === "Closed" ||
                   btnTxt === "Already Registered" ||
-                  btnTxt === "Already Member"
+                  btnTxt === "Already Member" 
+                  // btnTxt === `${remainingTime}`
                 }
               >
                 {btnTxt === "Closed" ? (

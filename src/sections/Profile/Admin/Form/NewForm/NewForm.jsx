@@ -895,7 +895,7 @@ function NewForm() {
                 transition: "all .4s",
               }}
             >
-              Public Mode (Public/Private)
+              Event Form Privacy (Private/Public)
             </label>
             <Switch
               checked={data.isPublic}
@@ -932,7 +932,7 @@ function NewForm() {
                 transition: "all .4s",
               }}
             >
-              Close Event Registration
+              Event Form Registration (Open/Close)
             </label>
             <Switch
               checked={data.isRegistrationClosed}
@@ -968,7 +968,7 @@ function NewForm() {
                 transition: "all .4s",
               }}
             >
-              Event Past/Ongoing
+              Event Form Status (Ongoing/Past)
             </label>
             <Switch
               checked={data.isEventPast}
