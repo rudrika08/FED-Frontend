@@ -46,12 +46,13 @@ const PreviewForm = ({
   const wrapperRef = useRef(null);
   const recoveryCtx = useContext(RecoveryContext);
   const { setTeamCode, setTeamName } = recoveryCtx;
+  const[ formData, setFormData] = useState(eventData);
   const [teamCodeData, SetTeamCodeData] = useState({
     teamCode: "",
     teamName: "",
   });
 
-  console.log("data", eventData);
+  // console.log("Form Data info", formData.info);
   // console.log("sections", sections);
 
   // if(!eventData && !sections.length()==0){
@@ -422,8 +423,11 @@ const PreviewForm = ({
   };
 
   const renderPaymentScreen = () => {
-    const { eventType, receiverDetails, eventAmount } = eventData;
+    const dataInfo = formData.info;
+    const { eventType, receiverDetails, eventAmount } = dataInfo;
 
+    // console.log("receiverDetails", receiverDetails);
+    // console.log("eventData", eventData);
     const getMediaUrl = (media) => {
       if (media instanceof File) {
         // If media is a File, create an object URL
@@ -507,7 +511,7 @@ const PreviewForm = ({
                 fontSize: "25px",
               }}
             >
-              {eventData?.eventTitle || "Preview Event"}
+              {eventData.info?.eventTitle || "Preview Event"}
             </Text>
             {isLoading ? (
               <ComponentLoading
