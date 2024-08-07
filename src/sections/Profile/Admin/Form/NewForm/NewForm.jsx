@@ -691,10 +691,18 @@ function NewForm() {
           {
             _id: nanoid(),
             name: "Transaction ID",
-            type: "text",
+            type: "number",
             value: "Last 4 digits of Transaction ID",
             isRequired: true,
-            validations: [],
+            validations: [
+              {
+                _id: nanoid(),
+                type: "length",
+                value: "4",
+                operator: "<=",
+                message: "Transaction ID should be at most 4 digits long",
+              },
+            ],
           },
           {
             _id: nanoid(),

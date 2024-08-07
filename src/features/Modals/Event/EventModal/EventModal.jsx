@@ -24,7 +24,7 @@ import {
   ComponentLoading,
 } from "../../../../microInteraction";
 import { api } from "../../../../services";
-import eventDefaultImg from "../../../../assets/images/defaultEventModal.png"
+import eventDefaultImg from "../../../../assets/images/defaultEventModal.png";
 
 const EventModal = (props) => {
   const { onClosePath } = props;
@@ -47,12 +47,11 @@ const EventModal = (props) => {
       try {
         const response = await api.get("/api/form/getAllForms");
         if (response.status === 200) {
-          const eventData = response.data.events.find((e)=>e.id===eventId);
-          console.log("fetched event modal:",eventData);
+          const eventData = response.data.events.find((e) => e.id === eventId);
+          console.log("fetched event modal:", eventData);
           setData(eventData);
-          console.log("dadddddddd",data);
+          console.log("dadddddddd", data);
           setInfo(eventData.info);
-         
         } else {
           setAlert({
             type: "error",
@@ -137,9 +136,9 @@ const EventModal = (props) => {
 
   const modifyDateFormat = (dateStr) => {
     // Remove the ordinal suffix from the day
-    const ordinalSuffixes = ['st', 'nd', 'rd', 'th'];
-    ordinalSuffixes.forEach(suffix => {
-        dateStr = dateStr.replace(suffix, '');
+    const ordinalSuffixes = ["st", "nd", "rd", "th"];
+    ordinalSuffixes.forEach((suffix) => {
+      dateStr = dateStr.replace(suffix, "");
     });
 
     // Parse the date string to a JavaScript Date object
@@ -149,9 +148,9 @@ const EventModal = (props) => {
     const isoDateStr = regDate.toISOString();
 
     return isoDateStr;
-};
+  };
 
-const calculateRemainingTime = () => {
+  const calculateRemainingTime = () => {
     const formattedDateStr = modifyDateFormat(info.regDateAndTime);
     // console.log(formattedDateStr); // For debugging
 
@@ -162,24 +161,32 @@ const calculateRemainingTime = () => {
     // console.log(timeDifference);
 
     if (timeDifference <= 0) {
-        setRemainingTime(null);
-        return;
+      setRemainingTime(null);
+      return;
     }
 
+    // Calculate the days, hours, minutes, and seconds remaining
     const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
     const hours = Math.floor((timeDifference / (1000 * 60 * 60)) % 24);
     const minutes = Math.floor((timeDifference / (1000 * 60)) % 60);
     const seconds = Math.floor((timeDifference / 1000) % 60);
 
-    const remaining = [
-        days > 0 ? `${days}d` : "",
-        hours > 0 ? `${hours}h` : "",
-        minutes > 0 ? `${minutes}m` : "",
+    let remaining;
+
+    if (days > 0) {
+      remaining = `${days} day${days > 1 ? "s" : ""} left`;
+    } else {
+      remaining = [
+        hours > 0 ? `${hours}h ` : "",
+        minutes > 0 ? `${minutes}m ` : "",
         seconds > 0 ? `${seconds}s` : "",
-    ].filter(Boolean).join(" ");
-   
+      ]
+        .join("")
+        .trim();
+    }
+
     setRemainingTime(remaining);
-};
+  };
 
   // Update button text based on registration status and remaining time
   useEffect(() => {
@@ -194,13 +201,13 @@ const calculateRemainingTime = () => {
 
   useEffect(() => {
     if (authCtx.isLoggedIn) {
-      console.log("_idL",data.id)
-      if(authCtx.user.regForm){
-      const isRegistered = authCtx.user.regForm.includes(data.id);
-      if (isRegistered) {
-        setBtnTxt("Already Registered");
+      console.log("_idL", data.id);
+      if (authCtx.user.regForm) {
+        const isRegistered = authCtx.user.regForm.includes(data.id);
+        if (isRegistered) {
+          setBtnTxt("Already Registered");
+        }
       }
-    }
     }
   }, [authCtx.isLoggedIn, authCtx.user.regForm, btnTxt, navigate, data.id]);
 
@@ -313,9 +320,7 @@ const calculateRemainingTime = () => {
                   style={{ marginBottom: "0.5rem" }}
                 />
               </SkeletonTheme>
-              <div
-                className={EventCardModal.card}
-              >
+              <div className={EventCardModal.card}>
                 {isLoading ? (
                   <ComponentLoading
                     customStyles={{
@@ -339,7 +344,7 @@ const calculateRemainingTime = () => {
                       <X />
                     </button>
                     <div className={EventCardModal.backimg}>
-                     {/* {!info.eventImg===null? <img
+                      {/* {!info.eventImg===null? <img
                         src=  {info.eventImg}
                         className={EventCardModal.img}
                         alt="Event"
@@ -349,22 +354,25 @@ const calculateRemainingTime = () => {
                       alt="Event"
                     />} */}
 
-{!imageLoaded && (
-            <Blurhash
-              hash="L6AcVvDi56n$C,T0IUbF{K-pNG%M"
-              width={"100%"}
-              height={200}
-              resolutionX={32}
-              resolutionY={32}
-              punch={1}
-            />
-          )}
-          <img
-            srcSet={info.eventImg}
-            className={EventCardModal.img}
-            alt="Event"
-            onLoad={() => setImageLoaded(true)}
-          />
+                      {!imageLoaded && (
+                        <Blurhash
+                          hash="L6AcVvDi56n$C,T0IUbF{K-pNG%M"
+                          width={"100%"}
+                          height={250}
+                          resolutionX={32}
+                          resolutionY={32}
+                          punch={1}
+                        />
+                      )}
+                      <img
+                        srcSet={info.eventImg}
+                        className={EventCardModal.img}
+                        style={{
+                          display: imageLoaded ? "block" : "none",
+                        }}
+                        alt="Event"
+                        onLoad={() => setImageLoaded(true)}
+                      />
                       <div className={EventCardModal.date}>{formattedDate}</div>
                       {info.ongoingEvent && (
                         <div
