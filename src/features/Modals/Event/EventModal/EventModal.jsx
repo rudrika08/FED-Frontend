@@ -17,6 +17,7 @@ import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { SkeletonTheme } from "react-loading-skeleton";
 import { IoIosLock } from "react-icons/io";
+import { Blurhash } from "react-blurhash";
 import {
   MicroLoading,
   Alert,
@@ -39,7 +40,7 @@ const EventModal = (props) => {
   const [isLoading, setIsLoading] = useState(true);
   const [info, setInfo] = useState({});
   const [data, setData] = useState({});
-  const [eventData,setEventData]=useState({});
+  const [imageLoaded, setImageLoaded] = useState(false);
 
   useEffect(() => {
     const fetchEvent = async () => {
@@ -134,14 +135,35 @@ const EventModal = (props) => {
 
   const formattedDate = `${dayWithSuffix} ${month}`;
 
-  const calculateRemainingTime = () => {
-    const regStartDate = new Date(info.regDateAndTime);
+  const modifyDateFormat = (dateStr) => {
+    // Remove the ordinal suffix from the day
+    const ordinalSuffixes = ['st', 'nd', 'rd', 'th'];
+    ordinalSuffixes.forEach(suffix => {
+        dateStr = dateStr.replace(suffix, '');
+    });
+
+    // Parse the date string to a JavaScript Date object
+    const regDate = new Date(Date.parse(dateStr));
+
+    // Convert the date to the desired ISO format (UTC)
+    const isoDateStr = regDate.toISOString();
+
+    return isoDateStr;
+};
+
+const calculateRemainingTime = () => {
+    const formattedDateStr = modifyDateFormat(info.regDateAndTime);
+    // console.log(formattedDateStr); // For debugging
+
+    const regStartDate = new Date(formattedDateStr);
     const now = new Date();
+    // console.log(now);
     const timeDifference = regStartDate - now;
+    // console.log(timeDifference);
 
     if (timeDifference <= 0) {
-      setRemainingTime(null);
-      return;
+        setRemainingTime(null);
+        return;
     }
 
     const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
@@ -150,14 +172,14 @@ const EventModal = (props) => {
     const seconds = Math.floor((timeDifference / 1000) % 60);
 
     const remaining = [
-      days > 0 ? `${days}d ` : "",
-      hours > 0 ? `${hours}h ` : "",
-      minutes > 0 ? `${minutes}m ` : "",
-      seconds > 0 ? `${seconds}s` : "",
-    ].join("");
-
-    setRemainingTime(remaining.trim());
-  };
+        days > 0 ? `${days}d` : "",
+        hours > 0 ? `${hours}h` : "",
+        minutes > 0 ? `${minutes}m` : "",
+        seconds > 0 ? `${seconds}s` : "",
+    ].filter(Boolean).join(" ");
+   
+    setRemainingTime(remaining);
+};
 
   // Update button text based on registration status and remaining time
   useEffect(() => {
@@ -317,7 +339,7 @@ const EventModal = (props) => {
                       <X />
                     </button>
                     <div className={EventCardModal.backimg}>
-                     {!info.eventImg===null? <img
+                     {/* {!info.eventImg===null? <img
                         src=  {info.eventImg}
                         className={EventCardModal.img}
                         alt="Event"
@@ -325,7 +347,24 @@ const EventModal = (props) => {
                       src=  {eventDefaultImg}
                       className={EventCardModal.img}
                       alt="Event"
-                    />}
+                    />} */}
+
+{!imageLoaded && (
+            <Blurhash
+              hash="L6AcVvDi56n$C,T0IUbF{K-pNG%M"
+              width={"100%"}
+              height={200}
+              resolutionX={32}
+              resolutionY={32}
+              punch={1}
+            />
+          )}
+          <img
+            srcSet={info.eventImg}
+            className={EventCardModal.img}
+            alt="Event"
+            onLoad={() => setImageLoaded(true)}
+          />
                       <div className={EventCardModal.date}>{formattedDate}</div>
                       {info.ongoingEvent && (
                         <div

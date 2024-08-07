@@ -19,6 +19,7 @@ import EventCardSkeleton from "../../layouts/Skeleton/EventCard/EventCardSkeleto
 import { Blurhash } from "react-blurhash";
 import { Alert, MicroLoading } from "../../microInteraction";
 import { color } from "framer-motion";
+// import useUnixTimestamp from "../../utils/hooks/useUnixTimeStamp";
 
 const EventCard = (props) => {
   const {
@@ -114,14 +115,35 @@ const EventCard = (props) => {
 
   const formattedDate = `${dayWithSuffix} ${month}`;
 
-  const calculateRemainingTime = () => {
-    const regStartDate = new Date(info.regDateAndTime);
+  const modifyDateFormat = (dateStr) => {
+    // Remove the ordinal suffix from the day
+    const ordinalSuffixes = ['st', 'nd', 'rd', 'th'];
+    ordinalSuffixes.forEach(suffix => {
+        dateStr = dateStr.replace(suffix, '');
+    });
+
+    // Parse the date string to a JavaScript Date object
+    const regDate = new Date(Date.parse(dateStr));
+
+    // Convert the date to the desired ISO format (UTC)
+    const isoDateStr = regDate.toISOString();
+
+    return isoDateStr;
+};
+
+const calculateRemainingTime = () => {
+    const formattedDateStr = modifyDateFormat(info.regDateAndTime);
+    // console.log(formattedDateStr); // For debugging
+
+    const regStartDate = new Date(formattedDateStr);
     const now = new Date();
+    // console.log(now);
     const timeDifference = regStartDate - now;
+    // console.log(timeDifference);
 
     if (timeDifference <= 0) {
-      setRemainingTime(null);
-      return;
+        setRemainingTime(null);
+        return;
     }
 
     const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
@@ -130,14 +152,15 @@ const EventCard = (props) => {
     const seconds = Math.floor((timeDifference / 1000) % 60);
 
     const remaining = [
-      days > 0 ? `${days}d ` : "",
-      hours > 0 ? `${hours}h ` : "",
-      minutes > 0 ? `${minutes}m ` : "",
-      seconds > 0 ? `${seconds}s` : "",
-    ].join("");
+        days > 0 ? `${days}d` : "",
+        hours > 0 ? `${hours}h` : "",
+        minutes > 0 ? `${minutes}m` : "",
+        seconds > 0 ? `${seconds}s` : "",
+    ].filter(Boolean).join(" ");
+   
+    setRemainingTime(remaining);
+};
 
-    setRemainingTime(remaining.trim());
-  };
 
   useEffect(() => {
     if (info.isRegistrationClosed) {
