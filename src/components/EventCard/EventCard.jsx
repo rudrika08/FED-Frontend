@@ -264,7 +264,7 @@ const calculateRemainingTime = () => {
             <Blurhash
               hash="L6AcVvDi56n$C,T0IUbF{K-pNG%M"
               width={"100%"}
-              height={"100%"}
+              height={200}
               resolutionX={32}
               resolutionY={32}
               punch={1}
