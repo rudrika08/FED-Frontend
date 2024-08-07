@@ -5,6 +5,7 @@ import { ComponentLoading } from "../../../../../microInteraction";
 import FormData from "../../../../../data/FormData.json";
 import { api } from "../../../../../services";
 import AuthContext from "../../../../../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 function ViewEvent({ handleChangePage }) {
   const [activePage, setActivePage] = useState("View Events");
@@ -14,6 +15,7 @@ function ViewEvent({ handleChangePage }) {
   const [error, setError] = useState(null);
   const [selectedSection, setSelectedSection] = useState("ongoing");
   const authCtx=useContext(AuthContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchEventData = async () => {
@@ -143,7 +145,7 @@ function ViewEvent({ handleChangePage }) {
                                   isPastpage={true}
                                   aosDisable={true}
                                   onDelete={handleDeleteEvent}
-                                  onEdit={() => handleChangePage("Form")}
+                                  onEdit={() => navigate('/profile/Form')}
                                   enableEdit={true}
                                   onHover={() =>
                                     console.log("Ongoing Event Hovered")

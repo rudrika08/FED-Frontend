@@ -78,9 +78,13 @@
       --color: blue;
       font-size: 80%;
       padding: 1em 1.8em;
-      border-bottom: rgb(0, 136, 255) solid 3px;
-      border-right: rgb(0, 136, 255) solid 3px;
+      border-bottom: rgb(0, 136, 255) solid 5px;
+      border-right: rgb(0, 136, 255) solid 5px;
       font-weight: bold;
+
+      transition: border 0.2s ease-in 0.5s, font-size 0.3s ease-in-out;
+
+
       position: relative;
       color: black;
       background: #e9e5e5;
@@ -91,7 +95,9 @@
                          calc(100% - var(--slant)) 100%, 0 100%, 0 var(--slant));
       
       &:hover {
-        background-color: #007acc;
+        font-size: 15px;
+        transition: border 0.5 ease-out 0.5 , font-size 0.5s ease-in-out 0.5s;
+        
       }
   
       &::after {
@@ -110,6 +116,7 @@
   }
 
   @media (max-width: 480px){
+    .circle2{display: none;}
     .hero img{
         height: 200px;
         margin-top: 20px;
