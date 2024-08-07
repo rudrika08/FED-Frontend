@@ -1,3 +1,6 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-dupe-keys */
+/* eslint-disable react/no-unescaped-entities */
 import { useContext, useState } from "react";
 import styles from "./style/Signup.module.scss";
 import { Input, Button, Text } from "../../components";
@@ -477,10 +480,10 @@ const SignUp = () => {
 
                 <Text
                   style={{
-                    fontSize: "0.7rem",
+                    fontSize: "0.774rem",
                     textAlign: "center",
                     marginLeft: "5px",
-                    textAlign: "left",
+                    textAlign: "center",
                   }}
                 >
                   agree to FED's

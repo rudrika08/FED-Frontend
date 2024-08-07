@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React from 'react';
 import { Hero, About, Sponser, Feedback, Contact } from "../../sections";
 import { ChatBot, LiveEventPopup } from "../../features";
