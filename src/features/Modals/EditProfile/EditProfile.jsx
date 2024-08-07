@@ -39,12 +39,12 @@ const EditProfile = ({ handleModalClose }) => {
   const handleSave = async () => {
     setIsLoading(true);
     try {
-      console.log(data)
-      let { linkedin, github , ...modifiedData} = data;
+      console.log(data);
+      let { linkedin, github, ...modifiedData } = data;
       modifiedData.extra = {
-        github : data.github,
-        linkedin : data.linkedin
-      }
+        github: data.github,
+        linkedin: data.linkedin,
+      };
       console.log(modifiedData);
       const response = await api.put("/api/user/editDetails", modifiedData);
 
@@ -68,10 +68,10 @@ const EditProfile = ({ handleModalClose }) => {
           authCtx.user.editPorfileCount,
           authCtx.user.regForm
         );
-        setTimeout(()=>{
+        setTimeout(() => {
           handleModalClose();
           window.location.reload();
-        },2000);
+        }, 2000);
         setAlert({
           type: "success",
           message: "Profile updated successfully.",
@@ -265,55 +265,55 @@ const EditProfile = ({ handleModalClose }) => {
                           className={styles.vals}
                         />
                       </div>
-                      <div className={styles.table}>
-                        <h6 className={styles.dets}>Github</h6>
-                        <Input
-                          style={{
-                            width: "17rem",
-                            margin: "0px",
-                            fontSize: "15px",
-                          }}
-                          placeholder="Enter your school"
-                          type="text"
-                          value={data.github}
-                          className={styles.vals}
-                          onChange={(e) =>
-                            setData({ ...data, github: e.target.value })
-                          }
-                        />
-                      </div>
-                      <div className={styles.table}>
-                        <h6 className={styles.dets}>LinkedIn</h6>
-                        <Input
-                          style={{
-                            width: "17rem",
-                            margin: "0px",
-                            fontSize: "15px",
-                          }}
-                          placeholder="Enter your school"
-                          type="text"
-                          value={data.linkedin}
-                          className={styles.vals}
-                          onChange={(e) =>
-                            setData({ ...data, linkedin: e.target.value })
-                          }
-                        />
-                      </div>
+                      {authCtx.user.access !== "USER" && (
+                        <>
+                          <div className={styles.table}>
+                            <h6 className={styles.dets}>Github</h6>
+                            <Input
+                              style={{
+                                width: "17rem",
+                                margin: "0px",
+                                fontSize: "15px",
+                              }}
+                              placeholder="Enter your school"
+                              type="text"
+                              value={data.github}
+                              className={styles.vals}
+                              onChange={(e) =>
+                                setData({ ...data, github: e.target.value })
+                              }
+                            />
+                          </div>
+                          <div className={styles.table}>
+                            <h6 className={styles.dets}>LinkedIn</h6>
+                            <Input
+                              style={{
+                                width: "17rem",
+                                margin: "0px",
+                                fontSize: "15px",
+                              }}
+                              placeholder="Enter your school"
+                              type="text"
+                              value={data.linkedin}
+                              className={styles.vals}
+                              onChange={(e) =>
+                                setData({ ...data, linkedin: e.target.value })
+                              }
+                            />
+                          </div>
+                        </>
+                      )}
+
                       <div
                         style={{ display: "flex", justifyContent: "center" }}
                       >
-                          <Button
-                            type="submit"
-                            onClick={handleSave}
-                            className={styles.submit}
-                          >
-                          {isLoading ? (
-                            <MicroLoading />
-                          ) : (
-                            "Update Changes"
-                          )}
-                          </Button>
-                        
+                        <Button
+                          type="submit"
+                          onClick={handleSave}
+                          className={styles.submit}
+                        >
+                          {isLoading ? <MicroLoading /> : "Update Changes"}
+                        </Button>
                       </div>
                     </div>
                   </div>
@@ -323,7 +323,7 @@ const EditProfile = ({ handleModalClose }) => {
           </>
         </div>
       </div>
-      <Alert/>
+      <Alert />
     </div>
   );
 };
