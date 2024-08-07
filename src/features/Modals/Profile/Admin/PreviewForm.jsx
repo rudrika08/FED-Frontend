@@ -52,6 +52,8 @@ const PreviewForm = ({
     teamName: "",
   });
 
+  
+
   // console.log("Form Data info", formData.info);
   // console.log("sections", sections);
 
@@ -172,8 +174,9 @@ const PreviewForm = ({
         setTimeout(() => {
           setTeamCode(teamCode);
           setTeamName(teamName);
+          console.log("saved context teamCode:",recoveryCtx.teamCode)
           navigate("/Events");
-        }, 5000);
+        }, 20000);
       };
 
       handleAutoClose();
@@ -356,8 +359,9 @@ const PreviewForm = ({
           position: "bottom-right",
           duration: 3000,
         });
-        handleClose();
         setIsSuccess(true);
+        handleClose();
+      
         if (response.data.team) {
           const { teamName, teamCode } = response.data.team;
 
@@ -370,7 +374,7 @@ const PreviewForm = ({
       } else {
         setAlert({
           type: "error",
-          message: "There was an error submitting the form. Please try again.",
+          message: response.data.message||"There was an error submitting the form. Please try again.",
           position: "bottom-right",
           duration: 3000,
         });
@@ -381,7 +385,7 @@ const PreviewForm = ({
       console.error("Form submission error:", error);
       setAlert({
         type: "error",
-        message: "There was an error submitting the form. Please try again.",
+        message: error?.response?.data?.message||"There was an error submitting the form. Please try again.",
         position: "bottom-right",
         duration: 3000,
       });
