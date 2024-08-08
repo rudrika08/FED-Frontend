@@ -140,6 +140,7 @@ function AddMemberForm() {
         const response = await api.post("/api/user/addMember", formData, {
           headers: {
             "Content-Type": "multipart/form-data",
+            "Authorization": `Bearer ${window.localStorage.getItem("token")}`,
           },
         });
         console.log("Member added successfully:", response.data.user);

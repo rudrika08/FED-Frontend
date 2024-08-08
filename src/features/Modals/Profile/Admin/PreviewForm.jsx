@@ -47,19 +47,11 @@ const PreviewForm = ({
   const recoveryCtx = useContext(RecoveryContext);
   const { setTeamCode, setTeamName } = recoveryCtx;
   const[ formData, setFormData] = useState(eventData);
-  const [teamCodeData, SetTeamCodeData] = useState({
-    teamCode: "",
-    teamName: "",
-  });
+  const [code,setcode]=useState(null);
+  const[team,setTeam]=useState(null);
 
   
 
-  // console.log("Form Data info", formData.info);
-  // console.log("sections", sections);
-
-  // if(!eventData && !sections.length()==0){
-  //   return ;
-  // }
 
   let currentSection =
     data !== undefined
@@ -170,13 +162,16 @@ const PreviewForm = ({
   // console.log(data);
   useEffect(() => {
     if (isSuccess) {
+      const participationType = eventData?.info?.participationType;
       const handleAutoClose = () => {
         setTimeout(() => {
-          setTeamCode(teamCode);
-          setTeamName(teamName);
-          console.log("saved context teamCode:",recoveryCtx.teamCode)
+          if(participationType==='Team'){
+         setTeamCode(code);
+         setTeamName(team);
+          }
           navigate("/Events");
-        }, 20000);
+       
+        }, 1000);
       };
 
       handleAutoClose();
@@ -349,8 +344,10 @@ const PreviewForm = ({
       const response = await api.post("/api/form/register", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
+          "Authorization": `Bearer ${window.localStorage.getItem("token")}`,
         },
       });
+      // console.log("response data:",response.data)
 
       if (response.status === 200 || response.status === 201) {
         setAlert({
@@ -359,18 +356,27 @@ const PreviewForm = ({
           position: "bottom-right",
           duration: 3000,
         });
-        setIsSuccess(true);
-        handleClose();
-      
-        if (response.data.team) {
-          const { teamName, teamCode } = response.data.team;
+        if (response.data) {
+          const { teamName, teamCode } = response.data;
+          
 
-          SetTeamCodeData((prevData) => ({
-            ...prevData,
-            teamCode: teamCode,
-            teamName: teamName,
-          }));
+          // SetTeamCodeData((prevData) => ({
+          //   ...prevData,
+          //   teamCode: teamCode,
+          //   teamName: teamName,
+          // }));
+          const participationType = eventData?.info?.participationType;
+          if(participationType==="Team"){
+            setTeam(teamName)
+            setcode(teamCode);
+            // console.log("saved context teamCode:",recoveryCtx.teamCode)
+          }
+          console.log("consoling teamdata:",teamName,teamCode)
         }
+        setIsSuccess(true);
+        // handleClose();
+      
+    
       } else {
         setAlert({
           type: "error",
