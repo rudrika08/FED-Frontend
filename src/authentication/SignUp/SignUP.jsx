@@ -170,24 +170,26 @@ const SignUp = () => {
     setUserObject(user);
 
     try {
+
       setAlert({
         type: "info",
-        message: "Generating Verification OTP. Wait a moment...",
+        message: "Verifying Email...",
         position: "bottom-right",
         duration: 3000,
       });
-
-      setTimeout(() => {
-        setShowModal(true);
-      }, 3000);
-
-      const response = await axios.post(
-        `${import.meta.env.VITE_API_URL}/api/auth/verifyEmail`,
+      
+      const response = await api.post(
+        "/api/auth/verifyEmail",
         { email: user.email },
         { headers: { "Content-Type": "application/json" } }
       );
 
       if (response.status === 200 || response.status === 201) {
+  
+        setTimeout(() => {
+          setShowModal(true);
+        }, 3000);
+
         setAlert({
           type: "success",
           message: response.data.message || "Otp Sent to Email",

@@ -47,10 +47,12 @@ function ViewMember() {
         const response = await api.get("/api/user/fetchAccessTypes");
         const fetchedAccess = response.data.data;
 
-        const filteredAccess = fetchedAccess.filter(accessType => (
-          !["ADMIN", "USER", "PRESIDENT", "VICEPRESIDENT"].includes(accessType) &&
-          !accessType.startsWith("DIRECTOR_")
-        ));
+        const filteredAccess = fetchedAccess.filter(
+          (accessType) =>
+            !["ADMIN", "USER", "PRESIDENT", "VICEPRESIDENT"].includes(
+              accessType
+            ) && !accessType.startsWith("DIRECTOR_")
+        );
 
         // Adding "Directors" and "Add Member" to the filteredAccess array
         filteredAccess.push("Directors", "Add Member");
@@ -80,15 +82,19 @@ function ViewMember() {
     }
   };
 
-  const headerMenu = access.map(accessType => accessType.toLowerCase());
+  const headerMenu = access.map((accessType) => accessType.toLowerCase());
 
   const renderButtons = () =>
     headerMenu.map((menu) => (
       <Button
         key={menu}
         className={styles.buttonMember}
-        variant={menu === memberActivePage.toLowerCase() ? "primary" : "secondary"}
-        onClick={() => { handleButtonClick(menu) }}
+        variant={
+          menu === memberActivePage.toLowerCase() ? "primary" : "secondary"
+        }
+        onClick={() => {
+          handleButtonClick(menu);
+        }}
         style={{
           borderRadius: menu !== "add member" ? "20px" : "10px",
           marginLeft: menu === "add member" ? "0px" : "0px",
@@ -105,15 +111,16 @@ function ViewMember() {
 
     let filteredMembers = [];
     if (memberActivePage.toLowerCase() === "directors") {
-      filteredMembers = members.filter(member => (
-        member.access.startsWith("DIRECTOR_") ||
-        member.access === "PRESIDENT" ||
-        member.access === "VICEPRESIDENT"
-      ));
+      filteredMembers = members.filter(
+        (member) =>
+          member.access.startsWith("DIRECTOR_") ||
+          member.access === "PRESIDENT" ||
+          member.access === "VICEPRESIDENT"
+      );
     } else {
-      filteredMembers = members.filter(member => {
+      filteredMembers = members.filter((member) => {
         const accessCategory = member.access.startsWith("DIRECTOR_")
-          ? member.access.split('_')[1].toLowerCase() + 's'
+          ? member.access.split("_")[1].toLowerCase() + "s"
           : member.access.toLowerCase();
 
         return accessCategory === memberActivePage.toLowerCase();
@@ -122,18 +129,16 @@ function ViewMember() {
 
     // Apply search query filter
     if (searchQuery) {
-      filteredMembers = filteredMembers.filter(member =>
+      filteredMembers = filteredMembers.filter((member) =>
         member.name.toLowerCase().includes(searchQuery.toLowerCase())
       );
-      
     }
     return filteredMembers;
   };
 
   useEffect(() => {
     setTimeout(() => {
-
-    setLoading(false);
+      setLoading(false);
     }, 1000);
   }, [searchQuery]);
 
@@ -147,7 +152,7 @@ function ViewMember() {
     teamMemberBack: styles.teamMemberBackCustom,
   };
 
-  const handleUpdate = member => {
+  const handleUpdate = (member) => {
     setMemberActivePage("Add Member");
     setEnable(true);
   };
@@ -155,7 +160,11 @@ function ViewMember() {
   const handleRemove = async () => {
     try {
       const id = authCtx.memberData.id;
-      const response = await api.delete(`/api/user/deleteMember/${id}`);
+      const response = await api.delete(`/api/user/deleteMember/${id}`, {
+        headers: {
+          Authorization: `Bearer ${window.localStorage.getItem("token")}`,
+        },
+      });
       if (response.status === 200 || response.status === 201) {
         setAlert({
           type: "success",
@@ -163,7 +172,9 @@ function ViewMember() {
           position: "bottom-right",
           duration: 3000,
         });
-        setMembers(members => members.filter(m => m.id !== response.data.user.id));
+        setMembers((members) =>
+          members.filter((m) => m.id !== response.data.user.id)
+        );
       }
     } catch (error) {
       console.error("Error removing member:", error);
