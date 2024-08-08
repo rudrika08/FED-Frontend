@@ -308,7 +308,8 @@
   }
 
   .backtxt {
-    height: 6.7rem;
+    height: 6.7rem; 
+    // height: fit-content;
   }
 
   .closeModal {
@@ -428,5 +429,11 @@
   .registerbtn button {
     min-width: 10rem;
     padding: 0.7rem 0.9rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .card{
+    width: 300px; //Need to find optimal solution for it
   }
 }
