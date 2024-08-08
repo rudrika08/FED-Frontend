@@ -91,7 +91,7 @@
     --slant: 0.7em;
     --color: blue;
     font-size: 80%;
-    padding: 0.4em 1.2em;
+    padding: 1%;
     border-bottom: rgb(0, 136, 255) solid 3px;
     border-right: rgb(0, 136, 255) solid 3px;
     font-weight: bold;
@@ -103,6 +103,7 @@
     transition: border 0.2s ease-in 0.5s, font-size 0.3s ease-in-out;
     &:hover {
       font-size: 15px;
+      width: 60%;
       transition: border 0.5 ease-out 0.5 , font-size 0.5s ease-in-out 0.5s;
     }
   }
