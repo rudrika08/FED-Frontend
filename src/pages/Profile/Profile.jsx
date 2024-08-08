@@ -54,6 +54,7 @@ const Profile = () => {
             response.data.user.extra?.linkedin,
             response.data.user.extra?.designation,
             response.data.user.access,
+            response.data.user.editProfileCount,
             response.data.user.regForm
           );
         }

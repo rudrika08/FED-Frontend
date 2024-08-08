@@ -5,14 +5,51 @@ import { FiEdit } from "react-icons/fi";
 import { EditProfile } from "../../../../features";
 import { ComponentLoading } from "../../../../microInteraction";
 import PropTypes from "prop-types";
+import { Alert } from "../../../../microInteraction";
 
 const Profile = ({ editmodal }) => {
   const authCtx = useContext(AuthContext);
   const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [alert, setAlert] = useState(null);
+
+  useEffect(() => {
+    if (alert) {
+      const { type, message, position, duration } = alert;
+      Alert({ type, message, position, duration });
+      setAlert(null); // Reset alert after displaying it
+    }
+  }, [alert]);
 
   const handleOpen = () => {
-    setIsOpen(true);
+    authCtx.update(
+      authCtx.user.name,
+      authCtx.user.email,
+      authCtx.user.img,
+      authCtx.user.rollNumber,
+      authCtx.user.school,
+      authCtx.user.college,
+      authCtx.user.contactNo,
+      authCtx.user.year,
+      authCtx.user.extra.github,
+      authCtx.user.extra.linkedin,
+      authCtx.user.extra.designation,
+      authCtx.user.access,
+      authCtx.user.editProfileCount,
+      authCtx.user.regForm
+    );
+    console.log("editProfileCount", authCtx.user.editProfileCount);
+    if (authCtx.user.access!=="USER" || authCtx.user.editProfileCount > 0) {
+      setIsOpen(true);
+    } else {
+      setAlert({
+        type: "error",
+        message: "You have exceeded the limit of editing your profile.",
+        position: "bottom-right",
+        duration: 3000,
+
+      });
+    }
   };
 
   const handleClose = () => {
@@ -47,11 +84,9 @@ const Profile = ({ editmodal }) => {
         <h3 className={styles.headInnerText}>
           <span>Profile</span> Details
         </h3>
-        {authCtx.user.access !== "USER" && (
-          <div className={styles.editbtn} onClick={handleOpen}>
-            <FiEdit />
-          </div>
-        )}
+        <div className={styles.editbtn} onClick={handleOpen}>
+          <FiEdit />
+        </div>
       </div>
       {authCtx.user && (
         isLoading ? (
@@ -84,9 +119,10 @@ const Profile = ({ editmodal }) => {
           </div>
         )
       )}
-      {isOpen && authCtx.user.access !== "USER" && (
+      {isOpen && (
         <EditProfile handleModalClose={handleClose} />
       )}
+      <Alert/>
     </div>
   );
 };

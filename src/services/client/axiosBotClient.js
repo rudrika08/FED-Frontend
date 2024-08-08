@@ -5,10 +5,6 @@ let headers = {
     'Content-Type': 'application/json',
 };
 
-if (localStorage.token) {
-    headers.Authorization = `Bearer ${localStorage.getItem('token')}`;
-}
-
 const axiosClient = axios.create({
     baseURL: baseURL,
     headers,

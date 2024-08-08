@@ -170,17 +170,14 @@ const SignUp = () => {
     setUserObject(user);
 
     try {
+
       setAlert({
         type: "info",
-        message: "Generating Verification OTP. Wait a moment...",
+        message: "Verifying Email...",
         position: "bottom-right",
         duration: 3000,
       });
-
-      setTimeout(() => {
-        setShowModal(true);
-      }, 3000);
-
+      
       const response = await api.post(
         "/api/auth/verifyEmail",
         { email: user.email },
@@ -188,6 +185,11 @@ const SignUp = () => {
       );
 
       if (response.status === 200 || response.status === 201) {
+  
+        setTimeout(() => {
+          setShowModal(true);
+        }, 3000);
+
         setAlert({
           type: "success",
           message: response.data.message || "Otp Sent to Email",
@@ -240,9 +242,9 @@ const SignUp = () => {
             response.data.user.extra?.github,
             response.data.user.extra?.linkedin,
             response.data.user.extra?.designation,
-            response.data.user.regForm,
             response.data.user.access,
             response.data.user.editProfileCount,
+            response.data.user.regForm,
             response.data.user.blurhash,
             response.data.token,
             10800000

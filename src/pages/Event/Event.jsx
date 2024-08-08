@@ -9,7 +9,8 @@ import ring from "../../assets/images/ring.svg";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import { ComponentLoading } from "../../microInteraction";
 import { RecoveryContext } from "../../context/RecoveryContext";
-import Share from "../../features/Modals/Event/ShareModal/ShareModal";
+// import Share from "../../features/Modals/Event/ShareModal/ShareModal";
+import ShareTeamData from "../../features/Modals/Event/ShareModal/ShareTeamData";
 
 const Event = () => {
   useEffect(() => {
@@ -104,6 +105,8 @@ const Event = () => {
     teamCode: recoveryCtx.teamCode,
     teamName: recoveryCtx.teamName,
   };
+  console.log("teamCodeAndName is:",teamCodeAndName);
+  
 
   // Slice the pastEvents array to show only the first 4 events
   const displayedPastEvents = pastEvents.slice(0, 4);
@@ -111,7 +114,7 @@ const Event = () => {
   return (
     <>
       <ChatBot />
-      {isOpen && <Share onClose={handleShare} teamData={teamCodeAndName} />}
+      {isOpen && <ShareTeamData onClose={handleShare} teamData={teamCodeAndName} />}
       <div className={style.main}>
         <div style={{ display: "flex" }}>
           <div className={style.line}></div>
@@ -188,18 +191,20 @@ const Event = () => {
                       </div>
                       <div className={style.cardone}>
                         {displayedPastEvents.map((event, index) => (
-                          <div
-                            style={{ height: "auto", width: "22rem" }}
-                            key={index}
-                          >
-                            <EventCard
-                              data={event}
-                              type="past"
-                              customStyles={customStyles}
-                              modalpath="/Events/pastEvents/"
-                              isLoading={isLoading} // Pass the loading state to each EventCard
-                            />
-                          </div>
+                          event.info.isPublic ? (
+                            <div
+                              style={{ height: "auto", width: "22rem" }}
+                              key={index}
+                            >
+                              <EventCard
+                                data={event}
+                                type="past"
+                                customStyles={customStyles}
+                                modalpath="/Events/pastEvents/"
+                                isLoading={isLoading} // Pass the loading state to each EventCard
+                              />
+                            </div>
+                          ) : null
                         ))}
                       </div>
                     </div>

@@ -5,12 +5,11 @@ import Button from "../Core/Button";
 import Input from "../Core/Input";
 import style from "./style/otpinput.module.scss";
 import { useNavigate } from "react-router-dom";
-import { X } from 'lucide-react';
+import { X } from "lucide-react";
 import { api } from "../../services";
-import { Alert,MicroLoading } from "../../microInteraction";
+import { Alert, MicroLoading } from "../../microInteraction";
 
 const OtpInput = (props) => {
-
   const { email } = useContext(RecoveryContext);
   const [timerCount, setTimer] = useState(60);
   const [OTPinput, setOTPinput] = useState(["", "", "", ""]);
@@ -20,15 +19,11 @@ const OtpInput = (props) => {
   const [password, setPassword] = useState("");
   const [cnfPassword, setCnfPassword] = useState("");
   const [error, setError] = useState("");
-  const [alert,setAlert]=useState(null);
-  const [loading,setLoading]=useState(false);
+  const [alert, setAlert] = useState(null);
+  const [loading, setLoading] = useState(false);
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-  const{isSignUp,onHandleVerfiy,handleClose}=props;
-
-
-
-
+  const { isSignUp, onHandleVerfiy, handleClose } = props;
 
   useEffect(() => {
     if (alert) {
@@ -36,8 +31,6 @@ const OtpInput = (props) => {
       Alert({ type, message, position, duration });
     }
   }, [alert]);
-
-
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -70,15 +63,12 @@ const OtpInput = (props) => {
     }
   };
 
-  const resendOTP = async() => {
-    
+  const resendOTP = async () => {
     console.log("inside resendOtp");
-if (disable) return;
-console.log("email",email);
-
+    if (disable) return;
+    console.log("email", email);
 
     if (email) {
-
       if (!emailRegex.test(email)) {
         setAlert({
           type: "error",
@@ -89,23 +79,24 @@ console.log("email",email);
         return;
       }
 
-   try {
-    setLoading(true);
+      try {
+        setLoading(true);
 
-      const response = await api.post("api/auth/forgotPassword", { email: email });
-      console.log(response)
-      if(response.status===201||response.status===200){
-        console.log("entering if")
-        setDisable(true);
-        setAlert({
-          type: "success",
-          message: "otp is sent to your email",
-          position: "bottom-right",
-          duration: 2800,
+        const response = await api.post("api/auth/forgotPassword", {
+          email: email,
         });
-        setTimer(60);
-      
-      }else{
+        console.log(response);
+        if (response.status === 201 || response.status === 200) {
+          console.log("entering if");
+          setDisable(true);
+          setAlert({
+            type: "success",
+            message: "otp is sent to your email",
+            position: "bottom-right",
+            duration: 2800,
+          });
+          setTimer(60);
+        } else {
           // toast.error("error in sending otp");
           setAlert({
             type: "error",
@@ -115,37 +106,36 @@ console.log("email",email);
           });
           setError(response.data.message);
         }
-   } catch (error) {
-    console.log("error in input field:",error);
-    // toast.error(response.error);
-    setAlert({
-      type: "error",
-      message: error?.response?.message||"Error in generating otp",
-      position: "bottom-right",
-      duration: 2800,
-    });
-    
-   }finally{
-    setLoading(false);
-   }
-  } 
+      } catch (error) {
+        console.log("error in input field:", error);
+        // toast.error(response.error);
+        setAlert({
+          type: "error",
+          message: error?.response?.message || "Error in generating otp",
+          position: "bottom-right",
+          duration: 2800,
+        });
+      } finally {
+        setLoading(false);
+      }
+    }
   };
 
   const verifyOTP = () => {
     const enteredOTP = OTPinput.join("");
     if (enteredOTP === String(otp)) {
-      navigate('/reset');
+      navigate("/reset");
     } else {
       alert("Incorrect OTP, please try again or resend.");
     }
   };
 
-  const changePassword = async(e) => {
+  const changePassword = async (e) => {
     e.preventDefault();
     const enteredOTP = OTPinput.join("");
-    console.log("enteredOtp:",enteredOTP)
- 
-    if ( !password || !cnfPassword) {
+    console.log("enteredOtp:", enteredOTP);
+
+    if (!password || !cnfPassword) {
       setAlert({
         type: "error",
         message: "Please fill all the fields",
@@ -156,71 +146,79 @@ console.log("email",email);
     }
     try {
       setLoading(true);
-     const response = await api.post("/api/auth/changePassword", {newPassword:password, confirmPassword:cnfPassword, otp:enteredOTP, email:email});
-     if(response.status===200||response.status===201){
-      setAlert({
-        type: "success",
-        message: "reset Password Successfully",
-        position: "bottom-right",
-        duration: 2800,
+      const response = await api.post("/api/auth/changePassword", {
+        newPassword: password,
+        confirmPassword: cnfPassword,
+        otp: enteredOTP,
+        email: email,
       });
-    
-      navigate('/Login');
-     }
+      if (response.status === 200 || response.status === 201) {
+        setAlert({
+          type: "success",
+          message: "reset Password Successfully",
+          position: "bottom-right",
+          duration: 2800,
+        });
 
-     if(response.status===404){
+        navigate("/Login");
+      }
+
+      if (response.status === 404) {
+        setAlert({
+          type: "error",
+          message: response.data.message,
+          position: "bottom-right",
+          duration: 2800,
+        });
+      }
+    } catch (error) {
       setAlert({
         type: "error",
-        message: response.data.message,
+        message: error?.response?.data?.message || "Changing Password Failed",
         position: "bottom-right",
         duration: 2800,
       });
-     }
-       
- } catch (error) {
-  setAlert({
-    type: "error",
-    message: error?.response?.data?.message||"Changing Password Failed",
-    position: "bottom-right",
-    duration: 2800,
-  });
-   
- }finally{
-  setLoading(false);
- }
-   
+    } finally {
+      setLoading(false);
+    }
+
     // alert("Password reset successfully");
   };
 
-
-  const handleVerifySignUp=()=>{
+  const handleVerifySignUp = () => {
     // console.log("hello");
     const enteredOTP = OTPinput.join("");
     // console.log(enteredOTP);
     // console.log(password);
     onHandleVerfiy(enteredOTP);
-
-    }
+  };
 
   return (
-    <div className={style.innerBox1} style={{background: isSignUp? '#1c1c1c':''}}>
-    { isSignUp &&  <div onClick={handleClose} style={{
-                  position:"absolute",
-                  top:"1rem",
-                  right:"1rem",
-                  color: "#fff",
-                  cursor:"pointer",
-               }}>
-          <X/>
-          </div>   
-}
+    <div
+      className={style.innerBox1}
+      style={{ background: isSignUp ? "#1c1c1c" : "" }}
+    >
+      {isSignUp && (
+        <div
+          onClick={handleClose}
+          style={{
+            position: "absolute",
+            top: "1rem",
+            right: "1rem",
+            color: "#fff",
+            cursor: "pointer",
+          }}
+        >
+          <X />
+        </div>
+      )}
       <div className={style.innerBox2}>
         <div className={style.innerTitle}>
           <div className={style.innerTitlediv}>
             <p className={style.verifyTitle}>Email Verification</p>
           </div>
           <div className={style.innerTitle2}>
-            <p>We have sent a code to your email {email}</p>
+            <p>We have sent a code to your email</p>
           </div>
         </div>
         <div>
@@ -264,9 +262,7 @@ console.log("email",email);
 
       {isSignUp ? (
         <>
-
- 
-        {error && <p style={{ color: "red" }}>{error}</p>}
+          {error && <p style={{ color: "red" }}>{error}</p>}
           <div className={style.buttondiv}>
             <div>
               <Button
@@ -283,11 +279,13 @@ console.log("email",email);
                 Verify Email
               </Button>
             </div>
-            </div>
-            </>
+          </div>
+        </>
       ) : (
         <form className={style.formdiv} onSubmit={changePassword}>
-          <div style={{ width: "97%", marginLeft: "auto", marginRight: "auto" }}>
+          <div
+            style={{ width: "97%", marginLeft: "auto", marginRight: "auto" }}
+          >
             <Input
               type="password"
               placeholder="Enter your password"
@@ -299,7 +297,9 @@ console.log("email",email);
               style={{ width: "100%" }}
             />
           </div>
-          <div style={{ width: '97%', marginLeft: "auto", marginRight: "auto" }}>
+          <div
+            style={{ width: "97%", marginLeft: "auto", marginRight: "auto" }}
+          >
             <Input
               type="password"
               placeholder="Confirm your password"
@@ -325,14 +325,13 @@ console.log("email",email);
                   cursor: "pointer",
                 }}
               >
-                {loading? <MicroLoading/>:"Verify Email"}
-              
+                {loading ? <MicroLoading /> : "Verify Email"}
               </Button>
             </div>
           </div>
         </form>
       )}
-      <Alert/>
+      <Alert />
     </div>
   );
 };
