@@ -46,7 +46,7 @@ const EditProfile = ({ handleModalClose }) => {
         linkedin: data.linkedin,
       };
       console.log(modifiedData);
-      const response = await api.put("/api/user/editDetails", modifiedData,{
+      const response = await api.put("/api/user/editDetails", modifiedData, {
         headers: {
           Authorization: `Bearer ${window.localStorage.getItem("token")}`,
         },
@@ -69,12 +69,11 @@ const EditProfile = ({ handleModalClose }) => {
           data.linkedin,
           authCtx.user.extra.designation,
           authCtx.user.access,
-          authCtx.user.editPorfileCount,
+          authCtx.user.editProfileCount-1,
           authCtx.user.regForm
         );
         setTimeout(() => {
           handleModalClose();
-          window.location.reload();
         }, 2000);
         setAlert({
           type: "success",
@@ -145,6 +144,7 @@ const EditProfile = ({ handleModalClose }) => {
                 data-aos="zoom-in-up"
                 data-aos-duration="500"
               >
+              <div className={styles.heading}>
                 <div className={styles.proHeading}>
                   <h3 className={styles.headInnerText}>
                     <span>Edit</span> Profile
@@ -156,6 +156,7 @@ const EditProfile = ({ handleModalClose }) => {
                 >
                   <X />
                 </button>
+              </div>
                 {authCtx.user && (
                   <div className={styles.details}>
                     <div className={styles.profileTable}>
@@ -309,8 +310,30 @@ const EditProfile = ({ handleModalClose }) => {
                       )}
 
                       <div
-                        style={{ display: "flex", justifyContent: "center" }}
+                        style={{
+                          display: "flex",
+                          justifyContent: "center",
+                          flexDirection: "column",
+                          alignItems: "center",
+                        }}
                       >
+                        {authCtx.user.access === "USER" && (
+                          <p
+                            className={styles.vals}
+                            style={{
+                              marginTop: "15px",
+                              textAlign: "center",
+                              width:"100%",
+                              fontSize:"1rem"
+                            }}
+                          >
+                            You can only edit your profile{" "}
+                            <span style={{ fontWeight: 600 }}>5 times. </span>{" "}Total Edits left:{" "}
+                            <span style={{ fontWeight: 600 }}>
+                              {authCtx.user.editProfileCount}
+                            </span>
+                          </p>
+                        )}
                         <Button
                           type="submit"
                           onClick={handleSave}

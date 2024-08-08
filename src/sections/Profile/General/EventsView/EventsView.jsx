@@ -40,7 +40,7 @@ const Events = () => {
           } else {
             // Filter and then sort events for users
             const filteredEvents = fetchedEvents.filter((event) =>
-              userEvents.includes(event._id)
+              userEvents.includes(event.id)
             );
             setEvents(sortEventsByDate(filteredEvents));
           }
@@ -58,17 +58,17 @@ const Events = () => {
         });
         console.error("Error fetching team members:", error);
 
-        const userEvents = authCtx.user.regForm;
-        // using local JSON data
-        let localEvents = eventsData.events;
-        if (authCtx.user.access !== "USER") {
-          setEvents(sortEventsByDate(localEvents));
-        } else {
-          const filteredEvents = localEvents.filter((event) =>
-            userEvents.includes(event._id)
-          );
-          setEvents(sortEventsByDate(filteredEvents));
-        }
+        // const userEvents = authCtx.user.regForm;
+        // // using local JSON data
+        // let localEvents = eventsData.events;
+        // if (authCtx.user.access !== "USER") {
+        //   setEvents(sortEventsByDate(localEvents));
+        // } else {
+        //   const filteredEvents = localEvents.filter((event) =>
+        //     userEvents.includes(event._id)
+        //   );
+        //   setEvents(sortEventsByDate(filteredEvents));
+        // }
       } finally {
         setIsLoading(false);
       }
@@ -136,7 +136,7 @@ const Events = () => {
                       </td>
 
                       <td className={styles.mobilewidthtd}>
-                        <Link to={`${viewPath}/${event._id}`}>
+                        <Link to={`${viewPath}/${event.id}`}>
                           <button
                             className={styles.viewButton}
                             style={{
@@ -152,7 +152,7 @@ const Events = () => {
                       </td>
                       {analyticsAccessRoles.includes(authCtx.user.access) && (
                         <td className={styles.mobilewidthtd}>
-                          <Link to={`${analyticsPath}/${event._id}`}>
+                          <Link to={`${analyticsPath}/${event.id}`}>
                             <button
                               className={styles.viewButton}
                               style={{

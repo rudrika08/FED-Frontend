@@ -78,7 +78,7 @@ const EventCard = (props) => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowSkeleton(false);
-    }, 2000); // Show skeleton for 2 seconds
+    }, 500); // Show skeleton for 2 seconds
 
     return () => clearTimeout(timer);
   }, []);
@@ -209,12 +209,12 @@ const calculateRemainingTime = () => {
           setIsMicroLoading(false);
           setBtnTxt("Already Member");
         }, 1500);
-        // setAlert({
-        //   type: "info",
-        //   message: "Team Members are not allowed to register for the Event",
-        //   position: "bottom-right",
-        //   duration: 3000,
-        // });
+        setAlert({
+          type: "info",
+          message: "Team Members are not allowed to register for the Event",
+          position: "bottom-right",
+          duration: 3000,
+        });
       } else {
         setNavigatePath("/Events/" + data.id + "/Form");
         setTimeout(() => {
@@ -351,8 +351,8 @@ const calculateRemainingTime = () => {
                 disabled={
                   btnTxt === "Closed" ||
                   btnTxt === "Already Registered" ||
-                  btnTxt === "Already Member" 
-                  // btnTxt === `${remainingTime}`
+                  btnTxt === "Already Member" ||
+                  btnTxt === `${remainingTime}`
                 }
               >
                 {btnTxt === "Closed" ? (
