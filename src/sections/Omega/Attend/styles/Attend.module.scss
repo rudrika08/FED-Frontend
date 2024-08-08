@@ -50,6 +50,7 @@
     display: flex;
     align-items: center;
     justify-content: space-around;
+    z-index: 1;
 }
 
 .text{
@@ -70,7 +71,6 @@ img{
 
 .circle1{
     position: absolute;
-    z-index: 2;
     top: 280%;
     left: -12%;
     filter: blur(40px);
