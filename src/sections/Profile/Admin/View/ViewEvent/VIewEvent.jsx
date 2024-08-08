@@ -14,7 +14,7 @@ function ViewEvent({ handleChangePage }) {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [selectedSection, setSelectedSection] = useState("ongoing");
-  const authCtx=useContext(AuthContext);
+  const authCtx = useContext(AuthContext);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -74,13 +74,16 @@ function ViewEvent({ handleChangePage }) {
     },
   };
 
-
- const handleDeleteEvent=async()=>{
-     console.log("deleting event:",authCtx.eventData);
-     const id = authCtx.eventData.id;
-     const response = await api.delete(`/api/form/deleteForm/${id}`)
-     console.log(response);
- }
+  const handleDeleteEvent = async () => {
+    console.log("deleting event:", authCtx.eventData);
+    const id = authCtx.eventData.id;
+    const response = await api.delete(`/api/form/deleteForm/${id}`, {
+      headers: {
+        Authorization: `Bearer ${window.localStorage.getItem("token")}`,
+      },
+    });
+    console.log(response);
+  };
   return (
     <div className={styles.container}>
       <div className={styles.buttonContainer}>
@@ -145,7 +148,7 @@ function ViewEvent({ handleChangePage }) {
                                   isPastpage={true}
                                   aosDisable={true}
                                   onDelete={handleDeleteEvent}
-                                  onEdit={() => navigate('/profile/Form')}
+                                  onEdit={() => navigate("/profile/Form")}
                                   enableEdit={true}
                                   onHover={() =>
                                     console.log("Ongoing Event Hovered")
@@ -176,8 +179,8 @@ function ViewEvent({ handleChangePage }) {
                                   modalpath="/profile/Events/"
                                   isPastpage={true}
                                   aosDisable={true}
-                                  onEdit={() => navigate('/profile/Form')}
-                                     onDelete={handleDeleteEvent}
+                                  onEdit={() => navigate("/profile/Form")}
+                                  onDelete={handleDeleteEvent}
                                   enableEdit={true}
                                   onHover={() =>
                                     console.log("Past Event Hovered")
