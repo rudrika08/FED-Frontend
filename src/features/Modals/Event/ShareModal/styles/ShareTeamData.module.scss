@@ -19,6 +19,7 @@
     background: rgba(0, 0, 0, 0.5);
     backdrop-filter: blur(5px);
     z-index: 5;
+    // text-align: left;
   }
   
   .maindiv {
@@ -35,7 +36,7 @@
     margin-left: auto;
     margin-right: auto;
     width: 22rem;
-    box-shadow: 0 6px 10px 3px rgba(24, 15, .3);
+    box-shadow: 0 6px 10px 3px rgba(24, 15, 15, 0.3);
     color: #f97507;
   }
   
@@ -50,7 +51,49 @@
   }
   
   .closebtn:hover {
-    color: #D14206;
-    transition: .2s linear;
+    color: #d14206;
+    transition: 0.2s linear;
+  }
+  
+  .copyContainer {
+    border: 1px solid #1a1fa9;
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 5px;
+    padding: 0.5rem;
+    margin: 0.5rem 0;
+    // text-align: left;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: #ffffff90;
+  }
+  
+  .copyUrl {
+    overflow-y: scroll;
+    scrollbar-width: none;
+    // ms-overflow-style: none;
+  }
+
+  .shareTitle{
+    font-weight:bold;
+    margin-left:-5rem;
+    font-size:1.5rem
+  }
+
+  @media (max-width:500px){
+    .maindiv{
+        width: 20rem;
+    }
+
+    .copyContainer{
+        font-size:0.8rem;
+    }
+
+    .shareTitle{
+        font-size: 1.2rem;
+        margin-left: -6rem;
+    }
+
+
   }
   

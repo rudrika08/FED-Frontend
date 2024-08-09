@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   FacebookShareButton,
   TwitterShareButton,
@@ -14,8 +14,16 @@ import { X } from 'lucide-react';
 
 const ShareTeamData = ({ onClose, teamData }) => {
   const { teamName, teamCode } = teamData;
+  const [copyText, setCopyText] = useState('Copy');
   const message = `Congratulations! Your team "${teamName}" with code "${teamCode}" has been successfully registered!🎉🎉`;
   const websiteUrl = window.location.href;  // Replace this with your actual website URL
+
+  const handleCopy = () => {
+    const textToCopy = `Team Name: ${teamName}\nTeam Code: ${teamCode}`;
+    navigator.clipboard.writeText(textToCopy);
+    setCopyText('Copied');
+    setTimeout(() => setCopyText('Copy'), 4000); // Reset button text after 2 seconds
+  };
 
   return (
     <div className={styles.shareContainer}>
@@ -24,8 +32,16 @@ const ShareTeamData = ({ onClose, teamData }) => {
         <div className={styles.closebtn} onClick={onClose}>
           <X />
         </div>
-        <h2 style={{fontWeight:"bold"}}>Share Team Name And Team Code</h2>
-        <p style={{color:"#ffffff90" ,textWrap:"wrap"}}>{message}</p>
+        <span className={styles.shareTitle}>Share Team Info</span>
+        <div className={styles.copyContainer}>
+          <p style={{color:"#ffffff90" ,textWrap:"wrap"}}>
+            Your Team Name: <span style={{fontWeight: "bold"}}>{teamName}</span><br />
+            Your Team Code: <span style={{fontWeight: "bold"}}>{teamCode}</span>
+          </p>
+          <button  onClick={handleCopy} style={{marginLeft: "10px",color:"#ffffff60" ,background:"#2a2a2a" , padding:"0.3rem" , borderRadius:"10px" }}>
+            {copyText}
+          </button>
+        </div>
         <div style={{ display: 'flex', justifyContent: 'space-around', width: '100%' }}>
           <FacebookShareButton url={websiteUrl} quote={message} hashtag="#TeamSuccess">
             <FacebookIcon size={40} round />
