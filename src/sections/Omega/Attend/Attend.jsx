@@ -34,10 +34,10 @@ function Attend() {
         </div>
 
         <div className={style.boxmain}>
-          <Card img="https://i.ibb.co/7knyjL2/oi0.jpg" title="Inspiration and Knowledge" />
-          <Card img="https://i.ibb.co/wB6SZ46/oi.jpg" title="Networking Opportunities" />
-          <Card img="https://i.ibb.co/gWkn3YD/oi2.jpg" title="Hands-on Experience" />
-          <Card img="https://i.ibb.co/K9s5WrN/oi3.jpg" title="Exposure and Recognition" />
+          <Card img="https://uploads-ssl.webflow.com/663d1907e337de23e83c30b2/66b5fc073c4fe7b17fd35209_image%20(14).png"  title="Inspiration and Knowledge" />
+          <Card img="https://uploads-ssl.webflow.com/663d1907e337de23e83c30b2/66b5faa63c233fc6529719c3_image%20(10).png" title="Networking Opportunities" />
+          <Card img="https://uploads-ssl.webflow.com/663d1907e337de23e83c30b2/66b5faa776cf7e0c97524f2b_image%20(9).png" title="Hands-on Experience" />
+          <Card img="https://uploads-ssl.webflow.com/663d1907e337de23e83c30b2/66b5faa63c233fc6529719c3_image%20(10).png" title="Exposure and Recognition" />
         </div>
       </div>
 

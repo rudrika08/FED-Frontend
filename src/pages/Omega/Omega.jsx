@@ -37,7 +37,6 @@ function Omega() {
       </Element>
       <div>
         <ChatBot />
-        <h1 style={{ margin: '8rem' }}>Currently in Development</h1>
       </div>
     </div>
   );

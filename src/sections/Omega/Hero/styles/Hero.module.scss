@@ -118,7 +118,7 @@
   @media (max-width: 480px){
     .circle2{
     position: absolute;
-    top: 60px;
+    top: -10%;
     right: -10%;
     background: linear-gradient(#4B00C6 , #0047FF , #50FF34 ,#00D1FF );
     filter:blur(40px);
@@ -137,7 +137,7 @@
     }
 
     .text{
-        width: 50%;
+        width: 100%;
         text-align: center;
         margin: 30px 10px;
     }

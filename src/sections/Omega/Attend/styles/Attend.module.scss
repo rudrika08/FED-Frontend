@@ -58,20 +58,21 @@
     margin-right: 5vw;
     font-weight: 600;
 }
-.icon{
-    height: 100%;
-    width: 8vw;
-    padding: 1vw;
-}
+// .icon{
+//     height: 100%;
+//     width: 8vw;
+//     padding: 1vw;
+// }
 
-img{
-    height: 100%;
-    width: auto;
-}
+// img{
+//     height: 100%;
+//     width: auto;
+//     border-radius: 50%;
+// }
 
 .circle1{
     position: absolute;
-    top: 280%;
+    top: 240%;
     left: -12%;
     filter: blur(40px);
     border-radius: 60px;
@@ -86,7 +87,7 @@ img{
 
 .circle2{
     position: absolute;
-    top: 280%;
+    top: 320%;
     right: -12%;
     background: linear-gradient(#4B00C6 , #0047FF , #50FF34 ,#00D1FF );
     filter:blur(40px);
@@ -113,17 +114,19 @@ img{
     margin-bottom: 15px;
     margin-top: 30px;
     width: 550px;
-    height: 85px;
+    height: 100px;
     justify-content: space-evenly;
     backdrop-filter: blur(10px);
     background: #0b0b0b11;
     border: solid;
     border-color: white;
     border-width: 2px;
+    padding: 10px;
+
   }
   
   .card_content h2 {
-    font-size: 120%;
+    font-size: 100%;
   }
   
   .card_img img {
@@ -134,14 +137,20 @@ img{
     left: 0;
     margin-left: 2px;
   }
+
+  .card_img{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
   
   .card_content {
-    margin-left: -55px;
     width: 100%;
     align-items: center;
     display: flex;
     padding: 10px;
     box-sizing: border-box;
+    justify-content: flex-start;
   }
 
   .cut{
@@ -163,7 +172,7 @@ img{
     width: 40px;
     height: 50px;
     left: 97%;
-    top: 74%;
+    top: 78%;
     border-top: solid white 2px;
     position: absolute;
     transform: rotate(-45deg);
@@ -206,5 +215,12 @@ img{
     .cut2{
         left: 97.1%;
     }
+  }
+
+  @media(max-width: 480px){
+    .card_img img{
+        height: 200%;
+    }
+    
   }
 
