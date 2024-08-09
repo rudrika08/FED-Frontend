@@ -1,3 +1,5 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
 import {
   FacebookShareButton,
@@ -42,7 +44,7 @@ const ShareTeamData = ({ onClose, teamData }) => {
             {copyText}
           </button>
         </div>
-        <div style={{ display: 'flex', justifyContent: 'space-around', width: '100%' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-around', width: '100%', marginTop: '1rem' }}>
           <FacebookShareButton url={websiteUrl} quote={message} hashtag="#TeamSuccess">
             <FacebookIcon size={40} round />
           </FacebookShareButton>
