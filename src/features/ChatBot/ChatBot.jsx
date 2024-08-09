@@ -1,4 +1,5 @@
 import { useRef, useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import styles from "./styles/ChatBot.module.scss";
 import { BsSend } from "react-icons/bs";
 import { IoCloseOutline } from "react-icons/io5";
@@ -6,7 +7,7 @@ import { BiSolidMessageSquareDetail } from "react-icons/bi";
 import { apiBot } from "../../services";
 
 export default function ChatBot() {
-  const name = "Fed Bot";
+  const name = "FedRick";
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
@@ -17,6 +18,8 @@ export default function ChatBot() {
   const [isVisible, setIsVisible] = useState(false);
   const [isEventOngoing, setIsEventOngoing] = useState(true);
   const chatboxRef = useRef(null);
+  const location = useLocation();
+  const isOmega = location.pathname.includes("/Omega");
 
   const sendMessage = async () => {
     if (!input) return;
@@ -102,7 +105,9 @@ export default function ChatBot() {
   return (
     <>
       <button
-        className={`${styles.chatbottoggle} ${botToggle}`}
+        className={`${styles.chatbottoggle} ${botToggle} ${
+          isOmega ? styles.omegaBackGround : ""
+        }`}
         onClick={handleClick}
       >
         <span>
@@ -121,7 +126,7 @@ export default function ChatBot() {
               <h2 className={styles.fed}>{name}</h2>
             </div>
             <span
-              className={`${styles.close} ${styles.chatBotClose}`}
+              className={`${styles.close} ${styles.chatBotClose} ${isOmega ? styles.omegaBackGround : ""}`}
               onClick={handleClick}
             >
               <IoCloseOutline />
@@ -130,12 +135,14 @@ export default function ChatBot() {
           <hr />
           <div className={styles.chatbox} ref={chatboxRef}>
             <div className={styles.messageBox}>
-              <div className={styles.botmessage}>{initialMsg}</div>
+              <div className={`${styles.botmessage} ${isOmega ? styles.omegaBackGround : ""}`}>
+                {initialMsg}
+              </div>
               {messages.map((message, index) => (
                 <div
                   key={index}
                   className={
-                    message.user ? styles.usermessage : styles.botmessage
+                    message.user ? styles.usermessage : `${styles.botmessage} ${isOmega ? styles.omegaBackGround : ""}`
                   }
                 >
                   {message.user || message.bot}
@@ -159,8 +166,11 @@ export default function ChatBot() {
               placeholder="Ask something..."
               onKeyDown={onHandleKey}
             />
-            <button className={styles.sendMessage} onClick={sendMessage}>
-              <BsSend className={styles.sendIcon} />
+            <button
+              className={styles.sendMessage}
+              onClick={sendMessage}
+            >
+              <BsSend className={`${styles.sendIcon} ${isOmega ? styles.omegaBackGround : ""}`} />
             </button>
           </div>
         </div>

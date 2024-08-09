@@ -189,6 +189,19 @@
   // margin-bottom: 5rem;
 }
 
+.notify{
+  background-color: #1c1c1c;
+  font-size: 1.5rem;
+  border: none;
+  display: flex;
+  align-items: center;
+  padding-top: 40px;
+  padding-bottom: 20px;
+  color: white;
+  background-clip: text;
+  cursor: pointer;
+}
+
 .seeall {
   text-decoration: underline;
 }
@@ -247,6 +260,19 @@
     font-size: 1rem;
     font-weight: 400;
     margin-bottom: 10px;
+  }
+
+  .notify{
+    background-color: #1c1c1c;
+    font-size: 1.2rem;
+    border: none;
+    display: flex;
+    text-align: center;
+    padding-top: 40px;
+    padding-bottom: 20px;
+    color: white;
+    background-clip: text;
+    cursor: pointer;
   }
 
   .eventcard,

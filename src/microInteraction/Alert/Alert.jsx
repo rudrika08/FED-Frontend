@@ -1,6 +1,7 @@
 import React from 'react';
 import { Toaster, toast } from 'react-hot-toast';
 import PropTypes from 'prop-types';
+import { blue } from '@mui/material/colors';
 
 const Alert = ({ type, message, position, duration, style }) => {
   const notify = () => {
@@ -55,7 +56,10 @@ const Alert = ({ type, message, position, duration, style }) => {
           style: { 
             ...defaultStyle, 
             ...style, 
-            ...mobileStyle 
+            ...mobileStyle,
+            border: '1.5px solid orange',
+            backgroundColor: "#fff3cd", 
+            color: '#856404' 
           } 
         });
         break;
