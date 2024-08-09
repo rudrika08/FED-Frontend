@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import React from 'react';
 import styles from './styles/Event.module.scss';
@@ -5,7 +6,7 @@ import data from '../../../data/omega/Event.json';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 
-function OmegaEventCard({ title, desc }) {
+function OmegaEventCard({ title, desc, img }) {
   const { ref, inView } = useInView({
     threshold: 0.1,
     triggerOnce: true,
@@ -22,7 +23,7 @@ function OmegaEventCard({ title, desc }) {
       <div className={styles.cut}></div>
       <div className={styles.card_img}>
         <img
-          src="https://png.pngtree.com/thumb_back/fh260/background/20230530/pngtree-thai-bangkaew-dog-doggy-puppy-photo-image_2798211.jpg"
+          src={img}
           alt="Event Image"
         />
       </div>
@@ -46,7 +47,7 @@ function Event() {
         <div className={styles.eventCards}>
           <div className={styles.cardItem}>
             {data.map((item, index) => (
-              <OmegaEventCard key={index} title={item.title} desc={item.desc} />
+              <OmegaEventCard key={index} title={item.title} desc={item.desc} img={item.img} />
             ))}
           </div>
         </div>

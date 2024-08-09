@@ -112,15 +112,16 @@ img{
   }
   
   .card_img img {
-    object-fit:contain;
-    width: 130%;
-    height: 100%;
+    object-fit:cover;
+    // width: 130%;
+    // height: 100%;
     top: 0;
     left: 0;
+    margin-left: 2px;
   }
   
   .card_content {
-    margin-left: 20px;
+    margin-left: -55px;
     width: 100%;
     align-items: center;
     display: flex;
