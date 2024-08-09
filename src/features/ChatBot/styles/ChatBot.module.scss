@@ -264,6 +264,7 @@ input:focus{
     margin-top: 0rem;
     margin-bottom: 0px;
     font-size: 1.15rem;
+    font-weight: 600;
     color:black;
     background-color: white;
     border-top-right-radius: 20px;
@@ -287,15 +288,47 @@ input:focus{
   width: 0px; 
 }
 
-.typing{
+.thinking{
   height: 25px;
   padding-bottom: 20px;
 }
 
-.typingIndicator {
+.thinkingIndicator {
+  margin-left: 2px;
   font-style: italic;
   color: #fff;
 }
+
+.botmessage {
+  position: relative;
+  padding-right: 40px; // Ensure enough space for icons
+}
+
+.messageActions {
+  display: none; // Hide by default
+  justify-content: flex-end; // Align to the right
+  align-items: center;
+  position: absolute;
+  bottom:-3px;
+  right: 10px; // Position icons to the right
+  transform: translateY(-50%);
+  width: auto; // Adjust width as necessary
+  gap: 5px;
+}
+
+.messageActions button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #fff;
+  margin: -5px 0px 1px 0;
+}
+
+.botmessage:hover .messageActions {
+  display: flex;
+  opacity: 2;
+}
+
 
 .omegaBackGround{
   background-color: #38ccff;
