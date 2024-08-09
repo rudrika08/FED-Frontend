@@ -80,7 +80,7 @@
     background: linear-gradient(#009ACA , #000695);
     height: 50vh;
     width: 20vw;
-    @media(max-width:360px){
+    @media(max-width:430px){
         top: 300%;
     }
 }
@@ -96,7 +96,7 @@
     height: 50vh;
     width: 20vw;
     
-  @media (max-width: 360px) {
+  @media (max-width: 430px) {
     // Apply your styles here for screen sizes less than 360px
     top: 280%;
     right: 15%;
@@ -221,6 +221,6 @@
     .card_img img{
         height: 200%;
     }
-    
+
   }
 
