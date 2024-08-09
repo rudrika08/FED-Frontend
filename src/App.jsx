@@ -13,7 +13,13 @@ import { EventModal } from "./features";
 // state
 import AuthContext from "./context/AuthContext";
 import EventStats from "./features/Modals/Event/EventStats/EventStats";
-import { EventsView, NewForm, ProfileView, ViewEvent, ViewMember } from "./sections";
+import {
+  EventsView,
+  NewForm,
+  ProfileView,
+  ViewEvent,
+  ViewMember,
+} from "./sections";
 
 // Lazy loading pages
 const Home = lazy(() => import("./pages/Home/Home"));
@@ -92,33 +98,35 @@ function App() {
             <Route path="/Alumni" element={<Alumni />} />
             <Route path="/Omega" element={<Omega />} />
 
-            {authCtx.isLoggedIn && [
-              // <Route path="/profile" element={<Profile />} />,
-              // <Route
-              //   path="/profile/Events/:eventId"
-              //   element={[<Profile />, <EventModal onClosePath="/profile" />]}
-              // />,
-              // <Route
-              //   path="/profile/Events/Analytics/:eventId"
-              //   element={[<Profile />, <EventStats onClosePath="/profile" />]}
-              // />,
-            ]}
-
-{authCtx.isLoggedIn&& <Route path="/profile" element={<Profile />}>
-            <Route path="" element={<ProfileView editmodal="/profile/" />} />
-           {authCtx.user.access==="ADMIN"? <Route path="events" element={<ViewEvent />} />:<Route path="events" element={<EventsView/>}/>}
-            <Route path="Form" element={<NewForm />} />
-            <Route path="members" element={<ViewMember/>}/>
-             <Route
-                path="events/:eventId"
-                element={[<EventModal onClosePath="/profile/events" />]}
-              />
-               <Route
-                path="events/Analytics/:eventId"
-                element={[ <EventStats onClosePath="/profile/events" />]}
-              />,
-          </Route>
-          }
+            {/* Route After Login */}
+            {authCtx.isLoggedIn && (
+              <Route path="/profile" element={<Profile />}>
+                <Route
+                  path=""
+                  element={<ProfileView editmodal="/profile/" />}
+                />
+                {authCtx.user.access === "ADMIN" ? (
+                  <Route path="events" element={<ViewEvent />} />
+                ) : (
+                  <Route path="events" element={<EventsView />} />
+                )}
+                <Route path="Form" element={<NewForm />} />
+                {authCtx.user.access === "ADMIN" && (
+                  <Route path="members" element={<ViewMember />} />
+                )}
+                <Route
+                  path="events/:eventId"
+                  element={[<EventModal onClosePath="/profile/events" />]}
+                />
+                {authCtx.user.access === "ADMIN" && (
+                  <Route
+                    path="events/Analytics/:eventId"
+                    element={[<EventStats onClosePath="/profile/events" />]}
+                  />
+                )}
+                ,
+              </Route>
+            )}
             <Route
               path="/Events/:eventId"
               element={[<Event />, <EventModal onClosePath="/Events" />]}
@@ -147,9 +155,8 @@ function App() {
             />
             <Route path="*" element={<Error />} />
           </Route>
-
-      
-
+           
+           {/* Routes for Authentication witout Navbar and footer */}
           <Route element={<AuthLayout />}>
             <Route
               path="/Login"

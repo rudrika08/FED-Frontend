@@ -64,18 +64,18 @@ const Sidebar = ({ activepage, handleChange }) => {
   const renderAdminMenu = () => (
     <>
       <div
-        onClick={() => handleChange("Event")}
+        onClick={() => handleChange("Events")}
         style={{
-          background: activepage === "Event" ? "var(--primary)" : "transparent",
-          WebkitBackgroundClip: activepage === "Event" ? "text" : "initial",
-          backgroundClip: activepage === "Event" ? "text" : "initial",
-          color: activepage === "Event" ? "transparent" : "inherit",
+          background: activepage === "Events" ? "var(--primary)" : "transparent",
+          WebkitBackgroundClip: activepage === "Events" ? "text" : "initial",
+          backgroundClip: activepage === "Events" ? "text" : "initial",
+          color: activepage === "Events" ? "transparent" : "inherit",
         }}
       >
         <SlCalender
           size={17}
           style={{
-            color: activepage === "Event" ? "#FF8A00" : "white",
+            color: activepage === "events" ? "#FF8A00" : "white",
             marginRight: "10px",
           }}
         />{" "}
@@ -182,8 +182,8 @@ const Sidebar = ({ activepage, handleChange }) => {
           {designation === "Admin" && renderAdminMenu()}
           {designation !== "Admin" && (
             <div
-              onClick={() => handleChange("Event")}
-              style={{ color: activepage === "Event" ? "#FF8A00" : "white" }}
+              onClick={() => handleChange("events")}
+              style={{ color: activepage === "events" ? "#FF8A00" : "white" }}
             >
               <NavLink to={"/profile/events"}>
                 <SlCalender size={17} style={{ marginRight: "10px" }} /> Event

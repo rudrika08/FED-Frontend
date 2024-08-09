@@ -73,7 +73,7 @@ function ViewMember() {
       authCtx.memberData = null;
       authCtx.croppedImageFile = null;
       setEnable(false);
-      setMemberActivePage(""); // Temporarily set to an empty string to trigger re-render
+      setMemberActivePage("");
       setTimeout(() => {
         setMemberActivePage("add member");
       }, 0);
