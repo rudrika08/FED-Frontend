@@ -116,7 +116,17 @@
   }
 
   @media (max-width: 480px){
-    .circle2{display: none;}
+    .circle2{
+    position: absolute;
+    top: 60px;
+    right: -10%;
+    background: linear-gradient(#4B00C6 , #0047FF , #50FF34 ,#00D1FF );
+    filter:blur(40px);
+    border-radius: 50%;
+    transform: rotate(60deg);
+    height: 50vh;
+    width:20vw;
+    }
 
     .hero{
       margin-top: 45px;

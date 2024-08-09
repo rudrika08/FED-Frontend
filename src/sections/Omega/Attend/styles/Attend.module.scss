@@ -79,6 +79,9 @@ img{
     background: linear-gradient(#009ACA , #000695);
     height: 50vh;
     width: 20vw;
+    @media(max-width:360px){
+        top: 300%;
+    }
 }
 
 .circle2{
@@ -91,6 +94,18 @@ img{
     transform: rotate(60deg);
     height: 50vh;
     width: 20vw;
+    
+  @media (max-width: 360px) {
+    // Apply your styles here for screen sizes less than 360px
+    top: 280%;
+    right: 15%;
+    background: linear-gradient(#4B00C6 , #0047FF , #50FF34 ,#00D1FF );;
+    filter: blur(40px);
+    border-radius: 50%;
+    transform: rotate(60deg);
+    height: 23vh;
+    width: 20vw;
+  }
 }
 
 .card {
@@ -192,3 +207,4 @@ img{
         left: 97.1%;
     }
   }
+
