@@ -80,7 +80,10 @@
     background: linear-gradient(#009ACA , #000695);
     height: 50vh;
     width: 20vw;
-    @media(max-width:430px){
+    @media (max-width: 480px){
+        top: 235%;
+    }
+    @media(max-width:360px){
         top: 300%;
     }
 }
@@ -98,7 +101,7 @@
     
   @media (max-width: 430px) {
     // Apply your styles here for screen sizes less than 360px
-    top: 280%;
+    top: 220%;
     right: 15%;
     background: linear-gradient(#4B00C6 , #0047FF , #50FF34 ,#00D1FF );;
     filter: blur(40px);
@@ -106,6 +109,17 @@
     transform: rotate(60deg);
     height: 21vh;
     width: 20vw;
+  }
+  @media (max-width:  360px) {
+        // Apply your styles here for screen sizes less than 360px
+        top: 280%;
+        right: 15%;
+        background: linear-gradient(#4B00C6 , #0047FF , #50FF34 ,#00D1FF );;
+        filter: blur(40px);
+        border-radius: 50%;
+        transform: rotate(60deg);
+        height: 21vh;
+        width: 20vw;
   }
 }
 
