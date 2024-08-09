@@ -170,7 +170,8 @@ const TeamCard = ({
                   <Button
                     onClick={(e) => {
                       e.preventDefault();
-                      if (onRemove) {
+                      const isConfirmed = window.confirm(`Do you really want to remove this member "${name}"?`);
+                      if (isConfirmed &&onRemove) {
                         console.log(data);
                         authCtx.memberData = data;
                         onRemove();
