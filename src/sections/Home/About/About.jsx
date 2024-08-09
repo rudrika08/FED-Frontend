@@ -15,8 +15,10 @@ function About() {
           <div className={`${styles.whyfed} ${styles.box}`}>
               <p className={styles.boxhead}><span style={{ background: "var(--primary)", WebkitBackgroundClip: "text", color: "transparent" }}>Why</span> one should Join FED?</p>
             <div className={styles.boxinnertext}>
-              <p>We aim to nurture entrepreneurship through</p>
-              <p>creative, authentic, and efficient techniques.</p>
+            <p>
+            We aim to empower the  next generation of entrepreneurs 
+            </p>
+            <p>to innovate, lead, and transform the future.</p>
             </div>
           </div>
         </div>
@@ -27,8 +29,8 @@ function About() {
           <div className={`${styles.howfed} ${styles.box}`}>
               <p className={styles.boxhead}><span style={{ background: "var(--primary)", WebkitBackgroundClip: "text", color: "transparent" }}>How</span> we are still on top?</p>
             <div className={styles.boxinnertext}>
-              <p>Strong co-operation between members that our</p>
-              <p>organisation instills is how we can accomplish all of this.</p>
+            <p>Efficient leaderships, strategic planning and sustainable</p>
+            <p>executive collaborations keeps us at foremost tiers.</p>
             </div>
           </div>
         </div>
@@ -39,8 +41,8 @@ function About() {
           <div className={`${styles.whatfed} ${styles.box}`}>
               <p className={styles.boxhead}><span style={{ background: "var(--primary)", WebkitBackgroundClip: "text", color: "transparent" }}>What</span> we do in FED?</p>
             <div className={styles.boxinnertext}>
-              <p>Through our social media handles, we arrange</p>
-              <p> high-quality events and inspiring ideas</p>
+            <p>We help startups and organise events to promote</p>
+            <p>entrepreneurships and business opportunities.</p> 
             </div>
           </div>
         </div>

@@ -22,7 +22,22 @@ const Profile = ({ editmodal }) => {
   }, [alert]);
 
   const handleOpen = () => {
-    console.log("editProfileCount", authCtx.user);
+    authCtx.update(
+      authCtx.user.name,
+      authCtx.user.email,
+      authCtx.user.img,
+      authCtx.user.rollNumber,
+      authCtx.user.school,
+      authCtx.user.college,
+      authCtx.user.contactNo,
+      authCtx.user.year,
+      authCtx.user.extra.github,
+      authCtx.user.extra.linkedin,
+      authCtx.user.extra.designation,
+      authCtx.user.access,
+      authCtx.user.editProfileCount,
+      authCtx.user.regForm
+    );
     console.log("editProfileCount", authCtx.user.editProfileCount);
     if (authCtx.user.access!=="USER" || authCtx.user.editProfileCount > 0) {
       setIsOpen(true);
