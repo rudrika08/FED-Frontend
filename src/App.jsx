@@ -121,7 +121,7 @@ function App() {
 
             <Route
               path="/Events/:eventId/Form"
-              element={[<Omega />, <EventForm />]}
+              element={[<Event />, <EventForm />]}
             />
 
             <Route path="/PrivacyPolicy" element={<PrivacyPolicy />} />
