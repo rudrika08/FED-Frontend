@@ -69,7 +69,7 @@ const TeamCard = ({
           <div className={styles.ImgDiv}>
             {!isImageLoaded && (
               <Blurhash
-                hash="L6AcVvDi56n$C,T0IUbF{K-pNG%M"
+                hash="LEG8_%els7NgM{M{RiNI*0IVog%L"
                 width={"100%"}
                 height={"100%"}
                 resolutionX={32}

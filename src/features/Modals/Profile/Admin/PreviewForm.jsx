@@ -1,5 +1,6 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import styles from "./styles/Preview.module.scss";
+import AuthContext from "../../../../context/AuthContext";
 import { Button, Text } from "../../../../components";
 import Section from "./SectionModal";
 import { Link, useNavigate } from "react-router-dom";
@@ -34,6 +35,7 @@ const PreviewForm = ({
   showCloseBtn,
 }) => {
   const navigate = useNavigate();
+  const authCtx = useContext(AuthContext);
   const [data, setdata] = useState(sections);
   const [activeSection, setactiveSection] = useState(
     data !== undefined ? data[0] : ""
@@ -46,12 +48,9 @@ const PreviewForm = ({
   const wrapperRef = useRef(null);
   const recoveryCtx = useContext(RecoveryContext);
   const { setTeamCode, setTeamName } = recoveryCtx;
-  const[ formData, setFormData] = useState(eventData);
-  const [code,setcode]=useState(null);
-  const[team,setTeam]=useState(null);
-
-  
-
+  const [formData, setFormData] = useState(eventData);
+  const [code, setcode] = useState(null);
+  const [team, setTeam] = useState(null);
 
   let currentSection =
     data !== undefined
@@ -165,12 +164,11 @@ const PreviewForm = ({
       const participationType = eventData?.info?.participationType;
       const handleAutoClose = () => {
         setTimeout(() => {
-          if(participationType==='Team'){
-         setTeamCode(code);
-         setTeamName(team);
+          if (participationType === "Team") {
+            setTeamCode(code);
+            setTeamName(team);
           }
           navigate("/Events");
-       
         }, 1000);
       };
 
@@ -344,12 +342,29 @@ const PreviewForm = ({
       const response = await api.post("/api/form/register", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
-          "Authorization": `Bearer ${window.localStorage.getItem("token")}`,
+          Authorization: `Bearer ${window.localStorage.getItem("token")}`,
         },
       });
       // console.log("response data:",response.data)
 
       if (response.status === 200 || response.status === 201) {
+        const updatedRegForm = [...authCtx.user.regForm, eventData.id];
+        authCtx.update(
+          authCtx.user.name,
+          authCtx.user.email,
+          authCtx.user.img,
+          authCtx.user.rollNumber,
+          authCtx.user.school,
+          authCtx.user.college,
+          authCtx.user.contactNo,
+          authCtx.user.year,
+          authCtx.user.github,
+          authCtx.user.linkedin,
+          authCtx.user.extra.designation,
+          authCtx.user.access,
+          authCtx.user.editProfileCount,
+          updatedRegForm // Pass the updated regForm
+        );
         setAlert({
           type: "success",
           message: "Form submitted successfully!",
@@ -358,7 +373,6 @@ const PreviewForm = ({
         });
         if (response.data) {
           const { teamName, teamCode } = response.data;
-          
 
           // SetTeamCodeData((prevData) => ({
           //   ...prevData,
@@ -366,21 +380,21 @@ const PreviewForm = ({
           //   teamName: teamName,
           // }));
           const participationType = eventData?.info?.participationType;
-          if(participationType==="Team"){
-            setTeam(teamName)
+          if (participationType === "Team") {
+            setTeam(teamName);
             setcode(teamCode);
             // console.log("saved context teamCode:",recoveryCtx.teamCode)
           }
-          console.log("consoling teamdata:",teamName,teamCode)
+          console.log("consoling teamdata:", teamName, teamCode);
         }
         setIsSuccess(true);
         // handleClose();
-      
-    
       } else {
         setAlert({
           type: "error",
-          message: response.data.message||"There was an error submitting the form. Please try again.",
+          message:
+            response.data.message ||
+            "There was an error submitting the form. Please try again.",
           position: "bottom-right",
           duration: 3000,
         });
@@ -391,7 +405,9 @@ const PreviewForm = ({
       console.error("Form submission error:", error);
       setAlert({
         type: "error",
-        message: error?.response?.data?.message||"There was an error submitting the form. Please try again.",
+        message:
+          error?.response?.data?.message ||
+          "There was an error submitting the form. Please try again.",
         position: "bottom-right",
         duration: 3000,
       });
@@ -643,7 +659,7 @@ const PreviewForm = ({
         </div>
       </div>
       )
-      <Alert/>
+      <Alert />
     </>
   );
 };

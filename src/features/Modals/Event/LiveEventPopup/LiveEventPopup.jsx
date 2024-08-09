@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import styles from "./styles/LiveEventPopup.module.scss";
-import eventData from "../../../../data/eventData.json";
 import { api } from "../../../../services";
 
 const LiveEventPopup = () => {

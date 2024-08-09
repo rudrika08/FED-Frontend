@@ -97,7 +97,7 @@ const Team = () => {
     "DIRECTOR_CREATIVE",
     "DIRECTOR_MARKETING",
     "DIRECTOR_OPERATIONS",
-    "DIRECTOR_SPONSORSHIP"
+    "DIRECTOR_SPONSORSHIP",
   ];
 
   const roleMap = access.reduce((map, code) => {
@@ -115,17 +115,25 @@ const Team = () => {
     return map;
   }, {});
 
-  const directorsAndAbove = directorAccessCodes.map((code) =>
-    teamMembers.find((member) => member.access === code)
-  ).filter(Boolean);
+  const directorsAndAbove = directorAccessCodes
+    .map((code) => teamMembers.find((member) => member.access === code))
+    .filter(Boolean);
 
-  const teamByRole = Object.keys(roleMap).map((role) => ({
-    role,
-    members: teamMembers.filter((member) => member.access === roleMap[role]),
-  }));
+    const teamByRole = Object.keys(roleMap)
+    .map((role) => ({
+      role,
+      members: teamMembers.filter((member) => member.access === roleMap[role]),
+    }))
+    .filter((roleGroup) => roleGroup.members.length > 0);
 
   const sortedTeamByRole = teamByRole.sort((a, b) => {
-    const order = ["Technical", "Creative", "Operations","Marketing", "Sponsorship & PR"];
+    const order = [
+      "Technical",
+      "Creative",
+      "Operations",
+      "Marketing",
+      "Sponsorship & PR",
+    ];
     return order.indexOf(a.role) - order.indexOf(b.role);
   });
 
@@ -210,7 +218,17 @@ const Team = () => {
       {/* <div className={styles.circle2}></div> */}
 
       {isLoading ? (
-        <ComponentLoading />
+        <ComponentLoading
+          customStyles={{
+            width: "100%",
+            height: "100%",
+            display: "flex",
+            marginTop: "5rem",
+            marginBottom: "10rem",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        />
       ) : (
         <>
           {error && <div className={styles.error}>{error.message}</div>}

@@ -69,7 +69,7 @@ const EditProfile = ({ handleModalClose }) => {
           data.linkedin,
           authCtx.user.extra.designation,
           authCtx.user.access,
-          authCtx.user.editProfileCount-1,
+          authCtx.user.editProfileCount - 1,
           authCtx.user.regForm
         );
         setTimeout(() => {
@@ -144,19 +144,19 @@ const EditProfile = ({ handleModalClose }) => {
                 data-aos="zoom-in-up"
                 data-aos-duration="500"
               >
-              <div className={styles.heading}>
-                <div className={styles.proHeading}>
-                  <h3 className={styles.headInnerText}>
-                    <span>Edit</span> Profile
-                  </h3>
+                <div className={styles.heading}>
+                  <div className={styles.proHeading}>
+                    <h3 className={styles.headInnerText}>
+                      <span>Edit</span> Profile
+                    </h3>
+                  </div>
+                  <button
+                    className={styles.closeModal}
+                    onClick={handleModalClose}
+                  >
+                    <X />
+                  </button>
                 </div>
-                <button
-                  className={styles.closeModal}
-                  onClick={handleModalClose}
-                >
-                  <X />
-                </button>
-              </div>
                 {authCtx.user && (
                   <div className={styles.details}>
                     <div className={styles.profileTable}>
@@ -262,11 +262,15 @@ const EditProfile = ({ handleModalClose }) => {
                             fontSize: "15px",
                           }}
                           placeholder="Enter Phone number"
-                          type="number"
+                          type="tel"
+                          maxLength={12}
                           value={data.contactNo}
-                          onChange={(e) =>
-                            setData({ ...data, contactNo: e.target.value })
-                          }
+                          onChange={(e) => {
+                            const value = e.target.value;
+                            if (/^\d*$/.test(value) && value.length <= 12) {
+                              setData({ ...data, contactNo: value });
+                            }
+                          }}
                           className={styles.vals}
                         />
                       </div>
@@ -323,12 +327,13 @@ const EditProfile = ({ handleModalClose }) => {
                             style={{
                               marginTop: "15px",
                               textAlign: "center",
-                              width:"100%",
-                              fontSize:"1rem"
+                              width: "100%",
+                              fontSize: "1rem",
                             }}
                           >
                             You can only edit your profile{" "}
-                            <span style={{ fontWeight: 600 }}>5 times. </span>{" "}Total Edits left:{" "}
+                            <span style={{ fontWeight: 600 }}>5 times. </span>{" "}
+                            Total Edits left:{" "}
                             <span style={{ fontWeight: 600 }}>
                               {authCtx.user.editProfileCount}
                             </span>
