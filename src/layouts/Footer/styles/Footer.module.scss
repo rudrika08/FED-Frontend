@@ -93,18 +93,21 @@
 }
 
 .icon {
-  margin-right: 10px;
-  margin-bottom: -3px;
+  margin-right: 5px;
+  margin-bottom: 3px;
   margin-top: 10px;
   font-size: 40px;
 }
-.icon:hover{
+
+.link1 :hover{
+  color: #FF8A00;
+  transition: 0.3s ease-in-out;
+}
+
+.Linkstyles:hover{
   background: var(--primary);
   background-clip: text;
   color: transparent;
-}
-.link1 :hover{
-  color: #FF8A00;
   transition: 0.3s ease-in-out;
 }
 
@@ -140,9 +143,6 @@
   color: #ffffff;
 }
 
-.terms_and_policies .Linkstyles:hover{
-  text-decoration: underline;
-}
 
 .tap1Div {
   display: flex;
@@ -162,6 +162,28 @@
   margin-top: 8px;
 }
 
+.omegaLink {
+  transition: color 0.3s ease;
+}
+
+.omegaLink:hover {
+  color: #38ccff; // Change this to the desired hover color
+}
+
+.omegaSocialLink {
+  transition: color 0.3s ease;
+  margin-right: 5px;
+  margin-bottom: 3px;
+  margin-top: 10px;
+  font-size: 40px;
+}
+
+.omegaSocialLink:hover {
+  &.link1 :hover{
+    color:#38ccff;
+  }
+  color: #38ccff;// Change this to the desired hover color
+}
 
 @media screen and (max-width: 768px) {
   .flexdiv {

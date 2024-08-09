@@ -66,13 +66,12 @@ function Hero() {
                 >
                   <h3 className={styles.typing}>{currentTitle}</h3>
                 </span>{" "}
-           
               </p>
             </div>
             <div className={styles.smallContainer}>
               <div className={styles.smallContent}>
                 <p>
-                  Nurturing{" "}
+                  Inspiring{" "}
                   <span
                     style={{
                       background: "var(--primary)",
@@ -80,9 +79,10 @@ function Hero() {
                       color: "transparent",
                     }}
                   >
-                    entrepreneurship
+                    visionaries
                   </span>{" "}
-                  through creative, authentic, and efficient techniques.
+                  towards cultivating excellence and enrouting future
+                  generations towards growth.
                 </p>
               </div>
             </div>
