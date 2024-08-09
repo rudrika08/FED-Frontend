@@ -26,6 +26,7 @@ import {
   ComponentLoading,
 } from "../../../../microInteraction";
 import { api } from "../../../../services";
+import { parse, differenceInMilliseconds, formatDistanceToNow } from "date-fns";
 import eventDefaultImg from "../../../../assets/images/defaultEventModal.png";
 
 const EventModal = (props) => {
@@ -150,31 +151,71 @@ const EventModal = (props) => {
 
   const formattedDate = `${dayWithSuffix} ${month}`;
 
-  const modifyDateFormat = (dateStr) => {
-    // Remove the ordinal suffix from the day
-    const ordinalSuffixes = ["st", "nd", "rd", "th"];
-    ordinalSuffixes.forEach((suffix) => {
-      dateStr = dateStr.replace(suffix, "");
-    });
+  // const modifyDateFormat = (dateStr) => {
+  //   // Remove the ordinal suffix from the day
+  //   const ordinalSuffixes = ["st", "nd", "rd", "th"];
+  //   ordinalSuffixes.forEach((suffix) => {
+  //     dateStr = dateStr.replace(suffix, "");
+  //   });
 
-    // Parse the date string to a JavaScript Date object
-    const regDate = new Date(Date.parse(dateStr));
+  //   // Parse the date string to a JavaScript Date object
+  //   const regDate = new Date(Date.parse(dateStr));
 
-    // Convert the date to the desired ISO format (UTC)
-    const isoDateStr = regDate.toISOString();
+  //   // Convert the date to the desired ISO format (UTC)
+  //   const isoDateStr = regDate.toISOString();
 
-    return isoDateStr;
-  };
+  //   return isoDateStr;
+  // };
+
+  // const calculateRemainingTime = () => {
+  //   const formattedDateStr = modifyDateFormat(info.regDateAndTime);
+  //   // console.log(formattedDateStr); // For debugging
+
+  //   const regStartDate = new Date(formattedDateStr);
+  //   const now = new Date();
+  //   // console.log(now);
+  //   const timeDifference = regStartDate - now;
+  //   // console.log(timeDifference);
+
+  //   if (timeDifference <= 0) {
+  //     setRemainingTime(null);
+  //     return;
+  //   }
+
+  //   // Calculate the days, hours, minutes, and seconds remaining
+  //   const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+  //   const hours = Math.floor((timeDifference / (1000 * 60 * 60)) % 24);
+  //   const minutes = Math.floor((timeDifference / (1000 * 60)) % 60);
+  //   const seconds = Math.floor((timeDifference / 1000) % 60);
+
+  //   let remaining;
+
+  //   if (days > 0) {
+  //     remaining = `${days} day${days > 1 ? "s" : ""} left`;
+  //   } else {
+  //     remaining = [
+  //       hours > 0 ? `${hours}h ` : "",
+  //       minutes > 0 ? `${minutes}m ` : "",
+  //       seconds > 0 ? `${seconds}s` : "",
+  //     ]
+  //       .join("")
+  //       .trim();
+  //   }
+
+  //   setRemainingTime(remaining);
+  // };
 
   const calculateRemainingTime = () => {
-    const formattedDateStr = modifyDateFormat(info.regDateAndTime);
-    // console.log(formattedDateStr); // For debugging
-
-    const regStartDate = new Date(formattedDateStr);
+    // Parse the regDateAndTime received from backend
+    const regStartDate = parse(
+      info.regDateAndTime,
+      "MMMM do yyyy, h:mm:ss a",
+      new Date()
+    );
     const now = new Date();
-    // console.log(now);
-    const timeDifference = regStartDate - now;
-    // console.log(timeDifference);
+
+    // Calculate the time difference in milliseconds
+    const timeDifference = differenceInMilliseconds(regStartDate, now);
 
     if (timeDifference <= 0) {
       setRemainingTime(null);
