@@ -1,18 +1,20 @@
 import { useRef, useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import styles from "./styles/ChatBot.module.scss";
-import { BsSend } from "react-icons/bs";
-import { IoCloseOutline } from "react-icons/io5";
+import { BsSend, BsFillMicFill, BsFillMicMuteFill } from "react-icons/bs";
+import { IoCloseOutline, IoCopyOutline } from "react-icons/io5";
 import { BiSolidMessageSquareDetail } from "react-icons/bi";
 import { apiBot } from "../../services";
+import { Alert } from "../../microInteraction";
 
 export default function ChatBot() {
   const name = "FedRick";
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
+  const [isThinking, setIsThinking] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
   const [initialMsg, setInitialMsg] = useState(
-    `Hello! I am ${name}, your personal assistant. Ask any queries related to FED?`
+    `Hello! I am ${name}, your personal assistant for FED. How can I help you today?`
   );
   const [isActive, setIsActive] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
@@ -20,16 +22,82 @@ export default function ChatBot() {
   const chatboxRef = useRef(null);
   const location = useLocation();
   const isOmega = location.pathname.includes("/Omega");
+  const [alert, setAlert] = useState(null);
+  const [isSpeaking, setIsSpeaking] = useState(false);
+
+  useEffect(() => {
+    if (alert) {
+      const { type, message, position, duration } = alert;
+      Alert({ type, message, position, duration });
+    }
+  }, [alert]);
+
+  useEffect(() => {
+    const fetchInitialMessage = async () => {
+      setTimeout(async () => {
+        try {
+          const response = await apiBot.post("/chat", {
+            message: "Connection Request",
+          });
+
+          if (response.status === 200 || response.status === 201) {
+            console.log(
+              "Successfully connected to chatbot",
+              response.data.message
+            );
+          } else {
+            console.log("Error:", response.data.message);
+          }
+        } catch (error) {
+          console.error("Error:", error);
+        }
+        setIsThinking(false);
+        scrollToBottom();
+      }, 1500);
+    };
+
+    fetchInitialMessage();
+  }, []);
+
+  const typeMessage = async (message) => {
+    let typedMessage = "";
+    setIsTyping(true); // Start typing
+    for (let i = 0; i < message.length; i++) {
+      typedMessage += message[i];
+      setMessages((prevMessages) => [
+        ...prevMessages.slice(0, -1),
+        { bot: typedMessage, isTyping: true },
+      ]);
+      scrollToBottom();
+      await new Promise((resolve) => setTimeout(resolve, 20));
+      setIsThinking(false);
+    }
+    setIsTyping(false); // Typing completed
+    setMessages((prevMessages) => [
+      ...prevMessages.slice(0, -1),
+      { bot: typedMessage, isTyping: false }, // Mark the message as fully typed
+    ]);
+    scrollToBottom();
+
+    if (isSpeaking) {
+      speakMessage(typedMessage);
+    }
+  };
 
   const sendMessage = async () => {
     if (!input) return;
+
+    if (isSpeaking) {
+      window.speechSynthesis.cancel();
+      setIsSpeaking(false);
+    }
 
     const userMessage = { user: input };
     setMessages((prevMessages) => [...prevMessages, userMessage]);
     setInput("");
 
     setTimeout(() => {
-      setIsTyping(true);
+      setIsThinking(true);
     }, 600);
 
     setTimeout(async () => {
@@ -39,25 +107,26 @@ export default function ChatBot() {
         if (response.status === 200 || response.status === 201) {
           setMessages((prevMessages) => [
             ...prevMessages,
-            { bot: response.data.response },
+            { bot: "", isTyping: true },
           ]);
+          await typeMessage(response.data.response);
         } else {
           setMessages((prevMessages) => [
             ...prevMessages,
-            { bot: "Error: Unable to connect to the server." },
+            { bot: "Error: Unable to connect to the server.", isTyping: false },
           ]);
           console.log("Error:", response.data.message);
         }
       } catch (error) {
         setMessages((prevMessages) => [
           ...prevMessages,
-          { bot: "Error: Unable to connect to the server." },
+          { bot: "Error: Unable to connect to the server.", isTyping: false },
         ]);
         console.error("Error:", error);
       }
-      setIsTyping(false);
+
       scrollToBottom();
-    }, 1500);
+    }, 4500); // Total delay considering thinking and typing phases
   };
 
   const onHandleKey = (e) => {
@@ -102,6 +171,41 @@ export default function ChatBot() {
   const botToggle = isActive ? styles.hidden : "";
   const chatBotOpen = isActive ? "" : styles.hidden;
 
+  const copyToClipboard = (text) => {
+    navigator.clipboard
+      .writeText(text)
+      .then(() => {
+        setAlert({
+          type: "success",
+          message: "Copied to clipboard!",
+          position: "bottom-left",
+          duration: 2000,
+        });
+      })
+      .catch((err) => {
+        setAlert({
+          type: "error",
+          message: "Failed to copy to clipboard!",
+          position: "bottom-left",
+          duration: 2000,
+        });
+      });
+  };
+
+  const speakMessage = (text) => {
+    if (isSpeaking) {
+      window.speechSynthesis.cancel(); // Stop current speech
+      setIsSpeaking(false); // Toggle to non-speaking state
+    } else {
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.onend = () => {
+        setIsSpeaking(false); // Reset speaking state after speech ends
+      };
+      window.speechSynthesis.speak(utterance);
+      setIsSpeaking(true); // Set to speaking state
+    }
+  };
+
   return (
     <>
       <button
@@ -126,7 +230,9 @@ export default function ChatBot() {
               <h2 className={styles.fed}>{name}</h2>
             </div>
             <span
-              className={`${styles.close} ${styles.chatBotClose} ${isOmega ? styles.omegaBackGround : ""}`}
+              className={`${styles.close} ${styles.chatBotClose} ${
+                isOmega ? styles.omegaBackGround : ""
+              }`}
               onClick={handleClick}
             >
               <IoCloseOutline />
@@ -135,23 +241,53 @@ export default function ChatBot() {
           <hr />
           <div className={styles.chatbox} ref={chatboxRef}>
             <div className={styles.messageBox}>
-              <div className={`${styles.botmessage} ${isOmega ? styles.omegaBackGround : ""}`}>
+              <div
+                className={`${styles.botmessage} ${
+                  isOmega ? styles.omegaBackGround : ""
+                }`}
+              >
                 {initialMsg}
               </div>
               {messages.map((message, index) => (
                 <div
                   key={index}
                   className={
-                    message.user ? styles.usermessage : `${styles.botmessage} ${isOmega ? styles.omegaBackGround : ""}`
+                    message.user
+                      ? styles.usermessage
+                      : `${styles.botmessage} ${
+                          isOmega ? styles.omegaBackGround : ""
+                        }`
                   }
                 >
                   {message.user || message.bot}
+                  {!message.user &&
+                    !message.isTyping && ( // Show icons only for fully typed bot messages
+                      <div className={styles.messageActions}>
+                        <button onClick={() => copyToClipboard(message.bot)}>
+                          <IoCopyOutline size={18} style={{ color: "white" }} />
+                        </button>
+                        <button onClick={() => speakMessage(message.bot)}>
+                          {isSpeaking ? (
+                            <BsFillMicMuteFill
+                              size={18}
+                              style={{ color: "white" }}
+                            />
+                          ) : (
+                            <BsFillMicFill
+                              size={18}
+                              style={{ color: "white" }}
+                            />
+                          )}
+                        </button>
+                      </div>
+                    )}
                 </div>
               ))}
-              <div className={styles.typing}>
-                {isTyping && (
-                  <div className={styles.typingIndicator}>
-                    {name} is typing...
+
+              <div className={styles.thinking}>
+                {isThinking && (
+                  <div className={styles.thinkingIndicator}>
+                    {name} is thinking...
                   </div>
                 )}
               </div>
@@ -166,15 +302,17 @@ export default function ChatBot() {
               placeholder="Ask something..."
               onKeyDown={onHandleKey}
             />
-            <button
-              className={styles.sendMessage}
-              onClick={sendMessage}
-            >
-              <BsSend className={`${styles.sendIcon} ${isOmega ? styles.omegaBackGround : ""}`} />
+            <button className={styles.sendMessage} onClick={sendMessage}>
+              <BsSend
+                className={`${styles.sendIcon} ${
+                  isOmega ? styles.omegaBackGround : ""
+                }`}
+              />
             </button>
           </div>
         </div>
       </div>
+      <Alert />
     </>
   );
 }

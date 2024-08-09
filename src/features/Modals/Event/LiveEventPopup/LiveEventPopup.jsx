@@ -61,6 +61,8 @@ const LiveEventPopup = () => {
     setIsVisible(false);
   };
 
+  console.log("eventImageurl:",eventImage);
+
   return (
     <>
       {isEventOngoing && (
