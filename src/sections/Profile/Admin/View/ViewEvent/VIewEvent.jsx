@@ -13,12 +13,15 @@ function ViewEvent({ handleChangePage }) {
   const [ongoingEvents, setOngoingEvents] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [reload, setReload] = useState(false);
+
   const [selectedSection, setSelectedSection] = useState("ongoing");
   const authCtx = useContext(AuthContext);
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchEventData = async () => {
+      console.log("fetch data called");
       try {
         const response = await api.get("/api/form/getAllForms");
         if (response.status === 200) {
@@ -57,7 +60,7 @@ function ViewEvent({ handleChangePage }) {
     };
 
     fetchEventData();
-  }, []);
+  }, [reload]);
 
   const customStyles = {
     eventname: {
@@ -75,15 +78,24 @@ function ViewEvent({ handleChangePage }) {
   };
 
   const handleDeleteEvent = async () => {
-    console.log("deleting event:", authCtx.eventData);
     const id = authCtx.eventData.id;
-    const response = await api.delete(`/api/form/deleteForm/${id}`, {
-      headers: {
-        Authorization: `Bearer ${window.localStorage.getItem("token")}`,
-      },
-    });
-    console.log(response);
+    try {
+      const response = await api.delete(`/api/form/deleteForm/${id}`, {
+        headers: {
+          Authorization: `Bearer ${window.localStorage.getItem("token")}`,
+        },
+      });
+      console.log("Event deleted:", response);
+      setReload(prev => {
+        console.log("Toggling reload:", !prev); // Log the new reload state
+        return !prev;
+      });
+    } catch (error) {
+      console.error("Error deleting event:", error);
+    }
   };
+  
+  
   return (
     <div className={styles.container}>
       <div className={styles.buttonContainer}>

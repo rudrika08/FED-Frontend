@@ -1,0 +1,9 @@
+[
+    { "name": "Dell", "logo": "https://uploads-ssl.webflow.com/65e4aa9d7c506b88d60a346e/66b0ffa54e378c61b55f5a85_dell.png" },
+    { "name": "Zendesk", "logo": "https://uploads-ssl.webflow.com/65e4aa9d7c506b88d60a346e/66b0ffa522f8aa928acdcfdb_zendesk.png" },
+    { "name": "Rakuten", "logo": "https://uploads-ssl.webflow.com/65e4aa9d7c506b88d60a346e/66b0ffa5c85ad1cf1a5db283_Rakuten.png" },
+    { "name": "Pacific Funds", "logo": "https://uploads-ssl.webflow.com/65e4aa9d7c506b88d60a346e/66b0ffa522f8aa928acdcfb9_PacificFunds.png" },
+    { "name": "NCR", "logo": "https://uploads-ssl.webflow.com/65e4aa9d7c506b88d60a346e/66b0ffa506c244ff9d8ef5f9_NCR.png" },
+    { "name": "Lattice", "logo": "https://uploads-ssl.webflow.com/65e4aa9d7c506b88d60a346e/66b0ffa559d418eed726df75_Lattice.png" },
+    { "name": "TED", "logo": "https://uploads-ssl.webflow.com/65e4aa9d7c506b88d60a346e/66b0ffa5e4993ab13057bcb2_TED.png" }
+]

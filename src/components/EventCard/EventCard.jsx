@@ -496,10 +496,6 @@ const EventCard = (props) => {
               e.preventDefault();
               if (onEdit) {
                 authCtx.eventData = data;
-                console.log(
-                  "data of past event is sent to form:",
-                  authCtx.eventData
-                );
                 onEdit();
               }
             }}
@@ -510,7 +506,8 @@ const EventCard = (props) => {
           <Button
             onClick={(e) => {
               e.preventDefault();
-              if (onDelete) {
+              const isConfirmed = window.confirm(`Do you really want to delete this event "${info.eventTitle}"?`);
+              if (isConfirmed && onDelete) {
                 authCtx.eventData = data;
                 onDelete();
               }

@@ -1,5 +1,5 @@
-import { Suspense, lazy, useContext } from "react";
-import { Routes, Route, Outlet, Navigate } from "react-router-dom";
+import { Suspense, lazy, useContext, useEffect } from "react";
+import { Routes, Route, Outlet, Navigate, useLocation } from "react-router-dom";
 
 // layouts
 import { Footer, Navbar, ProfileLayout } from "./layouts";
@@ -13,7 +13,13 @@ import { EventModal } from "./features";
 // state
 import AuthContext from "./context/AuthContext";
 import EventStats from "./features/Modals/Event/EventStats/EventStats";
-import { EventsView, NewForm, ProfileView, ViewEvent, ViewMember } from "./sections";
+import {
+  EventsView,
+  NewForm,
+  ProfileView,
+  ViewEvent,
+  ViewMember,
+} from "./sections";
 
 // Lazy loading pages
 const Home = lazy(() => import("./pages/Home/Home"));
@@ -26,7 +32,6 @@ const Alumni = lazy(() => import("./pages/Alumni/Alumni"));
 const Profile = lazy(() => import("./pages/Profile/Profile"));
 const Omega = lazy(() => import("./pages/Omega/Omega"));
 
-// const Login = lazy(() => import("./pages/Authentication/Login/Login"));
 const Signup = lazy(() => import("./pages/Authentication/Signup/Signup"));
 const ForgotPassword = lazy(() =>
   import("./authentication/Login/ForgotPassword/SendOtp")
@@ -44,15 +49,32 @@ const OTPInput = lazy(() =>
   import("./authentication/Login/ForgotPassword/OTPInput")
 );
 
-const MainLayout = () => (
-  <div>
-    <Navbar />
-    <div className="page">
-      <Outlet />
+const MainLayout = () => {
+  const location = useLocation();
+  const isOmegaPage = location.pathname === '/Omega';
+
+  useEffect(() => {
+    if (isOmegaPage) {
+      document.body.style.backgroundColor = 'black';
+    } else {
+      document.body.style.backgroundColor = '';
+    }
+
+    return () => {
+      document.body.style.backgroundColor = '';
+    };
+  }, [isOmegaPage]);
+
+  return (
+    <div>
+      <Navbar />
+      <div className="page">
+        <Outlet />
+      </div>
+      <Footer />
     </div>
-    <Footer />
-  </div>
-);
+  );
+};
 
 const AuthLayout = () => (
   <div className="authpage">
@@ -76,33 +98,35 @@ function App() {
             <Route path="/Alumni" element={<Alumni />} />
             <Route path="/Omega" element={<Omega />} />
 
-            {authCtx.isLoggedIn && [
-              // <Route path="/profile" element={<Profile />} />,
-              // <Route
-              //   path="/profile/Events/:eventId"
-              //   element={[<Profile />, <EventModal onClosePath="/profile" />]}
-              // />,
-              // <Route
-              //   path="/profile/Events/Analytics/:eventId"
-              //   element={[<Profile />, <EventStats onClosePath="/profile" />]}
-              // />,
-            ]}
-
-{authCtx.isLoggedIn&& <Route path="/profile" element={<Profile />}>
-            <Route path="" element={<ProfileView editmodal="/profile/" />} />
-           {authCtx.user.access==="ADMIN"? <Route path="events" element={<ViewEvent />} />:<Route path="events" element={<EventsView/>}/>}
-            <Route path="Form" element={<NewForm />} />
-            <Route path="members" element={<ViewMember/>}/>
-             <Route
-                path="events/:eventId"
-                element={[<EventModal onClosePath="/profile/events" />]}
-              />
-               <Route
-                path="events/Analytics/:eventId"
-                element={[ <EventStats onClosePath="/profile/events" />]}
-              />,
-          </Route>
-          }
+            {/* Route After Login */}
+            {authCtx.isLoggedIn && (
+              <Route path="/profile" element={<Profile />}>
+                <Route
+                  path=""
+                  element={<ProfileView editmodal="/profile/" />}
+                />
+                {authCtx.user.access === "ADMIN" ? (
+                  <Route path="events" element={<ViewEvent />} />
+                ) : (
+                  <Route path="events" element={<EventsView />} />
+                )}
+                <Route path="Form" element={<NewForm />} />
+                {authCtx.user.access === "ADMIN" && (
+                  <Route path="members" element={<ViewMember />} />
+                )}
+                <Route
+                  path="events/:eventId"
+                  element={[<EventModal onClosePath="/profile/events" />]}
+                />
+                {authCtx.user.access === "ADMIN" && (
+                  <Route
+                    path="events/Analytics/:eventId"
+                    element={[<EventStats onClosePath="/profile/events" />]}
+                  />
+                )}
+                ,
+              </Route>
+            )}
             <Route
               path="/Events/:eventId"
               element={[<Event />, <EventModal onClosePath="/Events" />]}
@@ -131,9 +155,8 @@ function App() {
             />
             <Route path="*" element={<Error />} />
           </Route>
-
-      
-
+           
+           {/* Routes for Authentication witout Navbar and footer */}
           <Route element={<AuthLayout />}>
             <Route
               path="/Login"
@@ -153,7 +176,7 @@ function App() {
                 authCtx.isLoggedIn ? (
                   <Navigate to="/profile" />
                 ) : (
-                  [<CompleteProfile />]
+                  <CompleteProfile />
                 )
               }
             />

@@ -36,12 +36,14 @@
 
 .backimg {
   width: 90%;
+  height: 16rem;
+  object-fit: cover;
   // overflow: hidden;
   margin-inline: auto;
   margin-top: 6%;
   // min-height: 13rem;
-  height: auto;
-  min-height: 5rem;
+  // height: auto;
+  // min-height: 5rem;
 }
 
 .date {
@@ -308,7 +310,8 @@
   }
 
   .backtxt {
-    height: 6.7rem;
+    height: 6.7rem; 
+    // height: fit-content;
   }
 
   .closeModal {
@@ -428,5 +431,11 @@
   .registerbtn button {
     min-width: 10rem;
     padding: 0.7rem 0.9rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .card{
+    width: 300px; //Need to find optimal solution for it
   }
 }

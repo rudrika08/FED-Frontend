@@ -11,7 +11,7 @@ import AuthContext from "../../context/AuthContext";
 import { api } from "../../services";
 import style from "./styles/Profile.module.scss";
 import { Loading } from "../../microInteraction";
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import {Navbar,Footer} from "../../layouts";
 
 const Profile = () => {
@@ -19,6 +19,7 @@ const Profile = () => {
   const authCtx = useContext(AuthContext);
   const [designation, setDesignation] = useState("Admin");
   const [isLoading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (authCtx.isLoggedIn && window.localStorage.getItem("token")) {
@@ -85,27 +86,7 @@ const Profile = () => {
     }
   }, [authCtx.user.access]);
 
-  const getActivePage = () => {
-    if (designation === "Admin") {
-      switch (activePage) {
-        case "Event":
-          return <ViewEvent handleChangePage={(page) => setActivePage(page)} />;
-        case "Form":
-          return <NewForm />;
-        case "Members":
-          return <ViewMember />;
-        default:
-          return <ProfileView editmodal="/profile/" />;
-      }
-    } else {
-      switch (activePage) {
-        case "Event":
-          return <EventsView />;
-        default:
-          return <ProfileView editmodal="/profile/" />;
-      }
-    }
-  };
+ 
 
   return (
     <ProfileLayout>
@@ -114,15 +95,13 @@ const Profile = () => {
           activepage={activePage}
           handleChange={(page) => {
             setActivePage(page);
+            
+              navigate(`/profile/${page.toLowerCase()}`); // Navigate to the corresponding route
+     
             authCtx.eventData = null;
           }}
         />
         {isLoading ? <Loading /> : <div className={style.profile__content}>   <Outlet/> </div>}
-        {/* {isLoading ? (
-          <Loading />
-        ) : (
-          <div className={style.profile__content}>{getActivePage()}</div>
-        )} */}
       </div>
     </ProfileLayout>
   );

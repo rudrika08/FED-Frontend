@@ -126,6 +126,7 @@ const ContactForm = () => {
               <div className={styles.circle}></div>
             </div>
           )}
+          <div className={styles.circle}></div>
         </div>
       </div>
       <Alert />
