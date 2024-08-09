@@ -1,5 +1,5 @@
-import { Suspense, lazy, useContext } from "react";
-import { Routes, Route, Outlet, Navigate } from "react-router-dom";
+import { Suspense, lazy, useContext, useEffect } from "react";
+import { Routes, Route, Outlet, Navigate, useLocation } from "react-router-dom";
 
 // layouts
 import { Footer, Navbar, ProfileLayout } from "./layouts";
@@ -26,7 +26,6 @@ const Alumni = lazy(() => import("./pages/Alumni/Alumni"));
 const Profile = lazy(() => import("./pages/Profile/Profile"));
 const Omega = lazy(() => import("./pages/Omega/Omega"));
 
-// const Login = lazy(() => import("./pages/Authentication/Login/Login"));
 const Signup = lazy(() => import("./pages/Authentication/Signup/Signup"));
 const ForgotPassword = lazy(() =>
   import("./authentication/Login/ForgotPassword/SendOtp")
@@ -44,15 +43,32 @@ const OTPInput = lazy(() =>
   import("./authentication/Login/ForgotPassword/OTPInput")
 );
 
-const MainLayout = () => (
-  <div>
-    <Navbar />
-    <div className="page">
-      <Outlet />
+const MainLayout = () => {
+  const location = useLocation();
+  const isOmegaPage = location.pathname === '/Omega';
+
+  useEffect(() => {
+    if (isOmegaPage) {
+      document.body.style.backgroundColor = 'black';
+    } else {
+      document.body.style.backgroundColor = '';
+    }
+
+    return () => {
+      document.body.style.backgroundColor = '';
+    };
+  }, [isOmegaPage]);
+
+  return (
+    <div>
+      <Navbar />
+      <div className="page">
+        <Outlet />
+      </div>
+      <Footer />
     </div>
-    <Footer />
-  </div>
-);
+  );
+};
 
 const AuthLayout = () => (
   <div className="authpage">
@@ -153,7 +169,7 @@ function App() {
                 authCtx.isLoggedIn ? (
                   <Navigate to="/profile" />
                 ) : (
-                  [<CompleteProfile />]
+                  <CompleteProfile />
                 )
               }
             />
