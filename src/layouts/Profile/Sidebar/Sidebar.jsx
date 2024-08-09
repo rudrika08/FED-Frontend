@@ -79,11 +79,8 @@ const Sidebar = ({ activepage, handleChange }) => {
             marginRight: "10px",
           }}
         />{" "}
-        <NavLink to='/profile/events'>
-        Event
-        </NavLink>
+        <NavLink to="/profile/events">Event</NavLink>
       </div>
-   
 
       <div
         onClick={() => handleChange("Form")}
@@ -101,9 +98,7 @@ const Sidebar = ({ activepage, handleChange }) => {
             marginRight: "10px",
           }}
         />{" "}
-          <Link to={'/profile/Form'}>
-        Form
-        </Link>
+        <Link to={"/profile/Form"}>Form</Link>
       </div>
       <div
         onClick={() => handleChange("Members")}
@@ -123,8 +118,7 @@ const Sidebar = ({ activepage, handleChange }) => {
             marginRight: "10px",
           }}
         />{" "}
-          <Link to={'/profile/members'}>   Members</Link>
-     
+        <Link to={"/profile/members"}> Members</Link>
       </div>
     </>
   );
@@ -133,16 +127,19 @@ const Sidebar = ({ activepage, handleChange }) => {
     <>
       <div className={styles.sidebar}>
         <div className={styles.profile}>
-        {/* <NavLink to={'/profile'}> */}
+          {/* <NavLink to={'/profile'}> */}
           <div
             style={{ width: "auto", position: "relative", cursor: "pointer" }}
             onClick={() => handleChange("Profile")}
           >
-            <img
-              src={ authCtx.user.img||imagePrv || defaultImg}
-              alt="Profile"
-              className={styles.profilePhoto}
-            />
+            <NavLink to={"/profile"}>
+              <img
+                src={authCtx.user.img || imagePrv || defaultImg}
+                alt="Profile"
+                className={styles.profilePhoto}
+              />
+            </NavLink>
+
             {selectedFile && (
               <EditImage
                 selectedFile={selectedFile}
@@ -173,10 +170,10 @@ const Sidebar = ({ activepage, handleChange }) => {
               </>
             )}
           </div>
-      
+
           <div className={styles.profileInfo}>
-          <NavLink to={'/profile'}>
-            <p className={styles.name}>{handleName()}</p>
+            <NavLink to={"/profile"}>
+              <p className={styles.name}>{handleName()}</p>
             </NavLink>
             <p className={styles.role}>{designation}</p>
           </div>
@@ -188,8 +185,8 @@ const Sidebar = ({ activepage, handleChange }) => {
               onClick={() => handleChange("Event")}
               style={{ color: activepage === "Event" ? "#FF8A00" : "white" }}
             >
-                <NavLink to={'/profile/events'}>
-              <SlCalender size={17} style={{ marginRight: "10px" }} /> Event
+              <NavLink to={"/profile/events"}>
+                <SlCalender size={17} style={{ marginRight: "10px" }} /> Event
               </NavLink>
             </div>
           )}

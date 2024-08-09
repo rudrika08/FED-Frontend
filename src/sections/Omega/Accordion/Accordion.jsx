@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/rules-of-hooks */
+/* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
 import styles from './styles/Accordion.module.scss';
 import data from '../../../data/omega/Accordion.json';

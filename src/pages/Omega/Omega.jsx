@@ -8,7 +8,8 @@ import Accordion from '../../sections/Omega/Accordion/Accordion';
 import Sponsors from '../../sections/Omega/Sponsors/Sponsors';
 import Event from "../../sections/Omega/Event/Event.jsx";
 import TeamImage from "../../sections/Omega/TeamImage/TeamImage.jsx";
-import Attend from "../../sections/Omega/Attend/Attend.jsx";
+import Attend from "../../sections/Omega/Attend/Attend.jsx';
+import { ChatBot } from '../../features';
 
 function Omega() {
   const { ref: teamImageRef, inView: teamImageInView } = useInView({
@@ -18,11 +19,11 @@ function Omega() {
 
   return (
     <div className={styles.body}>
-          <Hero />
-          <Event />
-          <Attend />
-          <Sponsors />
-          <Accordion />
+      <Hero />
+      <Event />
+      <Attend />
+      <Sponsors />
+      <Accordion />
       <Element name="TeamImage">
         <motion.div
           ref={teamImageRef}
@@ -34,6 +35,10 @@ function Omega() {
           <TeamImage />
         </motion.div>
       </Element>
+      <div>
+        <ChatBot />
+        <h1 style={{ margin: '8rem' }}>Currently in Development</h1>
+      </div>
     </div>
   );
 }
