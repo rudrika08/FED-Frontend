@@ -28,7 +28,7 @@ const TeamCard = ({
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowSkeleton(false);
-    }, 2000); // Show skeleton for 2 seconds
+    }, 500); // Show skeleton for 2 seconds
 
     return () => clearTimeout(timer);
   }, []);
