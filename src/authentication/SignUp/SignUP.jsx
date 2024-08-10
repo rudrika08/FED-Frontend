@@ -177,7 +177,7 @@ const SignUp = () => {
         position: "bottom-right",
         duration: 3000,
       });
-      
+      setEmail(user.email);
       const response = await api.post(
         "/api/auth/verifyEmail",
         { email: user.email },
