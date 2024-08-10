@@ -82,12 +82,15 @@ function FormField(props) {
     }
 
     newFields[fieldIndex][property] = value;
+
     const values =
       typeof value !== "object"
-        ? value
-            .split(",")
-            .map((val) => val.trim())
-            .filter(Boolean)
+        ? property === "isRequired"
+          ? value
+          : value
+              .split(",")
+              .map((val) => val.trim())
+              .filter(Boolean)
         : [];
 
     if (property === "value") {
@@ -209,7 +212,9 @@ function FormField(props) {
             checkedIcon={false}
             uncheckedIcon={false}
             title="Is this field required?"
-            onChange={(value) => handleChangeValue(value, "isRequired")}
+            onChange={(value) => {
+              handleChangeValue(value, "isRequired");
+            }}
           />
         </div>
         {section.fields?.length > 1 && (
