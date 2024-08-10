@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { MdOutlineLogout } from "react-icons/md";
-import AuthContext from '../../context/AuthContext';
+import AuthContext from "../../context/AuthContext";
 import styles from "./styles/Navbar.module.scss";
 import logo from "../../assets/images/Logo/logo.svg";
 import defaultImg from "../../assets/images/defaultImg.jpg";
@@ -15,6 +15,7 @@ const Navbar = () => {
   const lastScrollY = useRef(0);
   const authCtx = useContext(AuthContext);
   const location = useLocation(); // Hook to get the current location
+  const navigate = useNavigate();
 
   const handleScroll = () => {
     if (window.scrollY > lastScrollY.current) {
@@ -60,14 +61,24 @@ const Navbar = () => {
 
   const handleLogout = () => {
     authCtx.logout();
+    navigate("/")
     closeMobileMenu();
   };
 
+  const isOmegaActive = activeLink === "/Omega";
+
   return (
-    <nav className={`${styles.navbar} ${isVisible ? styles.visible : styles.hidden}`}>
+    <nav
+      className={`${styles.navbar} ${
+        isVisible ? styles.visible : styles.hidden
+      }`}
+    >
       <div className={styles.navbarContent} style={{ height: navbarHeight }}>
         <div className={styles.mobNav}>
-          <div className={`${styles.menuToggle} ${isMobile ? styles.active : ""}`} onClick={toggleMobileMenu}>
+          <div
+            className={`${styles.menuToggle} ${isMobile ? styles.active : ""}`}
+            onClick={toggleMobileMenu}
+          >
             {isMobile ? (
               <div className={styles.cross}>
                 <div className={styles.crossBar}></div>
@@ -81,12 +92,22 @@ const Navbar = () => {
               </>
             )}
           </div>
-          <div className={styles.logo_text}></div>
+          <NavLink to="/">
+            <div className={styles.logo_text}></div>
+          </NavLink>
         </div>
 
-        <ul className={`${styles.navLinks} ${isMobile ? styles.active : ""} ${authCtx.isLoggedIn ? styles.loggedIn : ""}`}>
+        <ul
+          className={`${styles.navLinks} ${isMobile ? styles.active : ""} ${
+            authCtx.isLoggedIn ? styles.loggedIn : ""
+          }`}
+        >
           {authCtx.isLoggedIn && windowWidth <= 768 && (
-            <NavLink to="/profile" className="LinkStyle" onClick={closeMobileMenu}>
+            <NavLink
+              to="/profile"
+              className="LinkStyle"
+              onClick={closeMobileMenu}
+            >
               <div className={styles.profileImgdiv}>
                 <img
                   src={authCtx.user.img || defaultImg}
@@ -108,7 +129,9 @@ const Navbar = () => {
             <li>
               <NavLink
                 to="/"
-                className={activeLink === "/" ? `${styles.link} ${styles.activeLink}` : styles.link}
+                className={`${styles.link} ${
+                  activeLink === "/" ? styles.activeLink : ""
+                } ${activeLink === "/Omega" ? styles.omegaHover : ""}`}
                 onClick={closeMobileMenu}
               >
                 Home
@@ -117,7 +140,9 @@ const Navbar = () => {
             <li>
               <NavLink
                 to="/Events"
-                className={activeLink === "/Events" ? `${styles.link} ${styles.activeLink}` : styles.link}
+                className={`${styles.link} ${
+                  activeLink === "/Events" ? styles.activeLink : ""
+                } ${activeLink === "/Omega" ? styles.omegaHover : ""}`}
                 onClick={closeMobileMenu}
               >
                 Event
@@ -125,8 +150,21 @@ const Navbar = () => {
             </li>
             <li>
               <NavLink
+                to="/Omega"
+                className={`${styles.link} ${
+                  activeLink === "/Omega" ? styles.activeLinkOmega : ""
+                } ${activeLink === "/Omega" ? styles.omegaHover : ""}`}
+                onClick={closeMobileMenu}
+              >
+                Omega
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
                 to="/Social"
-                className={activeLink === "/Social" ? `${styles.link} ${styles.activeLink}` : styles.link}
+                className={`${styles.link} ${
+                  activeLink === "/Social" ? styles.activeLink : ""
+                } ${activeLink === "/Omega" ? styles.omegaHover : ""}`}
                 onClick={closeMobileMenu}
               >
                 Social
@@ -135,7 +173,9 @@ const Navbar = () => {
             <li>
               <NavLink
                 to="/Team"
-                className={activeLink === "/Team" ? `${styles.link} ${styles.activeLink}` : styles.link}
+                className={`${styles.link} ${
+                  activeLink === "/Team" ? styles.activeLink : ""
+                } ${activeLink === "/Omega" ? styles.omegaHover : ""}`}
                 onClick={closeMobileMenu}
               >
                 Team
@@ -145,9 +185,20 @@ const Navbar = () => {
 
           {authCtx.isLoggedIn ? (
             windowWidth <= 768 ? (
-              <button className={styles.authButton} onClick={handleLogout}>Logout <MdOutlineLogout size={25} /></button>
+              <button
+                className={`${styles.authButton} ${
+                  isOmegaActive ? styles.omegaButton : ""
+                }`}
+                onClick={handleLogout}
+              >
+                Logout <MdOutlineLogout size={25} />
+              </button>
             ) : (
-              <NavLink to="/profile" className="LinkStyle" onClick={closeMobileMenu}>
+              <NavLink
+                to="/profile"
+                className="LinkStyle"
+                onClick={closeMobileMenu}
+              >
                 <div className={styles.profileImgdiv}>
                   <img
                     src={authCtx.user.img || defaultImg}
@@ -159,7 +210,13 @@ const Navbar = () => {
             )
           ) : (
             <NavLink to="/Login" onClick={closeMobileMenu}>
-              <button className={styles.authButton}>Login</button>
+              <button
+                className={`${styles.authButton} ${
+                  isOmegaActive ? styles.omegaButton : ""
+                }`}
+              >
+                Login
+              </button>
             </NavLink>
           )}
         </ul>

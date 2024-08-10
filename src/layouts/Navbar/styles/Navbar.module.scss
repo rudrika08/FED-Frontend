@@ -17,13 +17,13 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  margin-left: 10px;
-  gap:10px;
+  margin-top: -5px;
+  margin-left: 5px;
 }
 
 .logo {
-  width: 2.8rem;
-  height: 2.8rem;
+  width: 3rem;
+  height: 3rem;
   border-radius: 2.8rem;
   background: url("../../../assets/images/Logo/logo.svg") lightgray 50% / cover no-repeat;
 }
@@ -31,6 +31,8 @@
 .logo_text {
   width: 4.9rem;
   height: 2.3rem;
+  margin-right: -0.5rem;
+  margin-left: 2px;
   background: url("../../../assets/images/Logo/FED.svg") no-repeat;
 }
 
@@ -44,6 +46,8 @@
   align-items: center;
   width: 100%;
   padding: 5px 30px 0px 25px;
+  backdrop-filter: blur(20px);
+  border-radius: 50px;
 }
 
 .navLinks {
@@ -76,6 +80,13 @@
 
 .navLinks .activeLink {
   background: var(--primary);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.navLinks .omegaHover:hover {
+  background: #38ccff;
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -176,8 +187,8 @@
   justify-content: space-between;
   height: 3.5rem;
   list-style: none;
-  padding: 20px;
-  margin-left: -10px;
+  padding: 5px;
+  margin-top: -5px;
 }
 
 .authButton {
@@ -194,7 +205,8 @@
     rgba(244, 43, 3, 0.84) 128.34%
   );
   font-weight: 600;
-  padding: 8px 30px;
+  padding: 5px 25px;
+  padding-bottom: 1vh;
   border: none;
   color: #fff;
   cursor: pointer;
@@ -204,6 +216,29 @@
   transition: .2s linear;
   background: linear-gradient(260deg, rgba(255, 190, 11, .9) -29.7%, rgba(244, 43, 3, .9) 128.34%);
 }
+
+.activeLinkOmega {
+  color: #38ccff !important;
+}
+
+.omegaButton {
+  background-color: #38ccff !important;
+  background: linear-gradient(
+    260deg,
+    rgba(22, 175, 143, 0.84) -29.7%,
+    rgba(1, 113, 227, 0.84) 128.34%
+  );
+}
+
+.omegaButton:hover {
+  transition: .2s linear;
+  background: linear-gradient(
+    260deg,
+    rgba(22, 175, 143, 0.9) -29.7%,
+    rgba(1, 113, 227, 0.9) 128.34%
+  );
+}
+
 
 .profileImgdiv {
   height: 60px;
@@ -256,6 +291,9 @@
     background: none;
     border: none;
     gap: 10px;
+    padding-top:  2vh;
+    padding-bottom: 2vh;
+    margin-left: 1%;
   }
 
   .navLinks {
@@ -270,6 +308,7 @@
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.8s ease, visibility 0.8s ease;
+    padding-bottom: 2vh;
   }
 
   .profileImgdiv {
@@ -289,4 +328,8 @@
   .menuToggle {
     display: flex;
   }
+
+  // .authButton{
+  //   margin-right: 1.4rem;
+  // }
 }

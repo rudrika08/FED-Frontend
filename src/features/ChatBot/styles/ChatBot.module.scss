@@ -112,6 +112,13 @@ header{
     font-size: 2rem;
     cursor: pointer;
     color:white;
+    &.omegaBackGround {
+      background: transparent;
+    }
+    &.omegaBackGround:hover {
+      color: #0d8bd8;
+      background: transparent;
+    }
 }
 
 .close:hover{
@@ -130,6 +137,7 @@ hr{
     margin-bottom: 5px;
     border: 1px solid #6e6c6a;
 }
+
 
 .chatbox {
     padding: 10px;
@@ -196,7 +204,15 @@ hr{
     text-align: left;
     background: linear-gradient(260deg, rgba(255, 190, 11, 0.84) -29.7%, rgba(244, 43, 3, 0.84) 128.34%);
     color: #fff;
+    &.omegaBackGround {
+      background: linear-gradient(
+        260deg,
+        rgba(22, 175, 143, 0.84) -29.7%,
+        rgba(1, 113, 227, 0.84) 128.34%
+      );
+    }
 }
+
 
 .botmessage:after {
     content: "";
@@ -208,8 +224,13 @@ hr{
     color:black;
     border-bottom: 20px solid #D14206;
     border-right: 20px solid transparent;
-    transform: translateX(-50%) translateY(50%) rotate(315deg); 
+    transform: translateX(-50%) translateY(50%) rotate(315deg);
 }
+.omegaBackGround:after {
+  border-bottom: 20px solid #0d6fac;
+  border-right: 20px solid transparent;
+  transform: translateX(-50%) translateY(50%) rotate(315deg);
+} 
 
 .inputArea{
     height: 3rem;
@@ -243,6 +264,7 @@ input:focus{
     margin-top: 0rem;
     margin-bottom: 0px;
     font-size: 1.15rem;
+    font-weight: 600;
     color:black;
     background-color: white;
     border-top-right-radius: 20px;
@@ -253,20 +275,77 @@ input:focus{
 .sendIcon {
     color: #D14206;
     margin-top:.3rem;
+    &.omegaBackGround {
+      color: #0d8bd8;
+      background: white;
+    }
+    &.omegaBackGround:hover {
+      background: #fff;
+    }
 }
 
 .chatbox::-webkit-scrollbar {
   width: 0px; 
 }
 
-.typing{
+.thinking{
   height: 25px;
   padding-bottom: 20px;
 }
 
-.typingIndicator {
+.thinkingIndicator {
+  margin-left: 2px;
   font-style: italic;
   color: #fff;
+}
+
+.botmessage {
+  position: relative;
+  padding-right: 40px; // Ensure enough space for icons
+}
+
+.messageActions {
+  display: none; // Hide by default
+  justify-content: flex-end; // Align to the right
+  align-items: center;
+  position: absolute;
+  bottom:-3px;
+  right: 10px; // Position icons to the right
+  transform: translateY(-50%);
+  width: auto; // Adjust width as necessary
+  gap: 5px;
+}
+
+.messageActions button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #fff;
+  margin: -5px 0px 1px 0;
+}
+
+.botmessage:hover .messageActions {
+  display: flex;
+  opacity: 2;
+}
+
+
+.omegaBackGround{
+  background-color: #38ccff;
+  background: linear-gradient(
+    260deg,
+    rgba(22, 175, 143, 0.84) -29.7%,
+    rgba(1, 113, 227, 0.839) 128.34%
+  );
+}
+
+.omegaBackGround:hover {
+  transition: .2s linear;
+  background: linear-gradient(
+    260deg,
+    rgba(22, 175, 143, 0.9) -29.7%,
+    rgba(1, 113, 227, 0.9) 128.34%
+  );
 }
 
 @keyframes fade-in {
@@ -297,7 +376,6 @@ input:focus{
 @media (max-width: 768px) {
     .chatcontainer {
         height: auto;
-        margin-top: 30vw;
     }
     .chatbox {
         height: 70vh;

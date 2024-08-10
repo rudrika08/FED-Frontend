@@ -2,11 +2,7 @@
   background-color: #2f2f2f90;
   border: 1px solid #ffffff61;
   border-radius: 10px;
-  background: linear-gradient(
-    90deg,
-    rgba(32, 32, 32, 0.95) -11.52%,
-    rgba(37, 37, 37, 0.95) 106.29%
-  );
+  background: linear-gradient(90deg, rgba(32, 32, 32, 0.16) -11.52%, rgba(37, 37, 37, 0.22) 106.29%);
   padding: 15px;
   justify-content: center;
   align-items: center;
@@ -144,6 +140,24 @@
   }
 }
 
+@media (max-width: 800px) {
+  .circle {
+    height: 15rem;
+    width: 8rem;
+    top: 30%;
+    left: 0%;
+    z-index: 0;
+  }
+
+  .circle1 {
+    height: 15rem;
+    width: 10rem;
+    top: 10%;
+    right: -10%;
+
+    // overflow: hidden;
+  }
+}
 @media (max-width: 500px) {
   .container {
     flex-direction: column;
@@ -160,7 +174,7 @@
 
   .circle {
     height: 15rem;
-    width: 15rem;
+    width: 8rem;
     top: 30%;
     left: 0%;
     z-index: 0;
@@ -168,7 +182,7 @@
 
   .circle1 {
     height: 15rem;
-    width: 15rem;
+    width: 10rem;
     top: 10%;
     right: -10%;
 
@@ -177,6 +191,6 @@
 
   .ArrowBackIcon {
     top: 2%;
-    left:8%
+    left:4%
   }
 }

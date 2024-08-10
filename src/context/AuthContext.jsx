@@ -14,11 +14,16 @@ const AuthContext = React.createContext({
     college: "",
     contactNo: "",
     year: "",
-    github: "",
-    linkedin: "",
-    designation: "",
+    extra:{
+      github: "",
+      linkedin: "",
+      designation: "",
+    },
     access: "",
+    editProfileCount: "",
     regForm: [],
+    blurhash: "",
+    token: "",
   },
   target: null,
   isAdmin: false,
@@ -28,7 +33,7 @@ const AuthContext = React.createContext({
   update: () => {},
   eventData: null,
   memberData: null,
-  croppedImageFile:null,
+  croppedImageFile: null,
 });
 
 const calculateRemainingTime = (expirationTime) => {
@@ -105,8 +110,10 @@ export const AuthContextProvider = (props) => {
     github,
     linkedin,
     designation,
-    regForm,
     access,
+    editProfileCount,
+    regForm,
+    blurhash,
     token,
     expirationTime
   ) => {
@@ -120,11 +127,16 @@ export const AuthContextProvider = (props) => {
       college: college,
       contactNo: contactNo,
       year: year,
-      github: github,
-      linkedin: linkedin,
-      designation: designation,
+      extra:{
+        github: github,
+        linkedin:linkedin,
+        designation: designation,
+      },
       access: access,
+      editProfileCount: editProfileCount,
       regForm: regForm,
+      blurhash: blurhash,
+      token: token,
     };
 
     localStorage.setItem("user", JSON.stringify(setuserdata));
@@ -154,7 +166,10 @@ export const AuthContextProvider = (props) => {
     linkedin,
     designation,
     access,
-    regForm
+    editProfileCount,
+    regForm,
+    blurhash,
+    token
   ) => {
     console.log("update handler is called");
     const setuserdata = {
@@ -166,11 +181,16 @@ export const AuthContextProvider = (props) => {
       college: college,
       contactNo: contactNo,
       year: year,
-      github: github,
-      linkedin: linkedin,
-      designation: designation,
+      extra:{
+        github: github,
+        linkedin:linkedin,
+        designation: designation,
+      },
       access: access,
+      editProfileCount: editProfileCount,
       regForm: regForm,
+      blurhash: blurhash,
+      token: token
     };
 
     localStorage.setItem("user", JSON.stringify(setuserdata));
@@ -199,9 +219,9 @@ export const AuthContextProvider = (props) => {
       update: updateHandler,
       eventData: null,
       memberData: null,
-      croppedImageFile:null,
+      croppedImageFile: null,
     }),
-    [token, userIsLoggedIn, target, isAdmin]
+    [token, userIsLoggedIn, user, target, isAdmin, loginHandler, logoutHandler]
   );
 
   return (

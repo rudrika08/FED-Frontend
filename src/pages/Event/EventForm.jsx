@@ -13,7 +13,8 @@ const EventForm = () => {
   const { eventId } = useParams();
 
   // Ensure eventId is correctly parsed
-  const id = parseInt(eventId, 10);
+  const id = eventId;
+  console.log("event id in eventForm is :",id);
 
   useEffect(() => {
     if (alert) {
@@ -26,9 +27,16 @@ const EventForm = () => {
   useEffect(() => {
     const fetchEvent = async () => {
       try {
-        const response = await api.get(`/api/form/getEvent/${id}`);
+        const response = await api.get("/api/form/getAllForms");
+        console.log("registerForm",response.data)
         if (response.status === 200) {
-          setEventData(response.data);
+          const fetchedEvents = response.data.events;
+        
+          console.log("event id i want ::",id);
+        const filteredEvent = fetchedEvents.find((e)=>e.id===id);
+          
+          setEventData(filteredEvent);
+          console.log("fetched all events:",filteredEvent);
         } else {
           setAlert({
             type: "error",
@@ -66,7 +74,7 @@ const EventForm = () => {
           open={showPreview}
           handleClose={() => setShowPreview(false)}
           sections={eventData?.sections || []} // Ensure sections is always an array
-          eventData={eventData?.info || {}} // Pass the correct data prop
+          eventData={eventData || {}} // Pass the correct data prop
           showCloseBtn={true}
         />
       )}

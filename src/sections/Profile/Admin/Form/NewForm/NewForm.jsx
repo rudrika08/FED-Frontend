@@ -39,6 +39,7 @@ function NewForm() {
   const authCtx = useContext(AuthContext);
   const [alert, setAlert] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [isEditing, setisEditing] = useState(false);
   const [data, setdata] = useState({
     _id: nanoid(),
     eventTitle: "",
@@ -128,6 +129,7 @@ function NewForm() {
     if (authCtx.eventData) {
       setdata(authCtx.eventData?.info);
       setsections(authCtx.eventData?.sections);
+      setisEditing(true);
     }
   }, []);
 
@@ -163,72 +165,147 @@ function NewForm() {
 
   const isValidEvent = () => {
     if (!data.eventTitle) {
-      alert("Title is required.");
+      setAlert({
+        type: "error",
+        message: "Event title is required.",
+        position: "bottom-right",
+        duration: 3000,
+      });
       return false;
     }
 
     if (!data.eventImg) {
-      alert("Image is required.");
+      setAlert({
+        type: "error",
+        message: "Event image is required.",
+        position: "bottom-right",
+        duration: 3000,
+      });
       return false;
     }
     if (!data.eventDate) {
-      alert("Event date is required.");
+      setAlert({
+        type: "error",
+        message: "Event date is required.",
+        position: "bottom-right",
+        duration: 3000,
+      });
       return false;
     }
     if (!data.eventType) {
-      alert("Event type is required.");
+      setAlert({
+        type: "error",
+        message: "Event type is required.",
+        position: "bottom-right",
+        duration: 3000,
+      });
       return false;
     }
     if (!data.relatedEvent) {
-      alert("Related event is required.");
+      setAlert({
+        type: "error",
+        message: "Related event is required.",
+        position: "bottom-right",
+        duration: 3000,
+      });
       return false;
     }
     if (!data.participationType) {
-      alert("Participation type is required.");
+      setAlert({
+        type: "error",
+        message: "Participation type is required.",
+        position: "bottom-right",
+        duration: 3000,
+      });
       return false;
     }
     if (!data.eventPriority) {
-      alert("Priority is required.");
+      setAlert({
+        type: "error",
+        message: "Event priority is required.",
+        position: "bottom-right",
+        duration: 3000,
+      });
       return false;
     }
     if (!data.eventdescription) {
-      alert("Description is required.");
+      setAlert({
+        type: "error",
+        message: "Event description is required.",
+        position: "bottom-right",
+        duration: 3000,
+      });
       return false;
     }
     if (!data.successMessage) {
-      alert("Success message is required.");
+      setAlert({
+        type: "error",
+        message: "Success message is required.",
+        position: "bottom-right",
+        duration: 3000,
+      });
       return false;
     }
     if (!data.eventMaxReg) {
-      alert("Maximum registration is required.");
+      setAlert({
+        type: "error",
+        message: "Maximum registration is required.",
+        position: "bottom-right",
+        duration: 3000,
+      });
       return false;
     }
 
     if (data.eventType === "Paid") {
       if (!data.eventAmount) {
-        alert("Amount is required.");
+        setAlert({
+          type: "error",
+          message: "Event amount is required.",
+          position: "bottom-right",
+          duration: 3000,
+        });
         return false;
       }
 
       if (!data.receiverDetails.media) {
-        alert("Media is required.");
+        setAlert({
+          type: "error",
+          message: "Media is required.",
+          position: "bottom-right",
+          duration: 3000,
+        });
         return false;
       }
 
       if (!data.receiverDetails.upi) {
-        alert("UPI is required.");
+        setAlert({
+          type: "error",
+          message: "UPI is required.",
+          position: "bottom-right",
+          duration: 3000,
+        });
         return false;
       }
     }
 
     if (data.participationType === "Team") {
       if (!data.maxTeamSize) {
-        alert("Maximum team size is required.");
+        setAlert({
+          type: "error",
+          message: "Maximum team size is required.",
+          position: "bottom-right",
+          duration: 3000,
+        });
         return false;
       }
 
       if (!data.minTeamSize) {
-        alert("Minimum team size is required.");
+        setAlert({
+          type: "error",
+          message: "Minimum team size is required.",
+          position: "bottom-right",
+          duration: 3000,
+        });
         return false;
       }
     }
@@ -237,80 +314,129 @@ function NewForm() {
 
   const onSaveEvent = async () => {
     if (isValidEvent()) {
-
       setIsLoading(true);
       const newSections = constructForPreview();
-      console.log(data);
-  
       const form = new FormData();
-      const info = {};
-  
-      // Append data to the info object
+
+      if (data.eventImg && data.eventImg instanceof File) {
+        form.append("eventImg", data.eventImg);
+      }
+      if (
+        data.receiverDetails.media &&
+        data.receiverDetails.media instanceof File
+      ) {
+        form.append("media", data.receiverDetails.media);
+      }
+
+      form.append("upi", data.receiverDetails.upi);
+
       Object.keys(data).forEach((key) => {
         const value = data[key];
-  
-        if (typeof value === "object" && value !== null) {
-          if (Array.isArray(value)) {
-            info[key] = JSON.stringify(value);
-          } else {
-            info[key] = value;
-          }
-        } else {
-          info[key] = value;
+        if (key !== "eventImg") {
+          form.append(key, value);
         }
       });
-  
-      // Append info and sections to the form
-      form.append("info", JSON.stringify(info));
+
+      if (typeof data.eventImg === "string") {
+        form.delete("eventImg");
+      }
+
+      if (typeof data.receiverDetails.media === "string") {
+        form.delete("media");
+      }
+
+      if (data.receiverDetails) {
+        form.delete("receiverDetails");
+      }
+
       form.append("sections", JSON.stringify(newSections));
-  
-      if (authCtx.eventData) {
+
+      if (isEditing) {
         form.append("id", authCtx.eventData?.id);
       }
+
       if (data._id) {
         delete data._id;
       }
-  
-      console.log("form", form);
-      console.log("Form Data", data);
-  
-      try {
-        const response = await api.post("/api/form/addForm", form, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
+
+      if (isEditing) {
+        try {
+          const response = await api.put(
+            `/api/form/editForm/${authCtx.eventData?.id}`,
+            form,
+            {
+              headers: {
+                "Content-Type": "multipart/form-data",
+                 "Authorization": `Bearer ${window.localStorage.getItem("token")}`,
+              },
+            }
+          );
+
+          if (response.status === 200 || response.status === 201) {
+            setAlert({
+              type: "success",
+              message: "Form updated successfully",
+              position: "bottom-right",
+              duration: 3000,
+            });
+          } else {
+            setAlert({
+              type: "error",
+              message: "There was an error editing the form. Please try again.",
+              position: "bottom-right",
+              duration: 3000,
+            });
           }
-        });
-  
-        if (response.status === 200 || response.status === 201) {
-          setAlert({
-            type: "success",
-            message: "Form saved successfully",
-            position: "bottom-right",
-            duration: 3000,
-          });
-          event.target.reset();
-        } else {
+        } catch (error) {
           setAlert({
             type: "error",
-            message: "There was an error submitting the form. Please try again.",
+            message:
+              "There was an error submitting the form. Please try again.",
             position: "bottom-right",
             duration: 3000,
           });
+        } finally {
+          setIsLoading(false);
         }
-      } catch (error) {
-        setAlert({
-          type: "error",
-          message: "There was an error submitting the form. Please try again.",
-          position: "bottom-right",
-          duration: 3000,
-        });
-      } finally {
-        setIsLoading(false);
+      } else {
+        try {
+          const response = await api.post("/api/form/addForm", form, {
+            headers: {
+              "Content-Type": "multipart/form-data",
+              "Authorization": `Bearer ${window.localStorage.getItem("token")}`,
+            },
+          });
+
+          if (response.status === 200 || response.status === 201) {
+            setAlert({
+              type: "success",
+              message: "Form saved successfully",
+              position: "bottom-right",
+              duration: 3000,
+            });
+          } else {
+            setAlert({
+              type: "error",
+              message:
+                "There was an error submitting the form. Please try again.",
+              position: "bottom-right",
+              duration: 3000,
+            });
+          }
+        } catch (error) {
+          setAlert({
+            type: "error",
+            message:
+              "There was an error submitting the form. Please try again.",
+            position: "bottom-right",
+            duration: 3000,
+          });
+        } finally {
+          setIsLoading(false);
+        }
       }
     }
   };
-  
-  
 
   const onAddSection = () => {
     const lastSection = sections[sections.length - 1];
@@ -523,7 +649,6 @@ function NewForm() {
 
   const handleSaveSection = () => {
     if (isValidSections()) {
-      console.log("Sections", sections);
     } else {
       alert("Fill all the form fields, including conditions");
     }
@@ -568,10 +693,33 @@ function NewForm() {
           {
             _id: nanoid(),
             name: "Transaction ID",
-            type: "text",
-            value: "Enter Transaction ID",
+            type: "number",
+            value: "Last 4 digits of Transaction ID",
+            isRequired: true,
+            validations: [
+              {
+                _id: nanoid(),
+                type: "length",
+                value: "4",
+                operator: "<=",
+                message: "Transaction ID should be at most 4 digits long",
+              },
+            ],
+          },
+          {
+            _id: nanoid(),
+            name: "Payment Screenshot",
+            type: "image",
+            value: "Upload Payment Screenshot",
             isRequired: true,
             validations: [],
+          },
+          {
+            _id: nanoid(),
+            name: "T&C Acceptance",
+            type: "checkbox",
+            value: "Accept Terms & Conditions",
+            isRequired: true,
           },
         ],
       });
@@ -722,7 +870,9 @@ function NewForm() {
             )}
           </div>
 
-          <Button onClick={onSaveEvent}>Save</Button>
+          <Button isLoading={isLoading} onClick={onSaveEvent}>
+            {isEditing ? "Update" : "Save"}
+          </Button>
           <Button isLoading={false} onClick={handlePreview} variant="secondary">
             {showPreview ? "Hide" : "Preview"}
           </Button>
@@ -755,7 +905,7 @@ function NewForm() {
                 transition: "all .4s",
               }}
             >
-              Public Mode (Public/Private)
+              Event Form Privacy (Private/Public)
             </label>
             <Switch
               checked={data.isPublic}
@@ -792,7 +942,7 @@ function NewForm() {
                 transition: "all .4s",
               }}
             >
-              Close Event Registration
+              Event Form Registration (Open/Close)
             </label>
             <Switch
               checked={data.isRegistrationClosed}
@@ -828,7 +978,7 @@ function NewForm() {
                 transition: "all .4s",
               }}
             >
-              Event Past/Ongoing
+              Event Form Status (Ongoing/Past)
             </label>
             <Switch
               checked={data.isEventPast}
@@ -997,7 +1147,7 @@ function NewForm() {
                   )}
                   className={styles.formInput}
                   value={data.minTeamSize}
-                  onChange={(value) => setdata({ ...data, minTeamSize: value }) }
+                  onChange={(value) => setdata({ ...data, minTeamSize: value })}
                 />
                 {data.minTeamSize && (
                   <Input
@@ -1009,7 +1159,9 @@ function NewForm() {
                     )}
                     className={styles.formInput}
                     value={data.maxTeamSize}
-                    onChange={(value) => setdata({ ...data, maxTeamSize: value })}
+                    onChange={(value) =>
+                      setdata({ ...data, maxTeamSize: value })
+                    }
                   />
                 )}
               </div>
@@ -1095,12 +1247,9 @@ function NewForm() {
           >
             Sections
           </Text>
-          <Button onClick={handleSaveSection}>
-          {isLoading ? <MicroLoading /> : "Save"}
-          </Button>
           <Button
             variant="secondary"
-            style={{ marginLeft: "12px" }}
+            style={{ marginLeft: "auto" }}
             onClick={onAddSection}
           >
             Add Section
@@ -1132,8 +1281,9 @@ function NewForm() {
             open={showPreview}
             handleClose={() => setshowPreview(false)}
             sections={constructForPreview()}
-            eventData={data}
+            eventData={{ ...data, _id: authCtx.eventData?.id }}
             meta={paymentSection ? [paymentSection] : []}
+            showCloseBtn={true}
           />
         )}
       </div>

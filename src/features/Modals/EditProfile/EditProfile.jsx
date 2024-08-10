@@ -21,8 +21,8 @@ const EditProfile = ({ handleModalClose }) => {
     school: authCtx.user.school,
     college: authCtx.user.college,
     contactNo: authCtx.user.contactNo,
-    github: authCtx.user.github,
-    linkedin: authCtx.user.linkedin,
+    github: authCtx.user.extra.github,
+    linkedin: authCtx.user.extra.linkedin,
   });
 
   useEffect(() => {
@@ -39,14 +39,18 @@ const EditProfile = ({ handleModalClose }) => {
   const handleSave = async () => {
     setIsLoading(true);
     try {
-      console.log(data)
-      let { linkedin, github , ...modifiedData} = data;
+      console.log(data);
+      let { linkedin, github, ...modifiedData } = data;
       modifiedData.extra = {
-        github : data.github,
-        linkedin : data.linkedin
-      }
+        github: data.github,
+        linkedin: data.linkedin,
+      };
       console.log(modifiedData);
-      const response = await api.put("/api/user/editDetails", modifiedData);
+      const response = await api.put("/api/user/editDetails", modifiedData, {
+        headers: {
+          Authorization: `Bearer ${window.localStorage.getItem("token")}`,
+        },
+      });
 
       console.log(response.data.user);
       if (response.status === 200 || response.status === 201) {
@@ -63,14 +67,14 @@ const EditProfile = ({ handleModalClose }) => {
           data.year,
           data.github,
           data.linkedin,
-          authCtx.user.designation,
+          authCtx.user.extra.designation,
           authCtx.user.access,
+          authCtx.user.editProfileCount - 1,
           authCtx.user.regForm
         );
-        setTimeout(()=>{
+        setTimeout(() => {
           handleModalClose();
-          window.location.reload();
-        },2000);
+        }, 2000);
         setAlert({
           type: "success",
           message: "Profile updated successfully.",
@@ -140,17 +144,19 @@ const EditProfile = ({ handleModalClose }) => {
                 data-aos="zoom-in-up"
                 data-aos-duration="500"
               >
-                <div className={styles.proHeading}>
-                  <h3 className={styles.headInnerText}>
-                    <span>Edit</span> Profile
-                  </h3>
+                <div className={styles.heading}>
+                  <div className={styles.proHeading}>
+                    <h3 className={styles.headInnerText}>
+                      <span>Edit</span> Profile
+                    </h3>
+                  </div>
+                  <button
+                    className={styles.closeModal}
+                    onClick={handleModalClose}
+                  >
+                    <X />
+                  </button>
                 </div>
-                <button
-                  className={styles.closeModal}
-                  onClick={handleModalClose}
-                >
-                  <X />
-                </button>
                 {authCtx.user && (
                   <div className={styles.details}>
                     <div className={styles.profileTable}>
@@ -180,7 +186,7 @@ const EditProfile = ({ handleModalClose }) => {
                             fontSize: "15px",
                           }}
                           placeholder="Enter your roll"
-                          type="number"
+                          type="text"
                           value={data.rollNumber}
                           className={styles.vals}
                           onChange={(e) =>
@@ -200,11 +206,11 @@ const EditProfile = ({ handleModalClose }) => {
                           name={data.year}
                           className={styles.vals}
                           options={[
-                            { label: "1st Year", value: "1" },
-                            { label: "2nd Year", value: "2" },
-                            { label: "3rd Year", value: "3" },
-                            { label: "4th Year", value: "4" },
-                            { label: "5th Year", value: "5" },
+                            { label: "1st Year", value: "1st" },
+                            { label: "2nd Year", value: "2nd" },
+                            { label: "3rd Year", value: "3rd" },
+                            { label: "4th Year", value: "4th" },
+                            { label: "5th Year", value: "5th" },
                             { label: "Passout", value: "Passout" },
                           ]}
                           value={data.year}
@@ -256,63 +262,90 @@ const EditProfile = ({ handleModalClose }) => {
                             fontSize: "15px",
                           }}
                           placeholder="Enter Phone number"
-                          type="number"
+                          type="tel"
+                          maxLength={12}
                           value={data.contactNo}
-                          onChange={(e) =>
-                            setData({ ...data, contactNo: e.target.value })
-                          }
-                          className={styles.vals}
-                        />
-                      </div>
-                      <div className={styles.table}>
-                        <h6 className={styles.dets}>Github</h6>
-                        <Input
-                          style={{
-                            width: "17rem",
-                            margin: "0px",
-                            fontSize: "15px",
+                          onChange={(e) => {
+                            const value = e.target.value;
+                            if (/^\d*$/.test(value) && value.length <= 12) {
+                              setData({ ...data, contactNo: value });
+                            }
                           }}
-                          placeholder="Enter your school"
-                          type="text"
-                          value={data.github}
                           className={styles.vals}
-                          onChange={(e) =>
-                            setData({ ...data, github: e.target.value })
-                          }
                         />
                       </div>
-                      <div className={styles.table}>
-                        <h6 className={styles.dets}>LinkedIn</h6>
-                        <Input
-                          style={{
-                            width: "17rem",
-                            margin: "0px",
-                            fontSize: "15px",
-                          }}
-                          placeholder="Enter your school"
-                          type="text"
-                          value={data.linkedin}
-                          className={styles.vals}
-                          onChange={(e) =>
-                            setData({ ...data, linkedin: e.target.value })
-                          }
-                        />
-                      </div>
+                      {authCtx.user.access !== "USER" && (
+                        <>
+                          <div className={styles.table}>
+                            <h6 className={styles.dets}>Github</h6>
+                            <Input
+                              style={{
+                                width: "17rem",
+                                margin: "0px",
+                                fontSize: "15px",
+                              }}
+                              placeholder="Enter your school"
+                              type="text"
+                              value={data.github}
+                              className={styles.vals}
+                              onChange={(e) =>
+                                setData({ ...data, github: e.target.value })
+                              }
+                            />
+                          </div>
+                          <div className={styles.table}>
+                            <h6 className={styles.dets}>LinkedIn</h6>
+                            <Input
+                              style={{
+                                width: "17rem",
+                                margin: "0px",
+                                fontSize: "15px",
+                              }}
+                              placeholder="Enter your school"
+                              type="text"
+                              value={data.linkedin}
+                              className={styles.vals}
+                              onChange={(e) =>
+                                setData({ ...data, linkedin: e.target.value })
+                              }
+                            />
+                          </div>
+                        </>
+                      )}
+
                       <div
-                        style={{ display: "flex", justifyContent: "center" }}
+                        style={{
+                          display: "flex",
+                          justifyContent: "center",
+                          flexDirection: "column",
+                          alignItems: "center",
+                        }}
                       >
-                          <Button
-                            type="submit"
-                            onClick={handleSave}
-                            className={styles.submit}
+                        {authCtx.user.access === "USER" && (
+                          <p
+                            className={styles.vals}
+                            style={{
+                              marginTop: "15px",
+                              textAlign: "center",
+                              width: "100%",
+                              fontSize: "1rem",
+                            }}
                           >
-                          {isLoading ? (
-                            <MicroLoading />
-                          ) : (
-                            "Update Changes"
-                          )}
-                          </Button>
-                        
+                            You can only edit your profile{" "}
+                            <span style={{ fontWeight: 600 }}>5 times. </span>{" "}
+                            Total Edits left:{" "}
+                            <span style={{ fontWeight: 600 }}>
+                              {authCtx.user.editProfileCount}
+                            </span>
+                          </p>
+                        )}
+                        <Button
+                          type="submit"
+                          onClick={handleSave}
+                          className={styles.submit}
+                        >
+                          {isLoading ? <MicroLoading /> : "Update Changes"}
+                        </Button>
                       </div>
                     </div>
                   </div>
@@ -322,7 +355,7 @@ const EditProfile = ({ handleModalClose }) => {
           </>
         </div>
       </div>
-      <Alert/>
+      <Alert />
     </div>
   );
 };

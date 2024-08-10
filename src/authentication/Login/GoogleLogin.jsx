@@ -47,44 +47,44 @@ export default function GoogleLogin() {
   const handleLoginSuccess = async () => {
     setIsLoading(true);
     try {
-      const googleResponse = await axios.get(
-        `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${codeResponse.access_token}`
-      );
+      // const googleResponse = await axios.get(
+      //   `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${codeResponse.access_token}`
+      // );
 
-      if (googleResponse.status !== 200) {
-        // Handle the case where Google response is not successful
-        console.error("Google login failed:", googleResponse);
-        setAlert({
-          type: "error",
-          message: "Google login failed. Please try again.",
-          position: "bottom-right",
-          duration: 3000,
-        });
-        return;
-      }
-      console.log("google Response",googleResponse);
-      console.log("code response",codeResponse)
+      // if (googleResponse.status !== 200) {
+      //   setAlert({
+      //     type: "error",
+      //     message: "Google login failed. Please try again.",
+      //     position: "bottom-right",
+      //     duration: 3000,
+      //   });
+      //   return;
+      // }
+      // console.log("google Response", googleResponse);
+      // console.log("code response", codeResponse)
 
-      const googleUserData = {
-        email: googleResponse.data.email,
-        image: googleResponse.data.picture,
-        id: codeResponse.access_token,
-      };
+      // const googleUserData = {
+      //   data: googleResponse.data,
+      //   auth: codeResponse,
+      // };
 
-      console.log("Google User Data:", googleUserData);
+      // console.log("Google User Data:", googleUserData);
 
       try {
         // Send a POST request to the backend to check if the user exists
         // const response = await api.post("/api/auth/googleLogin", {
         //   tokenId: googleUserData.id,
         // });
-        const response = await api.get("/api/auth/googleLogin", {
-          tokenId: googleUserData.id,
+        const response = await api.post("/api/auth/googleAuth", {
+          access_token: codeResponse.access_token,
         });
+
+        console.log(response.data.user);
 
         if (response.status === 200 || response.status === 201) {
           // User exists in the backend
           console.log(response);
+          const user = response.data.user;
 
           setAlert({
             type: "success",
@@ -100,22 +100,27 @@ export default function GoogleLogin() {
           });
 
           setTimeout(() => {
+            localStorage.setItem("token",response.data.token);
             authCtx.login(
-              response.data.user.name,
-              response.data.user.email,
-              response.data.user.image,
-              response.data.user.rollNumber,
-              response.data.user.school,
-              response.data.user.college,
-              response.data.user.contactNo,
-              response.data.user.year,
-              response.data.user.regForm,
-              response.data.user.access,
+              user.name,
+              user.email,
+              user.img,
+              user.rollNumber,
+              user.school,
+              user.college,
+              user.contactNo,
+              user.year,
+              user.extra?.github,
+              user.extra?.linkedin,
+              user.extra?.designation,
+              user.access,
+              user.editProfileCount,
+              user.regForm,
+              user.blurhash,
               response.data.token,
-              3600000
+              9600000
             );
-            setShouldNavigate(true);
-          }, 3000);
+          }, 800);
 
           sessionStorage.removeItem("prevPage"); // Clean up
         } else {
@@ -124,9 +129,15 @@ export default function GoogleLogin() {
           // handleFallbackOrSignup(googleUserData);
         }
       } catch (error) {
+        setAlert({
+          type: "error",
+          message: "There was an error logging in. Please try again.",
+          position: "bottom-right",
+          duration: 3000,
+        });
         // API call error, fallback to local data
         console.error("Backend API call failed:", error);
-        handleFallbackOrSignup(googleUserData);
+        // handleFallbackOrSignup(googleUserData);
       }
     } catch (error) {
       console.error("Login error:", error);
@@ -141,59 +152,59 @@ export default function GoogleLogin() {
     }
   };
 
-  const handleFallbackOrSignup = async (googleUserData) => {
-    // User does not exist in the backend, use fallback local data
-    console.log("User not registered in backend, using fallback data");
-    const fallbackUser = users.find(
-      (user) => user.email === googleUserData.email
-    );
+  // const handleFallbackOrSignup = async (googleUserData) => {
+  //   // User does not exist in the backend, use fallback local data
+  //   console.log("User not registered in backend, using fallback data");
+  //   const fallbackUser = users.find(
+  //     (user) => user.email === googleUserData.email
+  //   );
 
-    if (fallbackUser) {
-      setAlert({
-        type: "success",
-        message:
-          "User not registered in backend, Logging In using fallback data",
-        position: "bottom-right",
-        duration: 2800,
-      });
+  //   if (fallbackUser) {
+  //     setAlert({
+  //       type: "success",
+  //       message:
+  //         "User not registered in backend, Logging In using fallback data",
+  //       position: "bottom-right",
+  //       duration: 2800,
+  //     });
 
-      setNavigatePath(sessionStorage.getItem("prevPage") || "/");
+  //     setNavigatePath(sessionStorage.getItem("prevPage") || "/");
 
-      setTimeout(() => {
-        setShouldNavigate(true);
-      }, 2800);
+  //     setTimeout(() => {
+  //       setShouldNavigate(true);
+  //     }, 2800);
 
-      setTimeout(() => {
-        authCtx.login(
-          fallbackUser.name,
-          fallbackUser.email,
-          googleUserData.image,
-          fallbackUser.rollNumber,
-          fallbackUser.school,
-          fallbackUser.college,
-          fallbackUser.contactNo,
-          fallbackUser.year,
-          fallbackUser.regForm,
-          fallbackUser.access,
-          "someToken",
-          3600000
-        );
-      }, 3000);
+  //     setTimeout(() => {
+  //       authCtx.login(
+  //         fallbackUser.name,
+  //         fallbackUser.email,
+  //         googleUserData.image,
+  //         fallbackUser.rollNumber,
+  //         fallbackUser.school,
+  //         fallbackUser.college,
+  //         fallbackUser.contactNo,
+  //         fallbackUser.year,
+  //         fallbackUser.regForm,
+  //         fallbackUser.access,
+  //         "someToken",
+  //         3600000
+  //       );
+  //     }, 3000);
 
-      sessionStorage.removeItem("prevPage"); // Clean up
-    } else {
-      setAlert({
-        type: "info",
-        message: "User not registered, kindly register first",
-        position: "bottom-right",
-        duration: 3000,
-      });
-      setNavigatePath("/signup");
-      setTimeout(() => {
-        setShouldNavigate(true);
-      }, 3000);
-    }
-  };
+  //     sessionStorage.removeItem("prevPage"); // Clean up
+  //   } else {
+  //     setAlert({
+  //       type: "info",
+  //       message: "User not registered, kindly register first",
+  //       position: "bottom-right",
+  //       duration: 3000,
+  //     });
+  //     setNavigatePath("/signup");
+  //     setTimeout(() => {
+  //       setShouldNavigate(true);
+  //     }, 3000);
+  //   }
+  // };
 
   return (
     <>

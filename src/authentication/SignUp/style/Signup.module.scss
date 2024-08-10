@@ -2,11 +2,7 @@
   background-color: #2f2f2f90;
   border: 1px solid #ffffff61;
   border-radius: 10px;
-  background: linear-gradient(
-    90deg,
-    rgba(32, 32, 32, 0.95) -11.52%,
-    rgba(37, 37, 37, 0.95) 106.29%
-  );
+  background: linear-gradient(90deg, rgba(32, 32, 32, 0.32) -11.52%, rgba(37, 37, 37, 0.43) 106.29%);
   padding: 20px;
   width: 30rem;
   display: flex;
@@ -40,6 +36,15 @@
   flex-direction: column;
   margin-inline: auto;
 }
+
+.signin h1{
+  padding-top: 10px;
+  background: var(--primary);
+  width: 20%;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
 .sideImage {
   width: 100%;
   height: auto;
@@ -96,6 +101,29 @@
   border: 1px solid #fff;
 }
 
+.dropdown {
+  position: relative;
+  width: 96%;
+  margin-top: 5px;
+  background-color: white;
+  border: 1px solid #ccc;
+  color: black;
+  border-radius: 4px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 2;
+  margin-left: 5px;
+}
+
+.dropdownItem {
+  padding: 10px;
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+}
+
+.dropdownItem:hover {
+  background-color: #202020;
+  color:#f97507;
+}
 
 // @media(min-width:800px){
 //   .container{
@@ -222,7 +250,13 @@
   }
 
   .ArrowBackIcon {
-    top: 10%;
+    top: 3%;
     left: 7%;
+  }
+}
+
+@media (max-width: 460px){
+  .signin h1{
+    width: 30%;
   }
 }

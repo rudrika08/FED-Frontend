@@ -1,4 +1,5 @@
-import React, { useContext, useState } from "react";
+/* eslint-disable no-unused-vars */
+import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { RecoveryContext } from "../../../context/RecoveryContext";
 import Input from "../../../components/Core/Input";
@@ -6,47 +7,98 @@ import Button from "../../../components/Core/Button";
 import style from "./styles/forgotPassword.module.scss";
 import styles from "../../SignUp/style/Signup.module.scss";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import 'react-toastify/dist/ReactToastify.css';
-import resetStyle from "./styles/reset.module.scss"
-import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { api } from "../../../services";
+import { Alert,MicroLoading } from "../../../microInteraction";
+
 
 export default function Login() {
   const { setEmail, email, setOTP, setPage } = useContext(RecoveryContext);
   const [loading, setLoading] = useState(false);
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const navigate=useNavigate();
+  const [alert,setAlert]=useState(null);
+  const [shouldNavigate, setShouldNavigate] = useState(false);
+  const [navigatePath, setNavigatePath] = useState("/");
 
-  function navigateToOtp(e) {
+
+  useEffect(() => {
+    if (alert) {
+      const { type, message, position, duration } = alert;
+      Alert({ type, message, position, duration });
+    }
+  }, [alert]);
+
+  useEffect(() => {
+    if (shouldNavigate) {
+      navigate(navigatePath);
+      setShouldNavigate(false); // Reset state after navigation
+    }
+  }, [shouldNavigate, navigatePath, navigate]);
+  
+
+  async function navigateToOtp(e) {
     e.preventDefault(); // Prevent default form submission behavior
     if (email) {
 
       if (!emailRegex.test(email)) {
-      toast.error("please enter a valid email address");
+        setAlert({
+          type: "error",
+          message: "Invalid Email Address",
+          position: "bottom-right",
+          duration: 2800,
+        });
         return;
       }
-      const OTP = Math.floor(Math.random() * 9000 + 1000);
-      console.log(OTP);
-      setOTP(OTP); // Set OTP in context and local storage
 
-      setLoading(true);
-      navigate('/otp')
-      setLoading(false);
+   try {
+    setLoading(true);
 
-      // axios
-      //   .post("http://localhost:5000/send_recovery_email", { OTP, recipient_email: email })
-      //   .then(() => {
-      //     setPage("otp");
-      //     toast.success("otp is sent to your email")
-      //     setLoading(false);
-      //   })
-      //   .catch(error => {
-      //     console.error("Error sending recovery email:", error);
-      //     alert("Failed to send recovery email. Please try again later.");
-      //     setLoading(false);
-      //   });
+      const response = await api.post("api/auth/forgotPassword", { email: email });
+      console.log(response)
+      if(response.status===201||response.status===200){
+        console.log("entering if")
+        setAlert({
+          type: "success",
+          message: "otp is sent to your email",
+          position: "bottom-right",
+          duration: 2800,
+        });
+        setNavigatePath('/otp');
+
+        setTimeout(() => {
+          setShouldNavigate(true);
+        }, 1500);
+      }else{
+          // toast.error("error in sending otp");
+          setAlert({
+            type: "error",
+            message: "error in sending otp",
+            position: "bottom-right",
+            duration: 2800,
+          });
+        }
+   } catch (error) {
+    console.log(error);
+    // toast.error(response.error);
+    setAlert({
+      type: "error",
+      message: error?.response?.data?.message,
+      position: "bottom-right",
+      duration: 2800,
+    });
+    
+   }finally{
+    setLoading(false);
+   }
+
     } else {
-      alert("Please enter your email");
+      setAlert({
+        type: "error",
+        message: "Please Enter valid Otp",
+        position: "bottom-right",
+        duration: 2800,
+      });
     }
   }
 
@@ -94,15 +146,17 @@ export default function Login() {
                     marginTop: "20px",
                     fontSize: "1rem",
                     cursor: "pointer",
+                    zIndex:"100"
                   }}
                 >
-                  {loading ? "Sending..." : "Send OTP"}
+                  {loading ? <MicroLoading/> : "Send OTP"}
                 </Button>
               </form>
             </div>
           </div>
         </div>
       </section>
+      <Alert />
     </div>
   );
 }

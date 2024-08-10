@@ -9,7 +9,7 @@ import Text from "../../../../components/Core/Text";
 import defaultImg from "../../../../assets/images/defaultImg.jpg";
 import { api } from "../../../../services";
 import styles from "../EventModal/styles/EventModal.module.scss";
-import FormData from "../../../../data/FormData.json";
+// import FormData from "../../../../data/FormData.json";
 
 const EventStats = ({ onClosePath }) => {
   const navigate = useNavigate();
@@ -24,10 +24,16 @@ const EventStats = ({ onClosePath }) => {
   useEffect(() => {
     const fetchEvent = async () => {
       try {
-        const response = await api.get(`/api/form/getEvent/${eventId}`);
-        if (response.status === 200) {
-          setData(response.data);
-          setInfo(response.data.info);
+        const response = await api.get(`/api/form/getFormAnalytics/${eventId}`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        });
+        if (response.status === 200) {  
+          console.log("response in event stat:",response.data.events[0]);
+          setData(response.data.events[0]);
+          setInfo(response.data.events[0].info);
+         
         } else {
           setAlert({
             type: "error",
@@ -40,11 +46,12 @@ const EventStats = ({ onClosePath }) => {
         }
       } catch (error) {
         console.error("Error fetching event:", error);
-
-        const { events } = FormData;
-        const data = events.find((event) => event._id === parseInt(eventId));
-        setData(data);
-        setInfo(data.info);
+        setAlert({
+          type: "error",
+          message:error.response.data.message||"There was an error fetching event details. Please try again.",
+          position: "bottom-right",
+          duration: 3000,
+        });
       } finally {
         setIsLoading(false);
       }
@@ -52,6 +59,8 @@ const EventStats = ({ onClosePath }) => {
 
     fetchEvent();
   }, [eventId]);
+
+  console.log(info)
 
   useEffect(() => {
     if (alert) {
@@ -206,7 +215,7 @@ const EventStats = ({ onClosePath }) => {
                             marginTop: "-0.4rem",
                           }}
                         />
-                      ) : filteredUsers.length > 0 ? (
+                      ) : filteredUsers && filteredUsers.length > 0 ? (
                         filteredUsers.map((email, index) => (
                           <div key={index} className={styles.userCard}>
                             <img

@@ -36,14 +36,18 @@
 
 .backimg {
   width: 90%;
+  height: 16rem;
+  object-fit: cover;
   // overflow: hidden;
   margin-inline: auto;
   margin-top: 6%;
-  height: auto;
+  // min-height: 13rem;
+  // height: auto;
+  // min-height: 5rem;
 }
 
 .date {
-  height: 10%;
+  // height: 10%;
   width: 13%;
   background: rgba(255, 255, 255, 0.1);
   border: 1px solid rgb(143, 139, 139);
@@ -62,7 +66,8 @@
 
 .backtxt {
   width: 87%;
-  height: 6.8rem;
+  height: auto;
+  max-height: 6.8rem;
   overflow-y: scroll;
   -ms-overflow-style: none; /* Internet Explorer 10+ */
   scrollbar-width: none; /* Firefox */
@@ -271,6 +276,7 @@
     // top: 6rem;
     // left: 1.2rem;
     z-index: 5;
+    padding-top: 8px;
   }
 
   .date {
@@ -304,12 +310,13 @@
   }
 
   .backtxt {
-    height: 6.7rem;
+    height: 6.7rem; 
+    // height: fit-content;
   }
 
   .closeModal {
-    top: -1.6rem;
-    right: 0.5rem;
+    top: -2.2rem;
+    right: 0.2rem;
   }
 }
 
@@ -424,5 +431,11 @@
   .registerbtn button {
     min-width: 10rem;
     padding: 0.7rem 0.9rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .card{
+    width: 300px; //Need to find optimal solution for it
   }
 }

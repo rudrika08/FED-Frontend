@@ -5,11 +5,12 @@ import Button from "../Core/Button";
 import Input from "../Core/Input";
 import style from "./style/otpinput.module.scss";
 import { useNavigate } from "react-router-dom";
-import { X } from 'lucide-react';
+import { X } from "lucide-react";
+import { api } from "../../services";
+import { Alert, MicroLoading } from "../../microInteraction";
 
 const OtpInput = (props) => {
-
-  const { email, otp } = useContext(RecoveryContext);
+  const { email } = useContext(RecoveryContext);
   const [timerCount, setTimer] = useState(60);
   const [OTPinput, setOTPinput] = useState(["", "", "", ""]);
   const [disable, setDisable] = useState(true);
@@ -18,12 +19,18 @@ const OtpInput = (props) => {
   const [password, setPassword] = useState("");
   const [cnfPassword, setCnfPassword] = useState("");
   const [error, setError] = useState("");
+  const [alert, setAlert] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-  const{isSignUp,onHandleVerfiy,handleClose}=props;
+  const { isSignUp, onHandleVerfiy, handleClose } = props;
 
   useEffect(() => {
-    console.log("OtpInputPage", otp);
-  }, [otp]);
+    if (alert) {
+      const { type, message, position, duration } = alert;
+      Alert({ type, message, position, duration });
+    }
+  }, [alert]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -56,76 +63,162 @@ const OtpInput = (props) => {
     }
   };
 
-  const resendOTP = () => {
+  const resendOTP = async () => {
+    console.log("inside resendOtp");
     if (disable) return;
-    axios
-      .post("http://localhost:5000/send_recovery_email", { OTP: otp, recipient_email: email })
-      .then(() => {
-        setDisable(true);
-        alert("A new OTP has been sent to your email.");
-        setTimer(60);
-      })
-      .catch(console.error);
+    console.log("email", email);
+
+    if (email) {
+      if (!emailRegex.test(email)) {
+        setAlert({
+          type: "error",
+          message: "Invalid Email Address",
+          position: "bottom-right",
+          duration: 2800,
+        });
+        return;
+      }
+
+      try {
+        setLoading(true);
+
+        const response = await api.post("api/auth/forgotPassword", {
+          email: email,
+        });
+        console.log(response);
+        if (response.status === 201 || response.status === 200) {
+          console.log("entering if");
+          setDisable(true);
+          setAlert({
+            type: "success",
+            message: "otp is sent to your email",
+            position: "bottom-right",
+            duration: 2800,
+          });
+          setTimer(60);
+        } else {
+          // toast.error("error in sending otp");
+          setAlert({
+            type: "error",
+            message: "error in sending otp",
+            position: "bottom-right",
+            duration: 2800,
+          });
+          setError(response.data.message);
+        }
+      } catch (error) {
+        console.log("error in input field:", error);
+        // toast.error(response.error);
+        setAlert({
+          type: "error",
+          message: error?.response?.message || "Error in generating otp",
+          position: "bottom-right",
+          duration: 2800,
+        });
+      } finally {
+        setLoading(false);
+      }
+    }
   };
 
   const verifyOTP = () => {
     const enteredOTP = OTPinput.join("");
     if (enteredOTP === String(otp)) {
-      navigate('/reset');
+      navigate("/reset");
     } else {
       alert("Incorrect OTP, please try again or resend.");
     }
   };
 
-  const changePassword = (e) => {
+  const changePassword = async (e) => {
     e.preventDefault();
-    if (password !== cnfPassword) {
-      setError("Passwords do not match");
+    const enteredOTP = OTPinput.join("");
+    console.log("enteredOtp:", enteredOTP);
+
+    if (!password || !cnfPassword) {
+      setAlert({
+        type: "error",
+        message: "Please fill all the fields",
+        position: "bottom-right",
+        duration: 2800,
+      });
       return;
     }
-    // axios
-    //   .post("http://localhost:5000/reset_password", { email, password })
-    //   .then(() => {
-    //     navigate('/Login');
-    //     alert("Password reset successfully");
-    //   })
-    //   .catch((err) => {
-    //     console.error(err);
-    //     setError("Failed to reset password");
-    //   });
-    navigate('/Login');
-    alert("Password reset successfully");
+    try {
+      setLoading(true);
+      const response = await api.post("/api/auth/changePassword", {
+        newPassword: password,
+        confirmPassword: cnfPassword,
+        otp: enteredOTP,
+        email: email,
+      });
+      if (response.status === 200 || response.status === 201) {
+        setAlert({
+          type: "success",
+          message: "reset Password Successfully",
+          position: "bottom-right",
+          duration: 2800,
+        });
+
+        navigate("/Login");
+      }
+
+      if (response.status === 404) {
+        setAlert({
+          type: "error",
+          message: response.data.message,
+          position: "bottom-right",
+          duration: 2800,
+        });
+      }
+    } catch (error) {
+      setAlert({
+        type: "error",
+        message: error?.response?.data?.message || "Changing Password Failed",
+        position: "bottom-right",
+        duration: 2800,
+      });
+    } finally {
+      setLoading(false);
+    }
+
+    // alert("Password reset successfully");
   };
 
-
-  const handleVerifySignUp=()=>{
+  const handleVerifySignUp = () => {
     // console.log("hello");
     const enteredOTP = OTPinput.join("");
     // console.log(enteredOTP);
     // console.log(password);
     onHandleVerfiy(enteredOTP);
-
-    }
+  };
 
   return (
-    <div className={style.innerBox1} style={{background: isSignUp? '#1c1c1c':''}}>
-    { isSignUp &&  <div onClick={handleClose} style={{
-                  position:"absolute",
-                  top:"1rem",
-                  right:"1rem",
-                  color: "#fff",
-                  cursor:"pointer",
-               }}>
-          <X/>
-          </div>   
-}
+    <div
+      className={style.innerBox1}
+      style={{ background: isSignUp ? "#1c1c1c" : "" }}
+    >
+      {isSignUp && (
+        <div
+          onClick={handleClose}
+          style={{
+            position: "absolute",
+            top: "1rem",
+            right: "1rem",
+            color: "#fff",
+            cursor: "pointer",
+          }}
+        >
+          <X />
+        </div>
+      )}
       <div className={style.innerBox2}>
         <div className={style.innerTitle}>
           <div className={style.innerTitlediv}>
             <p className={style.verifyTitle}>Email Verification</p>
           </div>
           <div className={style.innerTitle2}>
-            <p>We have sent a code to your email {email}</p>
+            <p>We have sent a code to {email}</p>
           </div>
         </div>
         <div>
@@ -169,9 +262,7 @@ const OtpInput = (props) => {
 
       {isSignUp ? (
         <>
-
- 
-        {error && <p style={{ color: "red" }}>{error}</p>}
+          {error && <p style={{ color: "red" }}>{error}</p>}
           <div className={style.buttondiv}>
             <div>
               <Button
@@ -188,11 +279,13 @@ const OtpInput = (props) => {
                 Verify Email
               </Button>
             </div>
-            </div>
-            </>
+          </div>
+        </>
       ) : (
         <form className={style.formdiv} onSubmit={changePassword}>
-          <div style={{ width: "97%", marginLeft: "auto", marginRight: "auto" }}>
+          <div
+            style={{ width: "97%", marginLeft: "auto", marginRight: "auto" }}
+          >
             <Input
               type="password"
               placeholder="Enter your password"
@@ -204,7 +297,9 @@ const OtpInput = (props) => {
               style={{ width: "100%" }}
             />
           </div>
-          <div style={{ width: '97%', marginLeft: "auto", marginRight: "auto" }}>
+          <div
+            style={{ width: "97%", marginLeft: "auto", marginRight: "auto" }}
+          >
             <Input
               type="password"
               placeholder="Confirm your password"
@@ -216,11 +311,11 @@ const OtpInput = (props) => {
               style={{ width: "100%" }}
             />
           </div>
-          {error && <p style={{ color: "red" }}>{error}</p>}
+          {/* {error && <p style={{ color: "red" }}>{error}</p>} */}
           <div className={style.buttondiv}>
             <div>
               <Button
-                onClick={verifyOTP}
+                onClick={changePassword}
                 style={{
                   width: "100%",
                   background: "var(--primary)",
@@ -230,12 +325,13 @@ const OtpInput = (props) => {
                   cursor: "pointer",
                 }}
               >
-                Verify Email
+                {loading ? <MicroLoading /> : "Verify Email"}
               </Button>
             </div>
           </div>
         </form>
       )}
+      <Alert />
     </div>
   );
 };

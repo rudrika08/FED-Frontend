@@ -53,7 +53,7 @@
   line-height: 149.415%;
   letter-spacing: 0.035rem;
   text-transform: uppercase;
-  margin-top: 3rem;
+  margin-top: 2rem;
   margin-bottom: 10px;
   margin-right: 10px;
 }
@@ -158,6 +158,7 @@
   }
   .sponser_all{
     width: 22rem;
+    margin-left: -0.5rem;
   }
   .sponser_title {
     font-size: 30px;
@@ -175,4 +176,11 @@
     align-items: center;
   }
 
+}
+
+@media (max-width: 380px) {
+  .sponser_container{
+    width: 93%;
+    margin-left: 0.8rem;
+  }
 }

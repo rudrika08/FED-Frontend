@@ -1,3 +1,5 @@
+/* eslint-disable react/no-unescaped-entities */
+/* eslint-disable no-unused-vars */
 import React, { useState, useContext, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import style from "./styles/Login.module.scss";
@@ -76,10 +78,10 @@ const Login = () => {
 
         setTimeout(() => {
           setShouldNavigate(true);
-        }, 2800);
+        }, 750);
 
         setTimeout(() => {
-          // localStorage.setItem("token",response.data.token);
+          localStorage.setItem("token",response.data.token);
           authCtx.login(
             user.name,
             user.email,
@@ -92,12 +94,14 @@ const Login = () => {
             user.extra?.github,
             user.extra?.linkedin,
             user.extra?.designation,
-            user.regForm,
             user.access,
+            user.editProfileCount,
+            user.regForm,
+            user.blurhash,
             response.data.token,
             9600000
           );
-        }, 30);
+        }, 800);
         console.log(authCtx);
 
         sessionStorage.removeItem("prevPage"); // Clean up
@@ -112,53 +116,11 @@ const Login = () => {
     } catch (error) {
       setAlert({
         type: "error",
-        message: "There was an error logging in. Please try again.",
+        message:error?.response?.data?.message|| "There was an error logging in. Please try again.",
         position: "bottom-right",
         duration: 3000,
       });
-      console.error("Error logging in:", error);
-
-      //using fallback data for testing
-      const user = users.find(
-        (user) => user.email === email && user.password === password
-      );
-
-      setAlert({
-        type: "success",
-        message: "Logging in using fallback data",
-        position: "bottom-right",
-        duration: 2800,
-      });
-
-      setNavigatePath(sessionStorage.getItem("prevPage") || "/");
-
-      setTimeout(() => {
-        setShouldNavigate(true);
-      }, 2800);
-
-      setTimeout(() => {
-        if (user) {
-          authCtx.login(
-            user.name,
-            user.email,
-            user.img,
-            user.rollNumber,
-            user.school,
-            user.college,
-            user.contactNo,
-            user.year,
-            user.github,
-            user.linkedin,
-            user.designation,
-            user.regForm,
-            user.access,
-            "somedata",
-            3600000
-          );
-        }
-      }, 3000);
-
-      sessionStorage.removeItem("prevPage"); // Clean up
+      console.error("Error logging in:", error?.response?.data?.message);
     } finally {
       setIsLoading(false);
     }
@@ -245,7 +207,8 @@ const Login = () => {
               style={{
                 fontSize: "0.7rem",
                 cursor: "pointer",
-                width: "30%",
+                width: "40%",
+                marginLeft:"0.4rem",
                 background: "var(--primary)",
                 WebkitBackgroundClip: "text",
                 color: "transparent",

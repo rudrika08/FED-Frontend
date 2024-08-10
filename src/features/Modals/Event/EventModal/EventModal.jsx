@@ -1,3 +1,5 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect, useContext } from "react";
 import EventCardModal from "./styles/EventModal.module.scss";
 import groupIcon from "../../../../assets/images/groups.svg";
@@ -10,6 +12,8 @@ import shareOutline from "../../../../assets/images/shareOutline.svg";
 import Share from "../../../../features/Modals/Event/ShareModal/ShareModal";
 // import AOS from "aos";
 // import "aos/dist/aos.css";
+import { MdGroups } from "react-icons/md";
+import { FaUser, FaRupeeSign } from "react-icons/fa";
 import { CiLock } from "react-icons/ci";
 import { PiClockCountdownDuotone } from "react-icons/pi";
 import AuthContext from "../../../../context/AuthContext";
@@ -17,12 +21,15 @@ import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { SkeletonTheme } from "react-loading-skeleton";
 import { IoIosLock } from "react-icons/io";
+import { Blurhash } from "react-blurhash";
 import {
   MicroLoading,
   Alert,
   ComponentLoading,
 } from "../../../../microInteraction";
 import { api } from "../../../../services";
+import { parse, differenceInMilliseconds, formatDistanceToNow } from "date-fns";
+import eventDefaultImg from "../../../../assets/images/defaultEventModal.png";
 
 const EventModal = (props) => {
   const { onClosePath } = props;
@@ -38,14 +45,32 @@ const EventModal = (props) => {
   const [isLoading, setIsLoading] = useState(true);
   const [info, setInfo] = useState({});
   const [data, setData] = useState({});
+  const [isRegisteredInRelatedEvents, setIsRegisteredInRelatedEvents] =
+    useState(false);
+  const [pastEvents, setPastEvents] = useState([]);
+  const [ongoingEvents, setOngoingEvents] = useState([]);
+
+  const [imageLoaded, setImageLoaded] = useState(false);
 
   useEffect(() => {
     const fetchEvent = async () => {
       try {
-        const response = await api.get(`/api/form/getEvent/${eventId}`);
+        const response = await api.get("/api/form/getAllForms");
         if (response.status === 200) {
-          setData(response.data);
-          setInfo(response.data.info);
+          const fetchedEvents = response.data.events;
+          // Separate ongoing and past events
+          const ongoing = fetchedEvents.filter(
+            (event) => !event.info.isEventPast
+          );
+          const past = fetchedEvents.filter((event) => event.info.isEventPast);
+
+          setOngoingEvents(ongoing);
+          setPastEvents(past);
+
+          const eventData = response.data?.events.find((e) => e.id === eventId);
+          console.log("fetched event modal test:", eventData);
+          setData(eventData);
+          setInfo(eventData?.info);
         } else {
           setAlert({
             type: "error",
@@ -59,19 +84,19 @@ const EventModal = (props) => {
       } catch (error) {
         console.error("Error fetching event:", error);
 
-        // setAlert({
-        //   type: "error",
-        //   message: "There was an error fetching event form. Please try again.",
-        //   position: "bottom-right",
-        //   duration: 3000,
-        // });
+        setAlert({
+          type: "error",
+          message: "There was an error fetching event form. Please try again.",
+          position: "bottom-right",
+          duration: 3000,
+        });
         // Fallback to local data
-        const { events } = FormData;
-        const data = events.find((event) => event._id === parseInt(eventId));
-        console.log(data);
-        const info = data.info;
-        setData(data);
-        setInfo(info);
+        // const { events } = FormData;
+        // const data = events.find((event) => event.id === parseInt(eventId));
+        // console.log(data);
+        // const info = data.info;
+        // setData(data);
+        // setInfo(info);
       } finally {
         setIsLoading(false);
       }
@@ -128,29 +153,98 @@ const EventModal = (props) => {
 
   const formattedDate = `${dayWithSuffix} ${month}`;
 
+  // const modifyDateFormat = (dateStr) => {
+  //   // Remove the ordinal suffix from the day
+  //   const ordinalSuffixes = ["st", "nd", "rd", "th"];
+  //   ordinalSuffixes.forEach((suffix) => {
+  //     dateStr = dateStr.replace(suffix, "");
+  //   });
+
+  //   // Parse the date string to a JavaScript Date object
+  //   const regDate = new Date(Date.parse(dateStr));
+
+  //   // Convert the date to the desired ISO format (UTC)
+  //   const isoDateStr = regDate.toISOString();
+
+  //   return isoDateStr;
+  // };
+
+  // const calculateRemainingTime = () => {
+  //   const formattedDateStr = modifyDateFormat(info.regDateAndTime);
+  //   // console.log(formattedDateStr); // For debugging
+
+  //   const regStartDate = new Date(formattedDateStr);
+  //   const now = new Date();
+  //   // console.log(now);
+  //   const timeDifference = regStartDate - now;
+  //   // console.log(timeDifference);
+
+  //   if (timeDifference <= 0) {
+  //     setRemainingTime(null);
+  //     return;
+  //   }
+
+  //   // Calculate the days, hours, minutes, and seconds remaining
+  //   const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+  //   const hours = Math.floor((timeDifference / (1000 * 60 * 60)) % 24);
+  //   const minutes = Math.floor((timeDifference / (1000 * 60)) % 60);
+  //   const seconds = Math.floor((timeDifference / 1000) % 60);
+
+  //   let remaining;
+
+  //   if (days > 0) {
+  //     remaining = `${days} day${days > 1 ? "s" : ""} left`;
+  //   } else {
+  //     remaining = [
+  //       hours > 0 ? `${hours}h ` : "",
+  //       minutes > 0 ? `${minutes}m ` : "",
+  //       seconds > 0 ? `${seconds}s` : "",
+  //     ]
+  //       .join("")
+  //       .trim();
+  //   }
+
+  //   setRemainingTime(remaining);
+  // };
+
   const calculateRemainingTime = () => {
-    const regStartDate = new Date(info.regDateAndTime);
+    // Parse the regDateAndTime received from backend
+    const regStartDate = parse(
+      info.regDateAndTime,
+      "MMMM do yyyy, h:mm:ss a",
+      new Date()
+    );
     const now = new Date();
-    const timeDifference = regStartDate - now;
+
+    // Calculate the time difference in milliseconds
+    const timeDifference = differenceInMilliseconds(regStartDate, now);
 
     if (timeDifference <= 0) {
       setRemainingTime(null);
       return;
     }
 
+    // Calculate the days, hours, minutes, and seconds remaining
     const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
     const hours = Math.floor((timeDifference / (1000 * 60 * 60)) % 24);
     const minutes = Math.floor((timeDifference / (1000 * 60)) % 60);
     const seconds = Math.floor((timeDifference / 1000) % 60);
 
-    const remaining = [
-      days > 0 ? `${days}d ` : "",
-      hours > 0 ? `${hours}h ` : "",
-      minutes > 0 ? `${minutes}m ` : "",
-      seconds > 0 ? `${seconds}s` : "",
-    ].join("");
+    let remaining;
 
-    setRemainingTime(remaining.trim());
+    if (days > 0) {
+      remaining = `${days} day${days > 1 ? "s" : ""} left`;
+    } else {
+      remaining = [
+        hours > 0 ? `${hours}h ` : "",
+        minutes > 0 ? `${minutes}m ` : "",
+        seconds > 0 ? `${seconds}s` : "",
+      ]
+        .join("")
+        .trim();
+    }
+
+    setRemainingTime(remaining);
   };
 
   // Update button text based on registration status and remaining time
@@ -165,13 +259,71 @@ const EventModal = (props) => {
   }, [info.isRegistrationClosed, remainingTime]);
 
   useEffect(() => {
-    if (authCtx.isLoggedIn) {
-      const isRegistered = authCtx.user.regForm.includes(data._id);
-      if (isRegistered) {
-        setBtnTxt("Already Registered");
+    // Get registered event IDs from auth context
+    const registeredEventIds = authCtx.user.regForm || [];
+    console.log("Registered Events", registeredEventIds);
+
+    // Collect related event IDs, filtering out null, undefined, and 'null'
+    const relatedEventIds = ongoingEvents
+      .map((event) => event.info.relatedEvent) // Extract relatedEvent IDs
+      .filter((id) => id !== null && id !== undefined && id !== "null") // Filter out null, undefined, and 'null'
+      .filter((id, index, self) => self.indexOf(id) === index); // Remove duplicates
+
+    console.log("Related Event IDs", relatedEventIds);
+
+    // Check if user is registered in any related events
+    let isRegisteredInRelatedEvents = false;
+    if (registeredEventIds.length > 0 && relatedEventIds.length > 0) {
+      isRegisteredInRelatedEvents = relatedEventIds.some((relatedEventId) =>
+        registeredEventIds.includes(relatedEventId)
+      );
+    }
+
+    console.log(
+      "Is Registered in Related Events:",
+      isRegisteredInRelatedEvents
+    );
+
+    if (isRegisteredInRelatedEvents) {
+      setIsRegisteredInRelatedEvents(true);
+    }
+  }, [ongoingEvents, authCtx.user.regForm]);
+
+  useEffect(() => {
+    if (authCtx.isLoggedIn && authCtx.user.regForm) {
+      console.log("Inside Card", isRegisteredInRelatedEvents);
+
+      if (isRegisteredInRelatedEvents) {
+        console.log("checking for ", data?.id);
+        if (data?.info?.relatedEvent === "null") {
+          setBtnTxt("Already Registered");
+        } else {
+          if (authCtx.user.regForm.includes(data?.id)) {
+            setBtnTxt("Already Registered");
+          } else {
+            if (remainingTime) {
+              setBtnTxt(remainingTime);
+            } else {
+              setBtnTxt("Register Now");
+            }
+          }
+        }
+      } else {
+        console.log("checking for ", data);
+        if (data?.info?.relatedEvent === "null") {
+          setBtnTxt("Register Now");
+        } else {
+          setBtnTxt("Locked");
+        }
       }
     }
-  }, [authCtx.isLoggedIn, authCtx.user.regForm, btnTxt, navigate, data._id]);
+  }, [
+    authCtx.isLoggedIn,
+    authCtx.user.regForm,
+    data,
+    isRegisteredInRelatedEvents,
+    remainingTime,
+  ]);
 
   const handleModalClose = () => {
     navigate(onClosePath);
@@ -190,16 +342,16 @@ const EventModal = (props) => {
         setTimeout(() => {
           setIsMicroLoading(false);
           setBtnTxt("Already Member");
-        }, 1500);
+        }, 1000);
 
-        // setAlert({
-        //   type: "info",
-        //   message: "Team Members are not allowed to register for the Event",
-        //   position: "bottom-right",
-        //   duration: 3000,
-        // });
+        setAlert({
+          type: "info",
+          message: "Team Members are not allowed to register for the Event",
+          position: "bottom-right",
+          duration: 3000,
+        });
       } else {
-        setNavigatePath("/Events/" + data._id + "/Form");
+        setNavigatePath("/Events/" + data?.id + "/Form");
         setTimeout(() => {
           setShouldNavigate(true);
         }, 3000);
@@ -282,9 +434,7 @@ const EventModal = (props) => {
                   style={{ marginBottom: "0.5rem" }}
                 />
               </SkeletonTheme>
-              <div
-                className={EventCardModal.card}
-              >
+              <div className={EventCardModal.card}>
                 {isLoading ? (
                   <ComponentLoading
                     customStyles={{
@@ -308,10 +458,34 @@ const EventModal = (props) => {
                       <X />
                     </button>
                     <div className={EventCardModal.backimg}>
+                      {/* {!info.eventImg===null? <img
+                        src=  {info.eventImg}
+                        className={EventCardModal.img}
+                        alt="Event"
+                      />:<img
+                      src=  {eventDefaultImg}
+                      className={EventCardModal.img}
+                      alt="Event"
+                    />} */}
+
+                      {!imageLoaded && (
+                        <Blurhash
+                          hash="LEG8_%els7NgM{M{RiNI*0IVog%L"
+                          width={"100%"}
+                          height={300}
+                          resolutionX={32}
+                          resolutionY={32}
+                          punch={1}
+                        />
+                      )}
                       <img
                         srcSet={info.eventImg}
                         className={EventCardModal.img}
+                        style={{
+                          display: imageLoaded ? "block" : "none",
+                        }}
                         alt="Event"
+                        onLoad={() => setImageLoaded(true)}
                       />
                       <div className={EventCardModal.date}>{formattedDate}</div>
                       {info.ongoingEvent && (
@@ -330,21 +504,49 @@ const EventModal = (props) => {
                     <div className={EventCardModal.backbtn}>
                       <div className={EventCardModal.eventname}>
                         {info.eventTitle}
-                        <div className={EventCardModal.price}>
-                          {info.eventAmount ? (
-                            <p>
-                              <img src={rupeeIcon} alt="Rupee" />
-                              {info.eventAmount}
-                            </p>
-                          ) : (
-                            <p style={{ color: "inherit" }}>Free</p>
-                          )}
-                        </div>
                         <p>
-                          <img src={groupIcon} alt="Group" />
-                          Team size: {info.minTeamSize}
-                          {" - "}
-                          {info.maxTeamSize}
+                          {info.participationType === "Team" ? (
+                            <>
+                              <MdGroups color="#f97507" size={25} />
+                              <span
+                                style={{
+                                  color: "white",
+                                  paddingRight: "2px",
+                                  paddingLeft: "3px",
+                                }}
+                              >
+                                {" "}
+                                Team size:
+                              </span>{" "}
+                                {info.minTeamSize} - {info.maxTeamSize} {" | "}
+                            </>
+                          ) : (
+                            <>
+                              <FaUser color="#f97507" size={13} />
+                              <span
+                                style={{
+                                  color: "white",
+                                  paddingRight: "2px",
+                                  paddingLeft: "3px",
+                                }}
+                              >
+                                Individual
+                              </span>
+                              {" | "}
+                            </>
+                          )}
+                          <div className={EventCardModal.price}>
+                            {info.eventAmount ? (
+                              <p style={{ font: "2rem" }}>
+                                <FaRupeeSign color="#f97507" size={15} />
+                                {info.eventAmount}
+                              </p>
+                            ) : (
+                              <p style={{ color: "white", marginTop: "-1px" }}>
+                                Free
+                              </p>
+                            )}
+                          </div>
                         </p>
                       </div>
                       <div className={EventCardModal.registerbtn}>
@@ -360,7 +562,8 @@ const EventModal = (props) => {
                           disabled={
                             btnTxt === "Closed" ||
                             btnTxt === "Already Registered" ||
-                            btnTxt === "Already Member"
+                            btnTxt === "Already Member" ||
+                            btnTxt === "Locked"
                           }
                         >
                           {btnTxt === "Closed" ? (
@@ -381,6 +584,14 @@ const EventModal = (props) => {
                               <div style={{ fontSize: "0.85rem" }}>
                                 Already Registered
                               </div>{" "}
+                            </>
+                          ) : btnTxt === "Locked" ? (
+                            <>
+                              <div style={{ fontSize: "0.9rem" }}>Locked</div>{" "}
+                              <IoIosLock
+                                alt=""
+                                style={{ marginLeft: "0px", fontSize: "1rem" }}
+                              />
                             </>
                           ) : isMicroLoading ? (
                             <div style={{ fontSize: "0.9rem" }}>

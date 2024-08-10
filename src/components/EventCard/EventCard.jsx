@@ -6,15 +6,19 @@ import "aos/dist/aos.css";
 import { Link, useNavigate } from "react-router-dom";
 import Share from "../../features/Modals/Event/ShareModal/ShareModal";
 import shareOutline from "../../assets/images/shareOutline.svg";
-import groupIcon from "../../assets/images/groups.svg";
-import rupeeIcon from "../../assets/images/rupeeIcon.svg";
+// import groupIcon from "../../assets/images/groups.svg";
+// import rupeeIcon from "../../assets/images/rupeeIcon.svg";
 import { PiClockCountdownDuotone } from "react-icons/pi";
 import { IoIosLock, IoIosStats } from "react-icons/io";
+import { MdGroups } from "react-icons/md";
+import { FaUser, FaRupeeSign } from "react-icons/fa";
+import { parse, differenceInMilliseconds, formatDistanceToNow } from "date-fns";
 import { Button } from "../Core";
 import AuthContext from "../../context/AuthContext";
 import EventCardSkeleton from "../../layouts/Skeleton/EventCard/EventCardSkeleton";
 import { Blurhash } from "react-blurhash";
 import { Alert, MicroLoading } from "../../microInteraction";
+// import useUnixTimestamp from "../../utils/hooks/useUnixTimeStamp";
 
 const EventCard = (props) => {
   const {
@@ -28,8 +32,11 @@ const EventCard = (props) => {
     additionalContent,
     aosDisable,
     onEdit,
+    onDelete,
     enableEdit,
     isLoading,
+    isRegisteredInRelatedEvents,
+    eventName,
   } = props;
 
   const { info } = data;
@@ -44,6 +51,7 @@ const EventCard = (props) => {
   const [isMicroLoading, setIsMicroLoading] = useState(false);
   const [shouldNavigate, setShouldNavigate] = useState(false);
   const [navigatePath, setNavigatePath] = useState("/");
+  const [isLocked, setIsLocked] = useState(false);
   const [alert, setAlert] = useState(null);
 
   useEffect(() => {
@@ -72,7 +80,7 @@ const EventCard = (props) => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowSkeleton(false);
-    }, 2000); // Show skeleton for 2 seconds
+    }, 500); // Show skeleton for 2 seconds
 
     return () => clearTimeout(timer);
   }, []);
@@ -109,30 +117,69 @@ const EventCard = (props) => {
 
   const formattedDate = `${dayWithSuffix} ${month}`;
 
+  const modifyDateFormat = (dateStr) => {
+    // Remove the ordinal suffix from the day
+    const ordinalSuffixes = ["st", "nd", "rd", "th"];
+    ordinalSuffixes.forEach((suffix) => {
+      dateStr = dateStr.replace(suffix, "");
+    });
+
+    // Parse the date string to a JavaScript Date object
+    const regDate = new Date(Date.parse(dateStr));
+
+    // Convert the date to the desired ISO format (UTC)
+    const isoDateStr = regDate.toISOString();
+
+    return isoDateStr;
+  };
+
   const calculateRemainingTime = () => {
-    const regStartDate = new Date(info.regDateAndTime);
+    // Parse the regDateAndTime received from backend
+    const regStartDate = parse(
+      info.regDateAndTime,
+      "MMMM do yyyy, h:mm:ss a",
+      new Date()
+    );
     const now = new Date();
-    const timeDifference = regStartDate - now;
+
+    // Calculate the time difference in milliseconds
+    const timeDifference = differenceInMilliseconds(regStartDate, now);
 
     if (timeDifference <= 0) {
       setRemainingTime(null);
       return;
     }
 
+    // Calculate the days, hours, minutes, and seconds remaining
     const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
     const hours = Math.floor((timeDifference / (1000 * 60 * 60)) % 24);
     const minutes = Math.floor((timeDifference / (1000 * 60)) % 60);
     const seconds = Math.floor((timeDifference / 1000) % 60);
 
-    const remaining = [
-      days > 0 ? `${days}d ` : "",
-      hours > 0 ? `${hours}h ` : "",
-      minutes > 0 ? `${minutes}m ` : "",
-      seconds > 0 ? `${seconds}s` : "",
-    ].join("");
+    let remaining;
 
-    setRemainingTime(remaining.trim());
+    if (days > 0) {
+      remaining = `${days} day${days > 1 ? "s" : ""} left`;
+    } else {
+      remaining = [
+        hours > 0 ? `${hours}h ` : "",
+        minutes > 0 ? `${minutes}m ` : "",
+        seconds > 0 ? `${seconds}s` : "",
+      ]
+        .join("")
+        .trim();
+    }
+
+    setRemainingTime(remaining);
   };
+
+  // Example usage in a React component with useEffect to update every second
+  useEffect(() => {
+    calculateRemainingTime(); // Initial calculation
+    const intervalId = setInterval(calculateRemainingTime, 1000); // Update every second
+
+    return () => clearInterval(intervalId); // Cleanup on component unmount
+  }, []);
 
   useEffect(() => {
     if (info.isRegistrationClosed) {
@@ -145,13 +192,39 @@ const EventCard = (props) => {
   }, [info.isRegistrationClosed, remainingTime]);
 
   useEffect(() => {
-    if (authCtx.isLoggedIn && authCtx.user.regForm ) {
-      const isRegistered = authCtx.user.regForm.includes(data.id);
-      if (isRegistered) {
-        setBtnTxt("Already Registered");
+    if (authCtx.isLoggedIn && authCtx.user.regForm) {
+      console.log("Inside Card", isRegisteredInRelatedEvents);
+
+      if (isRegisteredInRelatedEvents) {
+        console.log("checking for ", data.id);
+        if (data.info.relatedEvent === "null") {
+          setBtnTxt("Already Registered");
+        } else {
+          if (authCtx.user.regForm.includes(data.id)) {
+            setBtnTxt("Already Registered");
+          } else {
+            if (remainingTime) {
+              setBtnTxt(remainingTime);
+            } else {
+              setBtnTxt("Register Now");
+            }
+          }
+        }
+      } else {
+        if (data.info.relatedEvent === "null") {
+          setBtnTxt("Register Now");
+        } else {
+          setBtnTxt("Locked");
+        }
       }
     }
-  }, [authCtx.isLoggedIn, authCtx.user.regForm, btnTxt, navigate, data.id]);
+  }, [
+    authCtx.isLoggedIn,
+    authCtx.user.regForm,
+    data,
+    isRegisteredInRelatedEvents,
+    remainingTime,
+  ]);
 
   const handleShare = () => {
     setOpen(!isOpen);
@@ -169,12 +242,12 @@ const EventCard = (props) => {
           setIsMicroLoading(false);
           setBtnTxt("Already Member");
         }, 1500);
-        // setAlert({
-        //   type: "info",
-        //   message: "Team Members are not allowed to register for the Event",
-        //   position: "bottom-right",
-        //   duration: 3000,
-        // });
+        setAlert({
+          type: "info",
+          message: "Team Members are not allowed to register for the Event",
+          position: "bottom-right",
+          duration: 3000,
+        });
       } else {
         setNavigatePath("/Events/" + data.id + "/Form");
         setTimeout(() => {
@@ -222,7 +295,7 @@ const EventCard = (props) => {
         >
           {!imageLoaded && (
             <Blurhash
-              hash="L6AcVvDi56n$C,T0IUbF{K-pNG%M"
+              hash="LEG8_%els7NgM{M{RiNI*0IVog%L"
               width={"100%"}
               height={200}
               resolutionX={32}
@@ -260,31 +333,72 @@ const EventCard = (props) => {
         </div>
         <div className={style.backbtn} style={customStyles.backbtn}>
           <div className={style.eventname} style={customStyles.eventname}>
-            {info.eventTitle}
+            <span className={style.eventTitle}>
+              {info.eventTitle && info.eventTitle.length > 14
+                ? `${info.eventTitle.substring(0, 14)}...`
+                : info.eventTitle || "No title available"}
+            </span>
+
             {type === "ongoing" && (
               <p>
-                <img src={groupIcon} alt="Group" />
-                <span style={{ color: "white", paddingRight: "5px" }}>
-                  Team size:
-                </span>{" "}
-                {info.minTeamSize}
-                {"-"}
-                {info.maxTeamSize} {" | "}
+                {info.participationType === "Team" ? (
+                  <>
+                    <MdGroups color="#f97507" size={25} />
+                    <span
+                      style={{
+                        color: "white",
+                        paddingRight: "2px",
+                        paddingLeft: "3px",
+                      }}
+                    >
+                      {" "}
+                      Team size:
+                    </span>{" "}
+                    {info.minTeamSize} - {info.maxTeamSize} {" | "}
+                  </>
+                ) : (
+                  <>
+                    <FaUser color="#f97507" size={13} />
+                    <span
+                      style={{
+                        color: "white",
+                        paddingRight: "2px",
+                        paddingLeft: "3px",
+                      }}
+                    >
+                      Individual
+                    </span>
+                    {" | "}
+                  </>
+                )}
+
                 <div className={style.price} style={customStyles.price}>
                   {info.eventAmount ? (
-                    <p style={customStyles.eventnamep}>
-                      <img src={rupeeIcon} alt="Rupee" />
+                    <p style={{ font: "2rem" }}>
+                      <FaRupeeSign color="#f97507" size={15} />
                       {info.eventAmount}
                     </p>
                   ) : (
-                    <p style={{ color: "inherit" }}>Free</p>
+                    <p style={{ color: "white", marginTop: "-1px" }}>Free</p>
                   )}
                 </div>
               </p>
             )}
           </div>
           {type === "ongoing" && showRegisterButton && (
-            <div style={{ fontSize: ".9rem", color: "white" }}>
+            <div
+              style={{ fontSize: ".9rem", color: "white" }}
+              onMouseEnter={() => {
+                if (btnTxt === "Locked" && authCtx.isLoggedIn && authCtx.user.access === "USER") {
+                  setAlert({
+                    type: "info",
+                    message: `You need to register for ${eventName} first`,
+                    position: "bottom-right",
+                    duration: 3000,
+                  });
+                }
+              }}
+            >
               <button
                 className={style.registerbtn}
                 style={{
@@ -294,13 +408,15 @@ const EventCard = (props) => {
                 onClick={handleForm}
                 disabled={
                   btnTxt === "Closed" ||
+                  btnTxt === "Locked" ||
                   btnTxt === "Already Registered" ||
-                  btnTxt === "Already Member"
+                  btnTxt === "Already Member" ||
+                  btnTxt === `${remainingTime}`
                 }
               >
                 {btnTxt === "Closed" ? (
                   <>
-                    <div style={{ fontSize: "0.9rem" }}>Closed</div>{" "}
+                    <div style={{ fontSize: "0.9rem" }}>Closed</div>
                     <IoIosLock
                       alt=""
                       style={{ marginLeft: "0px", fontSize: "1rem" }}
@@ -308,7 +424,15 @@ const EventCard = (props) => {
                   </>
                 ) : btnTxt === "Already Registered" ? (
                   <>
-                    <div style={{ fontSize: "0.9rem" }}>Registered</div>{" "}
+                    <div style={{ fontSize: "0.9rem" }}>Registered</div>
+                  </>
+                ) : btnTxt === "Locked" ? (
+                  <>
+                    <div style={{ fontSize: "0.9rem" }}>Locked</div>
+                    <IoIosLock
+                      alt=""
+                      style={{ marginLeft: "0px", fontSize: "1rem" }}
+                    />
                   </>
                 ) : isMicroLoading ? (
                   <div style={{ fontSize: "0.9rem" }}>
@@ -318,11 +442,12 @@ const EventCard = (props) => {
                   <>
                     {remainingTime ? (
                       <>
-                        <PiClockCountdownDuotone /> {btnTxt}
+                        <PiClockCountdownDuotone size={20} />
+                        <div style={{ fontSize: "0.8rem" }}>{btnTxt}</div>
                       </>
                     ) : btnTxt === "Already Member" ? (
                       <>
-                        <div style={{ fontSize: "0.9rem" }}>Already Member</div>{" "}
+                        <div style={{ fontSize: "0.8rem" }}>Already Member</div>
                       </>
                     ) : (
                       <div style={{ fontSize: "0.9rem" }}>Register Now</div>
@@ -332,6 +457,7 @@ const EventCard = (props) => {
               </button>
             </div>
           )}
+          
         </div>
         <div className={style.backtxt} style={customStyles.backtxt}>
           <div style={{ display: "flex", alignItems: "center" }}>
@@ -377,7 +503,19 @@ const EventCard = (props) => {
           >
             Edit Event
           </Button>
-          <Button variant="secondary">Delete Event</Button>
+          <Button
+            onClick={(e) => {
+              e.preventDefault();
+              const isConfirmed = window.confirm(`Do you really want to delete this event "${info.eventTitle}"?`);
+              if (isConfirmed && onDelete) {
+                authCtx.eventData = data;
+                onDelete();
+              }
+            }}
+            variant="secondary"
+          >
+            Delete Event
+          </Button>
           <IoIosStats
             size={20}
             style={{ cursor: "pointer", color: "white" }}

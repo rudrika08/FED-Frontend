@@ -114,7 +114,17 @@ const Alumni = () => {
       {/* <div className={styles.circle}></div> */}
       {/* <div className={styles.circle2}></div> */}
       {isLoading ? (
-        <ComponentLoading />
+        <ComponentLoading
+          customStyles={{
+            width: "100%",
+            height: "100%",
+            display: "flex",
+            marginTop: "5rem",
+            marginBottom: "10rem",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        />
       ) : (
         <>
           {Error && <div className={styles.error}>{Error.message}</div>}
