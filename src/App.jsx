@@ -51,17 +51,17 @@ const OTPInput = lazy(() =>
 
 const MainLayout = () => {
   const location = useLocation();
-  const isOmegaPage = location.pathname === '/Omega';
+  const isOmegaPage = location.pathname === "/Omega";
 
   useEffect(() => {
     if (isOmegaPage) {
-      document.body.style.backgroundColor = 'black';
+      document.body.style.backgroundColor = "black";
     } else {
-      document.body.style.backgroundColor = '';
+      document.body.style.backgroundColor = "";
     }
 
     return () => {
-      document.body.style.backgroundColor = '';
+      document.body.style.backgroundColor = "";
     };
   }, [isOmegaPage]);
 
@@ -118,13 +118,19 @@ function App() {
                   path="events/:eventId"
                   element={[<EventModal onClosePath="/profile/events" />]}
                 />
-                {authCtx.user.access === "ADMIN" && (
+                {authCtx.user.access !== "USER" && (
                   <Route
                     path="events/Analytics/:eventId"
                     element={[<EventStats onClosePath="/profile/events" />]}
                   />
                 )}
-                ,
+                {authCtx.user.access === "USER" &&
+                  authCtx.user.email == "srex@fedkiit.com" && (
+                    <Route
+                      path="events/Analytics/:eventId"
+                      element={[<EventStats onClosePath="/profile/events" />]}
+                    />
+                  )}
               </Route>
             )}
             <Route
@@ -155,8 +161,8 @@ function App() {
             />
             <Route path="*" element={<Error />} />
           </Route>
-           
-           {/* Routes for Authentication witout Navbar and footer */}
+
+          {/* Routes for Authentication witout Navbar and footer */}
           <Route element={<AuthLayout />}>
             <Route
               path="/Login"
