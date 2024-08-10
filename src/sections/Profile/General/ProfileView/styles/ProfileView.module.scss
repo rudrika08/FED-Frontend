@@ -41,14 +41,40 @@
   margin-left: 10rem;
 
 }
-  
-.dets,
+
+// .profileBox{
+
+//   width: 700px;
+//   display: flex;
+// }
+
+.profileTable {
+  table-layout: fixed;
+  width: 70%;
+}
+
 .vals {
   font-family: "Rubik", sans-serif;
   font-size: 20px;
   padding-bottom: 27px;
+
+  &.highlight {
+    max-width: 50%;
+    overflow: hidden; 
+    text-overflow: ellipsis; 
+    white-space: nowrap; 
+  }
 }
+
+.dets{
+  font-family: "Rubik", sans-serif;
+  font-size: 20px;
+  padding-bottom: 27px;
+
   
+}
+
+
   .dets {
     padding-right: 100px;
   }
@@ -116,9 +142,6 @@
       margin-right: 1rem;
     }
 
-    .vals{
-      width: 2rem;
-    }
   }
   
   @media screen and (max-width:480px) {
@@ -150,6 +173,11 @@
     .dets {
       padding-right: 50px;
     }
+
+    .profileTable{
+      width: 100%;
+    }
+
   }
 
   @media screen and (max-width:430px) {
