@@ -2,6 +2,7 @@ import { useRef, useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import styles from "./styles/ChatBot.module.scss";
 import { BsSend, BsFillMicFill, BsFillMicMuteFill } from "react-icons/bs";
+import { FaVolumeUp, FaVolumeMute } from "react-icons/fa";
 import { IoCloseOutline, IoCopyOutline } from "react-icons/io5";
 import { BiSolidMessageSquareDetail } from "react-icons/bi";
 import { apiBot } from "../../services";
@@ -25,13 +26,21 @@ export default function ChatBot() {
   const [alert, setAlert] = useState(null);
   const [isSpeaking, setIsSpeaking] = useState(false);
 
+  const [isRecording, setIsRecording] = useState(false);
+  const [speechRecognition, setSpeechRecognition] = useState(null);
+  const [lastSpeechTime, setLastSpeechTime] = useState(Date.now());
+  const speechRecognitionDelay = 1000;
+
+  //Setting Alerts
   useEffect(() => {
     if (alert) {
       const { type, message, position, duration } = alert;
       Alert({ type, message, position, duration });
+      setAlert(null); // Reset alert after displaying it
     }
   }, [alert]);
 
+  // Setting the chatbot Connection with server
   useEffect(() => {
     const fetchInitialMessage = async () => {
       setTimeout(async () => {
@@ -59,6 +68,7 @@ export default function ChatBot() {
     fetchInitialMessage();
   }, []);
 
+  // Typing effect for bot messages
   const typeMessage = async (message) => {
     let typedMessage = "";
     setIsTyping(true); // Start typing
@@ -84,6 +94,7 @@ export default function ChatBot() {
     }
   };
 
+  // Sending user message to the server
   const sendMessage = async () => {
     if (!input) return;
 
@@ -129,6 +140,7 @@ export default function ChatBot() {
     }, 4500); // Total delay considering thinking and typing phases
   };
 
+  // Handle Enter key press
   const onHandleKey = (e) => {
     if (e.key === "Enter") {
       sendMessage();
@@ -171,6 +183,7 @@ export default function ChatBot() {
   const botToggle = isActive ? styles.hidden : "";
   const chatBotOpen = isActive ? "" : styles.hidden;
 
+  // Copy text to clipboard
   const copyToClipboard = (text) => {
     navigator.clipboard
       .writeText(text)
@@ -192,6 +205,7 @@ export default function ChatBot() {
       });
   };
 
+  // Speak message
   const speakMessage = (text) => {
     if (isSpeaking) {
       window.speechSynthesis.cancel(); // Stop current speech
@@ -205,6 +219,55 @@ export default function ChatBot() {
       setIsSpeaking(true); // Set to speaking state
     }
   };
+
+  // Speech recognition
+  useEffect(() => {
+    if ("webkitSpeechRecognition" in window) {
+      const recognition = new window.webkitSpeechRecognition();
+      recognition.lang = "en-US";
+      recognition.interimResults = false;
+      recognition.onresult = (event) => {
+        const transcript = event.results[0][0].transcript;
+        setInput(transcript);
+        setLastSpeechTime(Date.now()); // Reset the timer when a result is received
+      };
+      recognition.onerror = (event) => {
+        console.error("Speech recognition error", event);
+        setIsRecording(false);
+      };
+      setSpeechRecognition(recognition);
+    } else {
+      console.warn("Speech recognition not supported");
+    }
+  }, []);
+
+  // Handle Mic Button Click
+  const startRecording = () => {
+    if (speechRecognition) {
+      speechRecognition.start();
+      setIsRecording(true);
+    }
+  };
+
+  const stopRecording = () => {
+    if (speechRecognition) {
+      speechRecognition.stop();
+      setIsRecording(false);
+    }
+  };
+
+  // Auto Send msges after a delay
+  useEffect(() => {
+    const handleSendMessage = () => {
+      if (Date.now() - lastSpeechTime >= speechRecognitionDelay) {
+        sendMessage();
+      }
+    };
+
+    const timer = setTimeout(handleSendMessage, speechRecognitionDelay);
+    setIsRecording(false);
+    return () => clearTimeout(timer);
+  }, [lastSpeechTime]);
 
   return (
     <>
@@ -268,15 +331,12 @@ export default function ChatBot() {
                         </button>
                         <button onClick={() => speakMessage(message.bot)}>
                           {isSpeaking ? (
-                            <BsFillMicMuteFill
+                            <FaVolumeMute
                               size={18}
                               style={{ color: "white" }}
                             />
                           ) : (
-                            <BsFillMicFill
-                              size={18}
-                              style={{ color: "white" }}
-                            />
+                            <FaVolumeUp size={18} style={{ color: "white" }} />
                           )}
                         </button>
                       </div>
@@ -285,6 +345,11 @@ export default function ChatBot() {
               ))}
 
               <div className={styles.thinking}>
+                {isRecording && (
+                  <div className={styles.thinkingIndicator}>
+                    {name} is listening...
+                  </div>
+                )}
                 {isThinking && (
                   <div className={styles.thinkingIndicator}>
                     {name} is thinking...
@@ -302,8 +367,29 @@ export default function ChatBot() {
               placeholder="Ask something..."
               onKeyDown={onHandleKey}
             />
+            <button
+              className={styles.micButton}
+              onClick={isRecording ? stopRecording : startRecording}
+            >
+              {isRecording ? (
+                <BsFillMicMuteFill
+                  className={`${styles.sendIcon} ${
+                    isOmega ? styles.omegaBackGround : ""
+                  }`}
+                  size={24}
+                />
+              ) : (
+                <BsFillMicFill
+                  className={`${styles.sendIcon} ${
+                    isOmega ? styles.omegaBackGround : ""
+                  }`}
+                  size={24}
+                />
+              )}
+            </button>
             <button className={styles.sendMessage} onClick={sendMessage}>
               <BsSend
+                size={20}
                 className={`${styles.sendIcon} ${
                   isOmega ? styles.omegaBackGround : ""
                 }`}

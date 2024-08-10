@@ -115,11 +115,11 @@ const Events = () => {
               <table className={styles.eventsTable}>
                 <thead>
                   <tr>
-                    <th>Event Name</th>
-                    <th>Event Date</th>
+                    <th className={styles.mobilewidth}>Event Name</th>
+                    <th className={styles.mobilewidth}>Event Date</th>
                     <th className={styles.mobilewidth}>Details</th>
                     {(analyticsAccessRoles.includes(authCtx.user.access) || authCtx.user.email == "srex@fedkiit.com") && (
-                      <th className={styles.mobilewidth}>Registrations</th>
+                      <th className={styles.mobilewidth} style={{paddingTop:"1rem"}}>Registrations</th>
                     )}
                     {/* Add more headers */}
                   </tr>
@@ -128,10 +128,10 @@ const Events = () => {
                 <tbody>
                   {events.map((event) => (
                     <tr key={event._id}>
-                      <td style={{ fontWeight: "500" }}>
+                      <td className={styles.mobilewidth} style={{fontWeight:"500",paddingRight:"10px"}}>
                         {event.info.eventTitle}
                       </td>
-                      <td style={{ fontWeight: "500" }}>
+                      <td style={{ fontWeight: "200" }}>
                         {formatDate(event.info.eventDate)}
                       </td>
 
