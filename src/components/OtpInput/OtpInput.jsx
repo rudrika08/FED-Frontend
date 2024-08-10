@@ -218,7 +218,7 @@ const OtpInput = (props) => {
             <p className={style.verifyTitle}>Email Verification</p>
           </div>
           <div className={style.innerTitle2}>
-            <p>We have sent a code to your email</p>
+            <p>We have sent a code to {email}</p>
           </div>
         </div>
         <div>

@@ -24,8 +24,12 @@ const EventStats = ({ onClosePath }) => {
   useEffect(() => {
     const fetchEvent = async () => {
       try {
-        const response = await api.get(`/api/form/getAllForms?id=${eventId}`);
-        if (response.status === 200) {
+        const response = await api.get(`/api/form/getFormAnalytics/${eventId}`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        });
+        if (response.status === 200) {  
           console.log("response in event stat:",response.data.events[0]);
           setData(response.data.events[0]);
           setInfo(response.data.events[0].info);

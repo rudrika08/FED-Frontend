@@ -23,7 +23,6 @@ const Events = () => {
     "DIRECTOR_OPERATIONS",
     "DIRECTOR_SPONSORSHIP",
     "ADMIN",
-    "GUEST"
   ];
 
   useEffect(() => {
@@ -118,7 +117,7 @@ const Events = () => {
                     <th>Event Name</th>
                     <th>Event Date</th>
                     <th className={styles.mobilewidth}>Details</th>
-                    {analyticsAccessRoles.includes(authCtx.user.access) && (
+                    {analyticsAccessRoles.includes(authCtx.user.access) || authCtx.user.email == "srex@fedkiit.com" && (
                       <th className={styles.mobilewidth}>Registrations</th>
                     )}
                     {/* Add more headers */}
@@ -150,7 +149,7 @@ const Events = () => {
                           </button>
                         </Link>
                       </td>
-                      {analyticsAccessRoles.includes(authCtx.user.access) && (
+                      {analyticsAccessRoles.includes(authCtx.user.access) || authCtx.user.email == "srex@fedkiit.com" && (
                         <td className={styles.mobilewidthtd}>
                           <Link to={`${analyticsPath}/${event.id}`}>
                             <button
