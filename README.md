@@ -25,8 +25,8 @@ FED FRONTEND is the official website of the Federation of Entrepreneurship Devel
 
 - **Frontend**: ReactJS using Vite
 - **Backend**: Node.js with Express
-- **Database**: MongoDB
-- **Authentication**: Firebase Authentication
+- **Database**: MongoDB with Prisma
+- **Authentication**: Google Authentication
 - **Styling**: Modular SCSS for customizable and maintainable styles.
 
 ### How to Run Locally
