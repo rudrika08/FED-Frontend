@@ -5,7 +5,6 @@ import { Button, Input } from "../../../components";
 import { X } from "lucide-react";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import axios from "axios";
 import { Alert, MicroLoading } from "../../../microInteraction";
 import { api } from "../../../services";
 
@@ -13,6 +12,7 @@ const EditProfile = ({ handleModalClose }) => {
   const authCtx = useContext(AuthContext);
   const [alert, setAlert] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [errors, setErrors] = useState({});
 
   const [data, setData] = useState({
     name: authCtx.user.name,
@@ -36,26 +36,50 @@ const EditProfile = ({ handleModalClose }) => {
     AOS.init({ duration: 2000 });
   }, []);
 
+  const validate = () => {
+    const newErrors = {};
+    if (!data.rollNumber) newErrors.rollNumber = "Roll Number is required";
+    if (!data.school) newErrors.school = "School is required";
+    if (!data.college) newErrors.college = "college is required";
+    if (!data.contactNo || !/^\d{10}$/.test(data.contactNo))
+      newErrors.contactNo = "Enter a valid 10-digit Mobile Number";
+    if (!data.year) newErrors.year = "Year is required";
+
+    const keys = Object.keys(newErrors);
+
+    if (keys.length > 0) {
+      setAlert({
+        type: "error",
+        message: newErrors[Object.keys(newErrors)[0]],
+        position: "bottom-right",
+        duration: 3000,
+      });
+      setErrors(newErrors);
+      return false;
+    }
+    return true;
+  };
+
   const handleSave = async () => {
+    if (!validate()) return;
+
     setIsLoading(true);
     try {
-      console.log(data);
       let { linkedin, github, ...modifiedData } = data;
       modifiedData.extra = {
         github: data.github,
         linkedin: data.linkedin,
       };
-      console.log(modifiedData);
+
       const response = await api.put("/api/user/editDetails", modifiedData, {
         headers: {
           Authorization: `Bearer ${window.localStorage.getItem("token")}`,
         },
       });
 
-      console.log(response.data.user);
       if (response.status === 200 || response.status === 201) {
-        console.log("Profile updated successfully!", response.data);
-
+        setIsLoading(false);
+        setErrors({});
         authCtx.update(
           data.name,
           authCtx.user.email,
@@ -82,6 +106,7 @@ const EditProfile = ({ handleModalClose }) => {
           duration: 3000,
         });
       } else {
+        setIsLoading(false);
         setAlert({
           type: "error",
           message:
@@ -91,6 +116,7 @@ const EditProfile = ({ handleModalClose }) => {
         });
       }
     } catch (error) {
+      setIsLoading(false);
       console.error("Error updating profile:", error);
       setAlert({
         type: "error",
@@ -267,11 +293,12 @@ const EditProfile = ({ handleModalClose }) => {
                           value={data.contactNo}
                           onChange={(e) => {
                             const value = e.target.value;
-                            if (/^\d*$/.test(value) && value.length <= 12) {
+                            if (/^\d*$/.test(value) && value.length <= 10) {
                               setData({ ...data, contactNo: value });
                             }
                           }}
                           className={styles.vals}
+                          error={errors.contactNo}
                         />
                       </div>
                       {authCtx.user.access !== "USER" && (
@@ -284,7 +311,7 @@ const EditProfile = ({ handleModalClose }) => {
                                 margin: "0px",
                                 fontSize: "15px",
                               }}
-                              placeholder="Enter your school"
+                              placeholder="Enter your Github"
                               type="text"
                               value={data.github}
                               className={styles.vals}
@@ -301,7 +328,7 @@ const EditProfile = ({ handleModalClose }) => {
                                 margin: "0px",
                                 fontSize: "15px",
                               }}
-                              placeholder="Enter your school"
+                              placeholder="Enter your LinkedIn"
                               type="text"
                               value={data.linkedin}
                               className={styles.vals}

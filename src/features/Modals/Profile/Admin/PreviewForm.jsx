@@ -360,8 +360,8 @@ const PreviewForm = ({
     });
 
     try {
-      setIsLoading(true); // Set loading state
-      setIsMicroLoading(true); // Set micro loading state
+      setIsLoading(true);
+      setIsMicroLoading(true);
 
       if (isEditing) {
         setIsSuccess(true);
@@ -373,7 +373,6 @@ const PreviewForm = ({
           Authorization: `Bearer ${window.localStorage.getItem("token")}`,
         },
       });
-      // console.log("response data:",response.data)
 
       if (response.status === 200 || response.status === 201) {
         const updatedRegForm = [...authCtx.user.regForm, eventData.id];
@@ -479,16 +478,6 @@ const PreviewForm = ({
   const renderPaymentScreen = () => {
     const { eventType, receiverDetails, eventAmount } = formData;
 
-    const getMediaUrl = (media) => {
-      if (media instanceof File) {
-        // If media is a File, create an object URL
-        return URL.createObjectURL(media);
-      } else {
-        // Otherwise, assume media is a URL or handle it accordingly
-        return media;
-      }
-    };
-
     if (eventType === "Paid" && currentSection.name === "Payment Details") {
       return (
         <div
@@ -502,7 +491,11 @@ const PreviewForm = ({
         >
           {receiverDetails.media && (
             <img
-              src={getMediaUrl(receiverDetails.media)}
+              src={
+                typeof receiverDetails.media === "string"
+                  ? receiverDetails.media
+                  : URL.createObjectURL(receiverDetails.media)
+              }
               alt={"QR-Code"}
               style={{
                 width: 200,
