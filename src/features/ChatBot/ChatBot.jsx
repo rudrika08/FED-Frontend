@@ -29,7 +29,7 @@ export default function ChatBot() {
   const [isRecording, setIsRecording] = useState(false);
   const [speechRecognition, setSpeechRecognition] = useState(null);
   const [lastSpeechTime, setLastSpeechTime] = useState(Date.now());
-  const speechRecognitionDelay = 1000;
+  const speechRecognitionDelay = 2000;
 
   //Setting Alerts
   useEffect(() => {
@@ -137,7 +137,7 @@ export default function ChatBot() {
       }
 
       scrollToBottom();
-    }, 4500); // Total delay considering thinking and typing phases
+    }, 4000); // Total delay considering thinking and typing phases
   };
 
   // Handle Enter key press
@@ -222,6 +222,7 @@ export default function ChatBot() {
 
   // Speech recognition
   useEffect(() => {
+    console.log("Speech recognition effect");
     if ("webkitSpeechRecognition" in window) {
       const recognition = new window.webkitSpeechRecognition();
       recognition.lang = "en-US";
@@ -239,7 +240,7 @@ export default function ChatBot() {
     } else {
       console.warn("Speech recognition not supported");
     }
-  }, []);
+  }, [isRecording]);
 
   // Handle Mic Button Click
   const startRecording = () => {
