@@ -86,6 +86,11 @@
     width: 100%;
   }
 
+  .mobilewidth {
+    width: 100%;
+    overflow-x: auto;
+  }
+
   .noEvents {
     text-align: center;
     font-size: 25px;

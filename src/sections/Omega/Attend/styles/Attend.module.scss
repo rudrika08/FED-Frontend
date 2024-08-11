@@ -71,28 +71,48 @@
 // }
 
 .circle1{
-    position: absolute;
-    top: 240%;
-    left: -12%;
-    filter: blur(40px);
-    border-radius: 60px;
-    transform: rotate(60deg);
-    background: linear-gradient(#009ACA , #000695);
-    height: 50vh;
-    width: 20vw;
+  position: absolute;
+  top: 190%;
+  left: -17%;
+  filter: blur(40px);
+  border-radius: 120px;
+  transform: rotate(60deg);
+  background: linear-gradient(#009ACA, #000695);
+  height: 50vh;
+  width: 24vw;
     @media (max-width: 480px){
-      top: 202%;
-      left: -30%
+      height: 50vh;
+      width: 50vw;
+      top: 170%;
+      left: -62%;
+      transform: rotate(83deg);
     }
-    @media(max-width:360px){
-      top: 242%;
-      left: -30%
+    @media (min-width:700px) and (max-width:1100px){
+      top: 270%;
+      left: -20%;
     }
+    @media (min-width:670px) and (max-width:700px) {
+      top: 247%;
+      left: -24%;
+    }
+    @media (min-width:480px) and (max-width:670px) {
+      top: 210%;
+      left: -25%;
+    }
+    @media (min-width:1100px) and (max-width:1250px){
+      top: 240%;
+      left: -12%;
+      width: 15vw;
+    }
+    // @media(max-width:360px){
+    //   top: 242%;
+    //   left: -30%
+    // }
 }
 
 .circle2{
     position: absolute;
-    top: 320%;
+    top: 222%;
     right: -12%;
     background: linear-gradient(#4B00C6 , #0047FF , #50FF34 ,#00D1FF );
     filter:blur(40px);
@@ -101,10 +121,10 @@
     height: 50vh;
     width: 20vw;
     
-  @media (max-width: 430px) {
+  @media (min-width:450px) and (max-width: 480px) {
     // Apply your styles here for screen sizes less than 360px
-    top: 240%;
-    right: 15%;
+    top: 280%;
+    right: -11%;
     background: linear-gradient(#4B00C6 , #0047FF , #50FF34 ,#00D1FF );;
     filter: blur(40px);
     border-radius: 50%;
@@ -112,17 +132,46 @@
     height: 21vh;
     width: 20vw;
   }
-  @media (max-width:  360px) {
-        // Apply your styles here for screen sizes less than 360px
-        top: 300%;
-        right: 15%;
-        background: linear-gradient(#4B00C6 , #0047FF , #50FF34 ,#00D1FF );;
-        filter: blur(40px);
-        border-radius: 50%;
-        transform: rotate(60deg);
-        height: 21vh;
-        width: 20vw;
+  @media (max-width:450px) {
+    top: 230%;
+    right: 20%;
+    height: 25vh;
+    // display: none;
   }
+  // @media (max-width:380px) {
+  //   top: 250%;
+  // }
+  @media (min-width:700px) and (max-width:1100px) {
+    top: 295%;
+    right: -17%;
+  }
+  @media (min-width:670px) and (max-width:700px) {
+    top: 270%;
+    right: -23%;
+  }
+  @media (min-width:580px) and (max-width:670px) {
+    top: 235%;
+    right: -25%;
+  }
+  @media (min-width:480px) and (max-width:580px) {
+      top: 245%;
+      right: -25%;
+  }
+  @media (min-width:1100px) and (max-width:1250px) {
+    top: 265%;
+    right: -15%;
+  }
+  // @media (max-width:  360px) {
+  //       // Apply your styles here for screen sizes less than 360px
+  //       top: 300%;
+  //       right: 15%;
+  //       background: linear-gradient(#4B00C6 , #0047FF , #50FF34 ,#00D1FF );;
+  //       filter: blur(40px);
+  //       border-radius: 50%;
+  //       transform: rotate(60deg);
+  //       height: 21vh;
+  //       width: 20vw;
+  // }
 }
 
 .card {
