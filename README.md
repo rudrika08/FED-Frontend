@@ -1,11 +1,11 @@
 
-## FED Frontend Beta
+## FED Frontend
 
 ### Overview
 
 FED FRONTEND is the official website of the Federation of Entrepreneurship Development (FED), designed to showcase upcoming events, introduce team members and leads, and provide resources for developing entrepreneurial skills. This platform aims to empower individuals interested in entrepreneurship and innovation.
 
-### Features (Currently in Development)
+### Features
 
 #### User-Focused Features:
 
