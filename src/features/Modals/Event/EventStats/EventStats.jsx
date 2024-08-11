@@ -35,7 +35,6 @@ const EventStats = ({ onClosePath }) => {
           }
         );
         if (response.status === 200) {
-          console.log("response in event stat:", response.data.form);
           setData(response.data.form.formAnalytics);
           setInfo(response.data.form.info);
           setYear(response.data.yearCounts);

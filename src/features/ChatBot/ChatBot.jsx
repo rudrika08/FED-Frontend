@@ -50,12 +50,12 @@ export default function ChatBot() {
           });
 
           if (response.status === 200 || response.status === 201) {
-            console.log(
-              "Successfully connected to chatbot",
-              response.data.message
-            );
+            // console.log(
+            //   "Successfully connected to chatbot",
+            //   response.data.message
+            // );
           } else {
-            console.log("Error:", response.data.message);
+            // console.log("Error:", response.data.message);
           }
         } catch (error) {
           console.error("Error:", error);
@@ -126,7 +126,7 @@ export default function ChatBot() {
             ...prevMessages,
             { bot: "Error: Unable to connect to the server.", isTyping: false },
           ]);
-          console.log("Error:", response.data.message);
+          // console.log("Error:", response.data.message);
         }
       } catch (error) {
         setMessages((prevMessages) => [
@@ -222,7 +222,7 @@ export default function ChatBot() {
 
   // Speech recognition
   useEffect(() => {
-    console.log("Speech recognition effect");
+    // console.log("Speech recognition effect");
     if ("webkitSpeechRecognition" in window) {
       const recognition = new window.webkitSpeechRecognition();
       recognition.lang = "en-US";

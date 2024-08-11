@@ -13,7 +13,6 @@ const LiveEventPopup = () => {
       try {
         const response = await api.get("/api/form/getAllForms");
         const fetchedEvents = response.data;
-        console.log("fetchedEvents:", fetchedEvents);
 
         const currentEvent = fetchedEvents.events.filter(
           (event) =>
@@ -21,7 +20,7 @@ const LiveEventPopup = () => {
             event.info.isPublic === true &&
             event.info.eventPriority === "1"
         );
-        console.log("currentEvent:", currentEvent);
+        // console.log("currentEvent:", currentEvent);
         if (currentEvent && !sessionStorage.getItem("popupDisplayed")) {
           setIsEventOngoing(true);
           setEventImage(currentEvent[0].info.eventImg);
@@ -61,7 +60,7 @@ const LiveEventPopup = () => {
     setIsVisible(false);
   };
 
-  console.log("eventImageurl:",eventImage);
+  // console.log("eventImageurl:",eventImage);
 
   return (
     <>

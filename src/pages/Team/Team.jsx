@@ -33,7 +33,7 @@ const Team = () => {
             a.name.localeCompare(b.name)
           );
           setTeamMembers(sortedMembers);
-          console.log("incoming response", response.data.data);
+          // console.log("incoming response", response.data.data);
         } else {
           console.error("Error fetching team members:", response.data.message);
           setError({

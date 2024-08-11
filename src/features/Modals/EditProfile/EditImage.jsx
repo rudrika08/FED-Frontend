@@ -52,7 +52,7 @@ const EditImage = (props) => {
             });
 
             if (response.status === 200 || response.status === 201) {
-              console.log("Profile image updated successfully!", response.data);
+              // console.log("Profile image updated successfully!", response.data);
               if(response.data.url){
            
                 authCtx.update(
@@ -119,10 +119,10 @@ const EditImage = (props) => {
       const canvas = editorRef.current.getImageScaledToCanvas();
       canvas.toBlob(async (blob) => {
         const imageFile = new File([blob], fileName, { type: "image/jpeg" });
-        console.log("imagefile after crop", imageFile);
+        // console.log("imagefile after crop", imageFile);
         authCtx.croppedImageFile =imageFile; 
-        console.log("file stored in context:",authCtx.croppedImageFile);
-        console.log("selected file :", selectedFile);
+        // console.log("file stored in context:",authCtx.croppedImageFile);
+        // console.log("selected file :", selectedFile);
         setimgprv(URL.createObjectURL(blob));
         closeModal();
       }, "image/jpeg");

@@ -401,21 +401,15 @@ const PreviewForm = ({
         if (response.data) {
           const { teamName, teamCode } = response.data;
 
-          // SetTeamCodeData((prevData) => ({
-          //   ...prevData,
-          //   teamCode: teamCode,
-          //   teamName: teamName,
-          // }));
           const participationType = eventData?.info?.participationType;
           if (participationType === "Team") {
             setTeam(teamName);
             setcode(teamCode);
             // console.log("saved context teamCode:",recoveryCtx.teamCode)
           }
-          console.log("consoling teamdata:", teamName, teamCode);
+          // console.log("consoling teamdata:", teamName, teamCode);
         }
         setIsSuccess(true);
-        // handleClose();
       } else {
         setAlert({
           type: "error",

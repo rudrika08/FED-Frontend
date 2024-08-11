@@ -32,7 +32,7 @@ const PastEvent = () => {
             message: "Sorry for the inconvenience, we are having issues fetching our Events",
           });
           console.error("Error fetching events:", response.data.message);
-          // Fallback to local JSON data
+  
           const sortedPastEvents = events
             .filter((event) => event.info.isEventPast)
             .sort((a, b) => new Date(b.info.eventDate) - new Date(a.info.eventDate));
