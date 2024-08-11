@@ -325,11 +325,13 @@
       margin-top: 2.3rem;
     }
   
-    .name {
-      margin-left: 0;
+    .pasteventCard .name { 
+      display: flex;
       justify-content: center;
-          align-items: center;
+      align-items: center;
+      
     }
+    
   
 }
 

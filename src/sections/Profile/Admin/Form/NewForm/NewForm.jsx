@@ -141,6 +141,12 @@ function NewForm() {
   }, [alert]);
 
   const isValidSections = () => {
+    const sections = constructForPreview();
+    // if (!sections || sections === undefined) {
+    //   return false;
+    // }
+
+    console.log(sections);
     return sections.every((section) =>
       section.fields?.every((field) => {
         if (
@@ -152,12 +158,13 @@ function NewForm() {
         }
 
         if (["radio", "checkbox", "select"].includes(field.type)) {
-          return field.validations.every(
-            (validation) =>
-              validation.type && validation.value && validation.operator
-          );
+          return field.validations && field.validations.length > 0
+            ? field.validations.every(
+                (validation) =>
+                  validation.type && validation.value && validation.operator
+              )
+            : true;
         }
-
         return true;
       })
     );
@@ -313,6 +320,15 @@ function NewForm() {
   };
 
   const onSaveEvent = async () => {
+    if (sections === undefined) {
+      setAlert({
+        type: "error",
+        message: "Please add atleast one section",
+        position: "bottom-right",
+        duration: 3000,
+      });
+      return;
+    }
     if (isValidEvent()) {
       setIsLoading(true);
       const newSections = constructForPreview();
@@ -349,7 +365,9 @@ function NewForm() {
         form.delete("receiverDetails");
       }
 
-      form.append("sections", JSON.stringify(newSections));
+      if (sections && sections !== undefined) {
+        form.append("sections", JSON.stringify(newSections));
+      }
 
       if (isEditing) {
         form.append("id", authCtx.eventData?.id);
@@ -367,7 +385,7 @@ function NewForm() {
             {
               headers: {
                 "Content-Type": "multipart/form-data",
-                 "Authorization": `Bearer ${window.localStorage.getItem("token")}`,
+                Authorization: `Bearer ${window.localStorage.getItem("token")}`,
               },
             }
           );
@@ -403,7 +421,7 @@ function NewForm() {
           const response = await api.post("/api/form/addForm", form, {
             headers: {
               "Content-Type": "multipart/form-data",
-              "Authorization": `Bearer ${window.localStorage.getItem("token")}`,
+              Authorization: `Bearer ${window.localStorage.getItem("token")}`,
             },
           });
 
@@ -487,7 +505,12 @@ function NewForm() {
           newSection,
         ]);
       } else {
-        alert("Functionality not implemented yet.");
+        setAlert({
+          type: "error",
+          message: "Please add atleast one section",
+          position: "bottom-right",
+          duration: 3000,
+        });
       }
       setTimeout(() => {
         scrollRef.current.scrollIntoView({
@@ -647,13 +670,6 @@ function NewForm() {
   //   }
   // };
 
-  const handleSaveSection = () => {
-    if (isValidSections()) {
-    } else {
-      alert("Fill all the form fields, including conditions");
-    }
-  };
-
   const onChangeEventType = (value) => {
     setdata({ ...data, eventType: value, eventAmount: "" });
 
@@ -679,14 +695,6 @@ function NewForm() {
             name: "Enter UPI ID",
             type: "text",
             value: "Enter UPI ID",
-            isRequired: true,
-            validations: [],
-          },
-          {
-            _id: nanoid(),
-            name: "Paid Amount",
-            type: "number",
-            value: "Enter Amount Paid",
             isRequired: true,
             validations: [],
           },
@@ -729,7 +737,8 @@ function NewForm() {
   };
 
   const constructForPreview = () => {
-    const formatedData = [...sections];
+    const formatedData =
+      sections && sections !== undefined ? [...sections] : [];
 
     if (paymentSection && data.eventType === "Paid") {
       paymentSection.isDisabled = true;
@@ -820,7 +829,12 @@ function NewForm() {
       if (isValidSections()) {
         setshowPreview(!showPreview);
       } else {
-        alert("Section is not valid. Please fill all the fields.");
+        setAlert({
+          type: "error",
+          message: "Section is not valid. Please fill all the fields.",
+          position: "bottom-right",
+          duration: 3000,
+        });
       }
     } else {
       console.log("Invalid Event");
@@ -873,9 +887,15 @@ function NewForm() {
           <Button isLoading={isLoading} onClick={onSaveEvent}>
             {isEditing ? "Update" : "Save"}
           </Button>
-          <Button isLoading={false} onClick={handlePreview} variant="secondary">
-            {showPreview ? "Hide" : "Preview"}
-          </Button>
+          {sections && sections !== undefined ? (
+            <Button
+              isLoading={false}
+              onClick={handlePreview}
+              variant="secondary"
+            >
+              {showPreview ? "Hide" : "Preview"}
+            </Button>
+          ) : null}
         </div>
       </div>
       {isVisibility && (
@@ -1230,43 +1250,49 @@ function NewForm() {
             />
           </div>
         </div>
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            width: "86%",
-            marginBottom: "12px",
-          }}
-        >
-          <Text
+        {sections && sections !== undefined ? (
+          <div
             style={{
-              fontSize: "14px",
-              margin: "auto 6px",
-              marginRight: "auto",
+              display: "flex",
+              flexDirection: "row",
+              width: "86%",
+              marginBottom: "12px",
             }}
           >
-            Sections
-          </Text>
-          <Button
-            variant="secondary"
-            style={{ marginLeft: "auto" }}
-            onClick={onAddSection}
-          >
-            Add Section
-          </Button>
-        </div>
-        {sections.map((section) => (
-          <div key={section._id} ref={scrollRef}>
-            <Section
-              section={section}
-              sections={sections}
-              setsections={setsections}
-              meta={paymentSection ? [paymentSection] : []}
-              showAddButton={!section.isDisabled}
-              disabled={section.isDisabled}
-            />
+            <Text
+              style={{
+                fontSize: "14px",
+                margin: "auto 6px",
+                marginRight: "auto",
+              }}
+            >
+              Sections
+            </Text>
+            <Button
+              variant="secondary"
+              style={{ marginLeft: "auto" }}
+              onClick={onAddSection}
+            >
+              Add Section
+            </Button>
           </div>
-        ))}
+        ) : null}
+
+        {sections && sections !== undefined
+          ? sections.map((section) => (
+              <div key={section._id} ref={scrollRef}>
+                <Section
+                  section={section}
+                  sections={sections}
+                  setsections={setsections}
+                  meta={paymentSection ? [paymentSection] : []}
+                  showAddButton={!section.isDisabled}
+                  disabled={section.isDisabled}
+                />
+              </div>
+            ))
+          : null}
+
         {paymentSection && (
           <Section
             section={paymentSection}

@@ -12,7 +12,7 @@ const Events = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const viewPath = "/profile/Events";
-  const analyticsPath = "/profile/Events/Analytics";
+  const analyticsPath = "/profile/events/Analytics";
 
   const analyticsAccessRoles = [
     "PRESIDENT",
@@ -87,6 +87,7 @@ const Events = () => {
       .replace(/\//g, "-");
   };
 
+  console.log("Event Access",authCtx.user.access);
   return (
     <div className={styles.participatedEvents}>
       {authCtx.user.access !== "USER" ? (
@@ -114,11 +115,11 @@ const Events = () => {
               <table className={styles.eventsTable}>
                 <thead>
                   <tr>
-                    <th>Event Name</th>
-                    <th>Event Date</th>
+                    <th className={styles.mobilewidth}>Event Name</th>
+                    <th className={styles.mobilewidth}>Event Date</th>
                     <th className={styles.mobilewidth}>Details</th>
-                    {analyticsAccessRoles.includes(authCtx.user.access) || authCtx.user.email == "srex@fedkiit.com" && (
-                      <th className={styles.mobilewidth}>Registrations</th>
+                    {(analyticsAccessRoles.includes(authCtx.user.access) || authCtx.user.email == "srex@fedkiit.com") && (
+                      <th className={styles.mobilewidth} style={{paddingTop:"1rem"}}>Registrations</th>
                     )}
                     {/* Add more headers */}
                   </tr>
@@ -127,10 +128,10 @@ const Events = () => {
                 <tbody>
                   {events.map((event) => (
                     <tr key={event._id}>
-                      <td style={{ fontWeight: "500" }}>
+                      <td className={styles.mobilewidth} style={{fontWeight:"500",paddingRight:"10px"}}>
                         {event.info.eventTitle}
                       </td>
-                      <td style={{ fontWeight: "500" }}>
+                      <td style={{ fontWeight: "200" }}>
                         {formatDate(event.info.eventDate)}
                       </td>
 
@@ -149,7 +150,7 @@ const Events = () => {
                           </button>
                         </Link>
                       </td>
-                      {analyticsAccessRoles.includes(authCtx.user.access) || authCtx.user.email == "srex@fedkiit.com" && (
+                      {(analyticsAccessRoles.includes(authCtx.user.access) || authCtx.user.email == "srex@fedkiit.com") && (
                         <td className={styles.mobilewidthtd}>
                           <Link to={`${analyticsPath}/${event.id}`}>
                             <button

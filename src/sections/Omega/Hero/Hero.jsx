@@ -18,6 +18,7 @@ function Hero({ ongoingEvents, isRegisteredInRelatedEvents, eventName }) {
     if (alert) {
       const { type, message, position, duration } = alert;
       Alert({ type, message, position, duration });
+      setAlert(null); // Reset alert after displaying it
     }
   }, [alert]);
 

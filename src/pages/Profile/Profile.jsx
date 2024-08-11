@@ -96,7 +96,7 @@ const Profile = () => {
           handleChange={(page) => {
             setActivePage(page);
             
-              navigate(`/profile/${page.toLowerCase()}`); // Navigate to the corresponding route
+          
      
             authCtx.eventData = null;
           }}

@@ -158,7 +158,6 @@ const PreviewForm = ({
     setdata(newSections);
   };
 
-  // console.log(data);
   useEffect(() => {
     if (isSuccess) {
       const participationType = eventData?.info?.participationType;
@@ -317,8 +316,26 @@ const PreviewForm = ({
     });
   };
 
+  const filterMediaFields = () => {
+    return (
+      data
+        .filter(
+          (section) =>
+            currentSection._id === section._id ||
+            isCompleted.includes(section._id)
+        )
+        .map((section) =>
+          section.fields.filter(
+            (field) => field.type === "file" || field.type === "image"
+          )
+        )
+        .flat() || []
+    );
+  };
+
   const handleSubmit = async () => {
     const formData = new FormData();
+    const mediaFields = filterMediaFields() || [];
     const isCreateTeam = data.some(
       (sec) =>
         (sec.name === "Create Team" && currentSection._id === sec._id) ||
@@ -334,6 +351,12 @@ const PreviewForm = ({
     formData.append("sections", JSON.stringify(constructToSave()));
     formData.append("createTeam", isCreateTeam);
     formData.append("joinTeam", isJoinTeam);
+
+    mediaFields.forEach((field) => {
+      if (field.onChangeValue) {
+        formData.append(field.name, field.onChangeValue);
+      }
+    });
 
     try {
       setIsLoading(true); // Set loading state
@@ -449,11 +472,8 @@ const PreviewForm = ({
   };
 
   const renderPaymentScreen = () => {
-    const dataInfo = formData.info;
-    const { eventType, receiverDetails, eventAmount } = dataInfo;
+    const { eventType, receiverDetails, eventAmount } = formData;
 
-    // console.log("receiverDetails", receiverDetails);
-    // console.log("eventData", eventData);
     const getMediaUrl = (media) => {
       if (media instanceof File) {
         // If media is a File, create an object URL
@@ -463,6 +483,7 @@ const PreviewForm = ({
         return media;
       }
     };
+
     if (eventType === "Paid" && currentSection.name === "Payment Details") {
       return (
         <div
