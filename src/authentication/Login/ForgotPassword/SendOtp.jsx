@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { RecoveryContext } from "../../../context/RecoveryContext";
@@ -38,7 +37,7 @@ export default function Login() {
   
 
   async function navigateToOtp(e) {
-    e.preventDefault(); // Prevent default form submission behavior
+    e.preventDefault(); 
     if (email) {
 
       if (!emailRegex.test(email)) {
@@ -55,9 +54,7 @@ export default function Login() {
     setLoading(true);
 
       const response = await api.post("api/auth/forgotPassword", { email: email });
-      console.log(response)
       if(response.status===201||response.status===200){
-        console.log("entering if")
         setAlert({
           type: "success",
           message: "otp is sent to your email",
@@ -70,7 +67,6 @@ export default function Login() {
           setShouldNavigate(true);
         }, 1500);
       }else{
-          // toast.error("error in sending otp");
           setAlert({
             type: "error",
             message: "error in sending otp",

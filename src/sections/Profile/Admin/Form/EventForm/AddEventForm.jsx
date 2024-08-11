@@ -27,7 +27,6 @@ function AddEventForm() {
     e.preventDefault();
     if (isFormValid()) {
       if (isValidLink) {
-        console.log({eventName, eventDescription, registrationType, posterLink});
         alert("Event Added Successfully");
       } else {
         alert("Please enter valid link");

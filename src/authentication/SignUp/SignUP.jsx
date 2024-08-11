@@ -229,7 +229,7 @@ const SignUp = () => {
         if (response.status == 200 || response.status == 201) {
           // setLoad(false);
           localStorage.setItem("token",response.data.token);
-          console.log(response);
+          // console.log(response);
           authCtx.login(
             response.data.user.name,
             response.data.user.email,
@@ -249,7 +249,7 @@ const SignUp = () => {
             response.data.token,
             10800000
           );
-          console.log(authCtx);
+          // console.log(authCtx);
           navigate("/");
         }
       } catch (error) {
@@ -269,7 +269,7 @@ const SignUp = () => {
         position: "bottom-right",
         duration: 3000,
       });
-      console.log("Enter valid Otp");
+      // console.log("Enter valid Otp");
     }
   };
   const handleModalClose = () => {

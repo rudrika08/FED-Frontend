@@ -136,14 +136,14 @@ function AddMemberForm() {
           formData.append("image", croppedImageFile);
         }
   
-        console.log("Member Data", filteredData);
+
         const response = await api.post("/api/user/addMember", formData, {
           headers: {
             "Content-Type": "multipart/form-data",
             "Authorization": `Bearer ${window.localStorage.getItem("token")}`,
           },
         });
-        console.log("Member added successfully:", response.data.user);
+        // console.log("Member added successfully:", response.data.user);
         setData({
           name: "",
           email: "",
@@ -176,7 +176,7 @@ function AddMemberForm() {
       };
       reader.readAsDataURL(file);
       setSelectedFile(file);
-      console.log("File in addmember comp:", croppedImageFile);
+      // console.log("File in addmember comp:", croppedImageFile);
       setData({ ...data, img: file.name });
       setFileName(file.name);
       setOpenModal(true);

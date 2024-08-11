@@ -89,19 +89,18 @@ function Omega() {
   }, [ongoingEvents]);
 
   useEffect(() => {
-    // Get registered event IDs from auth context
+   
     const registeredEventIds = authCtx.user.regForm || [];
-    console.log("Registered Events", registeredEventIds);
+    ("Registered Events", registeredEventIds);
 
-    // Collect related event IDs, filtering out null, undefined, and 'null'
+  
     const relatedEventIds = ongoingEvents
       .map((event) => event.info.relatedEvent) // Extract relatedEvent IDs
       .filter((id) => id !== null && id !== undefined && id !== "null") // Filter out null, undefined, and 'null'
       .filter((id, index, self) => self.indexOf(id) === index); // Remove duplicates
 
-    console.log("Related Event IDs", relatedEventIds);
+    // console.log("Related Event IDs", relatedEventIds);
 
-    // Check if user is registered in any related events
     let isRegisteredInRelatedEvents = false;
     if (registeredEventIds.length > 0 && relatedEventIds.length > 0) {
       isRegisteredInRelatedEvents = relatedEventIds.some((relatedEventId) =>
@@ -109,10 +108,7 @@ function Omega() {
       );
     }
 
-    console.log(
-      "Is Registered in Related Events:",
-      isRegisteredInRelatedEvents
-    );
+  
 
     if (isRegisteredInRelatedEvents) {
       setIsRegisteredInRelatedEvents(true);

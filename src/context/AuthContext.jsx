@@ -171,7 +171,7 @@ export const AuthContextProvider = (props) => {
     blurhash,
     token
   ) => {
-    console.log("update handler is called");
+    // console.log("update handler is called");
     const setuserdata = {
       name: name,
       img: img,
