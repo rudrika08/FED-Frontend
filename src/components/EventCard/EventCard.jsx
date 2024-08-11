@@ -279,6 +279,7 @@ const EventCard = (props) => {
     return <EventCardSkeleton />;
   }
 
+  console.log(data)
   return (
     <div>
       <div

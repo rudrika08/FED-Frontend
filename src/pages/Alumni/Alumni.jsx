@@ -66,30 +66,14 @@ const Alumni = () => {
       <div className={styles.alumniSection}>
         <div className={styles.alumniGrid}>
           {otherMembers.map((member, idx) => (
-            <TeamCard
-              key={idx}
-              name={member.name}
-              image={member.img}
-              social={member.extra}
-              title={member.extra.title}
-              role={member.access}
-              know={member.extra.know}
-            />
+            <TeamCard key={idx} member={member} />
           ))}
         </div>
 
         {lastRowMembers.length > 0 && (
           <div className={styles.lastRowCentered}>
             {lastRowMembers.map((member, idx) => (
-              <TeamCard
-                key={idx}
-                name={member.name}
-                image={member.img}
-                social={member.extra}
-                title={member.extra.title}
-                role={member.access}
-                know={member.extra.know}
-              />
+              <TeamCard key={idx} member={member} />
             ))}
           </div>
         )}

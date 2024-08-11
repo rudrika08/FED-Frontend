@@ -27,6 +27,7 @@ const operators = [
 const hasOptions = ["select", "checkbox", "radio"];
 
 const PreviewForm = ({
+  isEditing,
   eventData,
   sections = [],
   open,
@@ -362,6 +363,10 @@ const PreviewForm = ({
       setIsLoading(true); // Set loading state
       setIsMicroLoading(true); // Set micro loading state
 
+      if (isEditing) {
+        setIsSuccess(true);
+        return;
+      }
       const response = await api.post("/api/form/register", formData, {
         headers: {
           "Content-Type": "multipart/form-data",

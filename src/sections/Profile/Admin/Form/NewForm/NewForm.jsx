@@ -127,7 +127,12 @@ function NewForm() {
 
   useEffect(() => {
     if (authCtx.eventData) {
-      setdata(authCtx.eventData?.info);
+      setdata({
+        ...authCtx.eventData?.info,
+        isPublic: authCtx.eventData?.info.isPublic,
+        isRegistrationClosed: authCtx.eventData?.info.isRegistrationClosed,
+        isEventPast: authCtx.eventData?.info.isEventPast,
+      });
       setsections(authCtx.eventData?.sections);
       setisEditing(true);
     }
@@ -142,11 +147,6 @@ function NewForm() {
 
   const isValidSections = () => {
     const sections = constructForPreview();
-    // if (!sections || sections === undefined) {
-    //   return false;
-    // }
-
-    console.log(sections);
     return sections.every((section) =>
       section.fields?.every((field) => {
         if (
@@ -1304,6 +1304,7 @@ function NewForm() {
         )}
         {showPreview && (
           <PreviewForm
+            isEditing={isEditing}
             open={showPreview}
             handleClose={() => setshowPreview(false)}
             sections={constructForPreview()}
