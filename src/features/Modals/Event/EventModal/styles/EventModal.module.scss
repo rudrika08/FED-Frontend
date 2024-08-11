@@ -48,12 +48,12 @@
 
 .date {
   // height: 10%;
-  width: 13%;
+  width: 15%;
   background: rgba(255, 255, 255, 0.1);
   border: 1px solid rgb(143, 139, 139);
   color: white;
   position: absolute;
-  left: 2.4rem;
+  left: 2rem;
   border-radius: 10px;
   text-align: center;
   font-size: 1rem;
@@ -303,7 +303,6 @@ input:checked + .slider:before {
     outline: none;
     border: none;
     cursor: pointer;
-    font-size: 0.5rem;
   }
 
   .eventname {
@@ -311,7 +310,7 @@ input:checked + .slider:before {
   }
 
   .date {
-    font-size: 0.5rem;
+    font-size: 0.8rem;
   }
 }
 

@@ -237,7 +237,7 @@ const EventCard = (props) => {
   const handleForm = () => {
     if (authCtx.isLoggedIn) {
       setIsMicroLoading(true);
-      if (authCtx.user.access !== "USER") {
+      if (authCtx.user.access !== "USER" && authCtx.user.access !== "ADMIN") {
         setTimeout(() => {
           setIsMicroLoading(false);
           setBtnTxt("Already Member");

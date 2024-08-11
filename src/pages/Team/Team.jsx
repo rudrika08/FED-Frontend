@@ -119,10 +119,12 @@ const Team = () => {
     .map((code) => teamMembers.find((member) => member.access === code))
     .filter(Boolean);
 
-    const teamByRole = Object.keys(roleMap)
+  const teamByRole = Object.keys(roleMap)
     .map((role) => ({
       role,
-      members: teamMembers.filter((member) => member.access === roleMap[role]),
+      members: teamMembers.filter(
+        (member) => member.access === roleMap[role]
+      ),
     }))
     .filter((roleGroup) => roleGroup.members.length > 0);
 
@@ -146,7 +148,6 @@ const Team = () => {
       remainderMembersCount > 0
         ? members.slice(0, -remainderMembersCount)
         : members;
-
     return (
       <div
         className={`${styles.teamSection} ${
@@ -160,31 +161,13 @@ const Team = () => {
           }`}
         >
           {otherMembers.map((member, idx) => (
-            <TeamCard
-              key={idx}
-              className="teamMember"
-              name={member.name}
-              image={member.img}
-              social={member.extra}
-              title={member.extra.designation}
-              role={member.access}
-              know={member.extra.know}
-            />
+            <TeamCard key={idx} className="teamMember" member={member} />
           ))}
         </div>
         {lastRowMembers.length > 0 && (
           <div className={styles.lastRowCentered}>
             {lastRowMembers.map((member, idx) => (
-              <TeamCard
-                key={idx}
-                className="teamMember"
-                name={member.name}
-                image={member.img}
-                social={member.extra}
-                title={member.extra.designation}
-                role={member.access}
-                know={member.extra.know}
-              />
+              <TeamCard key={idx} className="teamMember" member={member} />
             ))}
           </div>
         )}
@@ -235,27 +218,30 @@ const Team = () => {
 
           <TeamSection members={directorsAndAbove} isDirector={true} />
 
-          {sortedTeamByRole.map((section, index) => (
-            <TeamSection
-              key={index}
-              title={
-                <span>
-                  <span style={{ color: "#fff" }}>Team </span>
-                  <strong
-                    style={{
-                      background: "var(--primary)",
-                      WebkitBackgroundClip: "text",
-                      color: "transparent",
-                    }}
-                  >
-                    {section.role}
-                  </strong>
-                </span>
-              }
-              members={section.members}
-              isDirector={false}
-            />
-          ))}
+          {sortedTeamByRole.map(
+            (section, index) =>
+              section.members.length > 0 && (
+                <TeamSection
+                  key={index}
+                  title={
+                    <span>
+                      <span style={{ color: "#fff" }}>Team </span>
+                      <strong
+                        style={{
+                          background: "var(--primary)",
+                          WebkitBackgroundClip: "text",
+                          color: "transparent",
+                        }}
+                      >
+                        {section.role}
+                      </strong>
+                    </span>
+                  }
+                  members={section.members}
+                  isDirector={false}
+                />
+              )
+          )}
         </>
       )}
 

@@ -214,13 +214,7 @@ function ViewMember() {
               {membersToDisplay.map((member, idx) => (
                 <TeamCard
                   key={idx}
-                  data={member}
-                  name={member.name}
-                  image={member.img}
-                  social={member.extra}
-                  title={member.extra.designation}
-                  role={member.access}
-                  know={member.extra.know}
+                  member={member}
                   customStyles={customStyles}
                   onUpdate={handleUpdate}
                   onRemove={handleRemove}

@@ -35,7 +35,7 @@ const TEAM_SIZE = [
 
 function NewForm() {
   const scrollRef = useRef(null);
-  const [isVisibility, setisVisibility] = useState(true);
+  const [isVisibility, setisVisibility] = useState(false);
   const authCtx = useContext(AuthContext);
   const [alert, setAlert] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -62,7 +62,7 @@ function NewForm() {
     successMessage: "",
     isPublic: false,
     isRegistrationClosed: false,
-    isEventPast: false,
+    isEventPast: true,
 
     // eventName:"",
     // logoLink: "",
@@ -127,7 +127,12 @@ function NewForm() {
 
   useEffect(() => {
     if (authCtx.eventData) {
-      setdata(authCtx.eventData?.info);
+      setdata({
+        ...authCtx.eventData?.info,
+        isPublic: authCtx.eventData?.info.isPublic,
+        isRegistrationClosed: authCtx.eventData?.info.isRegistrationClosed,
+        isEventPast: authCtx.eventData?.info.isEventPast,
+      });
       setsections(authCtx.eventData?.sections);
       setisEditing(true);
     }
@@ -142,11 +147,6 @@ function NewForm() {
 
   const isValidSections = () => {
     const sections = constructForPreview();
-    // if (!sections || sections === undefined) {
-    //   return false;
-    // }
-
-    console.log(sections);
     return sections.every((section) =>
       section.fields?.every((field) => {
         if (
@@ -925,7 +925,15 @@ function NewForm() {
                 transition: "all .4s",
               }}
             >
-              Event Form Privacy (Private/Public)
+              Event Form Privacy (
+              <span style={{ color: !data.isPublic ? "#FF8A00" : "white" }}>
+                Private
+              </span>
+              /
+              <span style={{ color: data.isPublic ? "#FF8A00" : "white" }}>
+                Public
+              </span>
+              )
             </label>
             <Switch
               checked={data.isPublic}
@@ -962,7 +970,23 @@ function NewForm() {
                 transition: "all .4s",
               }}
             >
-              Event Form Registration (Open/Close)
+              Event Form Registration (
+              <span
+                style={{
+                  color: !data.isRegistrationClosed ? "#FF8A00" : "white",
+                }}
+              >
+                Close
+              </span>
+              /
+              <span
+                style={{
+                  color: data.isRegistrationClosed ? "#FF8A00" : "white",
+                }}
+              >
+                Open
+              </span>
+              )
             </label>
             <Switch
               checked={data.isRegistrationClosed}
@@ -998,7 +1022,23 @@ function NewForm() {
                 transition: "all .4s",
               }}
             >
-              Event Form Status (Ongoing/Past)
+              Event Form Status (
+              <span
+                style={{
+                  color: !data.isEventPast ? "#FF8A00" : "white",
+                }}
+              >
+                Past
+              </span>
+              /
+              <span
+                style={{
+                  color: data.isEventPast ? "#FF8A00" : "white",
+                }}
+              >
+                Ongoing
+              </span>
+              )
             </label>
             <Switch
               checked={data.isEventPast}
@@ -1304,6 +1344,7 @@ function NewForm() {
         )}
         {showPreview && (
           <PreviewForm
+            isEditing={isEditing}
             open={showPreview}
             handleClose={() => setshowPreview(false)}
             sections={constructForPreview()}

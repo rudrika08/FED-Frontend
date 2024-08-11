@@ -478,6 +478,7 @@ const SignUp = () => {
                   style={{ height: "17px", width: "17px", cursor: "pointer" }}
                   checked={isTandChecked}
                   onClick={handleCheckBox}
+                  id="custom-checkbox"
                 />
 
                 <Text

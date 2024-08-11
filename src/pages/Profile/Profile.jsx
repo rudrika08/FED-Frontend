@@ -95,9 +95,6 @@ const Profile = () => {
           activepage={activePage}
           handleChange={(page) => {
             setActivePage(page);
-            
-          
-     
             authCtx.eventData = null;
           }}
         />
