@@ -6,8 +6,6 @@ import "aos/dist/aos.css";
 import { Link, useNavigate } from "react-router-dom";
 import Share from "../../features/Modals/Event/ShareModal/ShareModal";
 import shareOutline from "../../assets/images/shareOutline.svg";
-// import groupIcon from "../../assets/images/groups.svg";
-// import rupeeIcon from "../../assets/images/rupeeIcon.svg";
 import { PiClockCountdownDuotone } from "react-icons/pi";
 import { IoIosLock, IoIosStats } from "react-icons/io";
 import { MdGroups } from "react-icons/md";
@@ -193,10 +191,10 @@ const EventCard = (props) => {
 
   useEffect(() => {
     if (authCtx.isLoggedIn && authCtx.user.regForm) {
-      console.log("Inside Card", isRegisteredInRelatedEvents);
+      // console.log("Inside Card", isRegisteredInRelatedEvents);
 
       if (isRegisteredInRelatedEvents) {
-        console.log("checking for ", data.id);
+        // console.log("checking for ", data.id);
         if (data.info.relatedEvent === "null") {
           setBtnTxt("Already Registered");
         } else {

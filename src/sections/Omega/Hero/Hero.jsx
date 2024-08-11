@@ -54,11 +54,10 @@ function Hero({ ongoingEvents, isRegisteredInRelatedEvents, eventName }) {
           });
         }, 1500);
       } else {
-        console.log("ongoingEvents:", ongoingEvents);
+
         const relatedEventId = ongoingEvents.find(
           (e) => e.info.relatedEvent === "null"
         )?.id;
-        console.log("relatedEventId:", relatedEventId);
         if (relatedEventId) {
           setNavigatePath(`/Events/${relatedEventId}/Form`);
           setShouldNavigate(true);

@@ -9,12 +9,6 @@ import AuthContext from "../../context/AuthContext";
 
 const TeamCard = ({
   member,
-  // image,
-  // social,
-  // title,
-  // data,
-  // role,
-  // know,
   blurhash,
   customStyles = {},
   onUpdate,
@@ -181,7 +175,7 @@ const TeamCard = ({
                     onClick={(e) => {
                       e.preventDefault();
                       if (onUpdate) {
-                        console.log(member);
+                        // console.log(member);
                         authCtx.memberData = member;
                         onUpdate();
                       }
@@ -197,7 +191,7 @@ const TeamCard = ({
                         `Do you really want to remove this member "${member?.name}"?`
                       );
                       if (isConfirmed && onRemove) {
-                        console.log(member);
+                        // console.log(member);
                         authCtx.memberData = member;
                         onRemove();
                       }

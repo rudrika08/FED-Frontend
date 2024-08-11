@@ -39,7 +39,7 @@ const Login = () => {
   useEffect(() => {
     if (shouldNavigate) {
       navigate(navigatePath);
-      setShouldNavigate(false); // Reset state after navigation
+      setShouldNavigate(false); 
     }
   }, [shouldNavigate, navigatePath, navigate]);
 
@@ -64,11 +64,11 @@ const Login = () => {
         password,
       });
 
-      console.log("incoming response", response.data);
+      // console.log("incoming response", response.data);
 
       if (response.status === 200 || response.status === 201) {
         const user = response.data.user;
-        console.log("user is ", user);
+        // console.log("user is ", user);
 
         setAlert({
           type: "success",
@@ -105,9 +105,9 @@ const Login = () => {
             9600000
           );
         }, 800);
-        console.log(authCtx);
+        // console.log(authCtx);
 
-        sessionStorage.removeItem("prevPage"); // Clean up
+        sessionStorage.removeItem("prevPage"); 
       } else {
         setAlert({
           type: "error",

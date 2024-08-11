@@ -10,11 +10,7 @@ const Social = () => {
     window.scrollTo(0, 0);
   }, []);
 
-  // const [isLoading, setIsLoading] = useState(true);
 
-  // setTimeout(() => {
-  //   setIsLoading(false);
-  // }, 3000);
 
   return (
     <div className={styles.socialMcontainer}>

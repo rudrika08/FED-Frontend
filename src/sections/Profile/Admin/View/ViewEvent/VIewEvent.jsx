@@ -21,7 +21,7 @@ function ViewEvent({ handleChangePage }) {
 
   useEffect(() => {
     const fetchEventData = async () => {
-      console.log("fetch data called");
+
       try {
         const response = await api.get("/api/form/getAllForms");
         if (response.status === 200) {
@@ -85,9 +85,7 @@ function ViewEvent({ handleChangePage }) {
           Authorization: `Bearer ${window.localStorage.getItem("token")}`,
         },
       });
-      console.log("Event deleted:", response);
       setReload(prev => {
-        console.log("Toggling reload:", !prev); // Log the new reload state
         return !prev;
       });
     } catch (error) {

@@ -63,7 +63,7 @@ const Profile = () => {
           // log out the user
         }
         else {
-          console.log(response.status);
+          // console.log(response.status);
         }
       }
     } catch (error) {

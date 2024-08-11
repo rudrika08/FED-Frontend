@@ -37,12 +37,7 @@ const Alumni = () => {
             "Sorry for the inconvenience, we are having issues fetching our Alumni",
         });
         console.error("Error fetching our Alumnis:", error);
-        // using local JSON data
-        // const testMembers = MemberData;
-        // const fileteredAlumni = testMembers.filter(
-        //   (member) => member.access === "ALUMNI"
-        // );
-        // setAlumni(fileteredAlumni);
+
       } finally {
         setIsLoading(false);
       }

@@ -64,7 +64,7 @@ const Events = () => {
         //   setEvents(sortEventsByDate(localEvents));
         // } else {
         //   const filteredEvents = localEvents.filter((event) =>
-        //     userEvents.includes(event._id)
+             userEvents.includes(event._id)
         //   );
         //   setEvents(sortEventsByDate(filteredEvents));
         // }
@@ -87,7 +87,7 @@ const Events = () => {
       .replace(/\//g, "-");
   };
 
-  console.log("Event Access",authCtx.user.access);
+  // console.log("Event Access",authCtx.user.access);
   return (
     <div className={styles.participatedEvents}>
       {authCtx.user.access !== "USER" ? (

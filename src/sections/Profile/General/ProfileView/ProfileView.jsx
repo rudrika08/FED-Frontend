@@ -38,7 +38,7 @@ const Profile = ({ editmodal }) => {
       authCtx.user.editProfileCount,
       authCtx.user.regForm
     );
-    console.log("editProfileCount", authCtx.user.editProfileCount);
+    // console.log("editProfileCount", authCtx.user.editProfileCount);
     if (authCtx.user.access !== "USER" || authCtx.user.editProfileCount > 0) {
       setIsOpen(true);
     } else {

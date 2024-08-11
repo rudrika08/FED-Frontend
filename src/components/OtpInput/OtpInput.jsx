@@ -64,9 +64,9 @@ const OtpInput = (props) => {
   };
 
   const resendOTP = async () => {
-    console.log("inside resendOtp");
+    // console.log("inside resendOtp");
     if (disable) return;
-    console.log("email", email);
+    // console.log("email", email);
 
     if (email) {
       if (!emailRegex.test(email)) {
@@ -85,9 +85,9 @@ const OtpInput = (props) => {
         const response = await api.post("api/auth/forgotPassword", {
           email: email,
         });
-        console.log(response);
+        // console.log(response);
         if (response.status === 201 || response.status === 200) {
-          console.log("entering if");
+          // console.log("entering if");
           setDisable(true);
           setAlert({
             type: "success",
@@ -133,7 +133,7 @@ const OtpInput = (props) => {
   const changePassword = async (e) => {
     e.preventDefault();
     const enteredOTP = OTPinput.join("");
-    console.log("enteredOtp:", enteredOTP);
+    // console.log("enteredOtp:", enteredOTP);
 
     if (!password || !cnfPassword) {
       setAlert({

@@ -10,7 +10,6 @@ import ring from "../../assets/images/ring.svg";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import { ComponentLoading } from "../../microInteraction";
 import { RecoveryContext } from "../../context/RecoveryContext";
-// import Share from "../../features/Modals/Event/ShareModal/ShareModal";
 import ShareTeamData from "../../features/Modals/Event/ShareModal/ShareTeamData";
 
 const Event = () => {
@@ -47,7 +46,6 @@ const Event = () => {
         if (response.status === 200) {
           const fetchedEvents = response.data.events;
           const sortedEvents = fetchedEvents.sort((a, b) => {
-            // Extract priority and event dates
             const priorityA = parseInt(a.info.eventPriority, 10);
             const priorityB = parseInt(b.info.eventPriority, 10);
             const dateA = new Date(a.info.eventDate);
@@ -83,7 +81,6 @@ const Event = () => {
             message:
               "Sorry for the inconvenience, we are having issues fetching our Events",
           });
-          console.error("Error fetching events:", response.data.message);
         }
       } catch (error) {
         setError({
@@ -109,7 +106,7 @@ const Event = () => {
   };
 
   useEffect(() => {
-    // Check if there are any public ongoing events
+  
     const hasPublicOngoingEvent = ongoingEvents.some(
       (event) => event.info.isPublic
     );
@@ -119,7 +116,6 @@ const Event = () => {
       (event) => event.info.relatedEvent === "null"
     );
 
-    // Store the event's name or title for display
     const eventName = eventWithNullRelated
       ? eventWithNullRelated.info.eventTitle
       : "";
@@ -127,19 +123,15 @@ const Event = () => {
   }, [ongoingEvents]);
 
   useEffect(() => {
-    // Get registered event IDs from auth context
+
     const registeredEventIds = authCtx.user.regForm || [];
-    console.log("Registered Events", registeredEventIds);
 
-    // Collect related event IDs, filtering out null, undefined, and 'null'
     const relatedEventIds = ongoingEvents
-      .map((event) => event.info.relatedEvent) // Extract relatedEvent IDs
-      .filter((id) => id !== null && id !== undefined && id !== "null") // Filter out null, undefined, and 'null'
-      .filter((id, index, self) => self.indexOf(id) === index); // Remove duplicates
+      .map((event) => event.info.relatedEvent) 
+      .filter((id) => id !== null && id !== undefined && id !== "null") 
+      .filter((id, index, self) => self.indexOf(id) === index); 
 
-    console.log("Related Event IDs", relatedEventIds);
 
-    // Check if user is registered in any related events
     let isRegisteredInRelatedEvents = false;
     if (registeredEventIds.length > 0 && relatedEventIds.length > 0) {
       isRegisteredInRelatedEvents = relatedEventIds.some((relatedEventId) =>
@@ -147,17 +139,13 @@ const Event = () => {
       );
     }
 
-    console.log(
-      "Is Registered in Related Events:",
-      isRegisteredInRelatedEvents
-    );
 
     if (isRegisteredInRelatedEvents) {
       setIsRegisteredInRelatedEvents(true);
     }
   }, [ongoingEvents, authCtx.user.regForm]);
 
-  console.log("Status", isRegisteredInRelatedEvents);
+
 
   const customStyles = {
     eventname: {
@@ -176,7 +164,6 @@ const Event = () => {
     teamCode: recoveryCtx.teamCode,
     teamName: recoveryCtx.teamName,
   };
-  console.log("teamCodeAndName is:", teamCodeAndName);
 
   // Slice the pastEvents array to show only the first 4 events
   const displayedPastEvents = pastEvents.slice(0, 4);
@@ -258,11 +245,11 @@ const Event = () => {
                                 customStyles={customStyles}
                                 modalpath="/Events/"
                                 aosDisable={false}
-                                isLoading={isLoading} // Pass the loading
+                                isLoading={isLoading} 
                                 isRegisteredInRelatedEvents={
                                   isRegisteredInRelatedEvents
-                                } // Pass the related Event status
-                                eventName={eventName} // Pass the event name
+                                } 
+                                eventName={eventName} 
                               />
                             </div>
                           ) : null
@@ -296,7 +283,7 @@ const Event = () => {
                                   type="past"
                                   customStyles={customStyles}
                                   modalpath="/Events/pastEvents/"
-                                  isLoading={isLoading} // Pass the loading state to each EventCard
+                                  isLoading={isLoading}
                                 />
                               </div>
                             ) : null
