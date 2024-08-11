@@ -59,13 +59,16 @@ const Login = () => {
     }
 
     try {
-      const response = await api.post("/api/auth/login", { email, password });
+      const response = await api.post("/api/auth/login", {
+        email: email.toLowerCase(),
+        password,
+      });
 
-      console.log("incoming response",response.data);
+      console.log("incoming response", response.data);
 
       if (response.status === 200 || response.status === 201) {
         const user = response.data.user;
-        console.log("user is ", user)
+        console.log("user is ", user);
 
         setAlert({
           type: "success",
@@ -81,7 +84,7 @@ const Login = () => {
         }, 750);
 
         setTimeout(() => {
-          localStorage.setItem("token",response.data.token);
+          localStorage.setItem("token", response.data.token);
           authCtx.login(
             user.name,
             user.email,
@@ -116,7 +119,9 @@ const Login = () => {
     } catch (error) {
       setAlert({
         type: "error",
-        message:error?.response?.data?.message|| "There was an error logging in. Please try again.",
+        message:
+          error?.response?.data?.message ||
+          "There was an error logging in. Please try again.",
         position: "bottom-right",
         duration: 3000,
       });
@@ -208,7 +213,7 @@ const Login = () => {
                 fontSize: "0.7rem",
                 cursor: "pointer",
                 width: "40%",
-                marginLeft:"0.4rem",
+                marginLeft: "0.4rem",
                 background: "var(--primary)",
                 WebkitBackgroundClip: "text",
                 color: "transparent",

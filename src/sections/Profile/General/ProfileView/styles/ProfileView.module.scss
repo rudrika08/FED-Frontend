@@ -64,6 +64,15 @@
     text-overflow: ellipsis; 
     white-space: nowrap; 
   }
+
+  &.highlight:hover{
+    overflow: scroll;
+    text-overflow: clip;
+  }
+
+  &.highlight::-webkit-scrollbar{
+    display: none;
+  }
 }
 
 .dets{
@@ -71,6 +80,7 @@
   font-size: 20px;
   padding-bottom: 27px;
   width:35%;
+  font-weight: 700;
 }
 
 
@@ -180,6 +190,7 @@
 
     .profileTable{
       width: 100%;
+      margin-left: -2%;
     }
 
   }
@@ -207,6 +218,10 @@
       display: grid;
       grid-template-columns: 5% 80% 15%;
       margin-left: 10px;
+    }
+
+    .profileTable{
+      margin-left: -20px;
     }
     
   }

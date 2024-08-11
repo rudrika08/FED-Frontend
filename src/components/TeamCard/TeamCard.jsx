@@ -8,13 +8,13 @@ import { Button } from "../Core";
 import AuthContext from "../../context/AuthContext";
 
 const TeamCard = ({
-  name,
-  image,
-  social,
-  title,
-  data,
-  role,
-  know,
+  member,
+  // image,
+  // social,
+  // title,
+  // data,
+  // role,
+  // know,
   blurhash,
   customStyles = {},
   onUpdate,
@@ -24,6 +24,12 @@ const TeamCard = ({
   const [contentLoaded, setContentLoaded] = useState(false);
   const [isImageLoaded, setIsImageLoaded] = useState(false);
   const [showSkeleton, setShowSkeleton] = useState(true);
+  const extraData = member?.extra || {
+    linkedin: "",
+    github: "",
+    know: "",
+    designation: "",
+  };
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -36,22 +42,28 @@ const TeamCard = ({
   const authCtx = useContext(AuthContext);
 
   const isDirectorRole =
-    ["PRESIDENT", "VICEPRESIDENT"].includes(role) ||
-    role.startsWith("DIRECTOR_");
+    ["PRESIDENT", "VICEPRESIDENT"].includes(member?.access) ||
+    member?.access?.startsWith("DIRECTOR_");
 
   const handleImageLoad = () => {
     setIsImageLoaded(true);
   };
 
   const handleLink = (url) => {
-    console.log("Social: ", social);
-    console.log("URL: ", url);
-
     if (url.startsWith("http://") || url.startsWith("https://")) {
       return url;
     } else {
       return "https://" + url;
     }
+  };
+
+  const isExtraDataEmpty = () => {
+    return (
+      !extraData?.designation &&
+      !extraData?.linkedin &&
+      !extraData?.github &&
+      !extraData.know
+    );
   };
 
   return (
@@ -79,8 +91,8 @@ const TeamCard = ({
               />
             )}
             <img
-              src={image}
-              alt={`Profile of ${name}`}
+              src={member?.img}
+              alt={`Profile of ${member?.name}`}
               className={styles.teamMemberImg}
               onLoad={handleImageLoad}
               style={{ display: isImageLoaded ? "block" : "none" }}
@@ -91,7 +103,7 @@ const TeamCard = ({
               customStyles.teamMemberInfo || ""
             }`}
           >
-            <h4 style={{ color: "#000" }}>{name}</h4>
+            <h4 style={{ color: "#000" }}>{member?.name}</h4>
           </div>
         </div>
         <div
@@ -101,22 +113,24 @@ const TeamCard = ({
         >
           {!showMore ? (
             <>
-              <h5
-                className={`${styles.teamMemberBackh5} ${
-                  customStyles.teamMemberBackh5 || ""
-                }`}
-                style={{ color: "#fff" }}
-              >
-                {title}
-              </h5>
+              {extraData.designation && (
+                <h5
+                  className={`${styles.teamMemberBackh5} ${
+                    customStyles.teamMemberBackh5 || ""
+                  }`}
+                  style={{ color: "#fff" }}
+                >
+                  {extraData.designation}
+                </h5>
+              )}
               <div
                 className={`${styles.socialLinks} ${
                   customStyles.socialLinks || ""
                 }`}
               >
-                {social.linkedin && (
+                {extraData?.linkedin && (
                   <a
-                    href={handleLink(social.linkedin)}
+                    href={handleLink(extraData?.linkedin)}
                     target="_blank"
                     rel="noopener noreferrer"
                     className={`${styles.socialLinksa} ${
@@ -126,9 +140,9 @@ const TeamCard = ({
                     <FaLinkedin />
                   </a>
                 )}
-                {social.github && (
+                {extraData?.github && (
                   <a
-                    href={handleLink(social.github)}
+                    href={handleLink(extraData?.github)}
                     target="_blank"
                     rel="noopener noreferrer"
                     className={`${styles.socialLinksa} ${
@@ -139,7 +153,7 @@ const TeamCard = ({
                   </a>
                 )}
               </div>
-              {isDirectorRole && (
+              {!isExtraDataEmpty() && isDirectorRole && (
                 <button
                   onClick={() => setShowMore(true)}
                   aria-expanded={showMore}
@@ -148,6 +162,15 @@ const TeamCard = ({
                   Know More
                 </button>
               )}
+              {isExtraDataEmpty() ? (
+                <div
+                  className={`${styles.knowPara} ${
+                    customStyles.knowPara || ""
+                  }`}
+                >
+                  <p>Nothing to show</p>
+                </div>
+              ) : null}
               {onUpdate && authCtx.user.access === "ADMIN" && (
                 <div
                   className={`${styles.updatebtn} ${
@@ -158,8 +181,8 @@ const TeamCard = ({
                     onClick={(e) => {
                       e.preventDefault();
                       if (onUpdate) {
-                        console.log(data);
-                        authCtx.memberData = data;
+                        console.log(member);
+                        authCtx.memberData = member;
                         onUpdate();
                       }
                     }}
@@ -170,17 +193,18 @@ const TeamCard = ({
                   <Button
                     onClick={(e) => {
                       e.preventDefault();
-                      const isConfirmed = window.confirm(`Do you really want to remove this member "${name}"?`);
-                      if (isConfirmed &&onRemove) {
-                        console.log(data);
-                        authCtx.memberData = data;
+                      const isConfirmed = window.confirm(
+                        `Do you really want to remove this member "${member?.name}"?`
+                      );
+                      if (isConfirmed && onRemove) {
+                        console.log(member);
+                        authCtx.memberData = member;
                         onRemove();
                       }
                     }}
                   >
                     Remove
                   </Button>
-                  {/* }} */}
                 </div>
               )}
             </>
@@ -190,11 +214,15 @@ const TeamCard = ({
                 customStyles.knowMoreContent || ""
               }`}
             >
-              <div
-                className={`${styles.knowPara} ${customStyles.knowPara || ""}`}
-              >
-                <p>{know}</p>
-              </div>
+              {extraData.know && (
+                <div
+                  className={`${styles.knowPara} ${
+                    customStyles.knowPara || ""
+                  }`}
+                >
+                  <p>{extraData.know}</p>
+                </div>
+              )}
               <button
                 onClick={() => setShowMore(false)}
                 aria-expanded={showMore}

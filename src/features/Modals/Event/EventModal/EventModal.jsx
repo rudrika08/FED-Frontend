@@ -261,15 +261,12 @@ const EventModal = (props) => {
   useEffect(() => {
     // Get registered event IDs from auth context
     const registeredEventIds = authCtx.user.regForm || [];
-    console.log("Registered Events", registeredEventIds);
 
     // Collect related event IDs, filtering out null, undefined, and 'null'
     const relatedEventIds = ongoingEvents
       .map((event) => event.info.relatedEvent) // Extract relatedEvent IDs
-      .filter((id) => id !== null && id !== undefined && id !== "null") // Filter out null, undefined, and 'null'
-      .filter((id, index, self) => self.indexOf(id) === index); // Remove duplicates
-
-    console.log("Related Event IDs", relatedEventIds);
+      .filter((id) => id !== null && id !== undefined && id !== "null")
+      .filter((id, index, self) => self.indexOf(id) === index); 
 
     // Check if user is registered in any related events
     let isRegisteredInRelatedEvents = false;
@@ -338,7 +335,7 @@ const EventModal = (props) => {
   const handleForm = () => {
     if (authCtx.isLoggedIn) {
       setIsMicroLoading(true);
-      if (authCtx.user.access !== "USER") {
+      if (authCtx.user.access !== "USER" && authCtx.user.access !== "ADMIN") {
         setTimeout(() => {
           setIsMicroLoading(false);
           setBtnTxt("Already Member");
@@ -569,7 +566,7 @@ const EventModal = (props) => {
                           {btnTxt === "Closed" ? (
                             <>
                               <div style={{ fontSize: "0.85rem" }}>
-                                Registration Closed
+                                Closed
                               </div>{" "}
                               <IoIosLock
                                 alt=""
