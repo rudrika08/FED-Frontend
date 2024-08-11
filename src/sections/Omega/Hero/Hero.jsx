@@ -43,7 +43,7 @@ function Hero({ ongoingEvents, isRegisteredInRelatedEvents, eventName }) {
   const handleForm = () => {
     if (authCtx.isLoggedIn) {
       setIsMicroLoading(true);
-      if (authCtx.user.access !== "USER") {
+      if (authCtx.user.access !== "USER" && authCtx.user.access !== "ADMIN") {
         setTimeout(() => {
           setIsMicroLoading(false);
           setAlert({
