@@ -64,7 +64,6 @@ const Accordion = () => {
             }`}
           >
             {item.content}
-            <div className={styles.cut2}></div>
           </div>
         </div>
         <div

@@ -1,6 +1,5 @@
 .mainPreview {
   display: flex;
-
   flex-direction: column;
   top: 0;
   left: 0;
@@ -55,9 +54,9 @@
   background: #555;
 }
 
-/* Optional: Add padding to the content to avoid overlapping with the scrollbar */
+
 .previewContainer > * {
-  padding-right: 1rem; /* Adjust as needed */
+  padding-right: 1rem; 
 }
 
 

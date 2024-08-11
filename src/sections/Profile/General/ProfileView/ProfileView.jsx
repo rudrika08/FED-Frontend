@@ -39,7 +39,7 @@ const Profile = ({ editmodal }) => {
       authCtx.user.regForm
     );
     console.log("editProfileCount", authCtx.user.editProfileCount);
-    if (authCtx.user.access!=="USER" || authCtx.user.editProfileCount > 0) {
+    if (authCtx.user.access !== "USER" || authCtx.user.editProfileCount > 0) {
       setIsOpen(true);
     } else {
       setAlert({
@@ -47,7 +47,6 @@ const Profile = ({ editmodal }) => {
         message: "You have exceeded the limit of editing your profile.",
         position: "bottom-right",
         duration: 3000,
-
       });
     }
   };
@@ -88,41 +87,45 @@ const Profile = ({ editmodal }) => {
           <FiEdit />
         </div>
       </div>
-      {authCtx.user && (
-        isLoading ? (
+      {authCtx.user &&
+        (isLoading ? (
           <ComponentLoading />
         ) : (
           <div className={styles.details}>
-            <table className={styles.profileTable}>
-              <tbody>
-                {userDetails.map((detail, index) => (
-                  <tr key={index}>
-                    <td className={styles.dets}>{detail.label}</td>
-                    <td className={styles.vals}>{detail.value}</td>
-                  </tr>
-                ))}
-                {authCtx.user.access !== "USER" && extraDetails.map((detail, index) => (
-                  (detail.value) ? (
+            <div className={styles.profileBox}>
+              <table className={styles.profileTable}>
+                <tbody>
+                  {userDetails.map((detail, index) => (
                     <tr key={index}>
                       <td className={styles.dets}>{detail.label}</td>
-                      <td className={styles.vals}>{detail.value}</td>
+                      <td className={`${styles.vals} ${detail.value ? styles.highlight : ""}`}>
+                        {detail.value}
+                      </td>
                     </tr>
-                  ) : (
-                    <tr key={index}>
-                      <td className={styles.dets}>{detail.label}</td>
-                      <td className={styles.vals}>N/A</td>
-                    </tr>
-                  )
-                ))}
-              </tbody>
-            </table>
+                  ))}
+                  {authCtx.user.access !== "USER" &&
+                    extraDetails.map((detail, index) =>
+                      detail.value ? (
+                        <tr  key={index}>
+                          <td className={styles.dets}>{detail.label}</td>
+                          <td className={`${styles.vals} ${detail.value ? styles.highlight : ""}`}>
+                          <a href={detail.value} target="_blank" style={{color: "white" , fontWeight: "500"}}>{detail.value}</a>
+                          </td>
+                        </tr>
+                      ) : (
+                        <tr key={index}>
+                          <td className={styles.dets} >{detail.label}</td>
+                          <td className={styles.vals}>N/A</td>
+                        </tr>
+                      )
+                    )}
+                </tbody>
+              </table>
+            </div>
           </div>
-        )
-      )}
-      {isOpen && (
-        <EditProfile handleModalClose={handleClose} />
-      )}
-      <Alert/>
+        ))}
+      {isOpen && <EditProfile handleModalClose={handleClose} />}
+      <Alert />
     </div>
   );
 };
