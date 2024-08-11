@@ -65,6 +65,20 @@ const Navbar = () => {
     closeMobileMenu();
   };
 
+  window.addEventListener("scroll", () => {
+    const navbarElements = document.getElementsByClassName(styles.navbar);
+    
+    if (window.scrollY > 0) {
+      for (let i = 0; i < navbarElements.length; i++) {
+        navbarElements[i].style.backdropFilter = "blur(20px)";
+      }
+    } else {
+      for (let i = 0; i < navbarElements.length; i++) {
+        navbarElements[i].style.backdropFilter = "none";
+      }
+    }
+  });
+  
   const isOmegaActive = activeLink === "/Omega";
 
   return (
