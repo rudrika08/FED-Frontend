@@ -81,7 +81,17 @@ const PastEvent = () => {
         <div className={style.whole}>
           <div className={style.eventwhole}>
             {isLoading ? (
-              <ComponentLoading />
+              <ComponentLoading
+                customStyles={{
+                  width: "100%",
+                  height: "100%",
+                  display: "flex",
+                  marginTop: "10rem",
+                  marginBottom: "10rem",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              />
             ) : error ? (
               <div className={style.error}>{error.message}</div>
             ) : (

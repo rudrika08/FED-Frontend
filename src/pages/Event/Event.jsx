@@ -72,10 +72,13 @@ const Event = () => {
             (event) => !event.info.isEventPast
           );
           const past = sortedEvents.filter((event) => event.info.isEventPast);
+          const sortedPastEvents = past.sort((a, b) => {
+            return new Date(b.info.eventDate) - new Date(a.info.eventDate);
+          });
 
           // Set state with the sorted events
           setOngoingEvents(ongoing);
-          setPastEvents(past);
+          setPastEvents(sortedPastEvents);
         } else {
           setError({
             message:

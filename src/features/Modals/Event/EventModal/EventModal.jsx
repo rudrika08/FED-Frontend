@@ -150,10 +150,10 @@ const EventModal = (props) => {
 
   const dayWithSuffix = day + getOrdinalSuffix(day);
   const month = date.toLocaleDateString("en-GB", { month: "long" });
+  const year = date.getFullYear(); // Get the full year
 
-  const formattedDate = `${dayWithSuffix} ${month}`;
+  const formattedDate = `${dayWithSuffix} ${month} ${year}`;
 
- 
   const calculateRemainingTime = () => {
     // Parse the regDateAndTime received from backend
     const regStartDate = parse(
@@ -196,12 +196,15 @@ const EventModal = (props) => {
 
   // Update button text based on registration status and remaining time
   useEffect(() => {
-    if (info.isRegistrationClosed) {
+    if (info.isRegistrationClosed || info.isEventPast) {
       setBtnTxt("Closed");
-    } else if (!remainingTime) {
-      setBtnTxt("Register Now");
-    } else {
+    } else if (remainingTime) {
+      if (authCtx.user.access === "USER") {
+        setBtnTxt("Locked");
+      }
       setBtnTxt(remainingTime);
+    } else {
+      setBtnTxt("Register Now");
     }
   }, [info.isRegistrationClosed, remainingTime]);
 
@@ -213,7 +216,7 @@ const EventModal = (props) => {
     const relatedEventIds = ongoingEvents
       .map((event) => event.info.relatedEvent) // Extract relatedEvent IDs
       .filter((id) => id !== null && id !== undefined && id !== "null")
-      .filter((id, index, self) => self.indexOf(id) === index); 
+      .filter((id, index, self) => self.indexOf(id) === index);
 
     // Check if user is registered in any related events
     let isRegisteredInRelatedEvents = false;
@@ -235,8 +238,10 @@ const EventModal = (props) => {
 
   useEffect(() => {
     if (authCtx.isLoggedIn && authCtx.user.regForm) {
-  
 
+      if (info.isRegistrationClosed) {
+        setBtnTxt("Closed");
+      }
       if (isRegisteredInRelatedEvents) {
         // console.log("checking for ", data?.id);
         if (data?.info?.relatedEvent === "null") {
@@ -254,9 +259,20 @@ const EventModal = (props) => {
         }
       } else {
         if (data?.info?.relatedEvent === "null") {
-          setBtnTxt("Register Now");
+          if (info.isRegistrationClosed) {
+            setBtnTxt("Closed");
+          } else {
+            if (remainingTime) {
+              setBtnTxt(remainingTime);
+            } else {
+              setBtnTxt("Register Now");
+            }
+          }
         } else {
-          setBtnTxt("Locked");
+          // setBtnTxt("Locked");
+          if (authCtx.user.access === "USER") {
+            setBtnTxt("Locked");
+          }
         }
       }
     }
@@ -264,6 +280,8 @@ const EventModal = (props) => {
     authCtx.isLoggedIn,
     authCtx.user.regForm,
     data,
+    info.isRegistrationClosed,
+    info.isEventPast,
     isRegisteredInRelatedEvents,
     remainingTime,
   ]);
@@ -413,9 +431,10 @@ const EventModal = (props) => {
 
                       {!imageLoaded && (
                         <Blurhash
+                          style={{ borderRadius: "10px" }}
                           hash="LEG8_%els7NgM{M{RiNI*0IVog%L"
                           width={"100%"}
-                          height={300}
+                          height={250}
                           resolutionX={32}
                           resolutionY={32}
                           punch={1}
@@ -461,7 +480,7 @@ const EventModal = (props) => {
                                 {" "}
                                 Team size:
                               </span>{" "}
-                                {info.minTeamSize} - {info.maxTeamSize} {" | "}
+                              {info.minTeamSize} - {info.maxTeamSize} {" | "}
                             </>
                           ) : (
                             <>
@@ -506,14 +525,13 @@ const EventModal = (props) => {
                             btnTxt === "Closed" ||
                             btnTxt === "Already Registered" ||
                             btnTxt === "Already Member" ||
-                            btnTxt === "Locked"
+                            btnTxt === "Locked" ||
+                            btnTxt === `${remainingTime}`
                           }
                         >
                           {btnTxt === "Closed" ? (
                             <>
-                              <div style={{ fontSize: "0.85rem" }}>
-                                Closed
-                              </div>{" "}
+                              <div style={{ fontSize: "0.85rem" }}>Closed</div>{" "}
                               <IoIosLock
                                 alt=""
                                 style={{

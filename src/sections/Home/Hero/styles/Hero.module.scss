@@ -81,6 +81,7 @@
   filter: blur(100px);
   position: absolute;
   top: 60%; 
+  opacity: 50%;
   left: -35%;
   border-radius: 50%;
   overflow: hidden;
@@ -194,7 +195,8 @@
   .circle{
     top: 80%;
     left: -150%;
+    opacity: 50%;
     height: 100vw;
-    background-color: rgba(255, 92, 0, 0.49);
+    background-color: rgba(255, 92, 0, 0.3);
   }
 }

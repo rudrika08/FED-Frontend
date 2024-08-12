@@ -4,11 +4,14 @@ import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "../../../context/AuthContext";
 import styles from "./styles/Hero.module.scss";
-import {Alert, MicroLoading} from "../../../microInteraction"; // Ensure this import path is correct
+import { parse, differenceInMilliseconds } from "date-fns";
+import { Alert, MicroLoading } from "../../../microInteraction"; // Ensure this import path is correct
 
 function Hero({ ongoingEvents, isRegisteredInRelatedEvents, eventName }) {
   const authCtx = useContext(AuthContext);
   const [alert, setAlert] = useState(null);
+  const [remainingTime, setRemainingTime] = useState("");
+  const [info, setInfo] = useState({});
   const navigate = useNavigate();
   const [shouldNavigate, setShouldNavigate] = useState(false);
   const [navigatePath, setNavigatePath] = useState("/");
@@ -54,7 +57,6 @@ function Hero({ ongoingEvents, isRegisteredInRelatedEvents, eventName }) {
           });
         }, 1500);
       } else {
-
         const relatedEventId = ongoingEvents.find(
           (e) => e.info.relatedEvent === "null"
         )?.id;
@@ -69,11 +71,86 @@ function Hero({ ongoingEvents, isRegisteredInRelatedEvents, eventName }) {
     }
   };
 
-  const buttonText = !authCtx.isLoggedIn
-    ? "REGISTER NOW"
-    : isRegisteredInRelatedEvents
-    ? "ALREADY REGISTERED"
-    : "REGISTER NOW";
+  const calculateRemainingTime = () => {
+    if (!info?.regDateAndTime) {
+      setRemainingTime(null);
+      return;
+    }
+
+    // Parse the regDateAndTime received from backend
+    try {
+      const regStartDate = parse(
+        info.regDateAndTime,
+        "MMMM do yyyy, h:mm:ss a",
+        new Date()
+      );
+      const now = new Date();
+
+      // Calculate the time difference in milliseconds
+      const timeDifference = differenceInMilliseconds(regStartDate, now);
+
+      if (timeDifference <= 0) {
+        setRemainingTime(null);
+        return;
+      }
+
+      // Calculate the days, hours, minutes, and seconds remaining
+      const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((timeDifference / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((timeDifference / (1000 * 60)) % 60);
+      const seconds = Math.floor((timeDifference / 1000) % 60);
+
+      let remaining;
+
+      if (days > 0) {
+        remaining = `${days} day${days > 1 ? "s" : ""} left`;
+      } else {
+        remaining = [
+          hours > 0 ? `${hours}h ` : "",
+          minutes > 0 ? `${minutes}m ` : "",
+          seconds > 0 ? `${seconds}s` : "",
+        ]
+          .join("")
+          .trim();
+      }
+
+      console.log(remaining);
+      setRemainingTime(remaining);
+    } catch (error) {
+      console.error("Date parsing error:", error);
+      setRemainingTime(null);
+    }
+  };
+
+  useEffect(() => {
+    const ongoingInfo = ongoingEvents.find(
+      (e) => e.info.relatedEvent === "null"
+    )?.info;
+    setInfo(ongoingInfo);
+    if (ongoingInfo?.regDateAndTime) {
+      calculateRemainingTime();
+      const intervalId = setInterval(calculateRemainingTime, 1000);
+      return () => clearInterval(intervalId);
+    }
+  }, [info?.regDateAndTime, ongoingEvents]);
+
+  const buttonText = (() => {
+    if (!authCtx.isLoggedIn) {
+      return remainingTime || "REGISTER NOW";
+    } else {
+      if (authCtx.user.access !== "USER") {
+        if (remainingTime) {
+          return remainingTime;
+        } else {
+          return "ALREADY MEMBER";
+        }
+      } else if (isRegisteredInRelatedEvents) {
+        return "ALREADY REGISTERED";
+      } else {
+        return remainingTime || "REGISTER NOW";
+      }
+    }
+  })();
 
   return (
     <div className={styles.hero}>
@@ -106,10 +183,16 @@ function Hero({ ongoingEvents, isRegisteredInRelatedEvents, eventName }) {
         <p>Empowering Entrepreneurs, Energizing the Future</p>
         <button
           onClick={handleButtonClick}
-          disabled={buttonText === "ALREADY REGISTERED"}
+          disabled={
+            buttonText === "ALREADY REGISTERED" ||
+            remainingTime ||
+            "ALREADY MEMBER"
+          }
           style={{
             cursor:
-              buttonText === "ALREADY REGISTERED" ? "not-allowed" : "pointer",
+              buttonText === "ALREADY REGISTERED" || remainingTime
+                ? "not-allowed"
+                : "pointer",
           }}
         >
           {isMicroLoading && buttonText === "REGISTER NOW" ? (

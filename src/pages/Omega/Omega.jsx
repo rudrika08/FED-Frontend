@@ -128,7 +128,7 @@ function Omega() {
         eventName={eventName}
       />
       <Attend />
-      <Sponsors />
+  
       <Accordion />
       <Element name="TeamImage">
         <motion.div

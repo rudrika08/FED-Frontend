@@ -9,7 +9,6 @@ import styles from "./styles/Event.module.scss";
 import { Alert, MicroLoading } from "../../../microInteraction"; // Ensure this import path is correct
 
 function EventCard({ data, isRegisteredInRelatedEvents, ongoingEvents }) {
-
   const authCtx = useContext(AuthContext);
   const { ref, inView } = useInView({
     threshold: 0.1,
@@ -91,9 +90,25 @@ function EventCard({ data, isRegisteredInRelatedEvents, ongoingEvents }) {
         }
       } else {
         if (data.info.relatedEvent === "null") {
-          setBtnTxt("Register Now");
+          if (remainingTime) {
+            setBtnTxt(remainingTime);
+          } else {
+            if (authCtx.user.access === "USER") {
+              setBtnTxt("Register Now");
+            } else {
+              setBtnTxt("Already Member");
+            }
+          }
         } else {
-          setBtnTxt("Locked");
+          if (authCtx.user.access === "USER") {
+            setBtnTxt("Locked");
+          } else {
+            if (remainingTime) {
+              setBtnTxt(remainingTime);
+            } else {
+              setBtnTxt("Already Member");
+            }
+          }
         }
       }
     } else {
@@ -167,15 +182,34 @@ function EventCard({ data, isRegisteredInRelatedEvents, ongoingEvents }) {
                 position: "bottom-right",
                 duration: 3000,
               });
+            } else if (
+              btnTxt === "Already Member" &&
+              authCtx.isLoggedIn &&
+              authCtx.user.access !== "USER"
+            ) {
+              setAlert({
+                type: "infoOmega",
+                message: `Team Members cannot register for Omega4.0`,
+                position: "bottom-right",
+                duration: 3000,
+              });
             }
           }}
         >
           <button
             onClick={handleRegisterClick}
-            disabled={btnTxt === "Locked" || btnTxt === "Registered"}
+            disabled={
+              btnTxt === "Locked" ||
+              btnTxt === "Registered" ||
+              btnTxt === remainingTime ||
+              btnTxt === "Already Member"
+            }
             style={{
               cursor:
-                btnTxt === "Locked" || btnTxt === "Registered"
+                btnTxt === "Locked" ||
+                btnTxt === "Registered" ||
+                btnTxt === remainingTime ||
+                btnTxt === "Already Member"
                   ? "not-allowed"
                   : "pointer",
             }}

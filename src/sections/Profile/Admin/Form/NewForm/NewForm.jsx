@@ -976,7 +976,7 @@ function NewForm() {
                   color: !data.isRegistrationClosed ? "#FF8A00" : "white",
                 }}
               >
-                Close
+                Open
               </span>
               /
               <span
@@ -984,7 +984,7 @@ function NewForm() {
                   color: data.isRegistrationClosed ? "#FF8A00" : "white",
                 }}
               >
-                Open
+                Close
               </span>
               )
             </label>
@@ -1028,7 +1028,7 @@ function NewForm() {
                   color: !data.isEventPast ? "#FF8A00" : "white",
                 }}
               >
-                Past
+                Ongoing
               </span>
               /
               <span
@@ -1036,7 +1036,7 @@ function NewForm() {
                   color: data.isEventPast ? "#FF8A00" : "white",
                 }}
               >
-                Ongoing
+                Past
               </span>
               )
             </label>
