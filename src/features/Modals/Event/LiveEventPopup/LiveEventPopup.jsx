@@ -18,12 +18,19 @@ const LiveEventPopup = () => {
           (event) =>
             event.info.isEventPast === false &&
             event.info.isPublic === true &&
-            event.info.eventPriority === "1"
+            event.info.relatedEvent === "null"
         );
-        // console.log("currentEvent:", currentEvent);
+
         if (currentEvent && !sessionStorage.getItem("popupDisplayed")) {
           setIsEventOngoing(true);
-          setEventImage(currentEvent[0].info.eventImg);
+
+          const today = new Date();
+          const endDate = new Date("2024-08-15");
+          const imageUrl = today <= endDate
+            ? "https://res.cloudinary.com/dm6jd6bhk/image/upload/v1723489222/WebImages/tnxnprjjzkdu8l2qrdlg.jpg"
+            : "https://res.cloudinary.com/dm6jd6bhk/image/upload/v1723489201/WebImages/doszbdruslss8qltkiv5.jpg";
+
+          setEventImage(imageUrl);
 
           const timer = setTimeout(() => {
             setIsVisible(true);
@@ -60,8 +67,6 @@ const LiveEventPopup = () => {
     setIsVisible(false);
   };
 
-  // console.log("eventImageurl:",eventImage);
-
   return (
     <>
       {isEventOngoing && (
@@ -71,7 +76,7 @@ const LiveEventPopup = () => {
               ×
             </button>
             <a href="/Events">
-              <img src={eventImage} alt="Event" />
+              <img src={eventImage} alt="Event" className={styles.popupContent} />
             </a>
           </div>
         </div>

@@ -112,8 +112,9 @@ const EventCard = (props) => {
 
   const dayWithSuffix = day + getOrdinalSuffix(day);
   const month = date.toLocaleDateString("en-GB", { month: "long" });
+  const year = date.getFullYear(); // Get the full year
 
-  const formattedDate = `${dayWithSuffix} ${month}`;
+  const formattedDate = `${dayWithSuffix} ${month} ${year}`;
 
   const modifyDateFormat = (dateStr) => {
     // Remove the ordinal suffix from the day
@@ -182,10 +183,13 @@ const EventCard = (props) => {
   useEffect(() => {
     if (info.isRegistrationClosed) {
       setBtnTxt("Closed");
-    } else if (!remainingTime) {
-      setBtnTxt("Register Now");
-    } else {
+    } else if (remainingTime) {
+      if (authCtx.user.access === "USER") {
+        setBtnTxt("Locked");
+      }
       setBtnTxt(remainingTime);
+    } else {
+      setBtnTxt("Register Now");
     }
   }, [info.isRegistrationClosed, remainingTime]);
 
@@ -210,9 +214,16 @@ const EventCard = (props) => {
         }
       } else {
         if (data.info.relatedEvent === "null") {
-          setBtnTxt("Register Now");
+          if (remainingTime) {
+            setBtnTxt(remainingTime);
+          } else {
+            setBtnTxt("Register Now");
+          }
         } else {
-          setBtnTxt("Locked");
+          // setBtnTxt("Locked");
+          if (authCtx.user.access === "USER") {
+            setBtnTxt("Locked");
+          }
         }
       }
     }
@@ -387,7 +398,11 @@ const EventCard = (props) => {
             <div
               style={{ fontSize: ".9rem", color: "white" }}
               onMouseEnter={() => {
-                if (btnTxt === "Locked" && authCtx.isLoggedIn && authCtx.user.access === "USER") {
+                if (
+                  btnTxt === "Locked" &&
+                  authCtx.isLoggedIn &&
+                  authCtx.user.access === "USER"
+                ) {
                   setAlert({
                     type: "info",
                     message: `You need to register for ${eventName} first`,
@@ -455,7 +470,6 @@ const EventCard = (props) => {
               </button>
             </div>
           )}
-          
         </div>
         <div className={style.backtxt} style={customStyles.backtxt}>
           <div style={{ display: "flex", alignItems: "center" }}>
@@ -504,7 +518,9 @@ const EventCard = (props) => {
           <Button
             onClick={(e) => {
               e.preventDefault();
-              const isConfirmed = window.confirm(`Do you really want to delete this event "${info.eventTitle}"?`);
+              const isConfirmed = window.confirm(
+                `Do you really want to delete this event "${info.eventTitle}"?`
+              );
               if (isConfirmed && onDelete) {
                 authCtx.eventData = data;
                 onDelete();

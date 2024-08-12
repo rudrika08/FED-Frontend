@@ -106,8 +106,10 @@ export default function Footer() {
             <div className={styles.footerright}>
               <h4 className={styles.socialh4}>Social</h4>
               <div className={styles.icondiv2}>
-                <Link
-                  to="/"
+                <a
+                  href="https://www.linkedin.com/company/fedkiit/"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className={`${styles.link1} ${
                     isOmega ? styles.omegaSocialLink : ""
                   }`}
@@ -117,9 +119,11 @@ export default function Footer() {
                       isOmega ? styles.omegaSocialLink : ""
                     }`}
                   />
-                </Link>
-                <Link
-                  to="/Events"
+                </a>
+                <a
+                  href="https://www.instagram.com/fedkiit?igsh=amNpM3UxMjE1d3Iy"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className={`${styles.link1} ${
                     isOmega ? styles.omegaSocialLink : ""
                   }`}
@@ -129,9 +133,11 @@ export default function Footer() {
                       isOmega ? styles.omegaSocialLink : ""
                     }`}
                   />
-                </Link>
-                <Link
-                  to="/Social"
+                </a>
+                <a
+                  href="https://youtube.com/@federationkiit"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className={`${styles.link1} ${
                     isOmega ? styles.omegaSocialLink : ""
                   }`}
@@ -141,7 +147,7 @@ export default function Footer() {
                       isOmega ? styles.omegaSocialLink : ""
                     }`}
                   />
-                </Link>
+                </a>
               </div>
             </div>
           </div>
