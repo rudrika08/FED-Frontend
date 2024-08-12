@@ -27,8 +27,8 @@ const LiveEventPopup = () => {
           const today = new Date();
           const endDate = new Date("2024-08-15");
           const imageUrl = today <= endDate
-            ? "https://uploads-ssl.webflow.com/65e4aa9d7c506b88d60a346e/66ba04453d9068bf8c140ed6_omega.jpg"
-            : "https://res.cloudinary.com/dm6jd6bhk/image/upload/v1723474145/WebImages/mttmhakhlpej28eudxca.jpg";
+            ? "https://res.cloudinary.com/dm6jd6bhk/image/upload/v1723489222/WebImages/tnxnprjjzkdu8l2qrdlg.jpg"
+            : "https://res.cloudinary.com/dm6jd6bhk/image/upload/v1723489201/WebImages/doszbdruslss8qltkiv5.jpg";
 
           setEventImage(imageUrl);
 

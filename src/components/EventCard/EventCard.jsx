@@ -183,10 +183,13 @@ const EventCard = (props) => {
   useEffect(() => {
     if (info.isRegistrationClosed) {
       setBtnTxt("Closed");
-    } else if (!remainingTime) {
-      setBtnTxt("Register Now");
-    } else {
+    } else if (remainingTime) {
+      if (authCtx.user.access === "USER") {
+        setBtnTxt("Locked");
+      }
       setBtnTxt(remainingTime);
+    } else {
+      setBtnTxt("Register Now");
     }
   }, [info.isRegistrationClosed, remainingTime]);
 
@@ -211,12 +214,16 @@ const EventCard = (props) => {
         }
       } else {
         if (data.info.relatedEvent === "null") {
-          setBtnTxt("Register Now");
+          if (remainingTime) {
+            setBtnTxt(remainingTime);
+          } else {
+            setBtnTxt("Register Now");
+          }
         } else {
-          setBtnTxt("Locked");
-          // if (authCtx.user.access === "USER") {
-          //   setBtnTxt("Locked");
-          // }
+          // setBtnTxt("Locked");
+          if (authCtx.user.access === "USER") {
+            setBtnTxt("Locked");
+          }
         }
       }
     }

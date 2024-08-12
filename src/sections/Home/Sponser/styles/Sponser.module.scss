@@ -16,7 +16,7 @@
 }
 
 .sponser_div{
-  border-radius: 2.77rem; //border radius of outer container holding every card
+  border-radius: 2.77rem;
   border: 0.88px solid rgba(255, 255, 255, 0.40);
   background: rgba(255, 255, 255, 0.10);
   backdrop-filter: blur(6.7px);
@@ -32,8 +32,9 @@
 .sponser_card {
   height: 7rem;
   width: 7rem;
-  border-radius: 4.9rem; //border radius of each card
+  border-radius: 4.9rem;
   border: 2px solid white;
+  background-color: white;
   overflow: hidden;
 }
 
@@ -137,7 +138,9 @@
   .sponser_card {
     height: 5rem;
     width: 5rem;
-    border-radius: 20px;
+    border-radius: 4.9rem;
+    border: 2px solid white;
+    background-color: white;
   }
 
   .sponser_title {
