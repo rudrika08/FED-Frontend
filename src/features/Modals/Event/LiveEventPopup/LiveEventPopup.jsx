@@ -18,7 +18,7 @@ const LiveEventPopup = () => {
           (event) =>
             event.info.isEventPast === false &&
             event.info.isPublic === true &&
-            event.info.eventPriority === "1"
+            event.info.relatedEvent === "null"
         );
         // console.log("currentEvent:", currentEvent);
         if (currentEvent && !sessionStorage.getItem("popupDisplayed")) {
