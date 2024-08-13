@@ -401,13 +401,13 @@ const PreviewForm = ({
         });
         if (response.data) {
           const { teamName, teamCode } = response.data;
-           console.log("eventdata:",eventData);
+      
           const participationType = eventData?.participationType;
-          console.log("preview form Participation type:",participationType)
+    
           if (participationType === "Team") {
             setTeam(teamName);
             setcode(teamCode);
-            console.log("saved context teamCode:",recoveryCtx.teamCode)
+        
             // console.log("consoling teamdata:", teamName, teamCode);
           }
      

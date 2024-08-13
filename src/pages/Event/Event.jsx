@@ -33,7 +33,6 @@ const Event = () => {
 
   useEffect(() => {
     if (recoveryCtx.teamCode && recoveryCtx.teamName) {
-      console.log("event page data:",recoveryCtx.teamCode,recoveryCtx.teamName)
       if (!isOpen) {
         setOpenModal(true);
       }
