@@ -162,7 +162,7 @@ const PreviewForm = ({
 
   useEffect(() => {
     if (isSuccess) {
-      const participationType = eventData?.info?.participationType;
+      const participationType = eventData?.participationType;
       const handleAutoClose = () => {
         setTimeout(() => {
           if (participationType === "Team") {
@@ -376,7 +376,7 @@ const PreviewForm = ({
       });
 
       if (response.status === 200 || response.status === 201) {
-        const updatedRegForm = [...authCtx.user.regForm, eventData.id];
+        const updatedRegForm = [...authCtx.user.regForm, form.id];
         authCtx.update(
           authCtx.user.name,
           authCtx.user.email,
@@ -401,14 +401,16 @@ const PreviewForm = ({
         });
         if (response.data) {
           const { teamName, teamCode } = response.data;
-
-          const participationType = eventData?.info?.participationType;
+      
+          const participationType = eventData?.participationType;
+    
           if (participationType === "Team") {
             setTeam(teamName);
             setcode(teamCode);
-            // console.log("saved context teamCode:",recoveryCtx.teamCode)
+        
+            // console.log("consoling teamdata:", teamName, teamCode);
           }
-          // console.log("consoling teamdata:", teamName, teamCode);
+     
         }
         setIsSuccess(true);
       } else {

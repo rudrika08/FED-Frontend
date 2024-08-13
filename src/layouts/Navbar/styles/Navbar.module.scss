@@ -191,6 +191,7 @@
   list-style: none;
   padding: 5px;
   margin-top: -5px;
+  margin-right: 1rem;
 }
 
 .authButton {
@@ -244,8 +245,8 @@
 
 .profileImgdiv {
   height: 60px;
-  width: 130px;
-  margin: 10px 0 15px;
+  width: 60px;
+  margin: 10px 0 15px 45px;
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -253,7 +254,7 @@
 
 .profileImgdiv img {
   height: 90%;
-  width: auto;
+  width: 100%;
   border-radius: 50%;
 }
 
