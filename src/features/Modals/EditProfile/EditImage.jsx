@@ -7,15 +7,19 @@ import { Button } from '../../../components';
 import { X } from 'lucide-react';
 import { Alert, MicroLoading } from "../../../microInteraction";
 import { api } from "../../../services";
+import camera from "../../../assets/images/camera.svg";
 // import { RecoveryContext } from '../../../context/RecoveryContext';
 
 const EditImage = (props) => {
   const{selectedFile, closeModal, setimage, updatePfp,setimgprv,setFile,fileName}=props;
-  const [scale, setScale] = useState(1);
+  // const [scale, setScale] = useState(1);
+  const [errorMsg,setMsg]=useState(null);
   const [alert, setAlert] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const authCtx = useContext(AuthContext);
-  const editorRef = useRef(null);
+  const imgRef = useRef(null);
+
+  // const editorRef = useRef(null);
 
 
   useEffect(() => {
@@ -25,24 +29,47 @@ const EditImage = (props) => {
     }
   }, [alert]);
 
-  const handleScaleChange = (e) => {
-    const scaleValue = parseFloat(e.target.value);
-    setScale(scaleValue);
+  // const handleScaleChange = (e) => {
+  //   const scaleValue = parseFloat(e.target.value);
+  //   setScale(scaleValue);
+  // };
+
+
+  const MAX_FILE_SIZE_MB = 0.75; // 750 KB
+  const MAX_FILE_SIZE_BYTES = MAX_FILE_SIZE_MB * 1024 * 1024;
+
+  const checkFileSize = (file) => file.size <= MAX_FILE_SIZE_BYTES;
+
+  const handleFileChange = (event) => {
+    setFile(event.target.files[0]);
+    setMsg(null);
   };
 
   const handleSave = async () => {
-    if (editorRef.current && selectedFile) {
+    if (selectedFile) {
+      if (!checkFileSize(selectedFile)) {
+        setAlert({
+          type: "error",
+          message: "File size should not exceed 750 KB.",
+          position: "bottom-right",
+          duration: 3000,
+        });
+        setMsg("File Size should not exceed 750 KB");
+        return;
+      }
+
       setIsLoading(true);
-      const canvas = editorRef.current.getImageScaledToCanvas();
-      canvas.toBlob(async (blob) => {
-        const imageFile = new File([blob], "profile.jpg", { type: "image/jpeg" });
+      // const canvas = editorRef.current.getImageScaledToCanvas();
+      // canvas.toBlob(async (blob) => {
+        // const imageFile = new File([blob], "profile.jpg", { type: "image/jpeg" });
       
 
         if (updatePfp) {
           try {
             const formData = new FormData();
             formData.append('email', authCtx.user.email);
-            formData.append('image', imageFile);
+            // formData.append('image', imageFile);
+            formData.append('image',selectedFile);
 
             const response = await api.post('/api/user/editProfileImage', formData, {
               headers: {
@@ -52,7 +79,7 @@ const EditImage = (props) => {
             });
 
             if (response.status === 200 || response.status === 201) {
-              // console.log("Profile image updated successfully!", response.data);
+   
               if(response.data.url){
            
                 authCtx.update(
@@ -68,11 +95,11 @@ const EditImage = (props) => {
                   authCtx.user.extra.linkedin,
                   authCtx.user.extra.designation,
                   authCtx.user.access,
-                  authCtx.user.editPorfileCount,
+                  authCtx.user.editProfileCount,
                   authCtx.user.regForm
                 );
               }
-              setimage(URL.createObjectURL(blob));
+              setimage(selectedFile);
               // setimage(response.data.url)
               setAlert({
                 type: "success",
@@ -106,26 +133,36 @@ const EditImage = (props) => {
         } else {
           // For AddMemberForm: Just update the preview image
           // setimage(URL.createObjectURL(blob));
-          setimgprv(imageFile,URL.createObjectURL(blob));
-          setFile(imageFile);
+          // setimgprv(imageFile,URL.createObjectURL(blob));
+          // setFile(imageFile);
           closeModal();
         }
-      }, "image/jpeg");
+      // }, "image/jpeg");
     }
   };
 
   const handleUpload = () => {
-    if (editorRef.current && selectedFile) {
-      const canvas = editorRef.current.getImageScaledToCanvas();
-      canvas.toBlob(async (blob) => {
-        const imageFile = new File([blob], fileName, { type: "image/jpeg" });
+    if (selectedFile) {
+      if (!checkFileSize(selectedFile)) {
+        setAlert({
+          type: "error",
+          message: "File size should not exceed 750 KB.",
+          position: "bottom-right",
+          duration: 3000,
+        });
+        setMsg("File Size should not exceed 750 KB");
+        return;
+      }
+      // const canvas = editorRef.current.getImageScaledToCanvas();
+      // canvas.toBlob(async (blob) => {
+        // const imageFile = new File([blob], fileName, { type: "image/jpeg" });
         // console.log("imagefile after crop", imageFile);
-        authCtx.croppedImageFile =imageFile; 
+        authCtx.croppedImageFile =selectedFile; 
         // console.log("file stored in context:",authCtx.croppedImageFile);
         // console.log("selected file :", selectedFile);
-        setimgprv(URL.createObjectURL(blob));
+        setimgprv(URL.createObjectURL(selectedFile));
         closeModal();
-      }, "image/jpeg");
+      // }, "image/jpeg");
     }
   };
 
@@ -165,7 +202,31 @@ const EditImage = (props) => {
             >
               <X />
             </button>
-            <AvatarEditor
+            <span className={style.imageTitle}>Image preview</span>
+            <div style={{height:"15rem", width:"15rem" , borderRadius:"20%"}}>
+              <img style={{height:"100%", width:"100%" , objectFit:"cover",borderRadius:"10%" }} className={style.imagePreview} src={URL.createObjectURL(selectedFile)} alt="" />
+            </div>
+            {errorMsg &&<div style={{width:"97%",marginLeft:"auto",marginRight:"auto" ,position:"relative",display:"flex" ,alignItems:"center", justifyContent:"space-between",marginTop:"5px"}}><span className={style.errMsg}>{errorMsg}</span>      
+                <div
+                  style={{ position: "absolute", right:"0", bottom:"0.1rem"}}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    imgRef.current?.click();
+                  }}
+                >
+                  <img src={camera} alt="camera" />
+                </div>
+                <input
+                  style={{
+                    display: "none",
+                  }}
+                  type="file"
+                  ref={imgRef}
+                  onChange={handleFileChange}
+                />
+               
+              </div>} 
+            {/* <AvatarEditor
               ref={editorRef}
               image={selectedFile}
               width={150}
@@ -173,10 +234,10 @@ const EditImage = (props) => {
               border={50}
               style={{ borderRadius: "2rem" }}
               borderRadius={125}
-              scale={scale}
-            />
-            <div className={style.wrapper}>
-              <input
+              // scale={scale}
+            /> */}
+            {/* <div className={style.wrapper}> */}
+              {/* <input
                 className={style.rangeInput}
                 type="range"
                 value={scale}
@@ -184,8 +245,8 @@ const EditImage = (props) => {
                 max="2"
                 step="0.01"
                 onChange={handleScaleChange}
-              />
-            </div>
+              /> */}
+            {/* </div> */}
             <div style={{ display: "flex", justifyContent: "center" }}>
 
             {updatePfp?  <Button type='button' onClick={handleSave} className={style.submit}>

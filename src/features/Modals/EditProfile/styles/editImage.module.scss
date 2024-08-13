@@ -8,7 +8,7 @@
     rgba(37, 37, 37, 0.95) 106.29%
   );
   
-  padding: 3rem;
+  padding: 2rem;
   border-radius: 1.26863rem;
   border: 1.2px solid rgba(214, 214, 214, 0.81);
 }
@@ -18,8 +18,8 @@
     padding: 0.5rem 1rem;
     border: none;
     border-radius: 10px;
-    margin-top: 25px;
-    margin-bottom: 10px;
+    margin-top: 15px;
+    margin-bottom: 5px;
     cursor: pointer;
   }
 
@@ -30,8 +30,8 @@
     font-size: 30px;
     position: absolute;
     cursor: pointer;
-    top: 0.55rem;
-    right: 1.5rem;
+    top: 0.1rem;
+    right: 0.7rem;
   }
 
  
@@ -108,3 +108,31 @@
     box-shadow: -20rem 0 0 20rem rgba(255, 255, 255, 0.2);
   }
   
+  .imagePreview{
+    border: 5px solid #1c1c1c;
+  }
+
+  .imageTitle{
+    font-size: 1.3rem;
+    font-weight: 600;
+    // margin-top: 0.5rem;
+    background: var(
+      --Primary,
+      linear-gradient(
+        260deg,
+        rgba(255, 190, 11, 0.84) -29.7%,
+        rgba(244, 43, 3, 0.84) 128.34%
+      )
+    );
+    color: transparent;
+    background-clip: text;
+    text-align: center;
+    margin-top: -1rem;
+
+  }
+
+  .errMsg{
+    font-size: 0.9rem;
+    color:red;
+    width: 70%;
+  }

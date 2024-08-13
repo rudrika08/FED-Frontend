@@ -146,6 +146,7 @@ const Sidebar = ({ activepage, handleChange }) => {
                 closeModal={closeModal}
                 setimage={setImage}
                 updatePfp={true}
+                setFile={setSelectedFile}
               />
             )}
             {authCtx.user.access !== "USER" && (
