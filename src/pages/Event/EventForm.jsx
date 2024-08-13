@@ -27,16 +27,11 @@ const EventForm = () => {
   useEffect(() => {
     const fetchEvent = async () => {
       try {
-        const response = await api.get("/api/form/getAllForms");
+        const response = await api.get(`/api/form/getAllForms?id=${eventId}`);
         // console.log("registerForm",response.data)
         if (response.status === 200) {
-          const fetchedEvents = response.data.events;
-        
-          // console.log("event id i want ::",id);
-        const filteredEvent = fetchedEvents.find((e)=>e.id===id);
+          setEventData(response.data.events);
           
-          setEventData(filteredEvent);
-          // console.log("fetched all events:",filteredEvent);
         } else {
           setAlert({
             type: "error",
@@ -49,9 +44,9 @@ const EventForm = () => {
       } catch (error) {
         console.error("Error fetching event:", error);
 
-        const { events } = FormData;
-        const localEventData = events.find((event) => event.id === id);
-        setEventData(localEventData);
+        // const { events } = FormData;
+        // const localEventData = events.find((event) => event.id === id);
+        // setEventData(localEventData);
       } finally {
         setIsLoading(false);
       }
@@ -66,8 +61,9 @@ const EventForm = () => {
         <PreviewForm
           open={showPreview}
           handleClose={() => setShowPreview(false)}
-          sections={eventData?.sections || []} // Ensure sections is always an array
-          eventData={eventData || {}} // Pass the correct data prop
+          sections={eventData?.sections || []}
+          eventData={eventData?.info || {}}
+          form={eventData || {}}
           showCloseBtn={true}
         />
       )}

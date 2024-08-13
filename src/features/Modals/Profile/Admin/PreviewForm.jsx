@@ -29,6 +29,7 @@ const hasOptions = ["select", "checkbox", "radio"];
 const PreviewForm = ({
   isEditing,
   eventData,
+  form,
   sections = [],
   open,
   meta = [],
@@ -348,7 +349,7 @@ const PreviewForm = ({
         (sec.name === "Join Team" && isCompleted.includes(sec._id))
     );
 
-    formData.append("_id", eventData.id);
+    formData.append("_id", form.id);
     formData.append("sections", JSON.stringify(constructToSave()));
     formData.append("createTeam", isCreateTeam);
     formData.append("joinTeam", isJoinTeam);
@@ -550,7 +551,7 @@ const PreviewForm = ({
                 fontSize: "25px",
               }}
             >
-              {eventData.info?.eventTitle || "Preview Event"}
+              {eventData?.eventTitle || "Preview Event"}
             </Text>
             {isLoading ? (
               <ComponentLoading

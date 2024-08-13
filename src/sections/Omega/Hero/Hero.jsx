@@ -185,12 +185,13 @@ function Hero({ ongoingEvents, isRegisteredInRelatedEvents, eventName }) {
           onClick={handleButtonClick}
           disabled={
             buttonText === "ALREADY REGISTERED" ||
-            remainingTime ||
-            "ALREADY MEMBER"
+            buttonText === "ALREADY MEMBER" ||
+            buttonText === remainingTime
           }
           style={{
             cursor:
-              buttonText === "ALREADY REGISTERED" || remainingTime
+              buttonText === "ALREADY REGISTERED" ||
+              buttonText === "ALREADY MEMBER" || remainingTime
                 ? "not-allowed"
                 : "pointer",
           }}
