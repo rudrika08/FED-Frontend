@@ -376,7 +376,7 @@ const PreviewForm = ({
       });
 
       if (response.status === 200 || response.status === 201) {
-        const updatedRegForm = [...authCtx.user.regForm, eventData.id];
+        const updatedRegForm = [...authCtx.user.regForm, form.id];
         authCtx.update(
           authCtx.user.name,
           authCtx.user.email,
