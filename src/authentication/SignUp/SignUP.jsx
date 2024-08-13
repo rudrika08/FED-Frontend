@@ -155,7 +155,8 @@ const SignUp = () => {
     } = showUser;
 
     const name = FirstName + " " + LastName;
-    const password = bcrypt.hashSync(Password, import.meta.env.VITE_BCRYPT);
+    const saltRounds = parseInt(import.meta.env.VITE_BCRYPT, 10);
+    const password = bcrypt.hashSync(Password, saltRounds);
     const user = {
       name,
       email,
