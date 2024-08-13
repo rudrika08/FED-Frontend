@@ -15,7 +15,9 @@ function Hero({ ongoingEvents, isRegisteredInRelatedEvents, eventName }) {
   const navigate = useNavigate();
   const [shouldNavigate, setShouldNavigate] = useState(false);
   const [navigatePath, setNavigatePath] = useState("/");
-  const [isMicroLoading, setIsMicroLoading] = useState(false);
+  const [isMicroLoading, setIsMicroLoading] = useState(true);
+  const [relatedEventId, setrelatedEventId] = useState(null);
+  const [btnTxt, setBtnTxt] = useState("REGISTER NOW");
 
   useEffect(() => {
     if (alert) {
@@ -127,6 +129,12 @@ function Hero({ ongoingEvents, isRegisteredInRelatedEvents, eventName }) {
       (e) => e.info.relatedEvent === "null"
     )?.info;
     setInfo(ongoingInfo);
+
+    const relatedId = ongoingEvents.find(
+      (e) => e.info.relatedEvent === "null"
+    )?.id;
+    setrelatedEventId(relatedId);
+
     if (ongoingInfo?.regDateAndTime) {
       calculateRemainingTime();
       const intervalId = setInterval(calculateRemainingTime, 1000);
@@ -134,23 +142,38 @@ function Hero({ ongoingEvents, isRegisteredInRelatedEvents, eventName }) {
     }
   }, [info?.regDateAndTime, ongoingEvents]);
 
-  const buttonText = (() => {
-    if (!authCtx.isLoggedIn) {
-      return remainingTime || "REGISTER NOW";
-    } else {
-      if (authCtx.user.access !== "USER") {
-        if (remainingTime) {
-          return remainingTime;
-        } else {
-          return "ALREADY MEMBER";
-        }
-      } else if (isRegisteredInRelatedEvents) {
-        return "ALREADY REGISTERED";
+  useEffect(() => {
+    const updateButtonText = () => {
+      if (!authCtx.isLoggedIn) {
+        setIsMicroLoading(false);
+        setBtnTxt(remainingTime || "REGISTER NOW");
       } else {
-        return remainingTime || "REGISTER NOW";
+        if (authCtx.user.access !== "USER") {
+          if (remainingTime) {
+            setBtnTxt(remainingTime);
+          } else {
+            setBtnTxt("ALREADY MEMBER");
+          }
+        } else if (isRegisteredInRelatedEvents) {
+          if (authCtx.user.regForm.includes(relatedEventId)) {
+            setIsMicroLoading(false);
+            setBtnTxt("ALREADY REGISTERED");
+          } else {
+            setIsMicroLoading(false);
+            setBtnTxt(remainingTime || "REGISTER NOW");
+          }
+        }
       }
-    }
-  })();
+    };
+
+    updateButtonText();
+  }, [
+    authCtx.isLoggedIn,
+    authCtx.user?.access,
+    remainingTime,
+    isRegisteredInRelatedEvents,
+    ongoingEvents,
+  ]);
 
   return (
     <div className={styles.hero}>
@@ -183,23 +206,24 @@ function Hero({ ongoingEvents, isRegisteredInRelatedEvents, eventName }) {
         <p>Empowering Entrepreneurs, Energizing the Future</p>
         <button
           onClick={handleButtonClick}
-          disabled={
-            buttonText === "ALREADY REGISTERED" ||
-            buttonText === "ALREADY MEMBER" ||
-            buttonText === remainingTime
+          disabled={isMicroLoading ||
+            btnTxt === "ALREADY REGISTERED" ||
+            btnTxt === "ALREADY MEMBER" ||
+            btnTxt === remainingTime
           }
           style={{
             cursor:
-              buttonText === "ALREADY REGISTERED" ||
-              buttonText === "ALREADY MEMBER" || remainingTime
+              btnTxt === "ALREADY REGISTERED" ||
+              btnTxt === "ALREADY MEMBER" ||
+              remainingTime
                 ? "not-allowed"
                 : "pointer",
           }}
         >
-          {isMicroLoading && buttonText === "REGISTER NOW" ? (
+          {isMicroLoading && btnTxt === "REGISTER NOW" ? (
             <MicroLoading color="#38ccff" />
           ) : (
-            buttonText
+            btnTxt
           )}
         </button>
       </div>

@@ -490,7 +490,7 @@ const SignUp = () => {
                     textAlign: "center",
                   }}
                 >
-                  agree to FED's
+                  Agree to FED's
                   <Link
                     to="/TermsAndConditions"
                     style={{

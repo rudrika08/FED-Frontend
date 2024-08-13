@@ -68,7 +68,7 @@ const EventModal = (props) => {
           setPastEvents(past);
 
           const eventData = response.data?.events.find((e) => e.id === eventId);
-          console.log("fetched event modal test:", eventData);
+          // console.log("fetched event modal test:", eventData);
           setData(eventData);
           setInfo(eventData?.info);
         } else {

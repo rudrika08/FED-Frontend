@@ -164,6 +164,9 @@ function App() {
 
           {/* Routes for Authentication witout Navbar and footer */}
           <Route element={<AuthLayout />}>
+         {!authCtx.isLoggedIn && (
+            <Route path="/profile/*" element={<Navigate to="/Login" />} />
+          )}
             <Route
               path="/Login"
               element={
