@@ -33,6 +33,7 @@ const Event = () => {
 
   useEffect(() => {
     if (recoveryCtx.teamCode && recoveryCtx.teamName) {
+      console.log("event page data:",recoveryCtx.teamCode,recoveryCtx.teamName)
       if (!isOpen) {
         setOpenModal(true);
       }
@@ -167,6 +168,7 @@ const Event = () => {
     teamCode: recoveryCtx.teamCode,
     teamName: recoveryCtx.teamName,
   };
+  console.log(teamCodeAndName);
 
   // Slice the pastEvents array to show only the first 4 events
   const displayedPastEvents = pastEvents.slice(0, 4);
