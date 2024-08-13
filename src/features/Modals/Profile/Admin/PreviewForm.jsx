@@ -473,9 +473,6 @@ const PreviewForm = ({
   const renderPaymentScreen = () => {
     const { eventType, receiverDetails, eventAmount } = formData;
 
-
-    console.log("Type",eventType);
-    console.log("Section",currentSection);
     if (eventType === "Paid" && currentSection.name === "Payment Details") {
       return (
         <div
