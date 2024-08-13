@@ -293,6 +293,17 @@ function NewForm() {
         });
         return false;
       }
+
+      if (!data.find((field) => field.name === "T&C Acceptance").value) {
+        setAlert({
+          type: "error",
+          message: "You must accept the terms and conditions to proceed.",
+          position: "bottom-right",
+          duration: 3000,
+        });
+        return false;
+      }
+      
     }
 
     if (data.participationType === "Team") {
