@@ -148,6 +148,7 @@ function Hero({ ongoingEvents, isRegisteredInRelatedEvents, eventName }) {
         setIsMicroLoading(false);
         setBtnTxt(remainingTime || "REGISTER NOW");
       } else {
+        setIsMicroLoading(false);
         if (authCtx.user.access !== "USER") {
           if (remainingTime) {
             setBtnTxt(remainingTime);
