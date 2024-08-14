@@ -198,31 +198,31 @@ function EventCard({ data, isRegisteredInRelatedEvents, ongoingEvents }) {
         <p>{data.info.eventdescription}</p>
         <div
           style={{ fontSize: ".9rem", color: "white" }}
-          onMouseEnter={() => {
-            if (
-              btnTxt === "Locked" &&
-              authCtx.isLoggedIn &&
-              authCtx.user.access === "USER"
-            ) {
-              setAlert({
-                type: "infoOmega",
-                message: `You need to register for Omega4.0 first`,
-                position: "bottom-right",
-                duration: 3000,
-              });
-            } else if (
-              btnTxt === "Already Member" &&
-              authCtx.isLoggedIn &&
-              authCtx.user.access !== "USER"
-            ) {
-              setAlert({
-                type: "infoOmega",
-                message: `Team Members cannot register for Omega4.0`,
-                position: "bottom-right",
-                duration: 3000,
-              });
-            }
-          }}
+        //   onMouseEnter={() => {
+        //     if (
+        //       btnTxt === "Locked" &&
+        //       authCtx.isLoggedIn &&
+        //       authCtx.user.access === "USER"
+        //     ) {
+        //       setAlert({
+        //         type: "infoOmega",
+        //         message: `You need to register for Omega4.0 first`,
+        //         position: "bottom-right",
+        //         duration: 3000,
+        //       });
+        //     } else if (
+        //       btnTxt === "Already Member" &&
+        //       authCtx.isLoggedIn &&
+        //       authCtx.user.access !== "USER"
+        //     ) {
+        //       setAlert({
+        //         type: "infoOmega",
+        //         message: `Team Members cannot register for Omega4.0`,
+        //         position: "bottom-right",
+        //         duration: 3000,
+        //       });
+        //     }
+        //   }}
         >
           <button
             onClick={handleRegisterClick}

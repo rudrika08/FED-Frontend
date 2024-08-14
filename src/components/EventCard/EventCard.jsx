@@ -317,7 +317,6 @@ const EventCard = (props) => {
     return <EventCardSkeleton />;
   }
 
-  const isDisabled = () => {};
   return (
     <div>
       <div

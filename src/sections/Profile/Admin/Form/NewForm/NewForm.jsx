@@ -731,15 +731,7 @@ function NewForm() {
             value: "Upload Payment Screenshot",
             isRequired: true,
             validations: [],
-          },
-          {
-            _id: nanoid(),
-            name: "T&C Acceptance",
-            type: "radio",
-            value: "Accept Terms & Conditions,",
-            isRequired: true,
-            validations: [],
-          },
+          }
         ],
       });
     } else {
