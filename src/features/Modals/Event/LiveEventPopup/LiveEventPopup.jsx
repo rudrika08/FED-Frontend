@@ -26,8 +26,7 @@ const LiveEventPopup = () => {
 
           const today = new Date();
           const endDate = new Date("2024-08-15");
-          console.log(currentEvent);
-          const imageUrl = "https://res.cloudinary.com/dm6jd6bhk/image/upload/v1723661287/WebImages/pafxir54o0dzikm1kzzp.png";
+          const imageUrl = currentEvent[0].info.eventImg;
 
           setEventImage(imageUrl);
 
