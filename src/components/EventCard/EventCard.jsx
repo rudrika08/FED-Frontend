@@ -243,7 +243,36 @@ const EventCard = (props) => {
     setOpen(false);
   };
 
+  const isValiedState = () => {
+    if (
+      btnTxt === "Closed" ||
+      btnTxt === "Already Registered" ||
+      btnTxt === "Already Member" ||
+      btnTxt === `${remainingTime}`
+    ) {
+      return false;
+    }
+    if (
+      btnTxt === "Locked" &&
+      authCtx.isLoggedIn &&
+      authCtx.user.access === "USER"
+    ) {
+      setAlert({
+        type: "info",
+        message: `You need to register for ${eventName} first`,
+        position: "bottom-right",
+        duration: 3000,
+      });
+      return false;
+    }
+    return true;
+  };
+
   const handleForm = () => {
+    if (!isValiedState()) {
+      return null;
+    }
+
     if (authCtx.isLoggedIn) {
       setIsMicroLoading(true);
       if (authCtx.user.access !== "USER" && authCtx.user.access !== "ADMIN") {
@@ -397,20 +426,14 @@ const EventCard = (props) => {
           {type === "ongoing" && showRegisterButton && (
             <div
               style={{ fontSize: ".9rem", color: "white" }}
-              onMouseEnter={() => {
-                if (
-                  btnTxt === "Locked" &&
-                  authCtx.isLoggedIn &&
-                  authCtx.user.access === "USER"
-                ) {
-                  setAlert({
-                    type: "info",
-                    message: `You need to register for ${eventName} first`,
-                    position: "bottom-right",
-                    duration: 3000,
-                  });
-                }
-              }}
+              // onMouseEnter={() => {
+              //   if (
+              //     btnTxt === "Locked" &&
+              //     authCtx.isLoggedIn &&
+              //     authCtx.user.access === "USER"
+              //   ) {
+              //   }
+              // }}
             >
               <button
                 className={style.registerbtn}
@@ -419,13 +442,13 @@ const EventCard = (props) => {
                   cursor: btnTxt === "Register Now" ? "pointer" : "not-allowed",
                 }}
                 onClick={handleForm}
-                disabled={
-                  btnTxt === "Closed" ||
-                  btnTxt === "Locked" ||
-                  btnTxt === "Already Registered" ||
-                  btnTxt === "Already Member" ||
-                  btnTxt === `${remainingTime}`
-                }
+                // disabled={
+                //   btnTxt === "Closed" ||
+                //   btnTxt === "Locked" ||
+                //   btnTxt === "Already Registered" ||
+                //   btnTxt === "Already Member" ||
+                //   btnTxt === `${remainingTime}`
+                // }
               >
                 {btnTxt === "Closed" ? (
                   <>
