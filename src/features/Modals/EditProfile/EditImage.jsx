@@ -41,7 +41,7 @@ const EditImage = (props) => {
   //   setScale(scaleValue);
   // };
 
-  const MAX_FILE_SIZE_MB = 0.75; // 750 KB
+  const MAX_FILE_SIZE_MB = 0.70; // 750 KB
   const MAX_FILE_SIZE_BYTES = MAX_FILE_SIZE_MB * 1024 * 1024;
 
   const checkFileSize = (file) => file.size <= MAX_FILE_SIZE_BYTES;
@@ -56,11 +56,11 @@ const EditImage = (props) => {
       if (!checkFileSize(selectedFile)) {
         setAlert({
           type: "error",
-          message: "File size should not exceed 750 KB.",
+          message: "File size should not exceed 700 KB.",
           position: "bottom-right",
           duration: 3000,
         });
-        setMsg("File Size should not exceed 750 KB");
+        setMsg("File Size should not exceed 700 KB");
         return;
       }
 
@@ -155,11 +155,11 @@ const EditImage = (props) => {
       if (!checkFileSize(selectedFile)) {
         setAlert({
           type: "error",
-          message: "File size should not exceed 750 KB.",
+          message: "File size should not exceed 700 KB.",
           position: "bottom-right",
           duration: 3000,
         });
-        setMsg("File Size should not exceed 750 KB");
+        setMsg("File Size should not exceed 700 KB");
         return;
       }
       // const canvas = editorRef.current.getImageScaledToCanvas();
