@@ -97,7 +97,7 @@ const TeamCard = ({
               customStyles.teamMemberInfo || ""
             }`}
           >
-            <h4 style={{ color: "#000" }}>{member?.name}</h4>
+            <h4 style={{ color: "#000", paddingTop:"12px" }}>{member?.name}</h4>
           </div>
         </div>
         <div
