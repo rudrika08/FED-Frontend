@@ -29,11 +29,13 @@ const Team = () => {
           const validMembers = response.data.data.filter(
             (member) => member.name !== null
           );
-          const sortedMembers = validMembers.sort((a, b) =>
-            a.name.localeCompare(b.name)
-          );
+          const sortedMembers = validMembers.sort((a, b) => {
+            if (b.year !== a.year) {
+              return b.year - a.year;
+            }
+            return a.name.localeCompare(b.name);
+          });
           setTeamMembers(sortedMembers);
-          // console.log("incoming response", response.data.data);
         } else {
           console.error("Error fetching team members:", response.data.message);
           setError({
@@ -47,10 +49,12 @@ const Team = () => {
           message:
             "Sorry for the inconvenience, we are having issues fetching our Team Members",
         });
-        // using local JSON data
-        const testMembers = MemberData.sort((a, b) =>
-          a.name.localeCompare(b.name)
-        );
+        const testMembers = MemberData.sort((a, b) => {
+          if (b.year !== a.year) {
+            return b.year - a.year;
+          }
+          return a.name.localeCompare(b.name);
+        });
         setTeamMembers(testMembers);
       } finally {
         setIsLoading(false);
@@ -68,7 +72,6 @@ const Team = () => {
           setAccess(filteredAccess);
         } else {
           console.error("Error fetching Access Types:", response.data.message);
-          // using local JSON data
           const testAccess = AccessTypes.data;
           const filteredAccess = testAccess.filter(
             (accessType) => !["ADMIN", "USER", "ALUMNI"].includes(accessType)
@@ -77,7 +80,6 @@ const Team = () => {
         }
       } catch (error) {
         console.error("Error fetching Access Types:", error);
-        // using local JSON data
         const testAccess = AccessTypes.data;
         const filteredAccess = testAccess.filter(
           (accessType) => !["ADMIN", "USER", "ALUMNI"].includes(accessType)
@@ -90,6 +92,7 @@ const Team = () => {
     fetchTeamMembers();
   }, []);
 
+  // Define the director access codes in the desired order
   const directorAccessCodes = [
     "PRESIDENT",
     "VICEPRESIDENT",
@@ -100,6 +103,23 @@ const Team = () => {
     "DIRECTOR_SPONSORSHIP",
   ];
 
+  // Separate directors from other members
+  const directorsAndAbove = teamMembers
+    .filter((member) => directorAccessCodes.includes(member.access))
+    .sort((a, b) => {
+      const aIndex = directorAccessCodes.indexOf(a.access);
+      const bIndex = directorAccessCodes.indexOf(b.access);
+      if (aIndex !== bIndex) {
+        return aIndex - bIndex; // Sort by access code order
+      }
+      return a.name.localeCompare(b.name); // Sort alphabetically within the same role
+    });
+
+  const otherMembers = teamMembers.filter(
+    (member) => !directorAccessCodes.includes(member.access)
+  );
+
+  // Create a role map for non-director roles
   const roleMap = access.reduce((map, code) => {
     if (!directorAccessCodes.includes(code)) {
       let role = code
@@ -115,14 +135,11 @@ const Team = () => {
     return map;
   }, {});
 
-  const directorsAndAbove = directorAccessCodes
-    .map((code) => teamMembers.find((member) => member.access === code))
-    .filter(Boolean);
-
+  // Group team members by their role
   const teamByRole = Object.keys(roleMap)
     .map((role) => ({
       role,
-      members: teamMembers.filter(
+      members: otherMembers.filter(
         (member) => member.access === roleMap[role]
       ),
     }))
