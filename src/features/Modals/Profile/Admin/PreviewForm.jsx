@@ -162,7 +162,9 @@ const PreviewForm = ({
 
   useEffect(() => {
     if (isSuccess) {
-      const participationType = eventData?.info?.participationType;
+      
+      const participationType = eventData?.participationType;
+      console.log(participationType);
       const handleAutoClose = () => {
         setTimeout(() => {
           if (participationType === "Team") {
