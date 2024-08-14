@@ -159,10 +159,10 @@ function Hero({ ongoingEvents, isRegisteredInRelatedEvents, eventName }) {
           if (authCtx.user.regForm.includes(relatedEventId)) {
             setIsMicroLoading(false);
             setBtnTxt("ALREADY REGISTERED");
-          } else {
-            setIsMicroLoading(false);
-            setBtnTxt(remainingTime || "REGISTER NOW");
           }
+        } else {
+          setIsMicroLoading(false);
+          setBtnTxt(remainingTime || "REGISTER NOW");
         }
       }
     };
