@@ -162,7 +162,7 @@ const PreviewForm = ({
 
   useEffect(() => {
     if (isSuccess) {
-      const participationType = eventData?.participationType;
+      const participationType = eventData?.info?.participationType;
       const handleAutoClose = () => {
         setTimeout(() => {
           if (participationType === "Team") {
@@ -401,16 +401,14 @@ const PreviewForm = ({
         });
         if (response.data) {
           const { teamName, teamCode } = response.data;
-      
+
           const participationType = eventData?.participationType;
-    
           if (participationType === "Team") {
             setTeam(teamName);
             setcode(teamCode);
-        
-            // console.log("consoling teamdata:", teamName, teamCode);
+            // console.log("saved context teamCode:",recoveryCtx.teamCode)
           }
-     
+          // console.log("consoling teamdata:", teamName, teamCode);
         }
         setIsSuccess(true);
       } else {
@@ -537,13 +535,18 @@ const PreviewForm = ({
       <div className={styles.mainPreview}>
         <div className={styles.previewContainerWrapper}>
           <div ref={wrapperRef} className={styles.previewContainer}>
-            {showCloseBtn && (
-              <Link to="/Events" onClick={handleClose}>
-                <div className={styles.closeBtn}>
+            {showCloseBtn &&
+              (isEditing ? (
+                <div onClick={handleClose} className={styles.closeBtn}>
                   <X />
                 </div>
-              </Link>
-            )}
+              ) : (
+                <Link to="/Events" onClick={handleClose}>
+                  <div className={styles.closeBtn}>
+                    <X />
+                  </div>
+                </Link>
+              ))}
             <Text
               style={{
                 marginBottom: "20px",

@@ -122,7 +122,35 @@ function EventCard({ data, isRegisteredInRelatedEvents, ongoingEvents }) {
     remainingTime,
   ]);
 
+  const isValiedState = () => {
+    if (
+      btnTxt === "Closed" ||
+      btnTxt === "Already Registered" ||
+      btnTxt === "Already Member" ||
+      btnTxt === `${remainingTime}`
+    ) {
+      return false;
+    }
+    if (
+      btnTxt === "Locked" &&
+      authCtx.isLoggedIn &&
+      authCtx.user.access === "USER"
+    ) {
+      setAlert({
+        type: "infoOmega",
+        message: `You need to register for Omega4.0 first`,
+        position: "bottom-right",
+        duration: 3000,
+      });
+      return false;
+    }
+    return true;
+  };
+
   const handleRegisterClick = () => {
+    if (!isValiedState()) {
+      return null;
+    }
     if (!authCtx.isLoggedIn) {
       sessionStorage.setItem("prevPage", window.location.pathname);
       navigate("/login");
@@ -198,20 +226,14 @@ function EventCard({ data, isRegisteredInRelatedEvents, ongoingEvents }) {
         >
           <button
             onClick={handleRegisterClick}
-            disabled={
-              btnTxt === "Locked" ||
-              btnTxt === "Registered" ||
-              btnTxt === remainingTime ||
-              btnTxt === "Already Member"
-            }
+            // disabled={
+            //   btnTxt === "Locked" ||
+            //   btnTxt === "Registered" ||
+            //   btnTxt === remainingTime ||
+            //   btnTxt === "Already Member"
+            // }
             style={{
-              cursor:
-                btnTxt === "Locked" ||
-                btnTxt === "Registered" ||
-                btnTxt === remainingTime ||
-                btnTxt === "Already Member"
-                  ? "not-allowed"
-                  : "pointer",
+              cursor: btnTxt === "Register Now" ? "pointer" : "not-allowed",
             }}
           >
             {isMicroLoading ? <MicroLoading color="#38ccff" /> : btnTxt}
