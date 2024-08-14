@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Skeleton from "react-loading-skeleton";
 import { SkeletonTheme } from "react-loading-skeleton";
@@ -10,9 +10,11 @@ import Text from "../../../../components/Core/Text";
 import defaultImg from "../../../../assets/images/defaultImg.jpg";
 import { api } from "../../../../services";
 import styles from "../EventModal/styles/EventModal.module.scss";
+import AuthContext from "../../../../context/AuthContext";
 
 const EventStats = ({ onClosePath }) => {
   const navigate = useNavigate();
+  const authCtx = useContext(AuthContext);
   const { eventId } = useParams();
   const [info, setInfo] = useState({});
   const [data, setData] = useState({});
@@ -93,15 +95,12 @@ const EventStats = ({ onClosePath }) => {
 
   const handleDownload = async () => {
     try {
-      const response = await api.get(
-        `/api/form/download/${eventId}`,
-        {
-          responseType: "blob",
-          headers: {
-            Authorization: `Bearer ${window.localStorage.getItem("token")}`,
-          },
-        }
-      );
+      const response = await api.get(`/api/form/download/${eventId}`, {
+        responseType: "blob",
+        headers: {
+          Authorization: `Bearer ${window.localStorage.getItem("token")}`,
+        },
+      });
 
       if (response.status === 200) {
         setAlert({
@@ -236,25 +235,27 @@ const EventStats = ({ onClosePath }) => {
                       >
                         {info.eventTitle}
                       </div>
-                      <div
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          marginTop: "1rem",
-                          padding: "0.5rem",
-                          borderRadius: "0.5rem",
-                          cursor: "pointer",
-                        }}
-                        onClick={handleDownload}
-                      >
-                        <FaDownload
-                          size={18}
+                      {authCtx.user.access === "ADMIN" && (
+                        <div
                           style={{
-                            marginRight: "2rem",
-                            color: "#FF8A00",
+                            display: "flex",
+                            alignItems: "center",
+                            marginTop: "1rem",
+                            padding: "0.5rem",
+                            borderRadius: "0.5rem",
+                            cursor: "pointer",
                           }}
-                        />
-                      </div>
+                          onClick={handleDownload}
+                        >
+                          <FaDownload
+                            size={18}
+                            style={{
+                              marginRight: "2rem",
+                              color: "#FF8A00",
+                            }}
+                          />
+                        </div>
+                      )}
                     </div>
 
                     <div style={{ display: "flex", justifyContent: "left" }}>

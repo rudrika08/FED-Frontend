@@ -294,16 +294,15 @@ function NewForm() {
         return false;
       }
 
-      if (!data.find((field) => field.name === "T&C Acceptance").value) {
-        setAlert({
-          type: "error",
-          message: "You must accept the terms and conditions to proceed.",
-          position: "bottom-right",
-          duration: 3000,
-        });
-        return false;
-      }
-      
+      // if (!data.find((field) => field.name === "T&C Acceptance").value) {
+      //   setAlert({
+      //     type: "error",
+      //     message: "You must accept the terms and conditions to proceed.",
+      //     position: "bottom-right",
+      //     duration: 3000,
+      //   });
+      //   return false;
+      // }
     }
 
     if (data.participationType === "Team") {
@@ -732,14 +731,7 @@ function NewForm() {
             value: "Upload Payment Screenshot",
             isRequired: true,
             validations: [],
-          },
-          {
-            _id: nanoid(),
-            name: "T&C Acceptance",
-            type: "checkbox",
-            value: "Accept Terms & Conditions",
-            isRequired: true,
-          },
+          }
         ],
       });
     } else {
@@ -1355,12 +1347,13 @@ function NewForm() {
         )}
         {showPreview && (
           <PreviewForm
-            isEditing={isEditing}
+            isEditing={true}
             open={showPreview}
             handleClose={() => setshowPreview(false)}
             sections={constructForPreview()}
-            eventData={{ ...data, _id: authCtx.eventData?.id }}
+            eventData={{ ...data, id: authCtx.eventData?.id }}
             meta={paymentSection ? [paymentSection] : []}
+            form={data}
             showCloseBtn={true}
           />
         )}
