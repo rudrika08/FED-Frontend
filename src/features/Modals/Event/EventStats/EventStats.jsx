@@ -30,7 +30,7 @@ const EventStats = ({ onClosePath }) => {
           `/api/form/getFormAnalytics/${eventId}`,
           {
             headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
+              Authorization: `Bearer ${window.localStorage.getItem("token")}`,
             },
           }
         );
@@ -98,7 +98,7 @@ const EventStats = ({ onClosePath }) => {
         {
           responseType: "blob",
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            Authorization: `Bearer ${window.localStorage.getItem("token")}`,
           },
         }
       );
