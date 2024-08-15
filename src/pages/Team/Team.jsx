@@ -49,13 +49,13 @@ const Team = () => {
           message:
             "Sorry for the inconvenience, we are having issues fetching our Team Members",
         });
-        const testMembers = MemberData.sort((a, b) => {
-          if (b.year !== a.year) {
-            return b.year - a.year;
-          }
-          return a.name.localeCompare(b.name);
-        });
-        setTeamMembers(testMembers);
+        // const testMembers = MemberData.sort((a, b) => {
+        //   if (b.year !== a.year) {
+        //     return b.year - a.year;
+        //   }
+        //   return a.name.localeCompare(b.name);
+        // });
+        // setTeamMembers(testMembers);
       } finally {
         setIsLoading(false);
       }
@@ -71,20 +71,28 @@ const Team = () => {
           );
           setAccess(filteredAccess);
         } else {
+          setError({
+            message:
+              "Sorry for the inconvenience, we are having issues fetching our Team Members",
+          });
           console.error("Error fetching Access Types:", response.data.message);
-          const testAccess = AccessTypes.data;
-          const filteredAccess = testAccess.filter(
-            (accessType) => !["ADMIN", "USER", "ALUMNI"].includes(accessType)
-          );
-          setAccess(filteredAccess);
+          // const testAccess = AccessTypes.data;
+          // const filteredAccess = testAccess.filter(
+          //   (accessType) => !["ADMIN", "USER", "ALUMNI"].includes(accessType)
+          // );
+          // setAccess(filteredAccess);
         }
       } catch (error) {
+        setError({
+          message:
+            "Sorry for the inconvenience, we are having issues fetching our Team Members",
+        });
         console.error("Error fetching Access Types:", error);
-        const testAccess = AccessTypes.data;
-        const filteredAccess = testAccess.filter(
-          (accessType) => !["ADMIN", "USER", "ALUMNI"].includes(accessType)
-        );
-        setAccess(filteredAccess);
+        // const testAccess = AccessTypes.data;
+        // const filteredAccess = testAccess.filter(
+        //   (accessType) => !["ADMIN", "USER", "ALUMNI"].includes(accessType)
+        // );
+        // setAccess(filteredAccess);
       }
     };
 
