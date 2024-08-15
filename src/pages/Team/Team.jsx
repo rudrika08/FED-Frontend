@@ -143,14 +143,24 @@ const Team = () => {
     return map;
   }, {});
 
-  // Group team members by their role
   const teamByRole = Object.keys(roleMap)
-    .map((role) => ({
-      role,
-      members: otherMembers.filter(
+    .map((role) => {
+      const members = otherMembers.filter(
         (member) => member.access === roleMap[role]
-      ),
-    }))
+      );
+
+      const seniorExecutives = members.filter(
+        (member) => member.extra?.designation === "Senior Executive"
+      );
+      const otherMembersWithoutSenior = members.filter(
+        (member) => member.extra?.designation !== "Senior Executive"
+      );
+
+      return {
+        role,
+        members: [...seniorExecutives, ...otherMembersWithoutSenior],
+      };
+    })
     .filter((roleGroup) => roleGroup.members.length > 0);
 
   const sortedTeamByRole = teamByRole.sort((a, b) => {
