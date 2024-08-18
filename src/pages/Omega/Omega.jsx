@@ -9,6 +9,7 @@ import Hero from "../../sections/Omega/Hero/Hero.jsx";
 import Accordion from "../../sections/Omega/Accordion/Accordion";
 import Sponsors from "../../sections/Omega/Sponsors/Sponsors";
 import Event from "../../sections/Omega/Event/Event.jsx";
+import FedShow from "../../sections/Omega/FedShow/FedShow.jsx"
 import TeamImage from "../../sections/Omega/TeamImage/TeamImage.jsx";
 import Attend from "../../sections/Omega/Attend/Attend.jsx";
 import ChatBot from "../../features/ChatBot/ChatBot.jsx";
@@ -122,6 +123,7 @@ function Omega() {
         isRegisteredInRelatedEvents={isRegisteredInRelatedEvents}
         eventName={eventName}
       />
+      <FedShow />
       <Event
         ongoingEvents={ongoingEvents}
         isRegisteredInRelatedEvents={isRegisteredInRelatedEvents}
