@@ -253,6 +253,14 @@ const Team = () => {
 
           <TeamSection members={directorsAndAbove} isDirector={true} />
 
+          <div className={styles.alumniBut}>
+            <div className={styles.ulhover}>
+              <Link to="/Alumni">
+                <span style={{ color: "#fff" }}>Our</span> Alumni
+              </Link>
+              <FaRegArrowAltCircleRight />
+            </div>
+          </div>
           {sortedTeamByRole.map(
             (section, index) =>
               section.members.length > 0 && (
@@ -279,15 +287,6 @@ const Team = () => {
           )}
         </>
       )}
-
-      <div className={styles.alumniBut}>
-        <div className={styles.ulhover}>
-          <Link to="/Alumni">
-            <span style={{ color: "#fff" }}>Meet</span> Our Alumni
-          </Link>
-          <FaRegArrowAltCircleRight />
-        </div>
-      </div>
     </div>
   );
 };
