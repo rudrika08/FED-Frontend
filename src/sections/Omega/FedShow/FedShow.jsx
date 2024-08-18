@@ -86,7 +86,7 @@ function FedShow() {
             style={{ perspective: 1000 }}
           >
             <div className={styles.showName}>
-              <img className={styles.imgRight} src={fedShowImg} alt="FED Show" />
+              <img className={styles.imgRight2} src={fedShowImg} alt="FED Show" />
             </div>
           </motion.div>
 
@@ -120,6 +120,8 @@ function FedShow() {
               src="https://uploads-ssl.webflow.com/645fbc01f38b6fb6255c240c/66c144619c2cf228fd915e28_image_2024-08-18_06-15-39.png"
               alt="Hero"
             />
+
+            <img className={styles.mobileFedShowImg} src="https://uploads-ssl.webflow.com/663d1907e337de23e83c30b2/66c2330cdc17d5b6d4bb5a0d_Screenshot%202024-08-18%20231413.png" alt="" />
           </motion.div>
         </Element>
       </div>
