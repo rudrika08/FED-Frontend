@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Element } from "react-scroll";
+import { useInView } from 'react-intersection-observer';
 import { motion } from "framer-motion";
 import { FaCalendarAlt, FaClock, FaMapMarkerAlt } from "react-icons/fa";
 import { parse, differenceInMilliseconds } from "date-fns";
@@ -9,6 +10,20 @@ import styles from "./styles/FedShow.module.scss";
 function FedShow() {
   const [remainingTime, setRemainingTime] = useState("");
   const [btnTxt, setBtnTxt] = useState("FREE PASS");
+
+  // Separate refs for each animated element
+  const { ref: refImg1, inView: inViewImg1 } = useInView({
+    threshold: 0.1,
+    triggerOnce: true,
+  });
+  const { ref: refImg2, inView: inViewImg2 } = useInView({
+    threshold: 0.1,
+    triggerOnce: true,
+  });
+  const { ref: refImg3, inView: inViewImg3 } = useInView({
+    threshold: 0.1,
+    triggerOnce: true,
+  });
 
   useEffect(() => {
     calculateRemainingTime();
@@ -63,8 +78,9 @@ function FedShow() {
       <div className={styles.imageContainer}>
         <Element name="img">
           <motion.div
+            ref={refImg1}
             initial={{ opacity: 0, y: -10, scale: 0.5 }}
-            animate={{ opacity: 1, y: 0, rotate: 0, scale: 1 }}
+            animate={{ opacity: inViewImg1 ? 1 : 0, y: inViewImg1 ? 0 : -10, rotate: inViewImg1 ? 0 : 0, scale: inViewImg1 ? 1 : 0.5 }}
             transition={{ duration: 0.6, ease: "easeOut" }}
             style={{ perspective: 1000 }}
           >
@@ -78,10 +94,10 @@ function FedShow() {
         <Element name="p">
           <p className={styles.head}>WHERE IDEAS MEET</p>
           <span className={styles.subHead}>INNOVATION</span>
-
           <motion.div
+            ref={refImg2}
             initial={{ opacity: 0, y: -10, scale: 0.5 }}
-            animate={{ opacity: 1, y: 0, rotate: 0, scale: 1 }}
+            animate={{ opacity: inViewImg2 ? 1 : 0, y: inViewImg2 ? 0 : -10, rotate: inViewImg2 ? 0 : 0, scale: inViewImg2 ? 1 : 0.5 }}
             transition={{ duration: 0.6, ease: "easeOut" }}
             style={{ perspective: 1000 }}
           >
@@ -110,8 +126,9 @@ function FedShow() {
         </Element>
         <Element name="img">
           <motion.div
+            ref={refImg3}
             initial={{ opacity: 0, y: -10, scale: 0.5 }}
-            animate={{ opacity: 1, y: 0, rotate: 0, scale: 1 }}
+            animate={{ opacity: inViewImg3 ? 1 : 0, y: inViewImg3 ? 0 : -10, rotate: inViewImg3 ? 0 : 0, scale: inViewImg3 ? 1 : 0.5 }}
             transition={{ duration: 0.6, ease: "easeOut" }}
             style={{ perspective: 1000 }}
           >
