@@ -12,11 +12,12 @@ function Hero({ ongoingEvents, isRegisteredInRelatedEvents, eventName }) {
   const [alert, setAlert] = useState(null);
   const [remainingTime, setRemainingTime] = useState("");
   const [info, setInfo] = useState({});
+  const [isRegistrationClosed, setIsRegistrationClosed] = useState(false);
   const navigate = useNavigate();
   const [shouldNavigate, setShouldNavigate] = useState(false);
   const [navigatePath, setNavigatePath] = useState("/");
   const [isMicroLoading, setIsMicroLoading] = useState(true);
-  const [relatedEventId, setrelatedEventId] = useState(null);
+  const [relatedEventId, setRelatedEventId] = useState(null);
   const [btnTxt, setBtnTxt] = useState("REGISTER NOW");
 
   useEffect(() => {
@@ -128,12 +129,14 @@ function Hero({ ongoingEvents, isRegisteredInRelatedEvents, eventName }) {
     const ongoingInfo = ongoingEvents.find(
       (e) => e.info.relatedEvent === "null"
     )?.info;
+
     setInfo(ongoingInfo);
+    setIsRegistrationClosed(ongoingInfo?.isRegistrationClosed || false);
 
     const relatedId = ongoingEvents.find(
       (e) => e.info.relatedEvent === "null"
     )?.id;
-    setrelatedEventId(relatedId);
+    setRelatedEventId(relatedId);
 
     if (ongoingInfo?.regDateAndTime) {
       calculateRemainingTime();
@@ -144,7 +147,10 @@ function Hero({ ongoingEvents, isRegisteredInRelatedEvents, eventName }) {
 
   useEffect(() => {
     const updateButtonText = () => {
-      if (!authCtx.isLoggedIn) {
+      if (isRegistrationClosed) {
+        setIsMicroLoading(false);
+        setBtnTxt("CLOSED");
+      } else if (!authCtx.isLoggedIn) {
         setIsMicroLoading(false);
         setBtnTxt(remainingTime || "REGISTER NOW");
       } else {
@@ -169,11 +175,12 @@ function Hero({ ongoingEvents, isRegisteredInRelatedEvents, eventName }) {
 
     updateButtonText();
   }, [
+    isRegistrationClosed,
     authCtx.isLoggedIn,
     authCtx.user?.access,
     remainingTime,
     isRegisteredInRelatedEvents,
-    ongoingEvents,
+    relatedEventId,
   ]);
 
   return (
@@ -207,13 +214,18 @@ function Hero({ ongoingEvents, isRegisteredInRelatedEvents, eventName }) {
         <p>Empowering Entrepreneurs, Energizing the Future</p>
         <button
           onClick={handleButtonClick}
-          disabled={isMicroLoading ||
+          disabled={
+            isMicroLoading ||
+            isRegistrationClosed ||
+            btnTxt === "CLOSED" ||
             btnTxt === "ALREADY REGISTERED" ||
             btnTxt === "ALREADY MEMBER" ||
             btnTxt === remainingTime
           }
           style={{
             cursor:
+              isRegistrationClosed ||
+              btnTxt === "CLOSED" ||
               btnTxt === "ALREADY REGISTERED" ||
               btnTxt === "ALREADY MEMBER" ||
               remainingTime
@@ -221,7 +233,7 @@ function Hero({ ongoingEvents, isRegisteredInRelatedEvents, eventName }) {
                 : "pointer",
           }}
         >
-          {isMicroLoading && btnTxt === "REGISTER NOW" ? (
+          {isMicroLoading ? (
             <MicroLoading color="#38ccff" />
           ) : (
             btnTxt

@@ -3,7 +3,7 @@ import React, { useEffect, useState, useContext } from "react";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { useNavigate } from "react-router-dom";
-import { parse, differenceInMilliseconds, formatDistanceToNow } from "date-fns";
+import { parse, differenceInMilliseconds } from "date-fns";
 import AuthContext from "../../../context/AuthContext";
 import styles from "./styles/Event.module.scss";
 import { Alert, MicroLoading } from "../../../microInteraction"; // Ensure this import path is correct
@@ -77,7 +77,9 @@ function EventCard({ data, isRegisteredInRelatedEvents, ongoingEvents }) {
   };
 
   useEffect(() => {
-    if (authCtx.isLoggedIn && authCtx.user.regForm) {
+    if (data.info.isRegistrationClosed) {
+      setBtnTxt("Closed");
+    } else if (authCtx.isLoggedIn && authCtx.user.regForm) {
       if (isRegisteredInRelatedEvents) {
         if (data.info.relatedEvent === "null") {
           setBtnTxt("Registered");
@@ -125,7 +127,7 @@ function EventCard({ data, isRegisteredInRelatedEvents, ongoingEvents }) {
   const isValiedState = () => {
     if (
       btnTxt === "Closed" ||
-      btnTxt === "Already Registered" ||
+      btnTxt === "Registered" ||
       btnTxt === "Already Member" ||
       btnTxt === `${remainingTime}`
     ) {
@@ -196,42 +198,10 @@ function EventCard({ data, isRegisteredInRelatedEvents, ongoingEvents }) {
       <div className={styles.card_content}>
         <h2>{data.info.eventTitle}</h2>
         <p>{data.info.eventdescription}</p>
-        <div
-          style={{ fontSize: ".9rem", color: "white" }}
-        //   onMouseEnter={() => {
-        //     if (
-        //       btnTxt === "Locked" &&
-        //       authCtx.isLoggedIn &&
-        //       authCtx.user.access === "USER"
-        //     ) {
-        //       setAlert({
-        //         type: "infoOmega",
-        //         message: `You need to register for Omega4.0 first`,
-        //         position: "bottom-right",
-        //         duration: 3000,
-        //       });
-        //     } else if (
-        //       btnTxt === "Already Member" &&
-        //       authCtx.isLoggedIn &&
-        //       authCtx.user.access !== "USER"
-        //     ) {
-        //       setAlert({
-        //         type: "infoOmega",
-        //         message: `Team Members cannot register for Omega4.0`,
-        //         position: "bottom-right",
-        //         duration: 3000,
-        //       });
-        //     }
-        //   }}
-        >
+        <div style={{ fontSize: ".9rem", color: "white" }}>
           <button
             onClick={handleRegisterClick}
-            // disabled={
-            //   btnTxt === "Locked" ||
-            //   btnTxt === "Registered" ||
-            //   btnTxt === remainingTime ||
-            //   btnTxt === "Already Member"
-            // }
+            disabled={btnTxt === "Closed" || btnTxt === "Registered" || btnTxt === "Already Member" || btnTxt === remainingTime}
             style={{
               cursor: btnTxt === "Register Now" ? "pointer" : "not-allowed",
             }}
