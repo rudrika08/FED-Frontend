@@ -30,7 +30,7 @@ function Sponsors() {
         <div className={styles.sponsorsLogos}>
           {sponsors.map((sponsor, index) => (
             <div key={index} className={styles.sponsor}>
-              <img src={sponsor.logo} alt={sponsor.name} />
+              <img src={sponsor.image} />
             </div>
           ))}
         </div>

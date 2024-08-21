@@ -120,9 +120,9 @@ function FedShow() {
             </div>
           </div>
 
-          <button className={styles.registerBtn} disabled={!remainingTime}>
+          {/* <button className={styles.registerBtn} disabled={!remainingTime}>
             {remainingTime ? `${btnTxt} (${remainingTime})` : "SHOW STARTED"}
-          </button>
+          </button> */}
         </Element>
         <Element name="img">
           <motion.div
