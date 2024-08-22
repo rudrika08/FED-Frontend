@@ -252,6 +252,8 @@ const EventModal = (props) => {
           } else {
             if (remainingTime) {
               setBtnTxt(remainingTime);
+            } else if (data?.info?.isRegistrationClosed) {
+              setBtnTxt("Closed");
             } else {
               setBtnTxt("Register Now");
             }
@@ -264,6 +266,8 @@ const EventModal = (props) => {
           } else {
             if (remainingTime) {
               setBtnTxt(remainingTime);
+            } else if (data?.info?.isRegistrationClosed) {
+              setBtnTxt("Closed");
             } else {
               setBtnTxt("Register Now");
             }
@@ -271,7 +275,11 @@ const EventModal = (props) => {
         } else {
           // setBtnTxt("Locked");
           if (authCtx.user.access === "USER") {
-            setBtnTxt("Locked");
+            if (data?.info?.isRegistrationClosed) {
+              setBtnTxt("Closed");
+            } else {
+              setBtnTxt("Locked");
+            }
           }
         }
       }
