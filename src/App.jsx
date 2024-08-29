@@ -96,7 +96,7 @@ function App() {
             <Route path="/Social" element={<Social />} />
             <Route path="/Team" element={<Team />} />
             <Route path="/Alumni" element={<Alumni />} />
-            <Route path="/Omega" element={<Omega />} />
+            {/* <Route path="/Omega" element={<Omega />} /> */}
 
             {/* Route After Login */}
             {authCtx.isLoggedIn && (

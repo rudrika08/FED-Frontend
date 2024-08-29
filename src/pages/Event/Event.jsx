@@ -109,7 +109,6 @@ const Event = () => {
   };
 
   useEffect(() => {
-  
     const hasPublicOngoingEvent = ongoingEvents.some(
       (event) => event.info.isPublic
     );
@@ -126,14 +125,12 @@ const Event = () => {
   }, [ongoingEvents]);
 
   useEffect(() => {
-
     const registeredEventIds = authCtx.user.regForm || [];
 
     const relatedEventIds = ongoingEvents
-      .map((event) => event.info.relatedEvent) 
-      .filter((id) => id !== null && id !== undefined && id !== "null") 
-      .filter((id, index, self) => self.indexOf(id) === index); 
-
+      .map((event) => event.info.relatedEvent)
+      .filter((id) => id !== null && id !== undefined && id !== "null")
+      .filter((id, index, self) => self.indexOf(id) === index);
 
     let isRegisteredInRelatedEvents = false;
     if (registeredEventIds.length > 0 && relatedEventIds.length > 0) {
@@ -142,13 +139,10 @@ const Event = () => {
       );
     }
 
-
     if (isRegisteredInRelatedEvents) {
       setIsRegisteredInRelatedEvents(true);
     }
   }, [ongoingEvents, authCtx.user.regForm]);
-
-
 
   const customStyles = {
     eventname: {
@@ -197,10 +191,17 @@ const Event = () => {
           ) : error ? (
             <div className={style.error}>{error.message}</div>
           ) : (
-          <>
-            <div className={style.line}></div>
-            <div className={style.eventwhole}>
-              
+            <>
+              {ongoingEvents.length > 0 ? (
+                <div className={style.line}></div>
+              ) : (
+                <div
+                  className={style.line}
+                  style={{ marginTop: "4.5rem" }}
+                ></div>
+              )}
+
+              <div className={style.eventwhole}>
                 <>
                   {ongoingEvents.length > 0 && (
                     <div className={style.eventcard}>
@@ -249,11 +250,11 @@ const Event = () => {
                                 customStyles={customStyles}
                                 modalpath="/Events/"
                                 aosDisable={false}
-                                isLoading={isLoading} 
+                                isLoading={isLoading}
                                 isRegisteredInRelatedEvents={
                                   isRegisteredInRelatedEvents
-                                } 
-                                eventName={eventName} 
+                                }
+                                eventName={eventName}
                               />
                             </div>
                           ) : null
@@ -306,8 +307,7 @@ const Event = () => {
                     )}
                   </div>
                 </>
-    
-            </div>
+              </div>
             </>
           )}
         </div>

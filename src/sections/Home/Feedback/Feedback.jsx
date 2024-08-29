@@ -1,4 +1,4 @@
-import { useRef, useEffect } from "react";
+import { useState, useRef, useEffect} from "react";
 import styles from "./styles/Feedback.module.scss";
 import feedbackData from "../../../data/Feedback.json";
 import quoteImg from "../../../assets/images/quote.png";
@@ -7,10 +7,25 @@ const Feedback = () => {
   const feedbacksRef = useRef(null);
 
   const FeedbackCard = ({ quote }) => {
+    const [isExpanded, setIsExpanded] = useState(false);
+
+    const toggleExpand = () => {
+      setIsExpanded(!isExpanded);
+    };
+
+    const truncatedQuote = quote.quote.length > 200 
+      ? `${quote.quote.substring(0, 160)}...` 
+      : quote.quote;
+
     return (
       <div className={styles.feedbackCard}>
-        <div className={styles.FeedbackMsg}>
-          <p className={styles.feedbackText}>{quote.quote}</p>
+        <div className={styles.FeedbackMsg} onClick={toggleExpand}>
+          <p className={styles.feedbackText}>
+            {isExpanded ? quote.quote : truncatedQuote}
+            {quote.quote.length > 160 && !isExpanded && (
+              <span className={styles.readMore} style={{fontWeight:"550", cursor:"pointer", color:"whitesmoke"}}>read more</span>
+            )}
+          </p>
         </div>
 
         <div>
