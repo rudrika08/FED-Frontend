@@ -9,7 +9,7 @@ const Home = () => {
 
   return (
     <>
-      {/*<LiveEventPopup />*/}
+      <LiveEventPopup />
       <Hero />
       <ChatBot />
       <About />
