@@ -10,7 +10,7 @@ import { api } from "../../../../../services";
 import { Alert, ComponentLoading } from "../../../../../microInteraction";
 
 function ViewMember() {
-  const [memberActivePage, setMemberActivePage] = useState("Alumni");
+  const [memberActivePage, setMemberActivePage] = useState("Board");
   const [members, setMembers] = useState([]);
   const [access, setAccess] = useState([]);
   const [selectedMember, setSelectedMember] = useState(null);
@@ -47,16 +47,51 @@ function ViewMember() {
         const response = await api.get("/api/user/fetchAccessTypes");
         const fetchedAccess = response.data.data;
 
-        const filteredAccess = fetchedAccess.filter(
+        const testAccess = [
+          "ADMIN",
+          "USER",
+
+          "PRESIDENT",
+          "VICEPRESIDENT",
+          "DIRECTOR_TECHNICAL",
+          "DIRECTOR_CREATIVE",
+          "DIRECTOR_MARKETING",
+          "DIRECTOR_OPERATIONS",
+          "DIRECTOR_PR_AND_FINANCE",
+          "DIRECTOR_HUMAN_RESOURCE",
+          "DEPUTY_DIRECTOR_TECHNICAL",
+          "DEPUTY_DIRECTOR_CREATIVE",
+          "DEPUTY_DIRECTOR_MARKETING",
+          "DEPUTY_DIRECTOR_OPERATIONS",
+          "DEPUTY_DIRECTOR_PR_AND_FINANCE",
+          "DEPUTY_DIRECTOR_HUMAN_RESOURCE",
+          "TECHNICAL",
+          "CREATIVE",
+          "MARKETING",
+          "OPERATIONS",
+          "PR_AND_FINANCE",
+          "HUMAN_RESOURCE",
+
+          "ALUMNI",
+          "EX_MEMBER",
+        ];
+
+        const filteredAccess = testAccess.filter(
           (accessType) =>
             !["ADMIN", "USER", "PRESIDENT", "VICEPRESIDENT"].includes(
               accessType
-            ) && !accessType.startsWith("DIRECTOR_")
-        );
+            ) &&
+            !accessType.startsWith("DIRECTOR_") &&
+            !accessType.startsWith("DEPUTY_")
+        ).map((accessType) => {
+          return accessType
+            .split("_")
+            .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+            .join(" ");
+        });
 
         // Adding "Directors" and "Add Member" to the filteredAccess array
-        filteredAccess.push("Directors", "Add Member");
-
+        filteredAccess.push("Board", "Add Member");
         setAccess(filteredAccess);
       } catch (error) {
         console.error("Error fetching Access Types:", error);
@@ -110,19 +145,22 @@ function ViewMember() {
     }
 
     let filteredMembers = [];
-    if (memberActivePage.toLowerCase() === "directors") {
+    if (memberActivePage.toLowerCase() === "board") {
       filteredMembers = members.filter(
         (member) =>
           member.access.startsWith("DIRECTOR_") ||
+          member.access.startsWith("DEPUTY_") ||
           member.access === "PRESIDENT" ||
           member.access === "VICEPRESIDENT"
       );
     } else {
       filteredMembers = members.filter((member) => {
-        const accessCategory = member.access.startsWith("DIRECTOR_")
-          ? member.access.split("_")[1].toLowerCase() + "s"
-          : member.access.toLowerCase();
-
+        // Convert accessCategory to lowercase for case-insensitive comparison
+        const accessCategory = member.access
+          .replace(/_/g, " ") // Replace all underscores with spaces
+          .toLowerCase();
+  
+        // Compare with memberActivePage in lowercase
         return accessCategory === memberActivePage.toLowerCase();
       });
     }
@@ -133,6 +171,9 @@ function ViewMember() {
         member.name.toLowerCase().includes(searchQuery.toLowerCase())
       );
     }
+
+    // Sort filtered members alphabetically
+    filteredMembers.sort((a, b) => a.name.localeCompare(b.name));
     return filteredMembers;
   };
 

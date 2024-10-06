@@ -21,14 +21,18 @@ const Alumni = () => {
         const response = await api.get("/api/user/fetchAlumni");
 
         if (response.status === 200) {
-          setAlumni(response.data.data);
+          // Sort alumni alphabetically
+          const sortedAlumni = response.data.data.sort((a, b) =>
+            a.name.localeCompare(b.name)
+          );
+          setAlumni(sortedAlumni);
         } else {
           console.error("Error fetching our Alumnis:", response.data.message);
           // using local JSON data
           const testMembers = MemberData;
-          const fileteredAlumni = testMembers.filter(
-            (member) => member.access === "ALUMNI"
-          );
+          const fileteredAlumni = testMembers
+            .filter((member) => member.access === "ALUMNI")
+            .sort((a, b) => a.name.localeCompare(b.name));
           setAlumni(fileteredAlumni);
         }
       } catch (error) {
@@ -37,7 +41,6 @@ const Alumni = () => {
             "Sorry for the inconvenience, we are having issues fetching our Alumni",
         });
         console.error("Error fetching our Alumnis:", error);
-
       } finally {
         setIsLoading(false);
       }
