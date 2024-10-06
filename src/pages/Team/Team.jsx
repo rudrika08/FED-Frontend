@@ -67,7 +67,8 @@ const Team = () => {
 
         if (response.status === 200) {
           const filteredAccess = response.data.data.filter(
-            (accessType) => !["ADMIN", "USER", "ALUMNI"].includes(accessType)
+            (accessType) =>
+              !["ADMIN", "USER", "ALUMNI", "EX_MEMBER"].includes(accessType)
           );
           setAccess(filteredAccess);
         } else {
@@ -101,43 +102,59 @@ const Team = () => {
   }, []);
 
   // Define the director access codes in the desired order
-  const directorAccessCodes = [
+  const boardAccessCodes = [
     "PRESIDENT",
     "VICEPRESIDENT",
     "DIRECTOR_TECHNICAL",
     "DIRECTOR_CREATIVE",
     "DIRECTOR_MARKETING",
     "DIRECTOR_OPERATIONS",
-    "DIRECTOR_SPONSORSHIP",
+    "DIRECTOR_PR_AND_FINANCE",
+    "DIRECTOR_HUMAN_RESOURCE",
+    "DEPUTY_DIRECTOR_TECHNICAL",
+    "DEPUTY_DIRECTOR_CREATIVE",
+    "DEPUTY_DIRECTOR_MARKETING",
+    "DEPUTY_DIRECTOR_OPERATIONS",
+    "DEPUTY_DIRECTOR_PR_AND_FINANCE",
+    "DEPUTY_DIRECTOR_HUMAN_RESOURCE",
   ];
 
   // Separate directors from other members
   const directorsAndAbove = teamMembers
-    .filter((member) => directorAccessCodes.includes(member.access))
+    .filter((member) => boardAccessCodes.includes(member.access))
     .sort((a, b) => {
-      const aIndex = directorAccessCodes.indexOf(a.access);
-      const bIndex = directorAccessCodes.indexOf(b.access);
-      if (aIndex !== bIndex) {
-        return aIndex - bIndex; // Sort by access code order
-      }
-      return a.name.localeCompare(b.name); // Sort alphabetically within the same role
+      const aIndex = boardAccessCodes.indexOf(a.access);
+      const bIndex = boardAccessCodes.indexOf(b.access);
+
+      return aIndex - bIndex; // Sort by access code order
+
+      // return a.name.localeCompare(b.name); // Sort alphabetically within the same role
     });
 
   const otherMembers = teamMembers.filter(
-    (member) => !directorAccessCodes.includes(member.access)
+    (member) => !boardAccessCodes.includes(member.access)
   );
 
   // Create a role map for non-director roles
   const roleMap = access.reduce((map, code) => {
-    if (!directorAccessCodes.includes(code)) {
+    if (!boardAccessCodes.includes(code)) {
       let role = code
         .split("_")
         .map(
           (word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
         )
         .join(" ");
-      if (role === "Operation") role = "Operations"; // Special case for Operations
-      if (role === "Sponsorship") role = "Finance & PR"; // Special case for Sponsorship & PR
+      // Ensure consistent capitalization for role names
+      switch (role.toLowerCase()) {
+        case "pr and finance":
+          role = "PR And Finance";
+          break;
+        case "human resource":
+          role = "Human Resource";
+          break;
+        // Add other cases if needed for consistent capitalization
+      }
+
       map[role] = code;
     }
     return map;
@@ -161,18 +178,18 @@ const Team = () => {
         members: [...seniorExecutives, ...otherMembersWithoutSenior],
       };
     })
-    .filter((roleGroup) => roleGroup.members.length > 0);
-
-  const sortedTeamByRole = teamByRole.sort((a, b) => {
-    const order = [
-      "Technical",
-      "Creative",
-      "Operations",
-      "Marketing",
-      "Finance & PR",
-    ];
-    return order.indexOf(a.role) - order.indexOf(b.role);
-  });
+    .filter((roleGroup) => roleGroup.members.length > 0)
+    .sort((a, b) => {
+      const order = [
+        "Technical",
+        "Creative",
+        "Marketing",
+        "Operations",
+        "PR And Finance",
+        "Human Resource",
+      ];
+      return order.indexOf(a.role) - order.indexOf(b.role);
+    });
 
   const TeamSection = ({ title, members, isDirector }) => {
     const membersPerRow = windowWidth < 500 ? 2 : 4;
@@ -261,7 +278,7 @@ const Team = () => {
               <FaRegArrowAltCircleRight />
             </div>
           </div>
-          {sortedTeamByRole.map(
+          {teamByRole.map(
             (section, index) =>
               section.members.length > 0 && (
                 <TeamSection

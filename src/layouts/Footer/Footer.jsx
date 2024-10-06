@@ -1,7 +1,13 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import { HashLink } from "react-router-hash-link";
-import { FaLinkedin, FaInstagram, FaYoutube, FaTwitter, FaMediumM } from "react-icons/fa";
+import {
+  FaLinkedin,
+  FaInstagram,
+  FaYoutube,
+  FaTwitter,
+  FaMediumM,
+} from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 
 import styles from "./styles/Footer.module.scss";
@@ -72,14 +78,16 @@ export default function Footer() {
               >
                 Alumni
               </Link>
-              <Link
-                to="http://medium.com/@fedkiit"
+              <a
+                href="http://medium.com/@fedkiit"
+                target="_blank"
+                rel="noopener noreferrer"
                 className={`${styles.footerleftlink} ${
                   isOmega ? styles.omegaLink : ""
                 }`}
               >
                 Blog
-              </Link>
+              </a>
             </div>
 
             <div className={styles.row2}>
@@ -143,7 +151,7 @@ export default function Footer() {
                     isOmega ? styles.omegaSocialLink : ""
                   }`}
                 >
-                  <FaXTwitter 
+                  <FaXTwitter
                     className={`${styles.icon} ${
                       isOmega ? styles.omegaSocialLink : ""
                     }`}
