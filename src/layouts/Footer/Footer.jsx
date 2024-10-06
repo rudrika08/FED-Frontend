@@ -1,7 +1,8 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import { HashLink } from "react-router-hash-link";
-import { FaLinkedin, FaInstagram, FaYoutube } from "react-icons/fa";
+import { FaLinkedin, FaInstagram, FaYoutube, FaTwitter, FaMediumM } from "react-icons/fa";
+import { FaXTwitter } from "react-icons/fa6";
 
 import styles from "./styles/Footer.module.scss";
 
@@ -64,20 +65,20 @@ export default function Footer() {
                 Contact
               </HashLink>
               <Link
-                to="/Team"
-                className={`${styles.footerleftlink} ${
-                  isOmega ? styles.omegaLink : ""
-                }`}
-              >
-                Member
-              </Link>
-              <Link
                 to="/Alumni"
                 className={`${styles.footerleftlink} ${
                   isOmega ? styles.omegaLink : ""
                 }`}
               >
                 Alumni
+              </Link>
+              <Link
+                to="http://medium.com/@fedkiit"
+                className={`${styles.footerleftlink} ${
+                  isOmega ? styles.omegaLink : ""
+                }`}
+              >
+                Blog
               </Link>
             </div>
 
@@ -129,6 +130,20 @@ export default function Footer() {
                   }`}
                 >
                   <FaInstagram
+                    className={`${styles.icon} ${
+                      isOmega ? styles.omegaSocialLink : ""
+                    }`}
+                  />
+                </a>
+                <a
+                  href="http://twitter.com/federation_kiit"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`${styles.link1} ${
+                    isOmega ? styles.omegaSocialLink : ""
+                  }`}
+                >
+                  <FaXTwitter 
                     className={`${styles.icon} ${
                       isOmega ? styles.omegaSocialLink : ""
                     }`}
