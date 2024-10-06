@@ -137,7 +137,7 @@ const Team = () => {
         )
         .join(" ");
       if (role === "Operation") role = "Operations"; // Special case for Operations
-      if (role === "Sponsorship") role = "Sponsorship & PR"; // Special case for Sponsorship & PR
+      if (role === "Sponsorship") role = "Finance & PR"; // Special case for Sponsorship & PR
       map[role] = code;
     }
     return map;
@@ -169,7 +169,7 @@ const Team = () => {
       "Creative",
       "Operations",
       "Marketing",
-      "Sponsorship & PR",
+      "Finance & PR",
     ];
     return order.indexOf(a.role) - order.indexOf(b.role);
   });
