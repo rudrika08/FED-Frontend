@@ -238,7 +238,6 @@ const EventModal = (props) => {
 
   useEffect(() => {
     if (authCtx.isLoggedIn && authCtx.user.regForm) {
-
       if (info.isRegistrationClosed) {
         setBtnTxt("Closed");
       }
@@ -261,8 +260,8 @@ const EventModal = (props) => {
         }
       } else {
         if (data?.info?.relatedEvent === "null") {
-          if (info.isRegistrationClosed) {
-            setBtnTxt("Closed");
+          if (authCtx.user.regForm.includes(data.id)) {
+            setBtnTxt("Already Registered");
           } else {
             if (remainingTime) {
               setBtnTxt(remainingTime);
