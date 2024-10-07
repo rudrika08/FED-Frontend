@@ -232,7 +232,6 @@ const Event = () => {
                               >
                                 {eventName}
                               </span>
-                              , to unlock other events.
                             </span>
                           </div>
                         )}
