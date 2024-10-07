@@ -198,8 +198,9 @@ const EventCard = (props) => {
       // console.log("Inside Card", isRegisteredInRelatedEvents);
 
       if (isRegisteredInRelatedEvents) {
-        // console.log("checking for ", data.id);
-        if (data.info.relatedEvent === "null") {
+
+        console.log("checking for ", data.id);
+        if (data?.info?.relatedEvent === "null") {
           setBtnTxt("Already Registered");
         } else {
           if (authCtx.user.regForm.includes(data.id)) {
@@ -207,7 +208,7 @@ const EventCard = (props) => {
           } else {
             if (remainingTime) {
               setBtnTxt(remainingTime);
-            } else if (data.info.isRegistrationClosed) {
+            } else if (data?.info?.isRegistrationClosed) {
               setBtnTxt("Closed");
             } else {
               setBtnTxt("Register Now");
@@ -215,18 +216,22 @@ const EventCard = (props) => {
           }
         }
       } else {
-        if (data.info.relatedEvent === "null") {
-          if (remainingTime) {
-            setBtnTxt(remainingTime);
-          } else if (data.info.isRegistrationClosed) {
-            setBtnTxt("Closed");
+        if (data?.info?.relatedEvent === "null") {
+          if (authCtx.user.regForm.includes(data.id)) {
+            setBtnTxt("Already Registered");
           } else {
-            setBtnTxt("Register Now");
+            if (remainingTime) {
+              setBtnTxt(remainingTime);
+            } else if (data?.info?.isRegistrationClosed) {
+              setBtnTxt("Closed");
+            } else {
+              setBtnTxt("Register Now");
+            }
           }
         } else {
           // setBtnTxt("Locked");
           if (authCtx.user.access === "USER") {
-            if (data.info.isRegistrationClosed) {
+            if (data?.info?.isRegistrationClosed) {
               setBtnTxt("Closed");
             } else {
               setBtnTxt("Locked");
