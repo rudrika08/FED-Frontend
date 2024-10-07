@@ -301,6 +301,7 @@ input:checked + .slider:before {
     outline: none;
     border: none;
     cursor: pointer;
+    width: 110px;
   }
 
   .eventname {
@@ -309,6 +310,7 @@ input:checked + .slider:before {
 
   .date {
     font-size: 0.8rem;
+    width: 75px;
   }
 }
 
@@ -468,7 +470,7 @@ input:checked + .slider:before {
 
 @media (max-width: 360px) {
   .card{
-    width: 340px;
+    width: 310px;
     padding: 5px 5px;
   }
 }

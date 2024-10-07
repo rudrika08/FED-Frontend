@@ -97,11 +97,21 @@
     right: 10px;
     font-size: 1.2em;
   }
+  .popupContent {
+    width: 100%;
+    height: 50vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    object-fit: inherit;
+  }
 }
 
 @media (max-width: 375px) {
   .popupContent {
     max-width: 100%;
+    height: 45vh;
+    object-fit: inherit;
   }
   .closeButton {
     top: 4px;
@@ -116,5 +126,8 @@
     right: 10px;
     font-size: 1em;
     padding: 0 7px;
+  }
+  .popupContent img {
+    width: 100%; 
   }
 }
