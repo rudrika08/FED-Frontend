@@ -12,7 +12,7 @@ const Events = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const viewPath = "/profile/Events";
-  const analyticsPath = "/profile/Events/Analytics";
+  const analyticsPath = "/profile/events/Analytics";
 
   const analyticsAccessRoles = [
     "PRESIDENT",
@@ -23,7 +23,6 @@ const Events = () => {
     "DIRECTOR_OPERATIONS",
     "DIRECTOR_SPONSORSHIP",
     "ADMIN",
-    "GUEST"
   ];
 
   useEffect(() => {
@@ -40,7 +39,7 @@ const Events = () => {
           } else {
             // Filter and then sort events for users
             const filteredEvents = fetchedEvents.filter((event) =>
-              userEvents.includes(event._id)
+              userEvents.includes(event.id)
             );
             setEvents(sortEventsByDate(filteredEvents));
           }
@@ -58,17 +57,17 @@ const Events = () => {
         });
         console.error("Error fetching team members:", error);
 
-        const userEvents = authCtx.user.regForm;
-        // using local JSON data
-        let localEvents = eventsData.events;
-        if (authCtx.user.access !== "USER") {
-          setEvents(sortEventsByDate(localEvents));
-        } else {
-          const filteredEvents = localEvents.filter((event) =>
-            userEvents.includes(event._id)
-          );
-          setEvents(sortEventsByDate(filteredEvents));
-        }
+        // const userEvents = authCtx.user.regForm;
+        // // using local JSON data
+        // let localEvents = eventsData.events;
+        // if (authCtx.user.access !== "USER") {
+        //   setEvents(sortEventsByDate(localEvents));
+        // } else {
+        //   const filteredEvents = localEvents.filter((event) =>
+             userEvents.includes(event._id)
+        //   );
+        //   setEvents(sortEventsByDate(filteredEvents));
+        // }
       } finally {
         setIsLoading(false);
       }
@@ -88,6 +87,7 @@ const Events = () => {
       .replace(/\//g, "-");
   };
 
+  // console.log("Event Access",authCtx.user.access);
   return (
     <div className={styles.participatedEvents}>
       {authCtx.user.access !== "USER" ? (
@@ -115,11 +115,11 @@ const Events = () => {
               <table className={styles.eventsTable}>
                 <thead>
                   <tr>
-                    <th>Event Name</th>
-                    <th>Event Date</th>
+                    <th className={styles.mobilewidth}>Event Name</th>
+                    <th className={styles.mobilewidth}>Event Date</th>
                     <th className={styles.mobilewidth}>Details</th>
-                    {analyticsAccessRoles.includes(authCtx.user.access) && (
-                      <th className={styles.mobilewidth}>Registrations</th>
+                    {(analyticsAccessRoles.includes(authCtx.user.access) || authCtx.user.email == "srex@fedkiit.com") && (
+                      <th className={styles.mobilewidth} style={{paddingTop:"1rem"}}>Registrations</th>
                     )}
                     {/* Add more headers */}
                   </tr>
@@ -128,15 +128,15 @@ const Events = () => {
                 <tbody>
                   {events.map((event) => (
                     <tr key={event._id}>
-                      <td style={{ fontWeight: "500" }}>
+                      <td className={styles.mobilewidth} style={{fontWeight:"500",paddingRight:"10px"}}>
                         {event.info.eventTitle}
                       </td>
-                      <td style={{ fontWeight: "500" }}>
+                      <td style={{ fontWeight: "200" }}>
                         {formatDate(event.info.eventDate)}
                       </td>
 
                       <td className={styles.mobilewidthtd}>
-                        <Link to={`${viewPath}/${event._id}`}>
+                        <Link to={`${viewPath}/${event.id}`}>
                           <button
                             className={styles.viewButton}
                             style={{
@@ -150,9 +150,9 @@ const Events = () => {
                           </button>
                         </Link>
                       </td>
-                      {analyticsAccessRoles.includes(authCtx.user.access) && (
+                      {(analyticsAccessRoles.includes(authCtx.user.access) || authCtx.user.email == "srex@fedkiit.com") && (
                         <td className={styles.mobilewidthtd}>
-                          <Link to={`${analyticsPath}/${event._id}`}>
+                          <Link to={`${analyticsPath}/${event.id}`}>
                             <button
                               className={styles.viewButton}
                               style={{

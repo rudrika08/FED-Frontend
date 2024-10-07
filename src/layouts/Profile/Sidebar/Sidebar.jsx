@@ -10,6 +10,8 @@ import styles from "./styles/Sidebar.module.scss";
 import defaultImg from "../../../assets/images/defaultImg.jpg";
 import camera from "../../../assets/images/camera.svg";
 import { EditImage } from "../../../features";
+import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 const Sidebar = ({ activepage, handleChange }) => {
   const [designation, setDesignation] = useState("");
@@ -35,7 +37,7 @@ const Sidebar = ({ activepage, handleChange }) => {
   }, [authCtx.user.access]);
 
   const handleLogout = () => {
-    navigate("/Login");
+    navigate("/");
     authCtx.logout();
   };
 
@@ -62,22 +64,22 @@ const Sidebar = ({ activepage, handleChange }) => {
   const renderAdminMenu = () => (
     <>
       <div
-        onClick={() => handleChange("Event")}
+        onClick={() => handleChange("Events")}
         style={{
-          background: activepage === "Event" ? "var(--primary)" : "transparent",
-          WebkitBackgroundClip: activepage === "Event" ? "text" : "initial",
-          backgroundClip: activepage === "Event" ? "text" : "initial",
-          color: activepage === "Event" ? "transparent" : "inherit",
+          background: activepage === "Events" ? "var(--primary)" : "transparent",
+          WebkitBackgroundClip: activepage === "Events" ? "text" : "initial",
+          backgroundClip: activepage === "Events" ? "text" : "initial",
+          color: activepage === "Events" ? "transparent" : "inherit",
         }}
       >
         <SlCalender
           size={17}
           style={{
-            color: activepage === "Event" ? "#FF8A00" : "white",
+            color: activepage === "events" ? "#FF8A00" : "white",
             marginRight: "10px",
           }}
         />{" "}
-        Event
+        <NavLink to="/profile/events">Event</NavLink>
       </div>
 
       <div
@@ -96,7 +98,7 @@ const Sidebar = ({ activepage, handleChange }) => {
             marginRight: "10px",
           }}
         />{" "}
-        Form
+        <Link to={"/profile/Form"}>Form</Link>
       </div>
       <div
         onClick={() => handleChange("Members")}
@@ -116,7 +118,7 @@ const Sidebar = ({ activepage, handleChange }) => {
             marginRight: "10px",
           }}
         />{" "}
-        Members
+        <Link to={"/profile/members"}> Members</Link>
       </div>
     </>
   );
@@ -125,21 +127,26 @@ const Sidebar = ({ activepage, handleChange }) => {
     <>
       <div className={styles.sidebar}>
         <div className={styles.profile}>
+          {/* <NavLink to={'/profile'}> */}
           <div
             style={{ width: "auto", position: "relative", cursor: "pointer" }}
             onClick={() => handleChange("Profile")}
           >
-            <img
-              src={ authCtx.user.img||imagePrv || defaultImg}
-              alt="Profile"
-              className={styles.profilePhoto}
-            />
+            <NavLink to={"/profile"}>
+              <img
+                src={authCtx.user.img || imagePrv || defaultImg}
+                alt="Profile"
+                className={styles.profilePhoto}
+              />
+            </NavLink>
+
             {selectedFile && (
               <EditImage
                 selectedFile={selectedFile}
                 closeModal={closeModal}
                 setimage={setImage}
                 updatePfp={true}
+                setFile={setSelectedFile}
               />
             )}
             {authCtx.user.access !== "USER" && (
@@ -164,8 +171,11 @@ const Sidebar = ({ activepage, handleChange }) => {
               </>
             )}
           </div>
+
           <div className={styles.profileInfo}>
-            <p className={styles.name}>{handleName()}</p>
+            <NavLink to={"/profile"}>
+              <p className={styles.name}>{handleName()}</p>
+            </NavLink>
             <p className={styles.role}>{designation}</p>
           </div>
         </div>
@@ -173,10 +183,12 @@ const Sidebar = ({ activepage, handleChange }) => {
           {designation === "Admin" && renderAdminMenu()}
           {designation !== "Admin" && (
             <div
-              onClick={() => handleChange("Event")}
-              style={{ color: activepage === "Event" ? "#FF8A00" : "white" }}
+              onClick={() => handleChange("events")}
+              style={{ color: activepage === "events" ? "#FF8A00" : "white" }}
             >
-              <SlCalender size={17} style={{ marginRight: "10px" }} /> Event
+              <NavLink to={"/profile/events"}>
+                <SlCalender size={17} style={{ marginRight: "10px" }} /> Event
+              </NavLink>
             </div>
           )}
           <div

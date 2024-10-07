@@ -1,5 +1,6 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import styles from "./styles/Preview.module.scss";
+import AuthContext from "../../../../context/AuthContext";
 import { Button, Text } from "../../../../components";
 import Section from "./SectionModal";
 import { Link, useNavigate } from "react-router-dom";
@@ -26,7 +27,9 @@ const operators = [
 const hasOptions = ["select", "checkbox", "radio"];
 
 const PreviewForm = ({
+  isEditing,
   eventData,
+  form,
   sections = [],
   open,
   meta = [],
@@ -34,6 +37,7 @@ const PreviewForm = ({
   showCloseBtn,
 }) => {
   const navigate = useNavigate();
+  const authCtx = useContext(AuthContext);
   const [data, setdata] = useState(sections);
   const [activeSection, setactiveSection] = useState(
     data !== undefined ? data[0] : ""
@@ -45,31 +49,15 @@ const PreviewForm = ({
   const [alert, setAlert] = useState(null);
   const wrapperRef = useRef(null);
   const recoveryCtx = useContext(RecoveryContext);
-  const{setTeamCode,setTeamName}=recoveryCtx;
-  const [teamCodeData,SetTeamCodeData]=useState({
-    teamCode :'',
-    teamName:'' 
-  })
-
-  // console.log("data", eventData);
-  // console.log("sections", sections);
-
-  // if(!eventData && !sections.length()==0){
-  //   return ;
-  // }
+  const { setTeamCode, setTeamName } = recoveryCtx;
+  const [formData, setFormData] = useState(eventData);
+  const [code, setcode] = useState(null);
+  const [team, setTeam] = useState(null);
 
   let currentSection =
     data !== undefined
       ? data.find((section) => section._id === activeSection._id)
       : null;
-
-  useEffect(() => {
-    if (alert) {
-      const { type, message, position, duration } = alert;
-      Alert({ type, message, position, duration });
-      setAlert(null); // Reset alert after displaying it
-    }
-  }, [alert]);
 
   useEffect(() => {
     setTimeout(() => {
@@ -92,6 +80,14 @@ const PreviewForm = ({
   useEffect(() => {
     constructSections();
   }, [sections]);
+
+  useEffect(() => {
+    if (alert) {
+      const { type, message, position, duration } = alert;
+      Alert({ type, message, position, duration });
+      setAlert(null); // Reset alert after displaying it
+    }
+  }, [alert]);
 
   const constructSections = () => {
     const newSections = data.map((section) => {
@@ -164,86 +160,19 @@ const PreviewForm = ({
     setdata(newSections);
   };
 
-  const handleSubmit = async () => {
-    const formData = new FormData();
-
-    data.forEach((section) => {
-      if (isCompleted.includes(section._id)) {
-        formData.append(`_id`, section._id);
-        formData.append(`name`, section.name);
-        section.fields.forEach((fld) => {
-          formData.append("field_id", fld._id);
-          formData.append("field_name", fld.name);
-          formData.append("field_value", fld.onChangeValue);
-        });
-      }
-    });
-
-console.log("team code in recovery context:",recoveryCtx.teamCode)
-
-
-    try {
-      setIsLoading(true); // Set loading state
-      setIsMicroLoading(true); // Set micro loading state
-      const response = await api.post("/api/form/register", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-
-      if (response.status === 200 || response.status === 201) {
-     
-        setAlert({
-          type: "success",
-          message: "Form submitted successfully!",
-          position: "bottom-right",
-          duration: 3000,
-        });
-        handleClose();
-        setIsSuccess(true);
-        if (response.data.team) {
-          const { teamName, teamCode } = response.data.team;
-        
-          SetTeamCodeData((prevData) => ({
-            ...prevData,
-            teamCode: teamCode,
-            teamName: teamName
-          }));
-        }
-  
-      } else {
-        setAlert({
-          type: "error",
-          message: "There was an error submitting the form. Please try again.",
-          position: "bottom-right",
-          duration: 3000,
-        });
-        setIsSuccess(false);
-        throw new Error("Unexpected response status");
-      }
-    } catch (error) {
-      console.error("Form submission error:", error);
-      setAlert({
-        type: "error",
-        message: "There was an error submitting the form. Please try again.",
-        position: "bottom-right",
-        duration: 3000,
-      });
-      setIsSuccess(false);
-    } finally {
-      setIsLoading(false);
-      setIsMicroLoading(false);
-    }
-  };
-
   useEffect(() => {
     if (isSuccess) {
+      
+      const participationType = eventData?.participationType;
+      console.log(participationType);
       const handleAutoClose = () => {
         setTimeout(() => {
-          setTeamCode(teamCode);
-          setTeamName(teamName);
+          if (participationType === "Team") {
+            setTeamCode(code);
+            setTeamName(team);
+          }
           navigate("/Events");
-        }, 5000);
+        }, 1000);
       };
 
       handleAutoClose();
@@ -350,10 +279,9 @@ console.log("team code in recovery context:",recoveryCtx.teamCode)
     if (isHavingFieldValidations.length > 0) {
       const isMatched = isHavingFieldValidations.find((valid) => {
         return currentSection.fields?.find((fld) => {
-          return fld.onChangeValue === valid.values;
+          return fld?.onChangeValue?.trim() === valid?.values?.trim();
         });
       });
-
       nextSection = isMatched ? isMatched?.onNext : nextSection;
       backSection = isMatched ? isMatched?.onBack : backSection;
     }
@@ -369,6 +297,151 @@ console.log("team code in recovery context:",recoveryCtx.teamCode)
     };
   };
 
+  const constructToSave = () => {
+    const newSections = [...data, ...meta];
+    return newSections.map((section) => {
+      if (
+        (section !== null && isCompleted.includes(section._id)) ||
+        (section !== null && currentSection._id === section._id)
+      ) {
+        return {
+          _id: section._id,
+          name: section.name,
+          fields: section.fields.map((field) => {
+            return {
+              _id: field._id,
+              name: field.name,
+              type: field.type,
+              value: field.onChangeValue,
+            };
+          }),
+        };
+      }
+    });
+  };
+
+  const filterMediaFields = () => {
+    return (
+      data
+        .filter(
+          (section) =>
+            currentSection._id === section._id ||
+            isCompleted.includes(section._id)
+        )
+        .map((section) =>
+          section.fields.filter(
+            (field) => field.type === "file" || field.type === "image"
+          )
+        )
+        .flat() || []
+    );
+  };
+
+  const handleSubmit = async () => {
+    const formData = new FormData();
+    const mediaFields = filterMediaFields() || [];
+    const isCreateTeam = data.some(
+      (sec) =>
+        (sec.name === "Create Team" && currentSection._id === sec._id) ||
+        (sec.name === "Create Team" && isCompleted.includes(sec._id))
+    );
+    const isJoinTeam = data.some(
+      (sec) =>
+        (sec.name === "Join Team" && currentSection._id === sec._id) ||
+        (sec.name === "Join Team" && isCompleted.includes(sec._id))
+    );
+
+    formData.append("_id", form.id);
+    formData.append("sections", JSON.stringify(constructToSave()));
+    formData.append("createTeam", isCreateTeam);
+    formData.append("joinTeam", isJoinTeam);
+
+    mediaFields.forEach((field) => {
+      if (field.onChangeValue) {
+        formData.append(field.name, field.onChangeValue);
+      }
+    });
+
+    try {
+      setIsLoading(true);
+      setIsMicroLoading(true);
+
+      if (isEditing) {
+        setIsSuccess(true);
+        return;
+      }
+      const response = await api.post("/api/form/register", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${window.localStorage.getItem("token")}`,
+        },
+      });
+
+      if (response.status === 200 || response.status === 201) {
+        const updatedRegForm = [...authCtx.user.regForm, form.id];
+        authCtx.update(
+          authCtx.user.name,
+          authCtx.user.email,
+          authCtx.user.img,
+          authCtx.user.rollNumber,
+          authCtx.user.school,
+          authCtx.user.college,
+          authCtx.user.contactNo,
+          authCtx.user.year,
+          authCtx.user.github,
+          authCtx.user.linkedin,
+          authCtx.user.extra.designation,
+          authCtx.user.access,
+          authCtx.user.editProfileCount,
+          updatedRegForm // Pass the updated regForm
+        );
+        setAlert({
+          type: "success",
+          message: "Form submitted successfully!",
+          position: "bottom-right",
+          duration: 3000,
+        });
+        if (response.data) {
+          const { teamName, teamCode } = response.data;
+
+          const participationType = eventData?.participationType;
+          if (participationType === "Team") {
+            setTeam(teamName);
+            setcode(teamCode);
+            // console.log("saved context teamCode:",recoveryCtx.teamCode)
+          }
+          // console.log("consoling teamdata:", teamName, teamCode);
+        }
+        setIsSuccess(true);
+      } else {
+        setAlert({
+          type: "error",
+          message:
+            response.data.message ||
+            "There was an error submitting the form. Please try again.",
+          position: "bottom-right",
+          duration: 3000,
+        });
+        setIsSuccess(false);
+        throw new Error("Unexpected response status");
+      }
+    } catch (error) {
+      console.error("Form submission error:", error);
+      setAlert({
+        type: "error",
+        message:
+          error?.response?.data?.message ||
+          "There was an error submitting the form. Please try again.",
+        position: "bottom-right",
+        duration: 3000,
+      });
+      setIsSuccess(false);
+    } finally {
+      setIsLoading(false);
+      setIsMicroLoading(false);
+    }
+  };
+
   const onNext = () => {
     if (!currentSection) {
       return false;
@@ -379,6 +452,7 @@ console.log("team code in recovery context:",recoveryCtx.teamCode)
     }
 
     const { nextSection } = inboundList();
+
     if (nextSection) {
       setisCompleted((prev) => [...prev, currentSection._id]);
       setactiveSection(nextSection);
@@ -399,18 +473,8 @@ console.log("team code in recovery context:",recoveryCtx.teamCode)
   };
 
   const renderPaymentScreen = () => {
-    const { eventType, receiverDetails, eventAmount } = eventData;
-    console.log(receiverDetails.media)
+    const { eventType, receiverDetails, eventAmount } = formData;
 
-    const getMediaUrl = (media) => {
-      if (media instanceof File) {
-        // If media is a File, create an object URL
-        return URL.createObjectURL(media);
-      } else {
-        // Otherwise, assume media is a URL or handle it accordingly
-        return media;
-      }
-    };
     if (eventType === "Paid" && currentSection.name === "Payment Details") {
       return (
         <div
@@ -423,9 +487,12 @@ console.log("team code in recovery context:",recoveryCtx.teamCode)
           }}
         >
           {receiverDetails.media && (
-           
             <img
-              src={getMediaUrl(receiverDetails.media)}
+              src={
+                typeof receiverDetails.media === "string"
+                  ? receiverDetails.media
+                  : URL.createObjectURL(receiverDetails.media)
+              }
               alt={"QR-Code"}
               style={{
                 width: 200,
@@ -468,129 +535,148 @@ console.log("team code in recovery context:",recoveryCtx.teamCode)
     <>
       open && (
       <div className={styles.mainPreview}>
-        <div ref={wrapperRef} className={styles.previewContainer}>
-          {showCloseBtn && (
-            <Link onClick={handleClose} to="/Events">
-              <div className={styles.closeBtn}>
-                <X />
-              </div>
-            </Link>
-          )}
-          <Text
-            style={{
-              marginBottom: "20px",
-              width: "100%",
-              display: "flex",
-              justifyContent: "center",
-              fontSize: "25px",
-            }}
-          >
-            {eventData?.eventTitle || "Preview Event"}
-          </Text>
-          {isLoading ? (
-            <ComponentLoading
-              customStyles={{
+        <div className={styles.previewContainerWrapper}>
+          <div ref={wrapperRef} className={styles.previewContainer}>
+            {showCloseBtn &&
+              (isEditing ? (
+                <div onClick={handleClose} className={styles.closeBtn}>
+                  <X />
+                </div>
+              ) : (
+                <Link to="/Events" onClick={handleClose}>
+                  <div className={styles.closeBtn}>
+                    <X />
+                  </div>
+                </Link>
+              ))}
+            <Text
+              style={{
+                marginBottom: "20px",
+                width: "100%",
                 display: "flex",
                 justifyContent: "center",
-                alignItems: "center",
-                marginLeft: "20rem",
-                marginTop: "5rem",
+                fontSize: "25px",
               }}
-            />
-          ) : !isCompleted.includes("Submitted") ? (
-            <div style={{ width: "100%" }}>
-              <div>
-                <Text style={{ alignSelf: "center" }} variant="secondary">
-                  {currentSection.name}
-                </Text>
-                <Text
+            >
+              {eventData?.eventTitle || "Preview Event"}
+            </Text>
+            {isLoading ? (
+              <ComponentLoading
+                customStyles={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  marginLeft: "0rem",
+                  marginTop: "5rem",
+                }}
+              />
+            ) : !isCompleted.includes("Submitted") ? (
+              <div style={{ width: "100%" }}>
+                <div>
+                  <Text style={{ alignSelf: "center" }} variant="secondary">
+                    {currentSection.name}
+                  </Text>
+                  <Text
+                    style={{
+                      cursor: "pointer",
+                      padding: "6px 0",
+                      fontSize: "11px",
+                      opacity: "0.4",
+                      marginBottom: "8px",
+                    }}
+                  >
+                    {currentSection.description}
+                  </Text>
+                </div>
+                {renderPaymentScreen()}
+                <Section section={currentSection} handleChange={handleChange} />
+                <div
                   style={{
-                    cursor: "pointer",
-                    padding: "6px 0",
-                    fontSize: "11px",
-                    opacity: "0.4",
-                    marginBottom: "8px",
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "center",
                   }}
                 >
-                  {currentSection.description}
+                  {inboundList() && inboundList().backSection && (
+                    <Button style={{ marginRight: "10px" }} onClick={onBack}>
+                      Back
+                    </Button>
+                  )}
+                  <Button
+                    onClick={
+                      inboundList() && inboundList().nextSection
+                        ? onNext
+                        : handleSubmit
+                    }
+                  >
+                    {inboundList() && inboundList().nextSection ? (
+                      "Next"
+                    ) : isMicroLoading ? (
+                      <MicroLoading />
+                    ) : (
+                      "Submit"
+                    )}
+                  </Button>
+                </div>
+              </div>
+            ) : isSuccess ? (
+              <div
+                style={{
+                  width: "100%",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                }}
+              >
+                <img
+                  src={Complete}
+                  alt="Complete"
+                  style={{ width: "400px", height: "400px", margin: "auto" }}
+                />
+                <Text
+                  variant="secondary"
+                  style={{
+                    width: "60%",
+                    fontSize: "14px",
+                    alignSelf: "center",
+                    textAlign: "center",
+                    marginTop: "16px",
+                    userSelect: "none",
+                  }}
+                >
+                  Form Submitted Successfully! Thank you for your time.
                 </Text>
               </div>
-              {renderPaymentScreen()}
-              <Section section={currentSection} handleChange={handleChange} />
-              <div style={{ display: "flex", flexDirection: "row", justifyContent: "center"}}>
-                {inboundList() && inboundList().backSection && (
-                  <Button style={{ marginRight: "10px" }} onClick={onBack}>
-                    Back
-                  </Button>
-                )}
-                <Button onClick={onNext}>
-                  {inboundList() && inboundList().nextSection ? (
-                    "Next"
-                  ) : isMicroLoading ? (
-                    <MicroLoading />
-                  ) : (
-                    "Submit"
-                  )}
-                </Button>
+            ) : (
+              <div
+                style={{
+                  width: "100%",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                }}
+              >
+                <Text
+                  variant="secondary"
+                  style={{
+                    width: "60%",
+                    fontSize: "14px",
+                    alignSelf: "center",
+                    textAlign: "center",
+                    marginTop: "16px",
+                    userSelect: "none",
+                  }}
+                >
+                  <h2 style={{ marginBottom: "3rem" }}>
+                    Error Submitting your Form
+                  </h2>
+                  There is an error submitting the form. If you have made any
+                  payment, please fill up your payment details again. There is
+                  no need to pay again.
+                </Text>
               </div>
-            </div>
-          ) : isSuccess ? (
-            <div
-              style={{
-                width: "100%",
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-              }}
-            >
-              <img
-                src={Complete}
-                alt="Complete"
-                style={{ width: "400px", height: "400px", margin: "auto" }}
-              />
-              <Text
-                variant="secondary"
-                style={{
-                  width: "60%",
-                  fontSize: "14px",
-                  alignSelf: "center",
-                  textAlign: "center",
-                  marginTop: "16px",
-                  userSelect: "none",
-                }}
-              >
-                Form Submitted Successfully! Thank you for your time.
-              </Text>
-            </div>
-          ) : (
-            <div
-              style={{
-                width: "100%",
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-              }}
-            >
-              <Text
-                variant="secondary"
-                style={{
-                  width: "60%",
-                  fontSize: "14px",
-                  alignSelf: "center",
-                  textAlign: "center",
-                  marginTop: "16px",
-                  userSelect: "none",
-                }}
-              >
-                <h2 style={{ marginBottom: "3rem" }}>
-                  Error Submitting your Form
-                </h2>
-                There is an error submitting the form. If you have made any
-                payment, please fill up your payment details again. There is no
-                need to pay again.
-              </Text>
-            </div>
-          )}
+            )}
+          </div>
         </div>
       </div>
       )

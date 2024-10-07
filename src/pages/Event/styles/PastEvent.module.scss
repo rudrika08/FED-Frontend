@@ -253,7 +253,7 @@
 .ArrowBackIcon {
   position: absolute;
   top: 1.5rem;
-  left: 3.5rem;
+  left: 2.4rem;
   color: #fff;
   cursor: pointer;
   z-index:5;
@@ -270,6 +270,9 @@
       border-radius: 20px;
       margin-left: 0;
       margin-inline: auto;
+    }
+    .name{
+      margin-left: 0;
     }
   
     .eventcard {
@@ -325,11 +328,13 @@
       margin-top: 2.3rem;
     }
   
-    .name {
-      margin-left: 0;
+    .pasteventCard .name { 
+      display: flex;
       justify-content: center;
-          align-items: center;
+      align-items: center;
+      
     }
+    
   
 }
 
@@ -448,16 +453,3 @@
 }
 }
 
-
-// @media screen and (max-width:600px){
-//   .name{
-//     justify-content: center;
-//     align-items: center;
-//   }
-
-//   .pasteventCard{
-//     padding-right: 0rem; 
-//   // position: relative;
-// margin-left: 0rem;
-//   }
-// }

@@ -99,6 +99,7 @@ strong {
   align-items: center;
   justify-content: flex-end;
   margin-right: 60px;
+  margin-top: -30px;
   color: #FF8A00;
   font-size: 25px;
   padding-bottom: 20px;
@@ -148,10 +149,7 @@ strong {
 /* Responsive styles */
 
 @media (max-width: 1024px) {
-  // .circle2 {
-  //   // bottom: -200%;
-  //   right: -25%;
-  // }
+
   .circle {
     left: -30%;
   }
@@ -161,11 +159,7 @@ strong {
   .circle {
     left: -20%;
   }
-  // .circle2 {
-  //   bottom: -500%;
-  //   right: -20%;
-  //   display: none;
-  // }
+
 
   .error{
     padding: 30px 70px;
@@ -241,11 +235,7 @@ strong {
     margin-top: 1rem;
   }
 
-  // .circle2 {
-  //   bottom: -500%;
-  //   left: 30%;
-  //   background-color: rgba(255, 92, 0, 0.59);
-  // }
+
   
 
   .alumniBut {
@@ -266,7 +256,7 @@ strong {
 @media (max-width: 415px) {
   .teamGrid {
     grid-template-columns: repeat(2, 1fr);
-    gap: 6vw;
+    gap: 5vw;
   }
   .lastRowCentered{
     margin-bottom: 0;

@@ -1,7 +1,6 @@
 .navbar {
   position: fixed;
   width: 100%;
-  backdrop-filter: blur(10px);
   transition: top 0.3s;
   display: flex;
   align-items: center;
@@ -9,6 +8,11 @@
   z-index: 10;
   top: 0;
   border-radius: 50px;
+  // background: linear-gradient(
+  //   91deg,
+  //   rgba(48, 48, 48, 0.3) -147.64%,
+  //   rgba(217, 217, 217, 0) 143.9%
+  // );
   margin-top: 10px;
 }
 
@@ -17,13 +21,13 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  margin-top: -5px;
   margin-left: 5px;
-  gap:10px;
 }
 
 .logo {
-  width: 2.8rem;
-  height: 2.8rem;
+  width: 3rem;
+  height: 3rem;
   border-radius: 2.8rem;
   background: url("../../../assets/images/Logo/logo.svg") lightgray 50% / cover no-repeat;
 }
@@ -31,7 +35,8 @@
 .logo_text {
   width: 4.9rem;
   height: 2.3rem;
-  margin-right: -1.6rem;
+  margin-right: -0.5rem;
+  margin-left: 2px;
   background: url("../../../assets/images/Logo/FED.svg") no-repeat;
 }
 
@@ -45,6 +50,7 @@
   align-items: center;
   width: 100%;
   padding: 5px 30px 0px 25px;
+  border-radius: 50px;
 }
 
 .navLinks {
@@ -138,7 +144,6 @@
   background: #fff;
   margin: 3px 0;
   transition: all 0.3s;
-  backdrop-filter: blur(20px);
 }
 
 .menuToggle .cross {
@@ -185,7 +190,8 @@
   height: 3.5rem;
   list-style: none;
   padding: 5px;
-  margin-left: -1.5rem;
+  margin-top: -5px;
+  margin-right: 0rem;
 }
 
 .authButton {
@@ -194,7 +200,7 @@
   align-items: center;
   justify-content: center;
   border-radius: 1.65rem;
-  height: 3rem;
+  height: 3.3rem;
   font-size: 1.2rem;
   background: linear-gradient(
     260deg,
@@ -202,7 +208,7 @@
     rgba(244, 43, 3, 0.84) 128.34%
   );
   font-weight: 600;
-  padding: 5px 20px;
+  padding: 5px 25px;
   padding-bottom: 1vh;
   border: none;
   color: #fff;
@@ -239,8 +245,8 @@
 
 .profileImgdiv {
   height: 60px;
-  width: 130px;
-  margin: 10px 0 15px;
+  width: 60px;
+  margin: 10px 0 15px 45px;
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -248,7 +254,7 @@
 
 .profileImgdiv img {
   height: 90%;
-  width: auto;
+  width: 100%;
   border-radius: 50%;
 }
 
@@ -290,6 +296,7 @@
     gap: 10px;
     padding-top:  2vh;
     padding-bottom: 2vh;
+    margin-left: 1%;
   }
 
   .navLinks {
@@ -310,6 +317,7 @@
   .profileImgdiv {
     width: fit-content;
     padding-top: 20px;
+    margin-left: -5px;
   }
 
   .profileImgdiv img {
@@ -325,7 +333,17 @@
     display: flex;
   }
 
-  .authButton{
-    margin-right: 1.4rem;
+  // .authButton{
+  //   margin-right: 1.4rem;
+  // }
+}
+@media (max-width: 380px) {
+  .logo_text {
+    margin-left: -10px;
+  }
+}
+@media (max-width: 320px) {
+  .logo_text {
+    margin-left: -25px;
   }
 }

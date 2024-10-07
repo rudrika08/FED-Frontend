@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { MdOutlineLogout } from "react-icons/md";
 import AuthContext from "../../context/AuthContext";
 import styles from "./styles/Navbar.module.scss";
@@ -15,6 +15,7 @@ const Navbar = () => {
   const lastScrollY = useRef(0);
   const authCtx = useContext(AuthContext);
   const location = useLocation(); // Hook to get the current location
+  const navigate = useNavigate();
 
   const handleScroll = () => {
     if (window.scrollY > lastScrollY.current) {
@@ -60,9 +61,24 @@ const Navbar = () => {
 
   const handleLogout = () => {
     authCtx.logout();
+    navigate("/")
     closeMobileMenu();
   };
 
+  window.addEventListener("scroll", () => {
+    const navbarElements = document.getElementsByClassName(styles.navbar);
+    
+    if (window.scrollY > 0) {
+      for (let i = 0; i < navbarElements.length; i++) {
+        navbarElements[i].style.backdropFilter = "blur(20px)";
+      }
+    } else {
+      for (let i = 0; i < navbarElements.length; i++) {
+        navbarElements[i].style.backdropFilter = "none";
+      }
+    }
+  });
+  
   const isOmegaActive = activeLink === "/Omega";
 
   return (
@@ -146,7 +162,8 @@ const Navbar = () => {
                 Event
               </NavLink>
             </li>
-            <li>
+            {/*
+              <li>
               <NavLink
                 to="/Omega"
                 className={`${styles.link} ${
@@ -156,7 +173,8 @@ const Navbar = () => {
               >
                 Omega
               </NavLink>
-            </li>
+            </li> 
+            */}
             <li>
               <NavLink
                 to="/Social"

@@ -14,7 +14,7 @@ const EventForm = () => {
 
   // Ensure eventId is correctly parsed
   const id = eventId;
-  console.log("event id in eventForm is :",id);
+  // console.log("event id in eventForm is :",id);
 
   useEffect(() => {
     if (alert) {
@@ -27,11 +27,11 @@ const EventForm = () => {
   useEffect(() => {
     const fetchEvent = async () => {
       try {
-        const response = await api.get("/api/form/getAllForms");
-        console.log("registerForm",response.data)
+        const response = await api.get(`/api/form/getAllForms?id=${eventId}`);
+        // console.log("registerForm",response.data)
         if (response.status === 200) {
-          const fetchedEvents = response.data.events;
-          setEventData(fetchedEvents[0]);
+          setEventData(response.data.events);
+          
         } else {
           setAlert({
             type: "error",
@@ -44,16 +44,9 @@ const EventForm = () => {
       } catch (error) {
         console.error("Error fetching event:", error);
 
-        // setAlert({
-        //   type: "error",
-        //   message: "There was an error fetching event form. Please try again.",
-        //   position: "bottom-right",
-        //   duration: 3000,
-        // });
-        // Fallback to local data
-        const { events } = FormData;
-        const localEventData = events.find((event) => event.id === id);
-        setEventData(localEventData);
+        // const { events } = FormData;
+        // const localEventData = events.find((event) => event.id === id);
+        // setEventData(localEventData);
       } finally {
         setIsLoading(false);
       }
@@ -68,8 +61,9 @@ const EventForm = () => {
         <PreviewForm
           open={showPreview}
           handleClose={() => setShowPreview(false)}
-          sections={eventData?.sections || []} // Ensure sections is always an array
-          eventData={eventData?.info || {}} // Pass the correct data prop
+          sections={eventData?.sections || []}
+          eventData={eventData?.info || {}}
+          form={eventData || {}}
           showCloseBtn={true}
         />
       )}

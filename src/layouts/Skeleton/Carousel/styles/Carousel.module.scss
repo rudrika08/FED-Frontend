@@ -47,6 +47,19 @@
   }
 }
 
+@media (max-width: 500px) {
+  .carousel_skeleton{
+    margin-right: 30px;
+    border-radius: 50px;
+  }
+
+  .inner_skeleton{
+    border-radius: 50px;
+  }
+}
+
+
+
 @media (max-width: 400px){
   .carousel_skeleton{
     height: 18rem;

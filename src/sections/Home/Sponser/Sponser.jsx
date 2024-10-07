@@ -44,7 +44,7 @@ const Sponser = () => {
       <div className={styles.sponser_card}>
         {!isImageLoaded && (
           <Blurhash
-            hash="L7C}Yb0JDz~D0J^8XpnO1m}8=y5R"
+            hash="LEG8_%els7NgM{M{RiNI*0IVog%L"
             width={'100%'}
             height={'100%'}
             resolutionX={32}

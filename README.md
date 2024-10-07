@@ -1,11 +1,11 @@
 
-## FED Frontend Beta
+## FED Frontend
 
 ### Overview
 
 FED FRONTEND is the official website of the Federation of Entrepreneurship Development (FED), designed to showcase upcoming events, introduce team members and leads, and provide resources for developing entrepreneurial skills. This platform aims to empower individuals interested in entrepreneurship and innovation.
 
-### Features (Currently in Development)
+### Features
 
 #### User-Focused Features:
 
@@ -25,8 +25,8 @@ FED FRONTEND is the official website of the Federation of Entrepreneurship Devel
 
 - **Frontend**: ReactJS using Vite
 - **Backend**: Node.js with Express
-- **Database**: MongoDB
-- **Authentication**: Firebase Authentication
+- **Database**: MongoDB with Prisma
+- **Authentication**: Google Authentication
 - **Styling**: Modular SCSS for customizable and maintainable styles.
 
 ### How to Run Locally

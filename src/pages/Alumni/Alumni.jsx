@@ -21,14 +21,18 @@ const Alumni = () => {
         const response = await api.get("/api/user/fetchAlumni");
 
         if (response.status === 200) {
-          setAlumni(response.data.data);
+          // Sort alumni alphabetically
+          const sortedAlumni = response.data.data.sort((a, b) =>
+            a.name.localeCompare(b.name)
+          );
+          setAlumni(sortedAlumni);
         } else {
           console.error("Error fetching our Alumnis:", response.data.message);
           // using local JSON data
           const testMembers = MemberData;
-          const fileteredAlumni = testMembers.filter(
-            (member) => member.access === "ALUMNI"
-          );
+          const fileteredAlumni = testMembers
+            .filter((member) => member.access === "ALUMNI")
+            .sort((a, b) => a.name.localeCompare(b.name));
           setAlumni(fileteredAlumni);
         }
       } catch (error) {
@@ -37,12 +41,6 @@ const Alumni = () => {
             "Sorry for the inconvenience, we are having issues fetching our Alumni",
         });
         console.error("Error fetching our Alumnis:", error);
-        // using local JSON data
-        // const testMembers = MemberData;
-        // const fileteredAlumni = testMembers.filter(
-        //   (member) => member.access === "ALUMNI"
-        // );
-        // setAlumni(fileteredAlumni);
       } finally {
         setIsLoading(false);
       }
@@ -66,30 +64,14 @@ const Alumni = () => {
       <div className={styles.alumniSection}>
         <div className={styles.alumniGrid}>
           {otherMembers.map((member, idx) => (
-            <TeamCard
-              key={idx}
-              name={member.name}
-              image={member.img}
-              social={member.extra}
-              title={member.extra.title}
-              role={member.access}
-              know={member.extra.know}
-            />
+            <TeamCard key={idx} member={member} />
           ))}
         </div>
 
         {lastRowMembers.length > 0 && (
           <div className={styles.lastRowCentered}>
             {lastRowMembers.map((member, idx) => (
-              <TeamCard
-                key={idx}
-                name={member.name}
-                image={member.img}
-                social={member.extra}
-                title={member.extra.title}
-                role={member.access}
-                know={member.extra.know}
-              />
+              <TeamCard key={idx} member={member} />
             ))}
           </div>
         )}
@@ -114,7 +96,17 @@ const Alumni = () => {
       {/* <div className={styles.circle}></div> */}
       {/* <div className={styles.circle2}></div> */}
       {isLoading ? (
-        <ComponentLoading />
+        <ComponentLoading
+          customStyles={{
+            width: "100%",
+            height: "100%",
+            display: "flex",
+            marginTop: "5rem",
+            marginBottom: "10rem",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        />
       ) : (
         <>
           {Error && <div className={styles.error}>{Error.message}</div>}

@@ -35,10 +35,11 @@ const TEAM_SIZE = [
 
 function NewForm() {
   const scrollRef = useRef(null);
-  const [isVisibility, setisVisibility] = useState(true);
+  const [isVisibility, setisVisibility] = useState(false);
   const authCtx = useContext(AuthContext);
   const [alert, setAlert] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [isEditing, setisEditing] = useState(false);
   const [data, setdata] = useState({
     _id: nanoid(),
     eventTitle: "",
@@ -61,7 +62,7 @@ function NewForm() {
     successMessage: "",
     isPublic: false,
     isRegistrationClosed: false,
-    isEventPast: false,
+    isEventPast: true,
 
     // eventName:"",
     // logoLink: "",
@@ -126,8 +127,14 @@ function NewForm() {
 
   useEffect(() => {
     if (authCtx.eventData) {
-      setdata(authCtx.eventData?.info);
+      setdata({
+        ...authCtx.eventData?.info,
+        isPublic: authCtx.eventData?.info.isPublic,
+        isRegistrationClosed: authCtx.eventData?.info.isRegistrationClosed,
+        isEventPast: authCtx.eventData?.info.isEventPast,
+      });
       setsections(authCtx.eventData?.sections);
+      setisEditing(true);
     }
   }, []);
 
@@ -139,6 +146,7 @@ function NewForm() {
   }, [alert]);
 
   const isValidSections = () => {
+    const sections = constructForPreview();
     return sections.every((section) =>
       section.fields?.every((field) => {
         if (
@@ -150,12 +158,13 @@ function NewForm() {
         }
 
         if (["radio", "checkbox", "select"].includes(field.type)) {
-          return field.validations.every(
-            (validation) =>
-              validation.type && validation.value && validation.operator
-          );
+          return field.validations && field.validations.length > 0
+            ? field.validations.every(
+                (validation) =>
+                  validation.type && validation.value && validation.operator
+              )
+            : true;
         }
-
         return true;
       })
     );
@@ -163,72 +172,157 @@ function NewForm() {
 
   const isValidEvent = () => {
     if (!data.eventTitle) {
-      alert("Title is required.");
+      setAlert({
+        type: "error",
+        message: "Event title is required.",
+        position: "bottom-right",
+        duration: 3000,
+      });
       return false;
     }
 
     if (!data.eventImg) {
-      alert("Image is required.");
+      setAlert({
+        type: "error",
+        message: "Event image is required.",
+        position: "bottom-right",
+        duration: 3000,
+      });
       return false;
     }
     if (!data.eventDate) {
-      alert("Event date is required.");
+      setAlert({
+        type: "error",
+        message: "Event date is required.",
+        position: "bottom-right",
+        duration: 3000,
+      });
       return false;
     }
     if (!data.eventType) {
-      alert("Event type is required.");
+      setAlert({
+        type: "error",
+        message: "Event type is required.",
+        position: "bottom-right",
+        duration: 3000,
+      });
       return false;
     }
     if (!data.relatedEvent) {
-      alert("Related event is required.");
+      setAlert({
+        type: "error",
+        message: "Related event is required.",
+        position: "bottom-right",
+        duration: 3000,
+      });
       return false;
     }
     if (!data.participationType) {
-      alert("Participation type is required.");
+      setAlert({
+        type: "error",
+        message: "Participation type is required.",
+        position: "bottom-right",
+        duration: 3000,
+      });
       return false;
     }
     if (!data.eventPriority) {
-      alert("Priority is required.");
+      setAlert({
+        type: "error",
+        message: "Event priority is required.",
+        position: "bottom-right",
+        duration: 3000,
+      });
       return false;
     }
     if (!data.eventdescription) {
-      alert("Description is required.");
+      setAlert({
+        type: "error",
+        message: "Event description is required.",
+        position: "bottom-right",
+        duration: 3000,
+      });
       return false;
     }
     if (!data.successMessage) {
-      alert("Success message is required.");
+      setAlert({
+        type: "error",
+        message: "Success message is required.",
+        position: "bottom-right",
+        duration: 3000,
+      });
       return false;
     }
     if (!data.eventMaxReg) {
-      alert("Maximum registration is required.");
+      setAlert({
+        type: "error",
+        message: "Maximum registration is required.",
+        position: "bottom-right",
+        duration: 3000,
+      });
       return false;
     }
 
     if (data.eventType === "Paid") {
       if (!data.eventAmount) {
-        alert("Amount is required.");
+        setAlert({
+          type: "error",
+          message: "Event amount is required.",
+          position: "bottom-right",
+          duration: 3000,
+        });
         return false;
       }
 
       if (!data.receiverDetails.media) {
-        alert("Media is required.");
+        setAlert({
+          type: "error",
+          message: "Media is required.",
+          position: "bottom-right",
+          duration: 3000,
+        });
         return false;
       }
 
       if (!data.receiverDetails.upi) {
-        alert("UPI is required.");
+        setAlert({
+          type: "error",
+          message: "UPI is required.",
+          position: "bottom-right",
+          duration: 3000,
+        });
         return false;
       }
+
+      // if (!data.find((field) => field.name === "T&C Acceptance").value) {
+      //   setAlert({
+      //     type: "error",
+      //     message: "You must accept the terms and conditions to proceed.",
+      //     position: "bottom-right",
+      //     duration: 3000,
+      //   });
+      //   return false;
+      // }
     }
 
     if (data.participationType === "Team") {
       if (!data.maxTeamSize) {
-        alert("Maximum team size is required.");
+        setAlert({
+          type: "error",
+          message: "Maximum team size is required.",
+          position: "bottom-right",
+          duration: 3000,
+        });
         return false;
       }
 
       if (!data.minTeamSize) {
-        alert("Minimum team size is required.");
+        setAlert({
+          type: "error",
+          message: "Minimum team size is required.",
+          position: "bottom-right",
+          duration: 3000,
+        });
         return false;
       }
     }
@@ -236,81 +330,141 @@ function NewForm() {
   };
 
   const onSaveEvent = async () => {
+    if (sections === undefined) {
+      setAlert({
+        type: "error",
+        message: "Please add atleast one section",
+        position: "bottom-right",
+        duration: 3000,
+      });
+      return;
+    }
     if (isValidEvent()) {
-
       setIsLoading(true);
       const newSections = constructForPreview();
-      console.log(data);
-  
       const form = new FormData();
-      const info = {};
-  
-      // Append data to the info object
+
+      if (data.eventImg && data.eventImg instanceof File) {
+        form.append("eventImg", data.eventImg);
+      }
+      if (
+        data.receiverDetails.media &&
+        data.receiverDetails.media instanceof File
+      ) {
+        form.append("media", data.receiverDetails.media);
+      }
+
+      form.append("upi", data.receiverDetails.upi);
+
       Object.keys(data).forEach((key) => {
         const value = data[key];
-  
-        if (typeof value === "object" && value !== null) {
-          if (Array.isArray(value)) {
-            info[key] = JSON.stringify(value);
-          } else {
-            info[key] = value;
-          }
-        } else {
-          info[key] = value;
+        if (key !== "eventImg") {
+          form.append(key, value);
         }
       });
-  
-      // Append info and sections to the form
-      form.append("info", JSON.stringify(info));
-      form.append("sections", JSON.stringify(newSections));
-  
-      if (authCtx.eventData) {
+
+      if (typeof data.eventImg === "string") {
+        form.delete("eventImg");
+      }
+
+      if (typeof data.receiverDetails.media === "string") {
+        form.delete("media");
+      }
+
+      if (data.receiverDetails) {
+        form.delete("receiverDetails");
+      }
+
+      if (sections && sections !== undefined) {
+        form.append("sections", JSON.stringify(newSections));
+      }
+
+      if (isEditing) {
         form.append("id", authCtx.eventData?.id);
       }
+
       if (data._id) {
         delete data._id;
       }
-  
-      console.log("form", form);
-      console.log("Form Data", data);
-  
-      try {
-        const response = await api.post("/api/form/addForm", form, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
+
+      if (isEditing) {
+        try {
+          const response = await api.put(
+            `/api/form/editForm/${authCtx.eventData?.id}`,
+            form,
+            {
+              headers: {
+                "Content-Type": "multipart/form-data",
+                Authorization: `Bearer ${window.localStorage.getItem("token")}`,
+              },
+            }
+          );
+
+          if (response.status === 200 || response.status === 201) {
+            setAlert({
+              type: "success",
+              message: "Form updated successfully",
+              position: "bottom-right",
+              duration: 3000,
+            });
+          } else {
+            setAlert({
+              type: "error",
+              message: "There was an error editing the form. Please try again.",
+              position: "bottom-right",
+              duration: 3000,
+            });
           }
-        });
-  
-        if (response.status === 200 || response.status === 201) {
-          setAlert({
-            type: "success",
-            message: "Form saved successfully",
-            position: "bottom-right",
-            duration: 3000,
-          });
-          event.target.reset();
-        } else {
+        } catch (error) {
           setAlert({
             type: "error",
-            message: "There was an error submitting the form. Please try again.",
+            message:
+              "There was an error submitting the form. Please try again.",
             position: "bottom-right",
             duration: 3000,
           });
+        } finally {
+          setIsLoading(false);
         }
-      } catch (error) {
-        setAlert({
-          type: "error",
-          message: "There was an error submitting the form. Please try again.",
-          position: "bottom-right",
-          duration: 3000,
-        });
-      } finally {
-        setIsLoading(false);
+      } else {
+        try {
+          const response = await api.post("/api/form/addForm", form, {
+            headers: {
+              "Content-Type": "multipart/form-data",
+              Authorization: `Bearer ${window.localStorage.getItem("token")}`,
+            },
+          });
+
+          if (response.status === 200 || response.status === 201) {
+            setAlert({
+              type: "success",
+              message: "Form saved successfully",
+              position: "bottom-right",
+              duration: 3000,
+            });
+          } else {
+            setAlert({
+              type: "error",
+              message:
+                "There was an error submitting the form. Please try again.",
+              position: "bottom-right",
+              duration: 3000,
+            });
+          }
+        } catch (error) {
+          setAlert({
+            type: "error",
+            message:
+              "There was an error submitting the form. Please try again.",
+            position: "bottom-right",
+            duration: 3000,
+          });
+        } finally {
+          setIsLoading(false);
+        }
       }
     }
   };
-  
-  
 
   const onAddSection = () => {
     const lastSection = sections[sections.length - 1];
@@ -361,7 +515,12 @@ function NewForm() {
           newSection,
         ]);
       } else {
-        alert("Functionality not implemented yet.");
+        setAlert({
+          type: "error",
+          message: "Please add atleast one section",
+          position: "bottom-right",
+          duration: 3000,
+        });
       }
       setTimeout(() => {
         scrollRef.current.scrollIntoView({
@@ -521,14 +680,6 @@ function NewForm() {
   //   }
   // };
 
-  const handleSaveSection = () => {
-    if (isValidSections()) {
-      console.log("Sections", sections);
-    } else {
-      alert("Fill all the form fields, including conditions");
-    }
-  };
-
   const onChangeEventType = (value) => {
     setdata({ ...data, eventType: value, eventAmount: "" });
 
@@ -559,20 +710,28 @@ function NewForm() {
           },
           {
             _id: nanoid(),
-            name: "Paid Amount",
+            name: "Transaction ID",
             type: "number",
-            value: "Enter Amount Paid",
+            value: "Last 4 digits of Transaction ID",
             isRequired: true,
-            validations: [],
+            validations: [
+              {
+                _id: nanoid(),
+                type: "length",
+                value: "4",
+                operator: "<=",
+                message: "Transaction ID should be at most 4 digits long",
+              },
+            ],
           },
           {
             _id: nanoid(),
-            name: "Transaction ID",
-            type: "text",
-            value: "Enter Transaction ID",
+            name: "Payment Screenshot",
+            type: "image",
+            value: "Upload Payment Screenshot",
             isRequired: true,
             validations: [],
-          },
+          }
         ],
       });
     } else {
@@ -581,7 +740,8 @@ function NewForm() {
   };
 
   const constructForPreview = () => {
-    const formatedData = [...sections];
+    const formatedData =
+      sections && sections !== undefined ? [...sections] : [];
 
     if (paymentSection && data.eventType === "Paid") {
       paymentSection.isDisabled = true;
@@ -672,7 +832,12 @@ function NewForm() {
       if (isValidSections()) {
         setshowPreview(!showPreview);
       } else {
-        alert("Section is not valid. Please fill all the fields.");
+        setAlert({
+          type: "error",
+          message: "Section is not valid. Please fill all the fields.",
+          position: "bottom-right",
+          duration: 3000,
+        });
       }
     } else {
       console.log("Invalid Event");
@@ -722,10 +887,18 @@ function NewForm() {
             )}
           </div>
 
-          <Button onClick={onSaveEvent}>Save</Button>
-          <Button isLoading={false} onClick={handlePreview} variant="secondary">
-            {showPreview ? "Hide" : "Preview"}
+          <Button isLoading={isLoading} onClick={onSaveEvent}>
+            {isEditing ? "Update" : "Save"}
           </Button>
+          {sections && sections !== undefined ? (
+            <Button
+              isLoading={false}
+              onClick={handlePreview}
+              variant="secondary"
+            >
+              {showPreview ? "Hide" : "Preview"}
+            </Button>
+          ) : null}
         </div>
       </div>
       {isVisibility && (
@@ -755,7 +928,15 @@ function NewForm() {
                 transition: "all .4s",
               }}
             >
-              Public Mode (Public/Private)
+              Event Form Privacy (
+              <span style={{ color: !data.isPublic ? "#FF8A00" : "white" }}>
+                Private
+              </span>
+              /
+              <span style={{ color: data.isPublic ? "#FF8A00" : "white" }}>
+                Public
+              </span>
+              )
             </label>
             <Switch
               checked={data.isPublic}
@@ -792,7 +973,23 @@ function NewForm() {
                 transition: "all .4s",
               }}
             >
-              Close Event Registration
+              Event Form Registration (
+              <span
+                style={{
+                  color: !data.isRegistrationClosed ? "#FF8A00" : "white",
+                }}
+              >
+                Open
+              </span>
+              /
+              <span
+                style={{
+                  color: data.isRegistrationClosed ? "#FF8A00" : "white",
+                }}
+              >
+                Close
+              </span>
+              )
             </label>
             <Switch
               checked={data.isRegistrationClosed}
@@ -828,7 +1025,23 @@ function NewForm() {
                 transition: "all .4s",
               }}
             >
-              Event Past/Ongoing
+              Event Form Status (
+              <span
+                style={{
+                  color: !data.isEventPast ? "#FF8A00" : "white",
+                }}
+              >
+                Ongoing
+              </span>
+              /
+              <span
+                style={{
+                  color: data.isEventPast ? "#FF8A00" : "white",
+                }}
+              >
+                Past
+              </span>
+              )
             </label>
             <Switch
               checked={data.isEventPast}
@@ -997,7 +1210,7 @@ function NewForm() {
                   )}
                   className={styles.formInput}
                   value={data.minTeamSize}
-                  onChange={(value) => setdata({ ...data, minTeamSize: value }) }
+                  onChange={(value) => setdata({ ...data, minTeamSize: value })}
                 />
                 {data.minTeamSize && (
                   <Input
@@ -1009,7 +1222,9 @@ function NewForm() {
                     )}
                     className={styles.formInput}
                     value={data.maxTeamSize}
-                    onChange={(value) => setdata({ ...data, maxTeamSize: value })}
+                    onChange={(value) =>
+                      setdata({ ...data, maxTeamSize: value })
+                    }
                   />
                 )}
               </div>
@@ -1078,46 +1293,49 @@ function NewForm() {
             />
           </div>
         </div>
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            width: "86%",
-            marginBottom: "12px",
-          }}
-        >
-          <Text
+        {sections && sections !== undefined ? (
+          <div
             style={{
-              fontSize: "14px",
-              margin: "auto 6px",
-              marginRight: "auto",
+              display: "flex",
+              flexDirection: "row",
+              width: "86%",
+              marginBottom: "12px",
             }}
           >
-            Sections
-          </Text>
-          <Button onClick={handleSaveSection}>
-          {isLoading ? <MicroLoading /> : "Save"}
-          </Button>
-          <Button
-            variant="secondary"
-            style={{ marginLeft: "12px" }}
-            onClick={onAddSection}
-          >
-            Add Section
-          </Button>
-        </div>
-        {sections.map((section) => (
-          <div key={section._id} ref={scrollRef}>
-            <Section
-              section={section}
-              sections={sections}
-              setsections={setsections}
-              meta={paymentSection ? [paymentSection] : []}
-              showAddButton={!section.isDisabled}
-              disabled={section.isDisabled}
-            />
+            <Text
+              style={{
+                fontSize: "14px",
+                margin: "auto 6px",
+                marginRight: "auto",
+              }}
+            >
+              Sections
+            </Text>
+            <Button
+              variant="secondary"
+              style={{ marginLeft: "auto" }}
+              onClick={onAddSection}
+            >
+              Add Section
+            </Button>
           </div>
-        ))}
+        ) : null}
+
+        {sections && sections !== undefined
+          ? sections.map((section) => (
+              <div key={section._id} ref={scrollRef}>
+                <Section
+                  section={section}
+                  sections={sections}
+                  setsections={setsections}
+                  meta={paymentSection ? [paymentSection] : []}
+                  showAddButton={!section.isDisabled}
+                  disabled={section.isDisabled}
+                />
+              </div>
+            ))
+          : null}
+
         {paymentSection && (
           <Section
             section={paymentSection}
@@ -1129,11 +1347,14 @@ function NewForm() {
         )}
         {showPreview && (
           <PreviewForm
+            isEditing={true}
             open={showPreview}
             handleClose={() => setshowPreview(false)}
             sections={constructForPreview()}
-            eventData={data}
+            eventData={{ ...data, id: authCtx.eventData?.id }}
             meta={paymentSection ? [paymentSection] : []}
+            form={data}
+            showCloseBtn={true}
           />
         )}
       </div>

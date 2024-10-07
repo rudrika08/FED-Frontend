@@ -1,28 +1,38 @@
-import { useState, useEffect } from 'react';
-import axios from 'axios';
-import styles from './styles/LiveEventPopup.module.scss';
-import eventData from '../../../../data/eventData.json';
+import { useState, useEffect } from "react";
+import axios from "axios";
+import styles from "./styles/LiveEventPopup.module.scss";
+import { api } from "../../../../services";
 
 const LiveEventPopup = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [isEventOngoing, setIsEventOngoing] = useState(false);
-  const [eventImage, setEventImage] = useState('');
+  const [eventImage, setEventImage] = useState("");
 
   useEffect(() => {
     const fetchEventData = async () => {
       try {
-        // const response = await axios.get('/api/form/getAllForms');
-        // const fetchedEvents = response.data;
-        const events = eventData;
+        const response = await api.get("/api/form/getAllForms");
+        const fetchedEvents = response.data;
 
-        const currentEvent = events.find(event => event.ongoingEvent);
-        if (currentEvent && !sessionStorage.getItem('popupDisplayed')) {
+        const currentEvent = fetchedEvents.events.filter(
+          (event) =>
+            event.info.isEventPast === false &&
+            event.info.isPublic === true &&
+            event.info.relatedEvent === "null"
+        );
+
+        if (currentEvent && !sessionStorage.getItem("popupDisplayed")) {
           setIsEventOngoing(true);
-          setEventImage(currentEvent.imageURL);
+
+          const today = new Date();
+          const endDate = new Date("2024-08-15");
+          const imageUrl = currentEvent[0].info.eventImg;
+
+          setEventImage(imageUrl);
 
           const timer = setTimeout(() => {
             setIsVisible(true);
-            sessionStorage.setItem('popupDisplayed', 'true');
+            sessionStorage.setItem("popupDisplayed", "true");
           }, 2500);
 
           return () => clearTimeout(timer);
@@ -58,10 +68,14 @@ const LiveEventPopup = () => {
   return (
     <>
       {isEventOngoing && (
-        <div className={`${styles.popup} ${isVisible ? styles.fadeIn : ''}`}>
+        <div className={`${styles.popup} ${isVisible ? styles.fadeIn : ""}`}>
           <div className={styles.popupContent}>
-            <button className={styles.closeButton} onClick={closePopup}>×</button>
-            <a href="/Events"><img src={eventImage} alt="Event" /></a>
+            <button className={styles.closeButton} onClick={closePopup}>
+              ×
+            </button>
+            <a href="/Events">
+              <img src={eventImage} alt="Event" className={styles.popupContent} />
+            </a>
           </div>
         </div>
       )}

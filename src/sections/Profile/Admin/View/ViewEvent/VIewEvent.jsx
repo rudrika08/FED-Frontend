@@ -1,9 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import styles from "./styles/ViewEvent.module.scss";
 import { EventCard } from "../../../../../components";
 import { ComponentLoading } from "../../../../../microInteraction";
 import FormData from "../../../../../data/FormData.json";
 import { api } from "../../../../../services";
+import AuthContext from "../../../../../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 function ViewEvent({ handleChangePage }) {
   const [activePage, setActivePage] = useState("View Events");
@@ -11,16 +13,19 @@ function ViewEvent({ handleChangePage }) {
   const [ongoingEvents, setOngoingEvents] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [reload, setReload] = useState(false);
+
   const [selectedSection, setSelectedSection] = useState("ongoing");
+  const authCtx = useContext(AuthContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchEventData = async () => {
+
       try {
         const response = await api.get("/api/form/getAllForms");
         if (response.status === 200) {
           const fetchedEvents = response.data.events;
-          console.log("incoming response",response.data)
-          console.log("fetched events",fetchedEvents);
           const sortedEvents = fetchedEvents.sort(
             (a, b) => new Date(b.info.eventDate) - new Date(a.info.eventDate)
           );
@@ -35,27 +40,27 @@ function ViewEvent({ handleChangePage }) {
         }
       } catch (error) {
         console.error("Error fetching event data:", error);
-        // setError({
-        //   message:
-        //     "Sorry for the inconvenience, we are having issues fetching our Events",
-        // });
-        const testEvents = FormData.events || [];
-        const sortedTestEvents = testEvents.sort(
-          (a, b) => new Date(b.info.eventDate) - new Date(a.info.eventDate)
-        );
-        const ongoing = sortedTestEvents.filter(
-          (event) => !event.info.isEventPast
-        );
-        const past = sortedTestEvents.filter((event) => event.info.isEventPast);
-        setOngoingEvents(ongoing);
-        setPastEvents(past);
+        setError({
+          message:
+            "Sorry for the inconvenience, we are having issues fetching our Events",
+        });
+        // const testEvents = FormData.events || [];
+        // const sortedTestEvents = testEvents.sort(
+        //   (a, b) => new Date(b.info.eventDate) - new Date(a.info.eventDate)
+        // );
+        // const ongoing = sortedTestEvents.filter(
+        //   (event) => !event.info.isEventPast
+        // );
+        // const past = sortedTestEvents.filter((event) => event.info.isEventPast);
+        // setOngoingEvents(ongoing);
+        // setPastEvents(past);
       } finally {
         setIsLoading(false);
       }
     };
 
     fetchEventData();
-  }, []);
+  }, [reload]);
 
   const customStyles = {
     eventname: {
@@ -72,6 +77,23 @@ function ViewEvent({ handleChangePage }) {
     },
   };
 
+  const handleDeleteEvent = async () => {
+    const id = authCtx.eventData.id;
+    try {
+      const response = await api.delete(`/api/form/deleteForm/${id}`, {
+        headers: {
+          Authorization: `Bearer ${window.localStorage.getItem("token")}`,
+        },
+      });
+      setReload(prev => {
+        return !prev;
+      });
+    } catch (error) {
+      console.error("Error deleting event:", error);
+    }
+  };
+  
+  
   return (
     <div className={styles.container}>
       <div className={styles.buttonContainer}>
@@ -135,7 +157,8 @@ function ViewEvent({ handleChangePage }) {
                                   modalpath="/profile/Events/"
                                   isPastpage={true}
                                   aosDisable={true}
-                                  onEdit={() => handleChangePage("Form")}
+                                  onDelete={handleDeleteEvent}
+                                  onEdit={() => navigate("/profile/Form")}
                                   enableEdit={true}
                                   onHover={() =>
                                     console.log("Ongoing Event Hovered")
@@ -166,7 +189,8 @@ function ViewEvent({ handleChangePage }) {
                                   modalpath="/profile/Events/"
                                   isPastpage={true}
                                   aosDisable={true}
-                                  onEdit={() => handleChangePage("Form")}
+                                  onEdit={() => navigate("/profile/Form")}
+                                  onDelete={handleDeleteEvent}
                                   enableEdit={true}
                                   onHover={() =>
                                     console.log("Past Event Hovered")

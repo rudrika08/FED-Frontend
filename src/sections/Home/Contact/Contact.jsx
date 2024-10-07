@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from "react";
 import { api } from "../../../services";
 import styles from "./styles/Contact.module.scss";
@@ -9,6 +10,7 @@ import { Alert, MicroLoading } from "../../../microInteraction";
 const ContactForm = () => {
   const [alert, setAlert] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
 
   useEffect(() => {
     if (alert) {
@@ -16,6 +18,19 @@ const ContactForm = () => {
       Alert({ type, message, position, duration });
     }
   }, [alert]);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    // Cleanup the event listener on component unmount
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -102,13 +117,16 @@ const ContactForm = () => {
             </Button>
           </form>
 
-          <div className={styles.imageSection}>
-            <div className={styles.backCircle}></div>
-            <AnimatedBox direction="right">
-              <img src={contactImg} alt="Contact" />
-            </AnimatedBox>
-            <div className={styles.circle}></div>
-          </div>
+          {!isMobile && (
+            <div className={styles.imageSection}>
+              <div className={styles.backCircle}></div>
+              <AnimatedBox direction="right">
+                <img src={contactImg} alt="Contact" />
+              </AnimatedBox>
+              <div className={styles.circle}></div>
+            </div>
+          )}
+          <div className={styles.circle}></div>
         </div>
       </div>
       <Alert />

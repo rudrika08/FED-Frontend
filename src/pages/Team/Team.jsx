@@ -26,25 +26,36 @@ const Team = () => {
         const response = await api.get("/api/user/fetchTeam");
 
         if (response.status === 200) {
-          setTeamMembers(response.data.data);
-          console.log("incoming response",response.data.data);
+          const validMembers = response.data.data.filter(
+            (member) => member.name !== null
+          );
+          const sortedMembers = validMembers.sort((a, b) => {
+            if (b.year !== a.year) {
+              return b.year - a.year;
+            }
+            return a.name.localeCompare(b.name);
+          });
+          setTeamMembers(sortedMembers);
         } else {
           console.error("Error fetching team members:", response.data.message);
           setError({
             message:
               "Sorry for the inconvenience, we are having issues fetching our Team Members",
           });
-          console.error("Error fetching team members:", error);
         }
       } catch (error) {
+        console.error("Error fetching team members:", error);
         setError({
           message:
             "Sorry for the inconvenience, we are having issues fetching our Team Members",
         });
-        console.error("Error fetching team members:", error);
-        // using local JSON data
-        const testMembers = MemberData;
-        setTeamMembers(testMembers);
+        // const testMembers = MemberData.sort((a, b) => {
+        //   if (b.year !== a.year) {
+        //     return b.year - a.year;
+        //   }
+        //   return a.name.localeCompare(b.name);
+        // });
+        // setTeamMembers(testMembers);
       } finally {
         setIsLoading(false);
       }
@@ -56,26 +67,33 @@ const Team = () => {
 
         if (response.status === 200) {
           const filteredAccess = response.data.data.filter(
-            (accessType) => !["ADMIN", "USER", "ALUMNI"].includes(accessType)
+            (accessType) =>
+              !["ADMIN", "USER", "ALUMNI", "EX_MEMBER"].includes(accessType)
           );
           setAccess(filteredAccess);
         } else {
+          setError({
+            message:
+              "Sorry for the inconvenience, we are having issues fetching our Team Members",
+          });
           console.error("Error fetching Access Types:", response.data.message);
-          // using local JSON data
-          const testAccess = AccessTypes.data;
-          const filteredAccess = testAccess.filter(
-            (accessType) => !["ADMIN", "USER", "ALUMNI"].includes(accessType)
-          );
-          setAccess(filteredAccess);
+          // const testAccess = AccessTypes.data;
+          // const filteredAccess = testAccess.filter(
+          //   (accessType) => !["ADMIN", "USER", "ALUMNI"].includes(accessType)
+          // );
+          // setAccess(filteredAccess);
         }
       } catch (error) {
+        setError({
+          message:
+            "Sorry for the inconvenience, we are having issues fetching our Team Members",
+        });
         console.error("Error fetching Access Types:", error);
-        // using local JSON data
-        const testAccess = AccessTypes.data;
-        const filteredAccess = testAccess.filter(
-          (accessType) => !["ADMIN", "USER", "ALUMNI"].includes(accessType)
-        );
-        setAccess(filteredAccess);
+        // const testAccess = AccessTypes.data;
+        // const filteredAccess = testAccess.filter(
+        //   (accessType) => !["ADMIN", "USER", "ALUMNI"].includes(accessType)
+        // );
+        // setAccess(filteredAccess);
       }
     };
 
@@ -83,36 +101,95 @@ const Team = () => {
     fetchTeamMembers();
   }, []);
 
-  console.log(access);
+  // Define the director access codes in the desired order
+  const boardAccessCodes = [
+    "PRESIDENT",
+    "VICEPRESIDENT",
+    "DIRECTOR_TECHNICAL",
+    "DIRECTOR_CREATIVE",
+    "DIRECTOR_MARKETING",
+    "DIRECTOR_OPERATIONS",
+    "DIRECTOR_PR_AND_FINANCE",
+    "DIRECTOR_HUMAN_RESOURCE",
+    "DEPUTY_DIRECTOR_TECHNICAL",
+    "DEPUTY_DIRECTOR_CREATIVE",
+    "DEPUTY_DIRECTOR_MARKETING",
+    "DEPUTY_DIRECTOR_OPERATIONS",
+    "DEPUTY_DIRECTOR_PR_AND_FINANCE",
+    "DEPUTY_DIRECTOR_HUMAN_RESOURCE",
+  ];
 
-  const directorAccessCodes = access.filter(
-    (code) =>
-      code.startsWith("PRESIDENT") ||
-      code.startsWith("VICEPRESIDENT") ||
-      code.startsWith("DIRECTOR_")
+  // Separate directors from other members
+  const directorsAndAbove = teamMembers
+    .filter((member) => boardAccessCodes.includes(member.access))
+    .sort((a, b) => {
+      const aIndex = boardAccessCodes.indexOf(a.access);
+      const bIndex = boardAccessCodes.indexOf(b.access);
+
+      return aIndex - bIndex; // Sort by access code order
+
+      // return a.name.localeCompare(b.name); // Sort alphabetically within the same role
+    });
+
+  const otherMembers = teamMembers.filter(
+    (member) => !boardAccessCodes.includes(member.access)
   );
+
+  // Create a role map for non-director roles
   const roleMap = access.reduce((map, code) => {
-    if (!directorAccessCodes.includes(code)) {
+    if (!boardAccessCodes.includes(code)) {
       let role = code
         .split("_")
         .map(
           (word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
         )
         .join(" ");
-      if (role === "Operation") role = "Operations"; // Special case for Operations
-      if (role === "Sponsorship") role = "Sponsorship & PR"; // Special case for Sponsorship & PR
+      // Ensure consistent capitalization for role names
+      switch (role.toLowerCase()) {
+        case "pr and finance":
+          role = "PR And Finance";
+          break;
+        case "human resource":
+          role = "Human Resource";
+          break;
+        // Add other cases if needed for consistent capitalization
+      }
+
       map[role] = code;
     }
     return map;
   }, {});
 
-  const directorsAndAbove = teamMembers.filter((member) =>
-    directorAccessCodes.includes(member.access)
-  );
-  const teamByRole = Object.keys(roleMap).map((role) => ({
-    role,
-    members: teamMembers.filter((member) => member.access === roleMap[role]),
-  }));
+  const teamByRole = Object.keys(roleMap)
+    .map((role) => {
+      const members = otherMembers.filter(
+        (member) => member.access === roleMap[role]
+      );
+
+      const seniorExecutives = members.filter(
+        (member) => member.extra?.designation === "Senior Executive"
+      );
+      const otherMembersWithoutSenior = members.filter(
+        (member) => member.extra?.designation !== "Senior Executive"
+      );
+
+      return {
+        role,
+        members: [...seniorExecutives, ...otherMembersWithoutSenior],
+      };
+    })
+    .filter((roleGroup) => roleGroup.members.length > 0)
+    .sort((a, b) => {
+      const order = [
+        "Technical",
+        "Creative",
+        "Marketing",
+        "Operations",
+        "PR And Finance",
+        "Human Resource",
+      ];
+      return order.indexOf(a.role) - order.indexOf(b.role);
+    });
 
   const TeamSection = ({ title, members, isDirector }) => {
     const membersPerRow = windowWidth < 500 ? 2 : 4;
@@ -123,7 +200,6 @@ const Team = () => {
       remainderMembersCount > 0
         ? members.slice(0, -remainderMembersCount)
         : members;
-
     return (
       <div
         className={`${styles.teamSection} ${
@@ -137,31 +213,13 @@ const Team = () => {
           }`}
         >
           {otherMembers.map((member, idx) => (
-            <TeamCard
-              key={idx}
-              className="teamMember"
-              name={member.name}
-              image={member.img}
-              social={member.extra}
-              title={member.extra.title}
-              role={member.access}
-              know={member.extra.know}
-            />
+            <TeamCard key={idx} className="teamMember" member={member} />
           ))}
         </div>
         {lastRowMembers.length > 0 && (
           <div className={styles.lastRowCentered}>
             {lastRowMembers.map((member, idx) => (
-              <TeamCard
-                key={idx}
-                className="teamMember"
-                name={member.name}
-                image={member.img}
-                social={member.extra}
-                title={member.extra.title}
-                role={member.access}
-                know={member.extra.know}
-              />
+              <TeamCard key={idx} className="teamMember" member={member} />
             ))}
           </div>
         )}
@@ -195,45 +253,57 @@ const Team = () => {
       {/* <div className={styles.circle2}></div> */}
 
       {isLoading ? (
-        <ComponentLoading />
+        <ComponentLoading
+          customStyles={{
+            width: "100%",
+            height: "100%",
+            display: "flex",
+            marginTop: "5rem",
+            marginBottom: "10rem",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        />
       ) : (
         <>
           {error && <div className={styles.error}>{error.message}</div>}
 
           <TeamSection members={directorsAndAbove} isDirector={true} />
 
-          {teamByRole.map((section, index) => (
-            <TeamSection
-              key={index}
-              title={
-                <span>
-                  <span style={{ color: "#fff" }}>Team </span>
-                  <strong
-                    style={{
-                      background: "var(--primary)",
-                      WebkitBackgroundClip: "text",
-                      color: "transparent",
-                    }}
-                  >
-                    {section.role}
-                  </strong>
-                </span>
-              }
-              members={section.members}
-              isDirector={false}
-            />
-          ))}
+          <div className={styles.alumniBut}>
+            <div className={styles.ulhover}>
+              <Link to="/Alumni">
+                <span style={{ color: "#fff" }}>Our</span> Alumni
+              </Link>
+              <FaRegArrowAltCircleRight />
+            </div>
+          </div>
+          {teamByRole.map(
+            (section, index) =>
+              section.members.length > 0 && (
+                <TeamSection
+                  key={index}
+                  title={
+                    <span>
+                      <span style={{ color: "#fff" }}>Team </span>
+                      <strong
+                        style={{
+                          background: "var(--primary)",
+                          WebkitBackgroundClip: "text",
+                          color: "transparent",
+                        }}
+                      >
+                        {section.role}
+                      </strong>
+                    </span>
+                  }
+                  members={section.members}
+                  isDirector={false}
+                />
+              )
+          )}
         </>
       )}
-
-      <div className={styles.alumniBut}>
-        <div className={styles.ulhover}>
-          <Link to="/Alumni">
-            <span style={{ color: "#fff" }}>Meet</span> Our Alumni
-          </Link>
-          <FaRegArrowAltCircleRight />
-        </div>
-      </div>
     </div>
   );
 };

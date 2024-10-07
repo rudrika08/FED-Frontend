@@ -5,14 +5,50 @@ import { FiEdit } from "react-icons/fi";
 import { EditProfile } from "../../../../features";
 import { ComponentLoading } from "../../../../microInteraction";
 import PropTypes from "prop-types";
+import { Alert } from "../../../../microInteraction";
 
 const Profile = ({ editmodal }) => {
   const authCtx = useContext(AuthContext);
   const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [alert, setAlert] = useState(null);
+
+  useEffect(() => {
+    if (alert) {
+      const { type, message, position, duration } = alert;
+      Alert({ type, message, position, duration });
+      setAlert(null); // Reset alert after displaying it
+    }
+  }, [alert]);
 
   const handleOpen = () => {
-    setIsOpen(true);
+    authCtx.update(
+      authCtx.user.name,
+      authCtx.user.email,
+      authCtx.user.img,
+      authCtx.user.rollNumber,
+      authCtx.user.school,
+      authCtx.user.college,
+      authCtx.user.contactNo,
+      authCtx.user.year,
+      authCtx.user.extra.github,
+      authCtx.user.extra.linkedin,
+      authCtx.user.extra.designation,
+      authCtx.user.access,
+      authCtx.user.editProfileCount,
+      authCtx.user.regForm
+    );
+    // console.log("editProfileCount", authCtx.user.editProfileCount);
+    if (authCtx.user.access !== "USER" || authCtx.user.editProfileCount > 0) {
+      setIsOpen(true);
+    } else {
+      setAlert({
+        type: "error",
+        message: "You have exceeded the limit of editing your profile.",
+        position: "bottom-right",
+        duration: 3000,
+      });
+    }
   };
 
   const handleClose = () => {
@@ -47,46 +83,49 @@ const Profile = ({ editmodal }) => {
         <h3 className={styles.headInnerText}>
           <span>Profile</span> Details
         </h3>
-        {authCtx.user.access !== "USER" && (
-          <div className={styles.editbtn} onClick={handleOpen}>
-            <FiEdit />
-          </div>
-        )}
+        <div className={styles.editbtn} onClick={handleOpen}>
+          <FiEdit />
+        </div>
       </div>
-      {authCtx.user && (
-        isLoading ? (
+      {authCtx.user &&
+        (isLoading ? (
           <ComponentLoading />
         ) : (
           <div className={styles.details}>
-            <table className={styles.profileTable}>
-              <tbody>
-                {userDetails.map((detail, index) => (
-                  <tr key={index}>
-                    <td className={styles.dets}>{detail.label}</td>
-                    <td className={styles.vals}>{detail.value}</td>
-                  </tr>
-                ))}
-                {authCtx.user.access !== "USER" && extraDetails.map((detail, index) => (
-                  (detail.value) ? (
+            <div className={styles.profileBox}>
+              <table className={styles.profileTable}>
+                <tbody>
+                  {userDetails.map((detail, index) => (
                     <tr key={index}>
                       <td className={styles.dets}>{detail.label}</td>
-                      <td className={styles.vals}>{detail.value}</td>
+                      <td className={`${styles.vals} ${detail.value ? styles.highlight : ""}`}>
+                        {detail.value}
+                      </td>
                     </tr>
-                  ) : (
-                    <tr key={index}>
-                      <td className={styles.dets}>{detail.label}</td>
-                      <td className={styles.vals}>N/A</td>
-                    </tr>
-                  )
-                ))}
-              </tbody>
-            </table>
+                  ))}
+                  {authCtx.user.access !== "USER" &&
+                    extraDetails.map((detail, index) =>
+                      detail.value ? (
+                        <tr  key={index}>
+                          <td className={styles.dets}>{detail.label}</td>
+                          <td className={`${styles.vals} ${detail.value ? styles.highlight : ""}`}>
+                          <a href={detail.value} target="_blank" style={{color: "white" , fontWeight: "500"}}>{detail.value}</a>
+                          </td>
+                        </tr>
+                      ) : (
+                        <tr key={index}>
+                          <td className={styles.dets} >{detail.label}</td>
+                          <td className={styles.vals}>N/A</td>
+                        </tr>
+                      )
+                    )}
+                </tbody>
+              </table>
+            </div>
           </div>
-        )
-      )}
-      {isOpen && authCtx.user.access !== "USER" && (
-        <EditProfile handleModalClose={handleClose} />
-      )}
+        ))}
+      {isOpen && <EditProfile handleModalClose={handleClose} />}
+      <Alert />
     </div>
   );
 };

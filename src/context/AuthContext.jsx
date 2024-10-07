@@ -20,8 +20,10 @@ const AuthContext = React.createContext({
       designation: "",
     },
     access: "",
-    editPorfileCount: "",
+    editProfileCount: "",
     regForm: [],
+    blurhash: "",
+    token: "",
   },
   target: null,
   isAdmin: false,
@@ -108,9 +110,10 @@ export const AuthContextProvider = (props) => {
     github,
     linkedin,
     designation,
-    regForm,
     access,
-    editPorfileCount,
+    editProfileCount,
+    regForm,
+    blurhash,
     token,
     expirationTime
   ) => {
@@ -130,8 +133,10 @@ export const AuthContextProvider = (props) => {
         designation: designation,
       },
       access: access,
-      editPorfileCount: editPorfileCount,
+      editProfileCount: editProfileCount,
       regForm: regForm,
+      blurhash: blurhash,
+      token: token,
     };
 
     localStorage.setItem("user", JSON.stringify(setuserdata));
@@ -161,10 +166,12 @@ export const AuthContextProvider = (props) => {
     linkedin,
     designation,
     access,
-    editPorfileCount,
-    regForm
+    editProfileCount,
+    regForm,
+    blurhash,
+    token
   ) => {
-    console.log("update handler is called");
+    // console.log("update handler is called");
     const setuserdata = {
       name: name,
       img: img,
@@ -180,8 +187,10 @@ export const AuthContextProvider = (props) => {
         designation: designation,
       },
       access: access,
-      editPorfileCount: editPorfileCount,
+      editProfileCount: editProfileCount,
       regForm: regForm,
+      blurhash: blurhash,
+      token: token
     };
 
     localStorage.setItem("user", JSON.stringify(setuserdata));

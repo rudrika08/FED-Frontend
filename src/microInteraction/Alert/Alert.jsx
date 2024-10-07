@@ -1,58 +1,107 @@
-import React from 'react';
-import { Slide, ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import PropTypes from 'prop-types';
+import React from "react";
+import { Toaster, toast } from "react-hot-toast";
+import PropTypes from "prop-types";
+import { blue } from "@mui/material/colors";
 
 const Alert = ({ type, message, position, duration, style }) => {
   const notify = () => {
-    const options = {
-      position: position || 'top-right',
-      autoClose: duration || 5000,
-      style: style || {},
-      hideProgressBar: true,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
+    const defaultStyle = {
+      borderRadius: "5px",
+      padding: "10px",
+      boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
+      fontSize: "16px",
     };
 
-    const toastId = "custom-id";
-    
-    // setTimeout(() => toast.dismiss(toastId), options.autoClose);
-   
+    const mobileStyle =
+      window.innerWidth <= 768
+        ? {
+            marginBottom: "2rem",
+          }
+        : {};
 
-    if (!toast.isActive(toastId)) {
-      switch (type) {
-        case 'success':
-          toast.success(message, { 
-            ...options, 
-            style : { 
-              border: '1.5px solid green',
-              backgroundColor: '#d3f9d3', 
-              color: '#198754' 
-            },  
-            toastId });
-          break;
-        case 'error':
-          toast.error(message, { 
-            ...options, 
-            style: { 
-              border: '1.5px solid red',
-              backgroundColor: '#FADADD', 
-              color: 'red' 
-            },
-            toastId });
-          break;
-        case 'info':
-          toast.info(message, { ...options, toastId });
-          break;
-        case 'warning':
-          toast.warning(message, { ...options, toastId });
-          break;
-        default:
-          toast(message, { ...options, toastId });
-          break;
-      }
+    const options = {
+      duration: duration || 5000,
+      style: { ...defaultStyle, ...style, ...mobileStyle },
+      position: position || "top-right",
+    };
+
+    // Directly show the appropriate toast
+    switch (type) {
+      case "success":
+        toast.success(message, {
+          ...options,
+          style: {
+            ...defaultStyle,
+            ...style,
+            ...mobileStyle,
+            border: "1.5px solid green",
+            backgroundColor: "#d3f9d3",
+            color: "#198754",
+          },
+        });
+        break;
+      case "error":
+        toast.error(message, {
+          ...options,
+          style: {
+            ...defaultStyle,
+            ...style,
+            ...mobileStyle,
+            border: "1.5px solid red",
+            backgroundColor: "#FADADD",
+            color: "red",
+          },
+        });
+        break;
+      case "info":
+        toast(message, {
+          ...options,
+          style: {
+            ...defaultStyle,
+            ...style,
+            ...mobileStyle,
+            border: "1.5px solid orange",
+            backgroundColor: "#fff3cd",
+            color: "#856404",
+          },
+        });
+        break;
+      case "warning":
+        toast(message, {
+          ...options,
+          style: {
+            ...defaultStyle,
+            ...style,
+            ...mobileStyle,
+            border: "1.5px solid orange",
+            backgroundColor: "#fff3cd",
+            color: "#856404",
+          },
+        });
+        break;
+      case "infoOmega":
+        toast(message, {
+          ...options,
+          style: {
+            ...defaultStyle,
+            ...style,
+            ...mobileStyle,
+            border: "1.5px solid #0171e3d6",
+            backgroundColor: "white",
+            color: "#0171e3d6",
+          },
+        });
+        break;
+      default:
+        toast(message, {
+          ...options,
+          style: {
+            ...defaultStyle,
+            ...style,
+            ...mobileStyle,
+          },
+        });
+        break;
     }
   };
 
@@ -60,7 +109,7 @@ const Alert = ({ type, message, position, duration, style }) => {
     notify();
   }
 
-  return <ToastContainer transition={Slide}/>;
+  return <Toaster position={position || "top-right"} />;
 };
 
 Alert.propTypes = {
