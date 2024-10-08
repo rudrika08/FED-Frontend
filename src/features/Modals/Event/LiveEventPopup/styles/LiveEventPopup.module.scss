@@ -91,22 +91,30 @@
   }
 }
 
+// phone
 @media (max-width: 480px) {
-  .closeButton {
-    top: 4px;
-    right: 10px;
-    font-size: 1.2em;
+  .popupContent {
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
   }
 }
 
 @media (max-width: 375px) {
   .popupContent {
     max-width: 100%;
+    height: auto;
   }
-  .closeButton {
-    top: 4px;
-    right: 10px;
-    font-size: 1.2em;
+  .img {
+    width: 100%;
+    height: auto;
   }
 }
 
@@ -116,5 +124,8 @@
     right: 10px;
     font-size: 1em;
     padding: 0 7px;
+  }
+  .popupContent img {
+    width: 100%; 
   }
 }
