@@ -1,0 +1,6 @@
+blank_issues_enabled: true
+
+contact_links:
+  - name: "Have Questions or Need Suggestions?"
+    url: "https://github.com/fed-tech/FED-Frontend/discussions/categories/q-a"
+    about: "Feel free to create a Q&A discussion to ask for clarifications or suggestions related to your issue."
