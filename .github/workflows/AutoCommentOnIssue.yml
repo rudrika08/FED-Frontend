@@ -1,5 +1,5 @@
 name: Auto Comment on Issue
-  
+
 on:
   issues:
     types: [opened]
