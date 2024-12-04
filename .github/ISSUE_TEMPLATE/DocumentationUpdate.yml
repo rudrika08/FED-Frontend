@@ -39,6 +39,6 @@ body:
         - "High"
         - "Medium"
         - "Low"
-      default: "Low"
+      default: 2  # Use an integer index (0-based) if required
     validations:
       required: true
