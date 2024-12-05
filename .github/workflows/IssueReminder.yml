@@ -1,0 +1,60 @@
+name: Issue Reminder for Main and Beta
+
+on:
+  schedule:
+    # Runs every day at 8 AM
+    - cron: '0 8 * * *'
+
+jobs:
+  remind-stale-issues:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check out the repository
+      uses: actions/checkout@v3
+
+    - name: Find and remind stale issues
+      uses: actions/github-script@v6
+      with:
+        script: |
+          const daysBeforeReminder = 3;
+          const staleDate = new Date(Date.now() - daysBeforeReminder * 24 * 60 * 60 * 1000);
+
+          // List all open issues
+          const { data: issues } = await github.rest.issues.listForRepo({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            state: 'open',
+          });
+
+          const staleIssues = [];
+
+          for (const issue of issues) {
+            // Check if the issue has no comments (only the original post)
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: issue.number,
+            });
+
+            // Filter issues with no activity in 3 days
+            if (
+              comments.length === 0 && 
+              new Date(issue.created_at) < staleDate && 
+              (issue.labels.some(label => label.name === 'main') || issue.labels.some(label => label.name === 'beta'))
+            ) {
+              staleIssues.push(issue);
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issue.number,
+                body: `👋 This issue hasn't received a response in over ${daysBeforeReminder} days. Please check in to see if it is still relevant or needs attention!`,
+              });
+            }
+          }
+
+          if (staleIssues.length === 0) {
+            console.log('No stale issues found. All issues are up-to-date.');
+          } else {
+            console.log(`${staleIssues.length} stale issue(s) found and reminded.`);
+          }
