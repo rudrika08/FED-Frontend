@@ -17,7 +17,7 @@ jobs:
         run: |
           COMMENT=$(cat <<EOF
           {
-            "body": "Thank you for creating this issue! 🎉 We'll look into it as soon as possible."
+            "body": "Thank you for creating this issue! 🎉 Our team will look into it as soon as possible."
           }
           EOF
           )
