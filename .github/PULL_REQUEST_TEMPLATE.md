@@ -1,8 +1,8 @@
-## 📋 Description
+## Description
 
 <!-- Please provide a brief description of your changes and explain the purpose of the PR. -->
 
-## 🔨 Changes Made
+## Changes Made
 
 <!-- List the changes made in this PR. If it fixes an issue, please include the issue number (e.g., Fixes #123). -->
 
@@ -11,7 +11,7 @@
 - 
 
 
-## 🏷️ Types of Changes
+## Types of Changes
 
 What type of changes does your code introduce? (Check all that apply)
 
@@ -22,7 +22,7 @@ What type of changes does your code introduce? (Check all that apply)
 
 - Fixes #
 
-## 📸 Screenshots (if applicable)
+## Screenshots (if applicable)
 
 <!-- If your changes include any UI updates, add screenshots here to show the changes. -->
 
