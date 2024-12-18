@@ -162,7 +162,6 @@ const Navbar = () => {
                 Event
               </NavLink>
             </li>
-            {/*
               <li>
               <NavLink
                 to="/Omega"
@@ -174,7 +173,17 @@ const Navbar = () => {
                 Omega
               </NavLink>
             </li> 
-            */}
+            <li>
+              <NavLink
+                to="/Gsoc"
+                className={`${styles.link} ${
+                  activeLink === "/Gsoc" ? styles.activeLink : ""
+                } ${activeLink === "/Gsoc" ? styles.GsocHover : ""}`}
+                onClick={closeMobileMenu}
+              >
+                Gsoc
+              </NavLink>
+            </li>
             <li>
               <NavLink
                 to="/Social"
