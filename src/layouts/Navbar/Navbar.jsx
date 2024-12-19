@@ -162,7 +162,7 @@ const Navbar = () => {
                 Event
               </NavLink>
             </li>
-              <li>
+              {/* <li>
               <NavLink
                 to="/Omega"
                 className={`${styles.link} ${
@@ -172,7 +172,7 @@ const Navbar = () => {
               >
                 Omega
               </NavLink>
-            </li> 
+            </li>  */}
             <li>
               <NavLink
                 to="/Gsoc"
