@@ -34,12 +34,12 @@ function FedShow() {
   const calculateRemainingTime = () => {
     try {
       const regStartDate = parse(
-        "August 25, 2024, 10:00:00 AM",
+        "December 28, 2024, 10:00:00 AM",
         "MMMM dd, yyyy, h:mm:ss a",
         new Date()
       );
       const endTime = parse(
-        "August 25, 2024, 2:00:00 PM",
+        "December 28, 2024, 2:00:00 PM",
         "MMMM dd, yyyy, h:mm:ss a",
         new Date()
       );
