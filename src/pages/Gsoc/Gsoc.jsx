@@ -9,6 +9,7 @@ import Hero from "../../sections/Gsoc/Hero/Hero.jsx";
 import Speaker from "../../sections/Gsoc/Speaker/Speaker.jsx";
 import Attend from "../../sections/Gsoc/Attend/Attend.jsx";
 import ChatBot from "../../features/ChatBot/ChatBot.jsx";
+import LiveInsights from "../../sections/Gsoc/LiveInsights/LiveInsights.jsx";
 
 function Gsoc() {
   useEffect(() => {
@@ -120,6 +121,7 @@ function Gsoc() {
         eventName={eventName}
       />
       <Speaker />
+      <LiveInsights />
       <Attend />
       <div>
         <ChatBot />
