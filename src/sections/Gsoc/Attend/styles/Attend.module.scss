@@ -3,7 +3,7 @@
     height: auto;
     width: 100%;
     gap: 15px;
-    background-color: #2f0048;
+    
     display: flex;
     flex-direction: column;
 }
@@ -70,10 +70,11 @@
   left: -17%;
   filter: blur(40px);
   border-radius: 120px;
-  transform: rotate(60deg);
-  background: linear-gradient(#009ACA, #000695);
+  transform: rotate(0deg);
+  background: linear-gradient(#F9AB00, #2F0048, #2F0048, #4B00C6);
   height: 50vh;
   width: 24vw;
+  
     @media (max-width: 480px){
       height: 50vh;
       width: 50vw;
@@ -109,10 +110,10 @@
     position: absolute;
     top: 272%;
     right: -12%;
-    background: linear-gradient(#4B00C6 , #0047FF , #50FF34 ,#00D1FF );
+    background: linear-gradient(#F9AB00, #2F0048, #2F0048, #4B00C6 );
     filter:blur(40px);
     border-radius: 50%;
-    transform: rotate(60deg);
+    transform: rotate(0deg);
     height: 50vh;
     width: 20vw;
     
@@ -120,10 +121,10 @@
     // Apply your styles here for screen sizes less than 360px
     top: 280%;
     right: -11%;
-    background: linear-gradient(#4B00C6 , #0047FF , #50FF34 ,#00D1FF );;
+    background: linear-gradient(#F9AB00, #2F0048, #2F0048, #4B00C6 );;
     filter: blur(40px);
     border-radius: 50%;
-    transform: rotate(60deg);
+    transform: rotate(0deg);
     height: 21vh;
     width: 20vw;
   }
