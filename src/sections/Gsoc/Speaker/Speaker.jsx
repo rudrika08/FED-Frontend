@@ -88,11 +88,8 @@ function FedShow() {
         
       <div className={styles.fedshowcircle}></div>
       <div className={styles.fedshowcircle2}></div>
-      <Element name="p">
-          <p className={styles.head}>Empowering Open Source:</p>
-          <span className={styles.subHead}> Insights and Inspiration from GSoC Expert</span>
-      </Element>
       <div className={styles.imageContainer}>
+      
       <Element name="img">
         <motion.div
             ref={refImg1}
@@ -122,8 +119,17 @@ function FedShow() {
             }}
             />
         </motion.div>
+        
         </Element>
           <div className={styles.info}>
+          <Element name="p">
+          <p className={styles.head}>EMPOWERING</p>
+          <p className={styles.subhead}>OPEN SOURCE</p>
+          <img src="https://cdn.prod.website-files.com/663d1907e337de23e83c30b2/6764f973ef9bcf3a5445d7b6_Screenshot%202024-12-20%20102739.png" alt="" 
+             height={150}
+             />
+           </Element>
+           <div className={styles.date}>
             <p>
               <FaCalendarAlt className={styles.icon} size={20} /> December 28,
               2024
@@ -135,6 +141,7 @@ function FedShow() {
               <p style={{ marginLeft: "20px" }}>
                 <FaMapMarkerAlt className={styles.icon} /> ONLINE
               </p>
+              </div>
             </div>
             <button
             className={styles.registerBtn}
