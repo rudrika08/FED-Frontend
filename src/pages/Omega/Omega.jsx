@@ -6,10 +6,11 @@ import { Element } from "react-scroll";
 import { useInView } from "react-intersection-observer";
 import styles from "./styles/Omega.module.scss";
 import Hero from "../../sections/Omega/Hero/Hero.jsx";
-import Accordion from "../../sections/Omega/Accordion/Accordion";
+import Accordion from "../../components/Accordian/Accordian.jsx";
+import data from "../../data/omega/Accordion.json";
 import Sponsors from "../../sections/Omega/Sponsors/Sponsors";
 import Event from "../../sections/Omega/Event/Event.jsx";
-import FedShow from "../../sections/Omega/FedShow/FedShow.jsx"
+import FedShow from "../../sections/Omega/FedShow/FedShow.jsx";
 import TeamImage from "../../sections/Omega/TeamImage/TeamImage.jsx";
 import Attend from "../../sections/Omega/Attend/Attend.jsx";
 import ChatBot from "../../features/ChatBot/ChatBot.jsx";
@@ -90,11 +91,9 @@ function Omega() {
   }, [ongoingEvents]);
 
   useEffect(() => {
-   
     const registeredEventIds = authCtx.user.regForm || [];
-    ("Registered Events", registeredEventIds);
+    "Registered Events", registeredEventIds;
 
-  
     const relatedEventIds = ongoingEvents
       .map((event) => event.info.relatedEvent) // Extract relatedEvent IDs
       .filter((id) => id !== null && id !== undefined && id !== "null") // Filter out null, undefined, and 'null'
@@ -108,8 +107,6 @@ function Omega() {
         registeredEventIds.includes(relatedEventId)
       );
     }
-
-  
 
     if (isRegisteredInRelatedEvents) {
       setIsRegisteredInRelatedEvents(true);
@@ -131,8 +128,8 @@ function Omega() {
       />
       <Attend />
       <Sponsors />
-  
-      <Accordion />
+
+      <Accordion data={data} />
       <Element name="TeamImage">
         <motion.div
           ref={teamImageRef}
