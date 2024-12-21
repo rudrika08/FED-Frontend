@@ -11,6 +11,7 @@ import Attend from "../../sections/Gsoc/Attend/Attend.jsx";
 import ChatBot from "../../features/ChatBot/ChatBot.jsx";
 import Accordion from "../../components/Accordian/Accordian.jsx";
 import data from "../../data/gsoc/Gsoc.json";
+import LiveInsights from "../../sections/Gsoc/LiveInsights/LiveInsights.jsx";
 
 function Gsoc() {
   useEffect(() => {
@@ -118,6 +119,7 @@ function Gsoc() {
         eventName={eventName}
       />
       <Speaker />
+      <LiveInsights />
       <Attend />
       <Accordion data={data} />
       <div>
