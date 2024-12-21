@@ -19,7 +19,9 @@
     height: 50vh;
     width: 20vw;
   }
-  
+  .imgMobile {
+    display: none;
+  }
   .fedshowcircle2 {
     position: absolute;
     top: 10rem;
@@ -66,15 +68,13 @@
   
   .imageContainer {
     display: flex;
-    flex-direction: row;
+  
     align-items: center;
     justify-content: center;
     margin-top: 2rem;
   }
   
-  .mobileFedShowImg{
-    display: none;
-  }
+  
   
   .fedShow .imgLeft {
     height: 400px;
@@ -254,27 +254,21 @@
   
   @media (max-width: 480px) {
   
-    .imgLeft,
-    .imgRight {
+   
+    .imgLeft{
       display: none;
     }
-  
-    .imageContainer {
-      display: flex;
-      justify-content: center;
-      align-items: center;
+    .imageContainer { 
       flex-direction: column;
     }
-    .mobileFedShowImg {
-      display: flex;
-      width: 100%;
-      margin-top: 20px;
+    .imgMobile {
+      display: block;
     }
     .fedshowcircle2 {
       position: absolute;
       top: 6%;
       right: 47%;
-      background: linear-gradient(#4b00c6, #0047ff, #50ff34, #00d1ff);
+      background: linear-gradient(#F9AB00, #2F0048, #2F0048, #4B00C6);
       filter: blur(40px);
       border-radius: 50%;
       transform: rotate(108deg);
@@ -283,7 +277,7 @@
       margin-left: -16%;
       display: none;
     }
-  
+    
     .fedshowcircle {
       top: 62%;
       margin-left: 213%;
@@ -314,6 +308,17 @@
     .text p {
       width: 70%;
       white-space: wrap;
+    }
+    .foot{
+      text-align: center;
+      font-size: 1.3rem;
+      margin:  1rem;
+    }
+    .subfoot{
+      text-align: center;
+      display: flex;
+      font-size: 1.3rem;
+      margin: 1rem;
     }
   
     .text button {

@@ -85,51 +85,81 @@ function FedShow() {
 
   return (
     <div className={styles.fedShow}>
-        
+
       <div className={styles.fedshowcircle}></div>
       <div className={styles.fedshowcircle2}></div>
       <div className={styles.imageContainer}>
-      
-      <Element name="img">
-        <motion.div
+
+        <Element name="img">
+          <motion.div
             ref={refImg1}
             initial={{ opacity: 0, y: -10, scale: 0.5 }}
             animate={{
-            opacity: inViewImg1 ? 1 : 0,
-            y: inViewImg1 ? 0 : -10,
-            rotate: inViewImg1 ? 0 : 0,
-            scale: inViewImg1 ? 1 : 0.5,
+              opacity: inViewImg1 ? 1 : 0,
+              y: inViewImg1 ? 0 : -10,
+              rotate: inViewImg1 ? 0 : 0,
+              scale: inViewImg1 ? 1 : 0.5,
             }}
             transition={{ duration: 0.6, ease: "easeOut" }}
             style={{
-            perspective: 1000,
-            display: "flex",
-            justifyContent: "center", 
-            alignItems: "center", 
-          
+              perspective: 1000,
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+
             }}
-        >
+          >
             <img
-            className={styles.imgLeft}
-            src="https://cdn.prod.website-files.com/66ffb182a2a1dbe73904d0b5/67630436c26671752504862c_img1-removebg-preview.png"
-            alt="Hero"
-            style={{
-                Width: "100%", 
-                 
-            }}
+              className={styles.imgLeft}
+              src="https://cdn.prod.website-files.com/66ffb182a2a1dbe73904d0b5/67630436c26671752504862c_img1-removebg-preview.png"
+              alt="Hero"
+              style={{
+                Width: "100%",
+
+              }}
             />
-        </motion.div>
-        
+          </motion.div>
+
         </Element>
-          <div className={styles.info}>
+        <div className={styles.info}>
           <Element name="p">
-          <p className={styles.head}>EMPOWERING</p>
-          <p className={styles.subhead}>OPEN SOURCE</p>
-          <img src="https://cdn.prod.website-files.com/663d1907e337de23e83c30b2/6764f973ef9bcf3a5445d7b6_Screenshot%202024-12-20%20102739.png" alt="" 
-             height={150}
-             />
-           </Element>
-           <div className={styles.date}>
+            <p className={styles.head}>EMPOWERING</p>
+            <p className={styles.subhead}>OPEN SOURCE</p>
+            <Element name="img">
+          <motion.div
+            ref={refImg1}
+            initial={{ opacity: 0, y: -10, scale: 0.5 }}
+            animate={{
+              opacity: inViewImg1 ? 1 : 0,
+              y: inViewImg1 ? 0 : -10,
+              rotate: inViewImg1 ? 0 : 0,
+              scale: inViewImg1 ? 1 : 0.5,
+            }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            style={{
+              perspective: 1000,
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+
+            }}
+          >
+            <img
+              className={styles.imgMobile}
+              src="https://cdn.prod.website-files.com/66ffb182a2a1dbe73904d0b5/67630436c26671752504862c_img1-removebg-preview.png"
+              alt="Hero"
+              style={{
+                Width: "100%",
+
+              }}
+            />
+          </motion.div>
+          </Element>
+            <img src="https://cdn.prod.website-files.com/663d1907e337de23e83c30b2/6764f973ef9bcf3a5445d7b6_Screenshot%202024-12-20%20102739.png" alt=""
+              height={150}
+            />
+          </Element>
+          <div className={styles.date}>
             <p>
               <FaCalendarAlt className={styles.icon} size={20} /> December 28,
               2024
@@ -141,9 +171,9 @@ function FedShow() {
               <p style={{ marginLeft: "20px" }}>
                 <FaMapMarkerAlt className={styles.icon} /> ONLINE
               </p>
-              </div>
             </div>
-            <button
+          </div>
+          <button
             className={styles.registerBtn}
             disabled={
               btnTxt === "SHOW ENDED" ||
@@ -154,12 +184,12 @@ function FedShow() {
           >
             {remainingTime ? `${remainingTime}` : btnTxt}
           </button>
-          </div>
-          
+        </div>
+
       </div>
       <Element name="p">
-          <p className={styles.foot}>Voices of Innovation, Paths to Open Source Success!</p>
-          <span className={styles.subfoot}>Inspiring Minds, Shaping the Future Together!</span>
+        <p className={styles.foot}>Voices of Innovation, Paths to Open Source Success!</p>
+        <span className={styles.subfoot}>Inspiring Minds, Shaping the Future Together!</span>
       </Element>
     </div>
   );
