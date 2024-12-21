@@ -9,6 +9,8 @@ import Hero from "../../sections/Gsoc/Hero/Hero.jsx";
 import Speaker from "../../sections/Gsoc/Speaker/Speaker.jsx";
 import Attend from "../../sections/Gsoc/Attend/Attend.jsx";
 import ChatBot from "../../features/ChatBot/ChatBot.jsx";
+import Accordion from "../../components/Accordian/Accordian.jsx";
+import data from "../../data/gsoc/Gsoc.json";
 import LiveInsights from "../../sections/Gsoc/LiveInsights/LiveInsights.jsx";
 
 function Gsoc() {
@@ -87,11 +89,9 @@ function Gsoc() {
   }, [ongoingEvents]);
 
   useEffect(() => {
-   
     const registeredEventIds = authCtx.user.regForm || [];
-    ("Registered Events", registeredEventIds);
+    "Registered Events", registeredEventIds;
 
-  
     const relatedEventIds = ongoingEvents
       .map((event) => event.info.relatedEvent) // Extract relatedEvent IDs
       .filter((id) => id !== null && id !== undefined && id !== "null") // Filter out null, undefined, and 'null'
@@ -105,8 +105,6 @@ function Gsoc() {
         registeredEventIds.includes(relatedEventId)
       );
     }
-
-  
 
     if (isRegisteredInRelatedEvents) {
       setIsRegisteredInRelatedEvents(true);
@@ -123,6 +121,7 @@ function Gsoc() {
       <Speaker />
       <LiveInsights />
       <Attend />
+      <Accordion data={data} />
       <div>
         <ChatBot />
       </div>

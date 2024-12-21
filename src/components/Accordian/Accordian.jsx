@@ -48,7 +48,7 @@ const Accordion = ({ data }) => {
         }
         transition={{ duration: 0.6, ease: "easeOut" }}
       >
-        <div className={styles.cut}></div>
+        {/* <div className={styles.cut}></div> */}
         <div className={styles["accordion-item"]}>
           <div
             className={styles["accordion-title"]}
@@ -65,10 +65,10 @@ const Accordion = ({ data }) => {
             {item.content}
           </div>
         </div>
-        <div
+        {/* <div
           className={styles.cut2}
           style={{ display: activeIndex === index ? "none" : "block" }}
-        ></div>
+        ></div> */}
       </motion.div>
     );
   };
