@@ -80,7 +80,7 @@ const Navbar = () => {
   });
   
   const isOmegaActive = activeLink === "/Omega";
-
+  const isGsocActive = activeLink === "/Gsoc"; 
   return (
     <nav
       className={`${styles.navbar} ${
@@ -145,7 +145,9 @@ const Navbar = () => {
                 to="/"
                 className={`${styles.link} ${
                   activeLink === "/" ? styles.activeLink : ""
-                } ${activeLink === "/Omega" ? styles.omegaHover : ""}`}
+                } ${activeLink === "/Omega" ? styles.omegaHover : ""} ${
+                  activeLink === "/Gsoc" ? styles.GsocHover : ""
+                }`}
                 onClick={closeMobileMenu}
               >
                 Home
@@ -156,7 +158,9 @@ const Navbar = () => {
                 to="/Events"
                 className={`${styles.link} ${
                   activeLink === "/Events" ? styles.activeLink : ""
-                } ${activeLink === "/Omega" ? styles.omegaHover : ""}`}
+                } ${activeLink === "/Omega" ? styles.omegaHover : ""}
+                ${
+                  activeLink === "/Gsoc" ? styles.GsocHover : ""}`}
                 onClick={closeMobileMenu}
               >
                 Event
@@ -178,7 +182,9 @@ const Navbar = () => {
                 to="/Gsoc"
                 className={`${styles.linkGsoc} ${
                   activeLink === "/Gsoc" ? styles.activeLinkGsoc : ""
-                } ${activeLink === "/Gsoc" ? styles.GsocHover : ""}`}
+                } ${activeLink === "/Gsoc" ? styles.GsocHover : ""}
+                ${
+                  activeLink === "/Gsoc" ? styles.GsocHover : ""}`}
                 onClick={closeMobileMenu}
               >
                 GSOC
@@ -189,7 +195,9 @@ const Navbar = () => {
                 to="/Social"
                 className={`${styles.link} ${
                   activeLink === "/Social" ? styles.activeLink : ""
-                } ${activeLink === "/Omega" ? styles.omegaHover : ""}`}
+                } ${activeLink === "/Omega" ? styles.omegaHover : ""}
+                ${
+                  activeLink === "/Gsoc" ? styles.GsocHover : ""}`}
                 onClick={closeMobileMenu}
               >
                 Social
@@ -200,7 +208,9 @@ const Navbar = () => {
                 to="/Team"
                 className={`${styles.link} ${
                   activeLink === "/Team" ? styles.activeLink : ""
-                } ${activeLink === "/Omega" ? styles.omegaHover : ""}`}
+                } ${activeLink === "/Omega" ? styles.omegaHover : ""}
+                ${
+                  activeLink === "/Gsoc" ? styles.GsocHover : ""}`}
                 onClick={closeMobileMenu}
               >
                 Team
@@ -238,7 +248,9 @@ const Navbar = () => {
               <button
                 className={`${styles.authButton} ${
                   isOmegaActive ? styles.omegaButton : ""
-                }`}
+                }
+                ${
+                  activeLink === "/Gsoc" ? styles.GsocHover : ""}`}
               >
                 Login
               </button>
