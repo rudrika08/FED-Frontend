@@ -9,7 +9,7 @@ import defaultImg from "../../assets/images/defaultImg.jpg";
 const Navbar = () => {
   const [isMobile, setIsMobile] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
-  const [navbarHeight, setNavbarHeight] = useState("80px");
+  const [navbarHeight, setNavbarHeight] = useState("90px");
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [activeLink, setActiveLink] = useState("/");
   const lastScrollY = useRef(0);
@@ -26,7 +26,7 @@ const Navbar = () => {
 
     if (isMobile) {
       setIsMobile(false);
-      setNavbarHeight("80px");
+      setNavbarHeight("90px");
     }
 
     lastScrollY.current = window.scrollY;
@@ -176,12 +176,12 @@ const Navbar = () => {
             <li>
               <NavLink
                 to="/Gsoc"
-                className={`${styles.link} ${
-                  activeLink === "/Gsoc" ? styles.activeLink : ""
+                className={`${styles.linkGsoc} ${
+                  activeLink === "/Gsoc" ? styles.activeLinkGsoc : ""
                 } ${activeLink === "/Gsoc" ? styles.GsocHover : ""}`}
                 onClick={closeMobileMenu}
               >
-                Gsoc
+                GSOC
               </NavLink>
             </li>
             <li>
