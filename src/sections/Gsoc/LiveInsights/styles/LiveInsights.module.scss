@@ -115,3 +115,194 @@ span {
         }
     }
 }
+
+@media(max-width: 900px) {
+    .outerbox {
+        height: 40rem;
+    }
+
+    h2 {
+        font-size: 1.5rem;
+    }
+}
+
+@media(max-width: 882px) {
+    .outerbox {
+        height: 30rem;
+    }
+
+    h2 {
+        font-size: 1rem;
+    }
+
+    .card_img img {
+        height: 400px;
+        width: 250px;
+    }
+}
+
+@media(max-width: 782px) {
+    .outerbox {
+        height: 28rem;
+    }
+
+    h2 {
+        font-size: 1rem;
+    }
+
+    .card_img img {
+        height: 350px;
+        width: 200px;
+    }
+
+    .flex1 img {
+        width: 3rem;
+        height: 3rem;
+    }
+}
+
+@media(max-width: 670px) {
+    .outerbox {
+        height: 30rem;
+    }
+
+    h2 {
+        font-size: 1rem;
+    }
+
+    h1 {
+        font-size: 1.6rem;
+    }
+
+    .card_img img {
+        height: 340px;
+        width: 180px;
+    }
+
+    .flex1 img {
+        width: 3rem;
+        height: 3rem;
+    }
+}
+
+@media(max-width: 613px) {
+    .outerbox {
+        height: 25rem;
+    }
+
+    h1 {
+        font-size: 1.3rem;
+    }
+
+    h2 {
+        font-size: 0.9rem;
+    }
+
+    .card_img img {
+        height: 310px;
+        width: 150px;
+    }
+
+    .flex1 img {
+        width: 3rem;
+        height: 3rem;
+    }
+}
+
+@media(max-width: 613px) {
+    .outerbox {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 35px;
+        height: 53rem;
+    }
+
+    .flex1 {
+        margin-top: 2rem;
+    }
+
+    h1 {
+        font-size: 1.3rem;
+    }
+
+    h2 {
+        font-size: 1rem;
+    }
+
+    .card_img img {
+        height: 400px;
+        width: 260px;
+    }
+
+    .flex1 img {
+        width: 3rem;
+        height: 3rem;
+    }
+}
+
+@media(max-width: 464px) {
+    .outerbox {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        height: 50rem;
+        padding: 35px;
+    }
+
+    .flex1 {
+        margin-top: 2rem;
+        margin-left: 0;
+    }
+
+    h1 {
+        font-size: 1rem;
+    }
+
+    h2 {
+        font-size: 1.2rem;
+    }
+
+    .card_img img {
+        height: 320px;
+        width: 200px;
+    }
+
+    .flex1 img {
+        width: 3rem;
+        height: 3rem;
+    }
+}
+
+@media(max-width: 420px) {
+    .outerbox {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        height: 50rem;
+        padding: 38px;
+    }
+
+    .flex1 {
+        margin-top: 2rem;
+        margin-left: 0;
+    }
+
+    h1 {
+        font-size: 1.3rem;
+    }
+
+    h2 {
+        font-size: 1rem;
+    }
+
+    .card_img img {
+        height: 320px;
+        width: 200px;
+    }
+
+    .flex1 img {
+        width: 3rem;
+        height: 3rem;
+    }
+}
