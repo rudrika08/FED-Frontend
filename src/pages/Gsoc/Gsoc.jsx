@@ -12,6 +12,7 @@ import ChatBot from "../../features/ChatBot/ChatBot.jsx";
 import Accordion from "../../components/Accordian/Accordian.jsx";
 import data from "../../data/gsoc/Gsoc.json";
 import LiveInsights from "../../sections/Gsoc/LiveInsights/LiveInsights.jsx";
+import TeamPage from "../../sections/Gsoc/TeamPage/TeamPage.jsx";
 
 function Gsoc() {
   useEffect(() => {
@@ -122,8 +123,10 @@ function Gsoc() {
       <LiveInsights />
       <Attend />
       <Accordion data={data} />
+      <TeamPage />
       <div>
         <ChatBot />
+        
       </div>
     </div>
   );
