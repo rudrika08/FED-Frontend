@@ -43,7 +43,7 @@
     border-width: 2px;
     position: relative; 
     border-radius: 10px;
-    z-index: 10;
+    // z-index: 10;
 
     .cut {
       background-color: #000;
@@ -54,7 +54,7 @@
       border-top-right-radius: 30px;
       border-top-left-radius: 100px;
       border-bottom: solid white 1px;
-      z-index: 1;
+      // z-index: 1;
       position: absolute;
       transform: rotate(-45deg);
     }
@@ -186,6 +186,7 @@
     }
 
     span {
+      color: white;
       background-color: #f48424;
       padding: 5px 16px;
       margin: -25px;
@@ -195,8 +196,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      border-radius: 0 10px 10px 0;
-      z-index: 3;
+      border-radius: 0px 10px 10px 0px;
     }
 
     p {
@@ -213,12 +213,18 @@
       display: none;
       padding: 20px 40px;
       background-color: #000;
+      border-radius: 10px;
       
       &.active {
         display: block;
         font-size: 14px;
       }
     }
+  }
+
+  .accordion-item.active span {
+    border-radius: 0px 10px 0px 10px;
+    /* Apply rounded corners */
   }
 
   @media (max-width: 768px) {

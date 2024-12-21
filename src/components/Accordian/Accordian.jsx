@@ -49,7 +49,11 @@ const Accordion = ({ data }) => {
         transition={{ duration: 0.6, ease: "easeOut" }}
       >
         {/* <div className={styles.cut}></div> */}
-        <div className={styles["accordion-item"]}>
+        <div
+          className={`${styles["accordion-item"]} ${
+            activeIndex === index ? styles.active : ""
+          }`}
+        >
           <div
             className={styles["accordion-title"]}
             onClick={() => toggleAccordion(index)}
