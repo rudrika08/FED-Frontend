@@ -156,13 +156,13 @@ function FedShow() {
           </motion.div>
           </Element>
             <img src="https://cdn.prod.website-files.com/663d1907e337de23e83c30b2/6764f973ef9bcf3a5445d7b6_Screenshot%202024-12-20%20102739.png" alt=""
-              height={150}
+              height={120}
             />
           </Element>
           <div className={styles.date}>
             <p>
-              <FaCalendarAlt className={styles.icon} size={20} /> December 28,
-              2024
+              <FaCalendarAlt className={styles.icon} size={20} /> January 3,
+              2025
             </p>
             <div style={{ display: "flex", alignItems: "center" }}>
               <p>
@@ -187,10 +187,10 @@ function FedShow() {
         </div>
 
       </div>
-      <Element name="p">
+      {/* <Element name="p">
         <p className={styles.foot}>Voices of Innovation, Paths to Open Source Success!</p>
         <span className={styles.subfoot}>Inspiring Minds, Shaping the Future Together!</span>
-      </Element>
+      </Element> */}
     </div>
   );
 }

@@ -81,6 +81,7 @@ const Navbar = () => {
   
   const isOmegaActive = activeLink === "/Omega";
   const isGsocActive = activeLink === "/Gsoc"; 
+  
   return (
     <nav
       className={`${styles.navbar} ${
@@ -250,7 +251,7 @@ const Navbar = () => {
                   isOmegaActive ? styles.omegaButton : ""
                 }
                 ${
-                  activeLink === "/Gsoc" ? styles.GsocHover : ""}`}
+                  activeLink === "/Gsoc" ? styles.GsocButton : ""}`}
               >
                 Login
               </button>
