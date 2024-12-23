@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import AuthContext from "../../../../context/AuthContext";
 import styles from "./styles/Hero.module.scss";
 import { parse, differenceInMilliseconds } from "date-fns";
-import { Alert, MicroLoading } from "../../../../microInteraction"; 
+import { Alert, MicroLoading } from "../../../../microInteraction";
 
 function Hero({ ongoingEvents, isRegisteredInRelatedEvents, eventName }) {
   const authCtx = useContext(AuthContext);
@@ -74,50 +74,44 @@ function Hero({ ongoingEvents, isRegisteredInRelatedEvents, eventName }) {
     }
   };
 
-  const calculateRemainingTime = () => {
-    if (!info?.regDateAndTime) {
-      setRemainingTime(null);
-      return;
-    }
-
-    // Parse the regDateAndTime received from backend
+const calculateRemainingTime = () => {
     try {
       const regStartDate = parse(
-        info.regDateAndTime,
-        "MMMM do yyyy, h:mm:ss a",
+        "January 3, 2025, 10:00:00 AM",
+        "MMMM dd, yyyy, h:mm:ss a",
+        new Date()
+      );
+      const endTime = parse(
+        "January 3, 2025, 2:00:00 PM",
+        "MMMM dd, yyyy, h:mm:ss a",
         new Date()
       );
       const now = new Date();
 
-      // Calculate the time difference in milliseconds
-      const timeDifference = differenceInMilliseconds(regStartDate, now);
-
-      if (timeDifference <= 0) {
+      if (now >= endTime) {
         setRemainingTime(null);
+        setBtnTxt("SHOW ENDED");
+        return;
+      } else if (now >= regStartDate) {
+        setRemainingTime(null);
+        setBtnTxt("SHOW IS LIVE");
         return;
       }
 
-      // Calculate the days, hours, minutes, and seconds remaining
+      const timeDifference = differenceInMilliseconds(regStartDate, now);
+
       const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
       const hours = Math.floor((timeDifference / (1000 * 60 * 60)) % 24);
       const minutes = Math.floor((timeDifference / (1000 * 60)) % 60);
       const seconds = Math.floor((timeDifference / 1000) % 60);
 
-      let remaining;
-
+      let remaining = "";
       if (days > 0) {
         remaining = `${days} day${days > 1 ? "s" : ""} left`;
       } else {
-        remaining = [
-          hours > 0 ? `${hours}h ` : "",
-          minutes > 0 ? `${minutes}m ` : "",
-          seconds > 0 ? `${seconds}s` : "",
-        ]
-          .join("")
-          .trim();
+        remaining = `${hours}h ${minutes}m ${seconds}s`;
       }
 
-      console.log(remaining);
       setRemainingTime(remaining);
     } catch (error) {
       console.error("Date parsing error:", error);
@@ -156,18 +150,14 @@ function Hero({ ongoingEvents, isRegisteredInRelatedEvents, eventName }) {
       } else {
         setIsMicroLoading(false);
         if (authCtx.user.access !== "USER") {
-          if (remainingTime) {
-            setBtnTxt(remainingTime);
-          } else {
-            setBtnTxt("ALREADY MEMBER");
-          }
+          setBtnTxt(remainingTime || "ALREADY MEMBER");
         } else if (isRegisteredInRelatedEvents) {
-          if (authCtx.user.regForm.includes(relatedEventId)) {
-            setIsMicroLoading(false);
-            setBtnTxt("ALREADY REGISTERED");
-          }
+          setBtnTxt(
+            authCtx.user.regForm.includes(relatedEventId)
+              ? "ALREADY REGISTERED"
+              : remainingTime || "REGISTER NOW"
+          );
         } else {
-          setIsMicroLoading(false);
           setBtnTxt(remainingTime || "REGISTER NOW");
         }
       }
@@ -211,8 +201,7 @@ function Hero({ ongoingEvents, isRegisteredInRelatedEvents, eventName }) {
         </motion.div>
       </Element>
       <div className={styles.text}>
-        <p>
-        Code, Collaborate, Conquer: Your GSoC Journey Starts Here!</p>
+        <p>Code, Collaborate, Conquer: Your GSoC Journey Starts Here!</p>
         <button
           onClick={handleButtonClick}
           disabled={
@@ -221,24 +210,19 @@ function Hero({ ongoingEvents, isRegisteredInRelatedEvents, eventName }) {
             btnTxt === "CLOSED" ||
             btnTxt === "ALREADY REGISTERED" ||
             btnTxt === "ALREADY MEMBER" ||
-            btnTxt === remainingTime
+            btnTxt === `${remainingTime}`
           }
           style={{
             cursor:
               isRegistrationClosed ||
               btnTxt === "CLOSED" ||
               btnTxt === "ALREADY REGISTERED" ||
-              btnTxt === "ALREADY MEMBER" ||
-              remainingTime
+              btnTxt === "ALREADY MEMBER"
                 ? "not-allowed"
                 : "pointer",
           }}
         >
-          {isMicroLoading ? (
-            <MicroLoading color="#38ccff" />
-          ) : (
-            btnTxt
-          )}
+          {isMicroLoading ? <MicroLoading color="#38ccff" /> : btnTxt}
         </button>
       </div>
       <Alert />
