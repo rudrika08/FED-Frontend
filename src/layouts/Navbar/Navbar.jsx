@@ -232,9 +232,8 @@ const Navbar = () => {
             <NavLink to="/Login" onClick={closeMobileMenu}>
               <button
                 className={`${styles.authButton} ${
-                  isOmegaActive ? styles.omegaButton : ""
-                }
-                ${activeLink === "/Gsoc" ? styles.GsocButton : ""}`}
+                  activeLink === "/Gsoc" ? styles.GsocButton : ""
+                }`}
               >
                 Login
               </button>

@@ -90,7 +90,7 @@
 }
 
 .navLinks .activeLinkGsoc {
-  background-color: #F9AB00;
+  background-color: #F48424;
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -98,7 +98,7 @@
 
 
 .navLinks .gsocHover:hover {
-  background: #F9AB00;
+  background: #F48424;
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -264,8 +264,8 @@
 //   ) !important;
 // }
 
-.GsocButton {
- background-color: #F48424;
+.gsocButton {
+ background-color: #fff;
 }
 
 .GsocButton:hover {
