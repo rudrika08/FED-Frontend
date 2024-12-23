@@ -144,7 +144,6 @@
     height: 25vh;
     display: none;
     flex-direction: column;
-    
   }
   // @media (max-width:380px) {
   //   top: 250%;
@@ -263,14 +262,16 @@
     
     .heading{
       display: flex;
+      flex-wrap: wrap;
+      align-items: center;
       font-size: 28px;
-      flex-direction: column;
-      
-    }
-    .omega{
-      margin-top: -5rem;
+      margin: 0 50px;
+     
     }
     .boxmain{
-      margin-top: -3rem;
+      
+      font-size: 14px;
   }
+
 }
+

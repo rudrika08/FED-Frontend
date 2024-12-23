@@ -268,12 +268,16 @@
  background-color: #fff;
 }
 
-.GsocButton:hover {
+.GsocButton {
   transition: .2s linear;
-  background-color:  #F48424;
+  background: linear-gradient(to left,#F48424,#2F0048);
   
 }
-
+.GsocButton:hover {
+  transition: .2s linear;
+  background: linear-gradient(to left,#f47b24,#4c0c6f);
+  
+}
 
 .profileImgdiv {
   height: 60px;

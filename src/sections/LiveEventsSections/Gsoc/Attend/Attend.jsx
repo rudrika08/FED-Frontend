@@ -30,8 +30,8 @@ function Attend() {
     <>
       <div className={style.main}>
         <div className={style.heading}>
-          <div className={style.why}><h1>WHY ATTEND</h1></div>
-          <div className={style.omega}><h1>THIS SESSION</h1></div>
+          <div className={style.why}><h1>WHY ATTEND <span style={{color:"#F48424"}}>THIS SESSION</span></h1></div>
+          {/* <div className={style.omega}><h1>THIS SESSION</h1></div> */}
         </div>
 
         <div className={style.boxmain}>
