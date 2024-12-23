@@ -95,15 +95,17 @@
   background-clip: text;
   color: transparent;
 }
- .navLinks .GsocHover:hover {
-  background-color: #F9AB00;
+
+
+.navLinks .gsocHover:hover {
+  background: #F9AB00;
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 }
 
 
-.navLinks .omegaHover:hover {
+.navLinks .omegaaHover:hover {
   background: #38ccff;
   -webkit-background-clip: text;
   background-clip: text;
@@ -128,29 +130,19 @@
   }
 }
 
-.link:hover {
-  background: var(--primary);
-  background-clip: text;
-  color: transparent;
-  transition: 0.2s ease-in;
+// .link:hover {
+//   background: var(--primary);
+//   background-clip: text;
+//   color: transparent;
+//   transition: 0.2s ease-in;
 
-  &::after {
-    width: 100%;
-    left: 0;
-  }
-}
+//   &::after {
+//     width: 100%;
+//     left: 0;
+//   }
+// }
 
-.linkGsoc:hover {
-  background-color:#F9AB00 ;
-  background-clip: text;
-  color: transparent;
-  transition: 0.2s ease-in;
 
-  &::after {
-    width: 100%;
-    left: 0;
-  }
-}
 
 .navLinks li a::after {
   content: "";

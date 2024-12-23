@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-import AuthContext from "../../../context/AuthContext";
+import AuthContext from "../../../../context/AuthContext";
 import styles from "./styles/LiveInsights.module.scss";
 import { parse, differenceInMilliseconds } from "date-fns";
-import { Alert, MicroLoading } from "../../../microInteraction";
+import { Alert, MicroLoading } from "../../../../microInteraction";
 
 function Card2({ img }) {
     return (
@@ -218,7 +218,7 @@ function LiveInsights({ ongoingEvents, isRegisteredInRelatedEvents }) {
     // ]);
 
     return (
-        <div>
+        <div className={styles.container}>
             <div className={styles.circle}></div>
             <div className={styles.circle2}></div>
             <h1>GET <span className={styles.para}>LIVE</span> INSIGHTS AND INSPIRATION</h1>
@@ -227,7 +227,7 @@ function LiveInsights({ ongoingEvents, isRegisteredInRelatedEvents }) {
                     <Card src="https://i.ibb.co/93dDdyJ/Picyard-1734689449494-deblurred.png" alt="GSOC image" />
                     <div className={styles.flex1}>
                         <h2>KICK OFF YOUR JOURNEY WITH RIGHT GUIDANCE FROM GSOC ALUMNI</h2>
-                        <div className={styles.mid}><Card2 src="https://i.ibb.co/C7vcpB8/image-4.png" alt="GSOC Logo" /><h2>Tailored Strategies for Success</h2></div>
+                        <div className={styles.mid}><Card2 src="https://i.ibb.co/C7vcpB8/image-4.png" alt="GSOC Logo" /><h2>Tailored Strategies for GSoC</h2></div>
                         <div className={styles.mid}><Card2 src="https://i.ibb.co/C7vcpB8/image-4.png" alt="GSOC Logo" /><h2>Insider Tips for Winning Proposals</h2></div>
                         <div className={styles.mid}><Card2 src="https://i.ibb.co/C7vcpB8/image-4.png" alt="GSOC Logo" /><h2>Real-Life Inspiration</h2></div>
                     </div>

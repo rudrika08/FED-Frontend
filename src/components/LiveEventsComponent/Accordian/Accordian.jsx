@@ -81,7 +81,7 @@ const Accordion = ({ data }) => {
     <div className={styles.accordion}>
       <div className={styles.title}>
         <h1>
-          FREQUENTLY ASKED <span>QUESTION</span>
+          FREQUENTLY ASKED <span>QUESTIONS</span>
         </h1>
       </div>
       {Array.isArray(itemsToShow) &&

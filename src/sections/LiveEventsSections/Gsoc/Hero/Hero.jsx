@@ -2,10 +2,10 @@ import React, { useContext, useEffect, useState } from "react";
 import { Element } from "react-scroll";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-import AuthContext from "../../../context/AuthContext";
+import AuthContext from "../../../../context/AuthContext";
 import styles from "./styles/Hero.module.scss";
 import { parse, differenceInMilliseconds } from "date-fns";
-import { Alert, MicroLoading } from "../../../microInteraction"; 
+import { Alert, MicroLoading } from "../../../../microInteraction"; 
 
 function Hero({ ongoingEvents, isRegisteredInRelatedEvents, eventName }) {
   const authCtx = useContext(AuthContext);
@@ -205,7 +205,7 @@ function Hero({ ongoingEvents, isRegisteredInRelatedEvents, eventName }) {
           style={{ perspective: 1000 }}
         >
           <img
-            src="https://cdn.prod.website-files.com/663d1907e337de23e83c30b2/6762ddc4c6cfd60b68cf0115_image%20(41).png"
+            src="https://cdn.prod.website-files.com/663d1907e337de23e83c30b2/676919ef6caf6de8079c286a_image%20(44).png"
             alt="Hero"
           />
         </motion.div>

@@ -1,20 +1,21 @@
 import { useContext, useEffect, useState } from "react";
-import { api } from "../../services";
-import AuthContext from "../../context/AuthContext";
+import { api } from "../../../services/index.jsx";
+import AuthContext from "../../../context/AuthContext.jsx";
 import { motion } from "framer-motion";
 import { Element } from "react-scroll";
 import { useInView } from "react-intersection-observer";
-import styles from "./styles/Gsoc.module.scss";
-import Hero from "../../sections/Gsoc/Hero/Hero.jsx";
-import Speaker from "../../sections/Gsoc/Speaker/Speaker.jsx";
-import Attend from "../../sections/Gsoc/Attend/Attend.jsx";
-import ChatBot from "../../features/ChatBot/ChatBot.jsx";
+import styles from "./styles/Omega.module.scss";
+import Hero from "../../../sections/LiveEventsSections/Omega/Hero/Hero.js";
 import Accordion from "../../components/Accordian/Accordian.jsx";
-import data from "../../data/gsoc/Gsoc.json";
-import LiveInsights from "../../sections/Gsoc/LiveInsights/LiveInsights.jsx";
-import TeamPage from "../../sections/Gsoc/TeamPage/TeamPage.jsx";
+import data from "../../../data/omega/Accordion.json";
+import Sponsors from "../../../sections/LiveEventsSections/Omega/Sponsors/Sponsors.js";
+import Event from "../../../sections/LiveEventsSections/Omega/Event/Event.js";
+import FedShow from "../../../sections/LiveEventsSections/Omega/FedShow/FedShow.js";
+import TeamImage from "../../../sections/LiveEventsSections/Omega/TeamImage/TeamImage.jsx";
+import Attend from "../../../sections/LiveEventsSections/Omega/Attend/Attend.js";
+import ChatBot from "../../../features/ChatBot/ChatBot.jsx";
 
-function Gsoc() {
+function Omega() {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -119,17 +120,36 @@ function Gsoc() {
         isRegisteredInRelatedEvents={isRegisteredInRelatedEvents}
         eventName={eventName}
       />
-      <Speaker />
-      <LiveInsights />
+      <FedShow />
+      <Event
+        ongoingEvents={ongoingEvents}
+        isRegisteredInRelatedEvents={isRegisteredInRelatedEvents}
+        eventName={eventName}
+      />
       <Attend />
+      <Sponsors />
+
       <Accordion data={data} />
-      <TeamPage />
+      <Element name="TeamImage">
+        <motion.div
+          ref={teamImageRef}
+          initial={{ opacity: 0, y: 50, scale: 0.5 }}
+          animate={
+            teamImageInView
+              ? { opacity: 1, y: 0, scale: 1 }
+              : { opacity: 0, y: 50, scale: 0.5 }
+          }
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          style={{ perspective: 1000 }}
+        >
+          <TeamImage />
+        </motion.div>
+      </Element>
       <div>
         <ChatBot />
-        
       </div>
     </div>
   );
 }
 
-export default Gsoc;
+export default Omega;
