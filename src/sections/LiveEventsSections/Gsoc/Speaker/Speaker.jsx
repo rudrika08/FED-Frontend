@@ -164,7 +164,7 @@ function FedShow() {
               <FaCalendarAlt className={styles.icon} size={20} /> January 3,
               2025
             </p>
-            <div style={{ display: "flex", alignItems: "center" }}>
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
               <p>
                 <FaClock className={styles.icon} /> 05:00 PM
               </p>
@@ -173,6 +173,7 @@ function FedShow() {
               </p>
             </div>
           </div>
+          <div className={styles.speakbtn}>
           <button
             className={styles.registerBtn}
             disabled={
@@ -184,6 +185,7 @@ function FedShow() {
           >
             {remainingTime ? `${remainingTime}` : btnTxt}
           </button>
+          </div>
         </div>
 
       </div>

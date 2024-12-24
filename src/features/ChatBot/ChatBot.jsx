@@ -306,9 +306,7 @@ export default function ChatBot() {
           <div className={styles.chatbox} ref={chatboxRef}>
             <div className={styles.messageBox}>
               <div
-                className={`${styles.botmessage} ${
-                  isGsoc ? styles.gsocBackGround : ""
-                }`}
+                className={`${styles.botmessage}`}
               >
                 {initialMsg}
               </div>
@@ -318,9 +316,7 @@ export default function ChatBot() {
                   className={
                     message.user
                       ? styles.usermessage
-                      : `${styles.botmessage} ${
-                          isGsoc ? styles.gsocBackGround : ""
-                        }`
+                      : `${styles.botmessage}`
                   }
                 >
                   {message.user || message.bot}
@@ -374,16 +370,12 @@ export default function ChatBot() {
             >
               {isRecording ? (
                 <BsFillMicMuteFill
-                  className={`${styles.sendIcon} ${
-                    isGsoc ? styles.gsocBackGround : ""
-                  }`}
+                  className={`${styles.sendIcon}`}
                   size={24}
                 />
               ) : (
                 <BsFillMicFill
-                  className={`${styles.sendIcon} ${
-                    isGsoc ? styles.gsocBackGround : ""
-                  }`}
+                  className={`${styles.sendIcon}`}
                   size={24}
                 />
               )}
@@ -391,9 +383,7 @@ export default function ChatBot() {
             <button className={styles.sendMessage} onClick={sendMessage}>
               <BsSend
                 size={20}
-                className={`${styles.sendIcon} ${
-                  isGsoc ? styles.gsocBackGround : ""
-                }`}
+                className={`${styles.sendIcon}`}
               />
             </button>
           </div>

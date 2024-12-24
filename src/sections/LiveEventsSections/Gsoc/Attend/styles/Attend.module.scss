@@ -3,7 +3,7 @@
    
     height: auto;
     width: 100%;
-    gap: 15px;
+    // gap: 15px;
     
     display: flex;
     flex-direction: column;
@@ -22,16 +22,19 @@
     
   
     h1{
-    margin-top: 6rem;
+    margin-top: 3rem;
     font-size: 35px;
     font-family: 'Poppins', sans-serif;
-    font-weight: 500;
+    font-weight: 600;
     }
 }
 
 .why{
-    margin-right: 1vw;
-    letter-spacing: 1px;
+    // margin-right: 1vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
 }
 .omega{
     color: #00D1FF;
@@ -224,7 +227,7 @@
 
 
 
-  @media (max-width:670px){
+  @media (max-width:480px){
     .boxmain{
         display: flex;
         flex-direction: column;
@@ -237,6 +240,9 @@
     }
     .heading{
         font-size: 28px;
+    }
+    .heading h1{
+      margin-top: 2rem;
     }
     .cut{
         left: -3.3%;

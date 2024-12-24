@@ -77,7 +77,7 @@ function Hero({ ongoingEvents, isRegisteredInRelatedEvents, eventName }) {
 const calculateRemainingTime = () => {
     try {
       const regStartDate = parse(
-        "January 3, 2025, 10:00:00 AM",
+        "December 25, 2024, 10:00:00 AM",
         "MMMM dd, yyyy, h:mm:ss a",
         new Date()
       );
@@ -94,7 +94,7 @@ const calculateRemainingTime = () => {
         return;
       } else if (now >= regStartDate) {
         setRemainingTime(null);
-        setBtnTxt("SHOW IS LIVE");
+        // setBtnTxt("SHOW IS LIVE");
         return;
       }
 
