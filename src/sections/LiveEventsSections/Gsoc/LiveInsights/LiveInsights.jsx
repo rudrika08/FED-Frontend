@@ -52,6 +52,7 @@ function LiveInsights({ ongoingEvents, isRegisteredInRelatedEvents }) {
   const [navigatePath, setNavigatePath] = useState("/");
   const [isMicroLoading, setIsMicroLoading] = useState(false);
   const [btnTxt, setBtnTxt] = useState("REGISTER NOW");
+  const [relatedEventId, setRelatedEventId] = useState(null);
 
   useEffect(() => {
     if (alert) {
@@ -61,78 +62,108 @@ function LiveInsights({ ongoingEvents, isRegisteredInRelatedEvents }) {
     }
   }, [alert]);
 
-  useEffect(() => {
-    if (shouldNavigate) {
-      navigate(navigatePath);
-      setShouldNavigate(false);
-    }
-  }, [shouldNavigate, navigatePath, navigate]);
+  // useEffect(() => {
+  //   if (shouldNavigate) {
+  //     navigate(navigatePath);
+  //     setShouldNavigate(false);
+  //   }
+  // }, [shouldNavigate, navigatePath, navigate]);
 
+  // useEffect(() => {
+  //     const intervalId = setInterval(() => {
+  //       calculateRemainingTime();
+  //     }, 1000); // Update every second
 
-  useEffect(() => {
-      const intervalId = setInterval(() => {
-        calculateRemainingTime();
-      }, 1000); // Update every second
+  //     return () => clearInterval(intervalId);
+  //   }, []);
+
+    useEffect(() => {
+      const ongoingInfo = ongoingEvents.find(
+        (e) => e.info.relatedEvent === "null"
+      )?.info;
   
-      return () => clearInterval(intervalId);
-    }, []);
+      setInfo(ongoingInfo);
+      setIsRegistrationClosed(ongoingInfo?.isRegistrationClosed || false);
   
-    const calculateRemainingTime = () => {
-      try {
-        const regStartDate = parse(
-          "December 25, 2024, 10:00:00 AM",
-          "MMMM dd, yyyy, h:mm:ss a",
-          new Date()
-        );
-        const endTime = parse(
-          "January 3, 2025, 2:00:00 PM",
-          "MMMM dd, yyyy, h:mm:ss a",
-          new Date()
-        );
-        const now = new Date();
-  
-        if (now >= endTime) {
-          setRemainingTime(null);
-          setBtnTxt("SHOW ENDED");
-          return;
-        } else if (now >= regStartDate) {
-          setRemainingTime(null);
-          // setBtnTxt("SHOW IS LIVE");
-          return;
-        }
-  
-        const timeDifference = differenceInMilliseconds(regStartDate, now);
-  
+      const relatedId = ongoingEvents.find(
+        (e) => e.info.relatedEvent === "null"
+      )?.id;
+      setRelatedEventId(relatedId);
+
+    }, [ongoingEvents]);
+
+  const calculateRemainingTime = () => {
+    try {
+      const regStartDate = parse(
+        "December 27, 2024, 10:00:00 AM",
+        "MMMM dd, yyyy, h:mm:ss a",
+        new Date()
+      );
+      const regEndDate = parse(
+        "January 3, 2025, 2:00:00 PM",
+        "MMMM dd, yyyy, h:mm:ss a",
+        new Date()
+      );
+      const now = new Date();
+
+      if (now >= regEndDate) {
+        setRemainingTime(null);
+        setBtnTxt("Registration Closed");
+        setIsRegistrationClosed(true);
+        return;
+      }
+
+      const timeDifference = differenceInMilliseconds(regStartDate, now);
+
+      if (now < regStartDate) {
         const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
         const hours = Math.floor((timeDifference / (1000 * 60 * 60)) % 24);
         const minutes = Math.floor((timeDifference / (1000 * 60)) % 60);
         const seconds = Math.floor((timeDifference / 1000) % 60);
-  
-        let remaining;
-  
-        if (days > 0) {
-          remaining = `${days} day${days > 1 ? "s" : ""} left`;
-        } else {
-          remaining = [
-            hours > 0 ? `${hours}h ` : "",
-            minutes > 0 ? `${minutes}m ` : "",
-            seconds > 0 ? `${seconds}s` : "",
-          ]
-            .join("")
-            .trim();
-        }
-  
+
+        const remaining =
+          days > 0
+            ? `${days} day${days > 1 ? "s" : ""} left`
+            : `${hours}h ${minutes}m ${seconds}s`;
+
         setRemainingTime(remaining);
-      } catch (error) {
-        console.error("Date parsing error:", error);
+        setBtnTxt(remaining);
+      } else {
         setRemainingTime(null);
       }
-    };
+    } catch (error) {
+      console.error("Date parsing error:", error);
+      setRemainingTime(null);
+    }
+  };
+
+  useEffect(() => {
+    const ongoingInfo = ongoingEvents.find(
+      (e) => e.info.relatedEvent === "null"
+    )?.info;
+
+    setInfo(ongoingInfo);
+    setIsRegistrationClosed(ongoingInfo?.isRegistrationClosed || false);
+
+    const relatedId = ongoingEvents.find(
+      (e) => e.info.relatedEvent === "null"
+    )?.id;
+    setRelatedEventId(relatedId);
+
+    if (ongoingInfo?.regDateAndTime) {
+      calculateRemainingTime();
+      const intervalId = setInterval(calculateRemainingTime, 1000);
+      return () => clearInterval(intervalId);
+    }
+  }, [info?.regDateAndTime, ongoingEvents]);
+
   const handleButtonClick = () => {
+    if (isRegistrationClosed) return;
+
     if (!authCtx.isLoggedIn) {
+      setIsMicroLoading(true);
       sessionStorage.setItem("prevPage", window.location.pathname);
-      setNavigatePath("/login");
-      setShouldNavigate(true);
+      navigate("/login");
     } else {
       handleForm();
     }
@@ -140,8 +171,11 @@ function LiveInsights({ ongoingEvents, isRegisteredInRelatedEvents }) {
 
   const handleForm = () => {
     if (authCtx.isLoggedIn) {
+      setIsMicroLoading(true);
+
       if (authCtx.user.access !== "USER" && authCtx.user.access !== "ADMIN") {
         setTimeout(() => {
+          setIsMicroLoading(false);
           setAlert({
             type: "info",
             message: "Team Members are not allowed to register for the Event",
@@ -149,25 +183,50 @@ function LiveInsights({ ongoingEvents, isRegisteredInRelatedEvents }) {
             duration: 3000,
           });
         }, 1500);
-      } else {
-        const relatedEventId = ongoingEvents.find(
-          (e) => e.info.relatedEvent === "null"
-        )?.id;
-        if (relatedEventId) {
-          setNavigatePath(`/Events/${relatedEventId}/Form`);
-          setShouldNavigate(true);
-        }
+        return;
       }
+
+      if (authCtx.user.regForm?.includes(relatedEventId)) {
+        setAlert({
+          type: "info",
+          message: "You have already registered for this event",
+          position: "bottom-right",
+          duration: 3000,
+        });
+        setIsMicroLoading(false);
+        return;
+      }
+
+      navigate(`/Events/${relatedEventId}/Form`);
     }
   };
 
-  const isButtonDisabled = () =>
-    isMicroLoading ||
-    isRegistrationClosed ||
-    btnTxt === "CLOSED" ||
-    btnTxt === "ALREADY REGISTERED" ||
-    btnTxt === "ALREADY MEMBER" ||
-    btnTxt === remainingTime;
+  useEffect(() => {
+    const updateButtonText = () => {
+      if (isRegistrationClosed) {
+        setBtnTxt("CLOSED");
+      } else if (!authCtx.isLoggedIn) {
+        setBtnTxt(remainingTime || "REGISTER NOW");
+      } else if (authCtx.user.access !== "USER") {
+        setBtnTxt("ALREADY MEMBER");
+      } else if (authCtx.user.regForm?.includes(relatedEventId)) {
+        setBtnTxt("ALREADY REGISTERED");
+      } else {
+        setBtnTxt(remainingTime || "REGISTER NOW");
+      }
+
+      setIsMicroLoading(false);
+    };
+
+    updateButtonText();
+  }, [
+    isRegistrationClosed,
+    authCtx.isLoggedIn,
+    authCtx.user?.access,
+    authCtx.user?.regForm,
+    relatedEventId,
+    remainingTime,
+  ]);
 
   return (
     <div className={styles.container}>
@@ -210,20 +269,30 @@ function LiveInsights({ ongoingEvents, isRegisteredInRelatedEvents }) {
       </div>
       <div className={styles.mid}>
         <button
-          className={styles.registerBtn}
+          onClick={handleButtonClick}
           disabled={
-            btnTxt === "SHOW ENDED" ||
-            btnTxt === "SHOW IS LIVE" ||
-            btnTxt === `${remainingTime}`
+            isMicroLoading ||
+            isRegistrationClosed ||
+            btnTxt === "CLOSED" ||
+            btnTxt === "ALREADY REGISTERED" ||
+            btnTxt === "ALREADY MEMBER"
           }
-          style={{ cursor: "not-allowed" }}
+          style={{
+            cursor:
+              isRegistrationClosed ||
+              btnTxt === "CLOSED" ||
+              btnTxt === "ALREADY REGISTERED" ||
+              btnTxt === "ALREADY MEMBER"
+                ? "not-allowed"
+                : "pointer",
+          }}
         >
-          {remainingTime ? `${remainingTime}` : btnTxt}
+          {isMicroLoading ? <MicroLoading color="#38ccff" /> : btnTxt}
         </button>
       </div>
       <Alert />
     </div>
   );
-}
+  }
 
 export default LiveInsights;

@@ -120,7 +120,11 @@ function Gsoc() {
         eventName={eventName}
       />
       <Speaker />
-      <LiveInsights />
+      <LiveInsights 
+        ongoingEvents={ongoingEvents}
+        isRegisteredInRelatedEvents={isRegisteredInRelatedEvents}
+        eventName={eventName}
+      />
       <Attend />
       <Faqs />
       <TeamPage />
