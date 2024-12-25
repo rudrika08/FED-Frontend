@@ -111,7 +111,7 @@ function FedShow() {
           >
             <img
               className={styles.imgLeft}
-              src="https://cdn.prod.website-files.com/66ffb182a2a1dbe73904d0b5/67630436c26671752504862c_img1-removebg-preview.png"
+              src="https://cdn.prod.website-files.com/663d1907e337de23e83c30b2/676bb19b5bdabb6c50ba2dc1_IMG_20241225_124533-removebg-preview.png"
               alt="Hero"
               style={{
                 Width: "100%",
@@ -146,7 +146,7 @@ function FedShow() {
           >
             <img
               className={styles.imgMobile}
-              src="https://cdn.prod.website-files.com/66ffb182a2a1dbe73904d0b5/67630436c26671752504862c_img1-removebg-preview.png"
+              src="https://cdn.prod.website-files.com/663d1907e337de23e83c30b2/676bb19b5bdabb6c50ba2dc1_IMG_20241225_124533-removebg-preview.png"
               alt="Hero"
               style={{
                 Width: "100%",

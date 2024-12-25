@@ -14,9 +14,7 @@ function Hero({ ongoingEvents, isRegisteredInRelatedEvents, eventName }) {
   const [info, setInfo] = useState({});
   const [isRegistrationClosed, setIsRegistrationClosed] = useState(false);
   const navigate = useNavigate();
-  const [shouldNavigate, setShouldNavigate] = useState(false);
-  const [navigatePath, setNavigatePath] = useState("/");
-  const [isMicroLoading, setIsMicroLoading] = useState(true);
+  const [isMicroLoading, setIsMicroLoading] = useState(false);
   const [relatedEventId, setRelatedEventId] = useState(null);
   const [btnTxt, setBtnTxt] = useState("REGISTER NOW");
 
@@ -24,95 +22,49 @@ function Hero({ ongoingEvents, isRegisteredInRelatedEvents, eventName }) {
     if (alert) {
       const { type, message, position, duration } = alert;
       Alert({ type, message, position, duration });
-      setAlert(null); // Reset alert after displaying it
+      setAlert(null);
     }
   }, [alert]);
 
-  useEffect(() => {
-    if (shouldNavigate) {
-      navigate(navigatePath);
-      setShouldNavigate(false); // Reset state after navigation
-    }
-  }, [shouldNavigate, navigatePath, navigate]);
-
-  const handleButtonClick = () => {
-    if (!authCtx.isLoggedIn) {
-      setIsMicroLoading(true);
-      sessionStorage.setItem("prevPage", window.location.pathname);
-      setNavigatePath("/login");
-      setShouldNavigate(true);
-    } else {
-      handleForm();
-    }
-  };
-
-  const handleForm = () => {
-    if (authCtx.isLoggedIn) {
-      setIsMicroLoading(true);
-      if (authCtx.user.access !== "USER" && authCtx.user.access !== "ADMIN") {
-        setTimeout(() => {
-          setIsMicroLoading(false);
-          setAlert({
-            type: "info",
-            message: "Team Members are not allowed to register for the Event",
-            position: "bottom-right",
-            duration: 3000,
-          });
-        }, 1500);
-      } else {
-        const relatedEventId = ongoingEvents.find(
-          (e) => e.info.relatedEvent === "null"
-        )?.id;
-        if (relatedEventId) {
-          setNavigatePath(`/Events/${relatedEventId}/Form`);
-          setShouldNavigate(true);
-        }
-        setTimeout(() => {
-          setIsMicroLoading(false);
-        }, 3000);
-      }
-    }
-  };
-
-const calculateRemainingTime = () => {
+  const calculateRemainingTime = () => {
     try {
       const regStartDate = parse(
-        "December 25, 2024, 10:00:00 AM",
+        "December 27, 2024, 10:00:00 AM",
         "MMMM dd, yyyy, h:mm:ss a",
         new Date()
       );
-      const endTime = parse(
+      const regEndDate = parse(
         "January 3, 2025, 2:00:00 PM",
         "MMMM dd, yyyy, h:mm:ss a",
         new Date()
       );
       const now = new Date();
 
-      if (now >= endTime) {
+      if (now >= regEndDate) {
         setRemainingTime(null);
-        setBtnTxt("SHOW ENDED");
-        return;
-      } else if (now >= regStartDate) {
-        setRemainingTime(null);
-        // setBtnTxt("SHOW IS LIVE");
+        setBtnTxt("Registration Closed");
+        setIsRegistrationClosed(true);
         return;
       }
 
       const timeDifference = differenceInMilliseconds(regStartDate, now);
 
-      const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((timeDifference / (1000 * 60 * 60)) % 24);
-      const minutes = Math.floor((timeDifference / (1000 * 60)) % 60);
-      const seconds = Math.floor((timeDifference / 1000) % 60);
+      if (now < regStartDate) {
+        const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((timeDifference / (1000 * 60 * 60)) % 24);
+        const minutes = Math.floor((timeDifference / (1000 * 60)) % 60);
+        const seconds = Math.floor((timeDifference / 1000) % 60);
 
-      let remaining = "";
-      if (days > 0) {
-        remaining = `${days} day${days > 1 ? "s" : ""} left`;
+        const remaining =
+          days > 0
+            ? `${days} day${days > 1 ? "s" : ""} left`
+            : `${hours}h ${minutes}m ${seconds}s`;
+
+        setRemainingTime(remaining);
+        setBtnTxt(remaining);
       } else {
-        remaining = `${hours}h ${minutes}m ${seconds}s`;
+        setRemainingTime(null);
       }
-
-      setRemainingTime(remaining);
     } catch (error) {
       console.error("Date parsing error:", error);
       setRemainingTime(null);
@@ -139,28 +91,65 @@ const calculateRemainingTime = () => {
     }
   }, [info?.regDateAndTime, ongoingEvents]);
 
+  const handleButtonClick = () => {
+    if (isRegistrationClosed) return;
+
+    if (!authCtx.isLoggedIn) {
+      setIsMicroLoading(true);
+      sessionStorage.setItem("prevPage", window.location.pathname);
+      navigate("/login");
+    } else {
+      handleForm();
+    }
+  };
+
+  const handleForm = () => {
+    if (authCtx.isLoggedIn) {
+      setIsMicroLoading(true);
+
+      if (authCtx.user.access !== "USER" && authCtx.user.access !== "ADMIN") {
+        setTimeout(() => {
+          setIsMicroLoading(false);
+          setAlert({
+            type: "info",
+            message: "Team Members are not allowed to register for the Event",
+            position: "bottom-right",
+            duration: 3000,
+          });
+        }, 1500);
+        return;
+      }
+
+      if (authCtx.user.regForm?.includes(relatedEventId)) {
+        setAlert({
+          type: "info",
+          message: "You have already registered for this event",
+          position: "bottom-right",
+          duration: 3000,
+        });
+        setIsMicroLoading(false);
+        return;
+      }
+
+      navigate(`/Events/${relatedEventId}/Form`);
+    }
+  };
+
   useEffect(() => {
     const updateButtonText = () => {
       if (isRegistrationClosed) {
-        setIsMicroLoading(false);
         setBtnTxt("CLOSED");
       } else if (!authCtx.isLoggedIn) {
-        setIsMicroLoading(false);
         setBtnTxt(remainingTime || "REGISTER NOW");
+      } else if (authCtx.user.access !== "USER") {
+        setBtnTxt("ALREADY MEMBER");
+      } else if (authCtx.user.regForm?.includes(relatedEventId)) {
+        setBtnTxt("ALREADY REGISTERED");
       } else {
-        setIsMicroLoading(false);
-        if (authCtx.user.access !== "USER") {
-          setBtnTxt(remainingTime || "ALREADY MEMBER");
-        } else if (isRegisteredInRelatedEvents) {
-          setBtnTxt(
-            authCtx.user.regForm.includes(relatedEventId)
-              ? "ALREADY REGISTERED"
-              : remainingTime || "REGISTER NOW"
-          );
-        } else {
-          setBtnTxt(remainingTime || "REGISTER NOW");
-        }
+        setBtnTxt(remainingTime || "REGISTER NOW");
       }
+
+      setIsMicroLoading(false);
     };
 
     updateButtonText();
@@ -168,9 +157,9 @@ const calculateRemainingTime = () => {
     isRegistrationClosed,
     authCtx.isLoggedIn,
     authCtx.user?.access,
-    remainingTime,
-    isRegisteredInRelatedEvents,
+    authCtx.user?.regForm,
     relatedEventId,
+    remainingTime,
   ]);
 
   return (
@@ -209,8 +198,7 @@ const calculateRemainingTime = () => {
             isRegistrationClosed ||
             btnTxt === "CLOSED" ||
             btnTxt === "ALREADY REGISTERED" ||
-            btnTxt === "ALREADY MEMBER" ||
-            btnTxt === `${remainingTime}`
+            btnTxt === "ALREADY MEMBER"
           }
           style={{
             cursor:
