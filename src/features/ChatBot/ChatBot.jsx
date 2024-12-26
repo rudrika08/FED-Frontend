@@ -22,7 +22,7 @@ export default function ChatBot() {
   const [isEventOngoing, setIsEventOngoing] = useState(true);
   const chatboxRef = useRef(null);
   const location = useLocation();
-  const isOmega = location.pathname.includes("/Omega");
+  const isGsoc = location.pathname.includes("/Gsoc");
   const [alert, setAlert] = useState(null);
   const [isSpeaking, setIsSpeaking] = useState(false);
 
@@ -274,7 +274,7 @@ export default function ChatBot() {
     <>
       <button
         className={`${styles.chatbottoggle} ${botToggle} ${
-          isOmega ? styles.omegaBackGround : ""
+          isGsoc ? styles.gsocBackGround : ""
         }`}
         onClick={handleClick}
       >
@@ -295,7 +295,7 @@ export default function ChatBot() {
             </div>
             <span
               className={`${styles.close} ${styles.chatBotClose} ${
-                isOmega ? styles.omegaBackGround : ""
+                isGsoc ? styles.gsocBackGround : ""
               }`}
               onClick={handleClick}
             >
@@ -306,9 +306,7 @@ export default function ChatBot() {
           <div className={styles.chatbox} ref={chatboxRef}>
             <div className={styles.messageBox}>
               <div
-                className={`${styles.botmessage} ${
-                  isOmega ? styles.omegaBackGround : ""
-                }`}
+                className={`${styles.botmessage}`}
               >
                 {initialMsg}
               </div>
@@ -318,9 +316,7 @@ export default function ChatBot() {
                   className={
                     message.user
                       ? styles.usermessage
-                      : `${styles.botmessage} ${
-                          isOmega ? styles.omegaBackGround : ""
-                        }`
+                      : `${styles.botmessage}`
                   }
                 >
                   {message.user || message.bot}
@@ -374,16 +370,12 @@ export default function ChatBot() {
             >
               {isRecording ? (
                 <BsFillMicMuteFill
-                  className={`${styles.sendIcon} ${
-                    isOmega ? styles.omegaBackGround : ""
-                  }`}
+                  className={`${styles.sendIcon}`}
                   size={24}
                 />
               ) : (
                 <BsFillMicFill
-                  className={`${styles.sendIcon} ${
-                    isOmega ? styles.omegaBackGround : ""
-                  }`}
+                  className={`${styles.sendIcon}`}
                   size={24}
                 />
               )}
@@ -391,9 +383,7 @@ export default function ChatBot() {
             <button className={styles.sendMessage} onClick={sendMessage}>
               <BsSend
                 size={20}
-                className={`${styles.sendIcon} ${
-                  isOmega ? styles.omegaBackGround : ""
-                }`}
+                className={`${styles.sendIcon}`}
               />
             </button>
           </div>
