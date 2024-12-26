@@ -28,8 +28,8 @@
 }
 
 h1 {
-    margin-top: 3rem;
-    margin-bottom: 2rem;
+    margin: 4.4rem 0;
+    
     text-align: center;
     color: white;
     font-size: 35px;
@@ -55,9 +55,11 @@ span {
     width: 75vw;
     border: 2px solid white;
     display: flex;
+    
     padding: 3rem;
     border-radius: 2%;
     background-color: #2F0048;
+    z-index: 1;
 }
 
 .mid {
