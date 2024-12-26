@@ -682,6 +682,7 @@ function NewForm() {
 
   const onChangeEventType = (value) => {
     setdata({ ...data, eventType: value, eventAmount: "" });
+    console.log(data); 
 
     if (value === "Paid") {
       setpaymentSection({
@@ -702,36 +703,44 @@ function NewForm() {
         fields: [
           {
             _id: nanoid(),
-            name: "Enter UPI ID",
-            type: "text",
-            value: "Enter UPI ID",
-            isRequired: true,
-            validations: [],
-          },
-          {
-            _id: nanoid(),
-            name: "Transaction ID",
-            type: "number",
-            value: "Last 4 digits of Transaction ID",
+            name: "Terms & conditions",
+            type: "radio",
+            value: "I confirm to pay the following amount",
             isRequired: true,
             validations: [
               {
                 _id: nanoid(),
                 type: "length",
-                value: "4",
-                operator: "<=",
-                message: "Transaction ID should be at most 4 digits long",
+                value: "1",
+                operator: "===",
+                message: "You need to agree to terms and conditions",
               },
             ],
           },
-          {
-            _id: nanoid(),
-            name: "Payment Screenshot",
-            type: "image",
-            value: "Upload Payment Screenshot",
-            isRequired: true,
-            validations: [],
-          }
+          // {
+          //   _id: nanoid(),
+          //   name: "Transaction ID",
+          //   type: "number",
+          //   value: "Last 4 digits of Transaction ID",
+          //   isRequired: true,
+          //   validations: [
+          //     {
+          //       _id: nanoid(),
+          //       type: "length",
+          //       value: "4",
+          //       operator: "<=",
+          //       message: "Transaction ID should be at most 4 digits long",
+          //     },
+          //   ],
+          // },
+          // {
+          //   _id: nanoid(),
+          //   name: "Payment Screenshot",
+          //   type: "image",
+          //   value: "Upload Payment Screenshot",
+          //   isRequired: true,
+          //   validations: [],
+          // }
         ],
       });
     } else {
