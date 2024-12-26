@@ -143,7 +143,8 @@ const ShareTeamData = ({ onClose, teamData, successMessage }) => {
                         style={{ color: "#FF8A00", textDecoration: "none" }}
                       >
                         {word}
-                      </a>{" "}
+                      </a>
+                      <br /> {/* This ensures the line break */}
                     </React.Fragment>
                   );
                 }
