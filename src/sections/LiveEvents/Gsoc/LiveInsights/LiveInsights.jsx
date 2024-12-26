@@ -16,7 +16,7 @@ function Card2({ img }) {
       viewport={{ once: true }}
     >
       <div className={styles.card_img2}>
-        <img src="https://i.ibb.co/C7vcpB8/image-4.png" alt="GSOC" />
+        <img src="https://cdn.prod.website-files.com/645fbc01f38b6fb6255c240c/676dd558d2026a8428f83ded_image-removebg-preview%20(3).png" alt="GSOC" />
       </div>
     </motion.div>
   );
@@ -33,7 +33,7 @@ function Card({ img }) {
     >
       <div className={styles.card_img}>
         <img
-          src="https://i.ibb.co/93dDdyJ/Picyard-1734689449494-deblurred.png"
+          src="https://cdn.prod.website-files.com/645fbc01f38b6fb6255c240c/676dd6757e773446d895f1c4_gsoc%202025.png"
           alt="GSOC"
         />
       </div>
@@ -238,28 +238,28 @@ function LiveInsights({ ongoingEvents, isRegisteredInRelatedEvents }) {
       <div className={styles.mid}>
         <div className={styles.outerbox}>
           <Card
-            src="https://i.ibb.co/93dDdyJ/Picyard-1734689449494-deblurred.png"
+            src="https://cdn.prod.website-files.com/645fbc01f38b6fb6255c240c/676dd558d2026a8428f83ded_image-removebg-preview%20(3).png"
             alt="GSOC image"
           />
           <div className={styles.flex1}>
-            <h2>KICK OFF YOUR JOURNEY WITH RIGHT GUIDANCE FROM GSoC ALUMINUS</h2>
+            <h2>KICK OFF YOUR JOURNEY WITH RIGHT GUIDANCE FROM GSoC ALUMNUS</h2>
             <div className={styles.mid}>
               <Card2
-                src="https://i.ibb.co/C7vcpB8/image-4.png"
+                src="https://cdn.prod.website-files.com/645fbc01f38b6fb6255c240c/676dd558d2026a8428f83ded_image-removebg-preview%20(3).png"
                 alt="GSOC Logo"
               />
               <h2>Tailored Strategies for GSoC</h2>
             </div>
             <div className={styles.mid}>
               <Card2
-                src="https://i.ibb.co/C7vcpB8/image-4.png"
+                src="https://cdn.prod.website-files.com/645fbc01f38b6fb6255c240c/676dd558d2026a8428f83ded_image-removebg-preview%20(3).png"
                 alt="GSOC Logo"
               />
               <h2>Real-Life Inspiration</h2>
             </div>
             <div className={styles.mid}>
               <Card2
-                src="https://i.ibb.co/C7vcpB8/image-4.png"
+                src="https://cdn.prod.website-files.com/645fbc01f38b6fb6255c240c/676dd558d2026a8428f83ded_image-removebg-preview%20(3).png"
                 alt="GSOC Logo"
               />
               <h2>Insider Tips for Winning Proposals</h2>

@@ -176,7 +176,7 @@ const Navbar = () => {
                 } ${activeLink === "/Gsoc" ? styles.gsocHover : ""}`}
                 onClick={closeMobileMenu}
               >
-                GSOC
+                GSoC
               </NavLink>
             </li>
             <li>
