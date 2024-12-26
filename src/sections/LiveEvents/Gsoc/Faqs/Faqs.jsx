@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./styles/Faqs.module.scss";
-import faqs from "../../../../data/LiveEventsData/gsoc/Gsoc.json";
-import Accordion from "../../../../components/LiveEventsComponent/Accordian/Accordian";
+import faqs from "../../../../data/liveEvents/gsoc/Gsoc.json";
+import Accordion from "../../../../components/LiveEvents/Accordian/Accordian";
 
 const Faqs = () => {
     return (

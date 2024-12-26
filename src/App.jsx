@@ -31,7 +31,7 @@ const Team = lazy(() => import("./pages/Team/Team"));
 const Alumni = lazy(() => import("./pages/Alumni/Alumni"));
 const Profile = lazy(() => import("./pages/Profile/Profile"));
 // const Omega = lazy(() => import("./pages/Omega/Omega"));
-const Gsoc = lazy(() => import("./pages/LiveEventsPages/Gsoc/Gsoc"));
+const Gsoc = lazy(() => import("./pages/LiveEvents/Gsoc/Gsoc"));
 
 const Signup = lazy(() => import("./pages/Authentication/Signup/Signup"));
 const ForgotPassword = lazy(() =>

@@ -5,14 +5,14 @@ import { motion } from "framer-motion";
 import { Element } from "react-scroll";
 import { useInView } from "react-intersection-observer";
 import styles from "./styles/Gsoc.module.scss";
-import Hero from "../../../sections/LiveEventsSections/Gsoc/Hero/Hero.jsx";
-import Speaker from "../../../sections/LiveEventsSections/Gsoc/Speaker/Speaker.jsx";
-import Attend from "../../../sections/LiveEventsSections/Gsoc/Attend/Attend.jsx";
+import Hero from "../../../sections/LiveEvents/Gsoc/Hero/Hero.jsx"; 
+import Speaker from "../../../sections/LiveEvents/Gsoc/Speaker/Speaker.jsx";
+import Attend from "../../../sections/LiveEvents/Gsoc/Attend/Attend.jsx";
 import ChatBot from "../../../features/ChatBot/ChatBot.jsx";
-import Accordion from "../../../components/LiveEventsComponent/Accordian/Accordian.jsx";
-import Faqs from "../../../sections/LiveEventsSections/Gsoc/Faqs/Faqs.jsx";
-import LiveInsights from "../../../sections/LiveEventsSections/Gsoc/LiveInsights/LiveInsights.jsx";
-import TeamPage from "../../../sections/LiveEventsSections/Gsoc/TeamPage/TeamPage.jsx";
+import Accordion from "../../../components/LiveEvents/Accordian/Accordian.jsx";
+import Faqs from "../../../sections/LiveEvents/Gsoc/Faqs/Faqs.jsx";
+import LiveInsights from "../../../sections/LiveEvents/Gsoc/LiveInsights/LiveInsights.jsx";
+import TeamPage from "../../../sections/LiveEvents/Gsoc/TeamPage/TeamPage.jsx";
 
 function Gsoc() {
   useEffect(() => {
