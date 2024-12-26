@@ -34,7 +34,7 @@ function FedShow() {
   const calculateRemainingTime = () => {
     try {
       const regStartDate = parse(
-        "January 3, 2025, 10:00:00 AM",
+        "January 10, 2025, 10:00:00 AM",
         "MMMM dd, yyyy, h:mm:ss a",
         new Date()
       );
@@ -144,24 +144,29 @@ function FedShow() {
 
             }}
           >
+            <div className={styles.speaker}>
             <img
               className={styles.imgMobile}
               src="https://cdn.prod.website-files.com/663d1907e337de23e83c30b2/676d6a56848816903d373118_final%20harshil.png"
               alt="Hero"
-              style={{
-                Width: "100%",
-
-              }}
+              
             />
+            
+            </div>
           </motion.div>
+          
           </Element>
-            <img src="https://cdn.prod.website-files.com/663d1907e337de23e83c30b2/6764f973ef9bcf3a5445d7b6_Screenshot%202024-12-20%20102739.png" alt=""
+            <img className={styles.evelogo} src="https://cdn.prod.website-files.com/663d1907e337de23e83c30b2/6764f973ef9bcf3a5445d7b6_Screenshot%202024-12-20%20102739.png" alt=""
               height={120}
             />
+            <center><img className={styles.mobLogo} src="https://cdn.prod.website-files.com/663d1907e337de23e83c30b2/6764f973ef9bcf3a5445d7b6_Screenshot%202024-12-20%20102739.png" alt=""
+              height={120}
+          /></center>
           </Element>
           <div className={styles.date}>
+          
             <p>
-              <FaCalendarAlt className={styles.icon} size={20} /> January 3,
+              <FaCalendarAlt className={styles.icon} size={20} /> January 10,
               2025
             </p>
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>

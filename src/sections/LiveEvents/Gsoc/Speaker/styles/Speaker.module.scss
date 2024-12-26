@@ -51,7 +51,7 @@
     // font-size: 2rem;
     font-weight: 200;
     text-align: justify;
-    color:  #e47404
+    color:  #e47404;
   }
   .foot{
     margin-top: -9rem;
@@ -75,12 +75,14 @@
     margin-top: 2rem;
   }
   
-  
+  .mobLogo{
+    display: none;
+  }
   
   .fedShow .imgLeft {
     height: 400px;
    // margin-top: 7.5rem;
-    margin-right: 4rem;
+    // margin-right: 4rem;
     margin-bottom: 1rem;
     //   width: 70%;
   }
@@ -120,6 +122,8 @@
       // justify-content: center;
       margin-top: 3rem;
       font-weight: 600;
+    z-index: 1;
+      
       
     
       p {
@@ -132,24 +136,25 @@
       }
      
     .head{
-      font-size: 35px;
+      font-size: 45px;
       font-weight: 600;
+      margin-bottom: -1.2rem;
       }
       .subhead{
-        font-size: 35px;
+        font-size: 45px;
         color: #F48424;
         font-weight: 600;
       }
       .icon {
         margin-right: 5px;
-        color: #fff;
+        color: #F48424;
       }
       img{
-        margin-top: 1.5rem;
+        margin-top: 0.5rem;
        
       }
       .date{
-        margin-top: 1.5rem;
+        margin-top: 0.5rem;
         // margin-left: -1rem;
       }
     }
@@ -169,10 +174,10 @@
       --color: #fbab04;
       font-size: 20px;
       width: 80%;
-      padding: 1rem 1.8rem ;
+      padding: 0.7rem 1.8rem ;
       border-radius: 10px;
       font-weight: bold;
-      
+      max-width: 12rem;
       transition: ease-in 0.5s, font-size 0.3s ease-in-out;
 
 
@@ -264,7 +269,12 @@
   
   @media (max-width: 480px) {
   
-   
+    .mobLogo{
+      display: block;
+    }
+    .evelogo{
+      display: none;
+    }
     .imgLeft{
       display: none;
     }
@@ -273,6 +283,15 @@
     }
     .imgMobile {
       display: block;
+      margin-bottom: 2rem;
+      height: 300px;
+      width: 370px;
+    }
+    .speakerMoble{
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
     .fedshowcircle2 {
       position: absolute;
@@ -296,15 +315,24 @@
       height: 32%;
       display: none;
     }
-  
+    .info {
+      .head{
+        font-size: 28px;
+        margin-bottom: 0.1rem;
+      }
+      .subhead{
+        font-size: 28px;
+      }
+    }
     .head {
+      font-size: 28px;
       margin-top: 50px;
       display: flex;
       justify-content: center;
       align-items: center;
     }
     .subhead{
-      font-size: 30px;
+      font-size: 28px;
       margin-left: 40px;
       display: flex;
       justify-content: center;

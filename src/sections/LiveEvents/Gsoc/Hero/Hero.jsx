@@ -29,7 +29,7 @@ function Hero({ ongoingEvents, isRegisteredInRelatedEvents, eventName }) {
   const calculateRemainingTime = () => {
     try {
       const regStartDate = parse(
-        "December 27, 2024, 10:00:00 AM",
+        "December 29, 2024, 10:00:00 AM",
         "MMMM dd, yyyy, h:mm:ss a",
         new Date()
       );
@@ -198,14 +198,16 @@ function Hero({ ongoingEvents, isRegisteredInRelatedEvents, eventName }) {
             isRegistrationClosed ||
             btnTxt === "CLOSED" ||
             btnTxt === "ALREADY REGISTERED" ||
-            btnTxt === "ALREADY MEMBER"
+            btnTxt === "ALREADY MEMBER" ||
+            btnTxt === `${remainingTime}`
           }
           style={{
             cursor:
               isRegistrationClosed ||
               btnTxt === "CLOSED" ||
               btnTxt === "ALREADY REGISTERED" ||
-              btnTxt === "ALREADY MEMBER"
+              btnTxt === "ALREADY MEMBER" ||
+              btnTxt === `${remainingTime}`
                 ? "not-allowed"
                 : "pointer",
           }}

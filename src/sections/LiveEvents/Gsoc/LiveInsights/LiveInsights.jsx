@@ -95,7 +95,7 @@ function LiveInsights({ ongoingEvents, isRegisteredInRelatedEvents }) {
   const calculateRemainingTime = () => {
     try {
       const regStartDate = parse(
-        "December 27, 2024, 10:00:00 AM",
+        "December 29, 2024, 10:00:00 AM",
         "MMMM dd, yyyy, h:mm:ss a",
         new Date()
       );
@@ -242,7 +242,7 @@ function LiveInsights({ ongoingEvents, isRegisteredInRelatedEvents }) {
             alt="GSOC image"
           />
           <div className={styles.flex1}>
-            <h2>KICK OFF YOUR JOURNEY WITH RIGHT GUIDANCE FROM GSoC ALUMNI</h2>
+            <h2>KICK OFF YOUR JOURNEY WITH RIGHT GUIDANCE FROM GSoC ALUMINUS</h2>
             <div className={styles.mid}>
               <Card2
                 src="https://i.ibb.co/C7vcpB8/image-4.png"
@@ -255,15 +255,16 @@ function LiveInsights({ ongoingEvents, isRegisteredInRelatedEvents }) {
                 src="https://i.ibb.co/C7vcpB8/image-4.png"
                 alt="GSOC Logo"
               />
-              <h2>Insider Tips for Winning Proposals</h2>
+              <h2>Real-Life Inspiration</h2>
             </div>
             <div className={styles.mid}>
               <Card2
                 src="https://i.ibb.co/C7vcpB8/image-4.png"
                 alt="GSOC Logo"
               />
-              <h2>Real-Life Inspiration</h2>
+              <h2>Insider Tips for Winning Proposals</h2>
             </div>
+           
           </div>
         </div>
       </div>
@@ -275,14 +276,16 @@ function LiveInsights({ ongoingEvents, isRegisteredInRelatedEvents }) {
             isRegistrationClosed ||
             btnTxt === "CLOSED" ||
             btnTxt === "ALREADY REGISTERED" ||
-            btnTxt === "ALREADY MEMBER"
+            btnTxt === "ALREADY MEMBER" ||
+            btnTxt === `${remainingTime}`
           }
           style={{
             cursor:
               isRegistrationClosed ||
               btnTxt === "CLOSED" ||
               btnTxt === "ALREADY REGISTERED" ||
-              btnTxt === "ALREADY MEMBER"
+              btnTxt === "ALREADY MEMBER" ||
+              btnTxt === `${remainingTime}`
                 ? "not-allowed"
                 : "pointer",
           }}
