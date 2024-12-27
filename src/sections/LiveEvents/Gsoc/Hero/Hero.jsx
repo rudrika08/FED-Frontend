@@ -29,12 +29,12 @@ function Hero({ ongoingEvents, isRegisteredInRelatedEvents, eventName }) {
   const calculateRemainingTime = () => {
     try {
       const regStartDate = parse(
-        "December 27, 2024, 04:45:00 AM",
+        "December 28, 2024, 11:00:00 PM",
         "MMMM dd, yyyy, h:mm:ss a",
         new Date()
       );
       const regEndDate = parse(
-        "January 3, 2025, 2:00:00 PM",
+        "January 9, 2025, 12:00:00 PM",
         "MMMM dd, yyyy, h:mm:ss a",
         new Date()
       );
