@@ -710,9 +710,9 @@ function NewForm() {
           },
           {
             _id: nanoid(),
-            name: "Transaction ID",
+            name: "Transaction ID (Last 4)",
             type: "number",
-            value: "Transaction ID (Last 4)",
+            value: "Last 4 digits of Transaction ID",
             isRequired: true,
             validations: [
               {
