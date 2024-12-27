@@ -343,6 +343,11 @@ const PreviewForm = ({
   };
 
   const handleSubmit = async () => {
+
+    if (!currentSection || !areRequiredFieldsFilled()) {
+        return;
+  }
+
     const formData = new FormData();
     const mediaFields = filterMediaFields() || [];
     const isCreateTeam = data.some(

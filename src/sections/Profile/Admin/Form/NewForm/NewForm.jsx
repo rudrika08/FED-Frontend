@@ -712,14 +712,14 @@ function NewForm() {
             _id: nanoid(),
             name: "Transaction ID",
             type: "number",
-            value: "Last 4 digits of Transaction ID",
+            value: "Transaction ID (Last 4)",
             isRequired: true,
             validations: [
               {
                 _id: nanoid(),
                 type: "length",
-                value: "4",
-                operator: "<=",
+                value: 4,
+                operator: "===",
                 message: "Transaction ID should be at most 4 digits long",
               },
             ],
@@ -731,7 +731,25 @@ function NewForm() {
             value: "Upload Payment Screenshot",
             isRequired: true,
             validations: [],
-          }
+          },
+          {
+            _id: nanoid(),
+            name: "Terms & Conditions",
+            type: "radio",
+            value:
+              "I acknowledge that all payments made are non-refundable once the form is submitted. For any further assistance contact fedkiit@gmail.com",
+            isRequired: true,
+            validations: [
+              {
+                _id: nanoid(),
+                type: "length",
+                value: 1,
+                operator: "===",
+                message:
+                  "You need to agree to the terms and conditions to proceed.",
+              },
+            ],
+          },
         ],
       });
     } else {
