@@ -15,6 +15,7 @@ import {
 } from "../../../../microInteraction";
 // import AuthContext from "../../../../context/AuthContext";
 import { RecoveryContext } from "../../../../context/RecoveryContext";
+// import paymentImage from "https://cdn.prod.website-files.com/645fbc01f38b6fb6255c240c/676db4b779d9f41ff8df3875_bank-card-mobile-phone-online-payment_107791-16646-removebg-preview.png"; 
 
 const operators = [
   { label: "match", value: "===" },
@@ -35,6 +36,7 @@ const PreviewForm = ({
   meta = [],
   handleClose,
   showCloseBtn,
+  eventId
 }) => {
   const navigate = useNavigate();
   const authCtx = useContext(AuthContext);
@@ -49,11 +51,13 @@ const PreviewForm = ({
   const [alert, setAlert] = useState(null);
   const wrapperRef = useRef(null);
   const recoveryCtx = useContext(RecoveryContext);
-  const { setTeamCode, setTeamName } = recoveryCtx;
+  const { setTeamCode, setTeamName, setSuccessMessage } = recoveryCtx;
   const [formData, setFormData] = useState(eventData);
   const [code, setcode] = useState(null);
   const [team, setTeam] = useState(null);
-
+  const [message, setMessage] = useState(null);
+  // console.log('Data', eventId);
+  
   let currentSection =
     data !== undefined
       ? data.find((section) => section._id === activeSection._id)
@@ -162,14 +166,17 @@ const PreviewForm = ({
 
   useEffect(() => {
     if (isSuccess) {
-      
       const participationType = eventData?.participationType;
-      console.log(participationType);
+      const successMessage = eventData?.successMessage;
+      // console.log(participationType);
       const handleAutoClose = () => {
         setTimeout(() => {
           if (participationType === "Team") {
             setTeamCode(code);
             setTeamName(team);
+          }
+          if (successMessage){
+            setSuccessMessage(successMessage);
           }
           navigate("/Events");
         }, 1000);
@@ -370,6 +377,7 @@ const PreviewForm = ({
         setIsSuccess(true);
         return;
       }
+
       const response = await api.post("/api/form/register", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
@@ -403,12 +411,16 @@ const PreviewForm = ({
         });
         if (response.data) {
           const { teamName, teamCode } = response.data;
-
+   
           const participationType = eventData?.participationType;
+          const successMessage = eventData?.successMessage;
           if (participationType === "Team") {
             setTeam(teamName);
             setcode(teamCode);
             // console.log("saved context teamCode:",recoveryCtx.teamCode)
+          }
+          if (successMessage){
+            setMessage(successMessage);
           }
           // console.log("consoling teamdata:", teamName, teamCode);
         }
@@ -472,10 +484,123 @@ const PreviewForm = ({
     }
   };
 
-  const renderPaymentScreen = () => {
-    const { eventType, receiverDetails, eventAmount } = formData;
+  const handlePayment = async (e) => {
+    if (!areRequiredFieldsFilled()) {
+      return false;
+    }
+    setIsLoading(true);
+    setIsMicroLoading(true);
+    // console.log(typeof(eventAmount)); 
+    const { eventAmount } = formData;
+    
+    try {
+      const response = await api.post("/api/form/initiatePayment", {
+        eventId: eventId,
+        amount: eventAmount,
+      }, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${window.localStorage.getItem("token")}`,
+        },
+      });
+  
+      if (response.status === 200 || response.status === 201) {
+        const orderId  = response.data.orderId;
+        // console.log(orderId);
+        
+        // Start Razorpay checkout
+        const options = {
+          key: import.meta.env.VITE_RAZORPAY_PUBLIC_KEY, // Public Razorpay key
+          amount: eventAmount * 100,
+          currency: "INR",
+          name: "Fed KIIT",
+          description: eventData?.eventTitle,
+          image:eventData?.eventImg,
+          order_id: orderId,
+          handler: async function (response) {
+            try {
+            const body = {
+              ...response,
+            };
+             console.log("body", body);
+    
+            const validateRes = await api.post(
+              "/api/form/validatePayment",
+              body,
+              {
+                headers: {
+                  "Content-Type": "application/json",
+                  Authorization: `Bearer ${window.localStorage.getItem("token")}`,
+                },
+              }
+            );
+            if (validateRes.data.msg === "success") {
+              // setIsPaymentSuccess(true);
+              handleSubmit(); // Automatically submit the form upon success
+            } else {
+              throw new Error("Payment validation failed");
+            }
+          } catch (error) {
+            
+            console.error("Payment validation error:", error);
+            alert("Payment validation failed. You can continue filling the form.");
+          }
+         
+          },
+          prefill: {
+            //We recommend using the prefill parameter to auto-fill customer's contact information, especially their phone number
+            name: authCtx.user.name, //your customer's name
+            email: authCtx?.user?.email,
+            contact: authCtx?.user?.contactNo, //Provide the customer's phone number for better conversion rates
+          },
+          notes: {
+            address: "Razorpay Corporate Office",
+          },
+          theme: {
+            color: "#3399cc",
+          },
+          
+        };
+  
+        const razorpay = new window.Razorpay(options);
+        razorpay.open();
+        razorpay.on("payment.failed", function (response) {
+          alert(`Payment failed: ${response.error.description}`);
+        })
+   
+        
+      } else {
+        setAlert({
+          type: "error",
+          message:
+            response.data.message ||
+            "There was an error initiating the payment. Please try again.",
+          position: "bottom-right",
+          duration: 3000,
+        });
+        setIsSuccess(false);
+        throw new Error("Unexpected response status");
+      }
+    } catch (error) {
+      console.error("Payment initiation error:", error);
+      setAlert({
+        type: "error",
+        message:
+          error?.response?.data?.message ||
+          "There was an error initiating the payment. Please try again.",
+        position: "bottom-right",
+        duration: 3000,
+      });
+      setIsSuccess(false);
+    } finally {
+      setIsLoading(false);
+      setIsMicroLoading(false);
+    }
+  };
+  
 
-    if (eventType === "Paid" && currentSection.name === "Payment Details") {
+  const renderPaymentScreen = () => {
+    if (formData.eventType === "Paid" && currentSection.name === "Process Your Payment") {
       return (
         <div
           style={{
@@ -486,50 +611,12 @@ const PreviewForm = ({
             alignItems: "center",
           }}
         >
-          {receiverDetails.media && (
-            <img
-              src={
-                typeof receiverDetails.media === "string"
-                  ? receiverDetails.media
-                  : URL.createObjectURL(receiverDetails.media)
-              }
-              alt={"QR-Code"}
-              style={{
-                width: 200,
-                height: 200,
-                objectFit: "contain",
-              }}
-            />
-          )}
-          <p
-            style={{
-              fontSize: 12,
-              marginTop: 12,
-              color: "lightgray",
-            }}
-          >
-            Make the payment of{" "}
-            <strong
-              style={{
-                color: "#fff",
-              }}
-            >
-              &#8377;{eventAmount}
-            </strong>{" "}
-            using QR-Code or UPI Id{" "}
-            <strong
-              style={{
-                color: "#fff",
-              }}
-            >
-              {receiverDetails.upi}
-            </strong>
-          </p>
+        <img style={{height :"10rem",width:"auto"}} src="https://cdn.prod.website-files.com/645fbc01f38b6fb6255c240c/676dc7f6b7fdbd3cc1b7ca41_image-removebg-preview%20(2).png"></img>
         </div>
       );
     }
-    return null;
-  };
+  };    
+  
 
   return (
     <>
@@ -604,9 +691,10 @@ const PreviewForm = ({
                   )}
                   <Button
                     onClick={
+
                       inboundList() && inboundList().nextSection
                         ? onNext
-                        : handleSubmit
+                        : (formData.eventType === "Paid" && currentSection.name === "Process Your Payment")?handlePayment:handleSubmit
                     }
                   >
                     {inboundList() && inboundList().nextSection ? (
@@ -614,7 +702,9 @@ const PreviewForm = ({
                     ) : isMicroLoading ? (
                       <MicroLoading />
                     ) : (
-                      "Submit"
+                      
+                      (formData.eventType === "Paid" && currentSection.name === "Process Your Payment")?"Pay Now":"Submit"
+                     
                     )}
                   </Button>
                 </div>
