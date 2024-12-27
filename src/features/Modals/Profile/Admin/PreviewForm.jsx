@@ -56,7 +56,7 @@ const PreviewForm = ({
   const [code, setcode] = useState(null);
   const [team, setTeam] = useState(null);
   const [message, setMessage] = useState(null);
-  console.log('Data', eventId);
+  // console.log('Data', eventId);
   
   let currentSection =
     data !== undefined
@@ -168,7 +168,7 @@ const PreviewForm = ({
     if (isSuccess) {
       const participationType = eventData?.participationType;
       const successMessage = eventData?.successMessage;
-      console.log(participationType);
+      // console.log(participationType);
       const handleAutoClose = () => {
         setTimeout(() => {
           if (participationType === "Team") {
@@ -506,11 +506,11 @@ const PreviewForm = ({
   
       if (response.status === 200 || response.status === 201) {
         const orderId  = response.data.orderId;
-        console.log(orderId);
+        // console.log(orderId);
         
         // Start Razorpay checkout
         const options = {
-          key: "rzp_test_ChH0b4D5LwCIsA", // Public Razorpay key
+          key: import.meta.env.VITE_RAZORPAY_PUBLIC_KEY, // Public Razorpay key
           amount: eventAmount * 100,
           currency: "INR",
           name: "Fed KIIT",
@@ -600,7 +600,7 @@ const PreviewForm = ({
   
 
   const renderPaymentScreen = () => {
-    if (formData.eventType === "Paid" && currentSection.name === "Payment Details") {
+    if (formData.eventType === "Paid" && currentSection.name === "Process Your Payment") {
       return (
         <div
           style={{
@@ -611,7 +611,7 @@ const PreviewForm = ({
             alignItems: "center",
           }}
         >
-        <img style={{height :"10rem",width:"auto"}} src="https://cdn.prod.website-files.com/645fbc01f38b6fb6255c240c/676db4b779d9f41ff8df3875_bank-card-mobile-phone-online-payment_107791-16646-removebg-preview.png"></img>
+        <img style={{height :"10rem",width:"auto"}} src="https://cdn.prod.website-files.com/645fbc01f38b6fb6255c240c/676dc7f6b7fdbd3cc1b7ca41_image-removebg-preview%20(2).png"></img>
         </div>
       );
     }
@@ -694,7 +694,7 @@ const PreviewForm = ({
 
                       inboundList() && inboundList().nextSection
                         ? onNext
-                        : (formData.eventType === "Paid" && currentSection.name === "Payment Details")?handlePayment:handleSubmit
+                        : (formData.eventType === "Paid" && currentSection.name === "Process Your Payment")?handlePayment:handleSubmit
                     }
                   >
                     {inboundList() && inboundList().nextSection ? (
@@ -703,7 +703,7 @@ const PreviewForm = ({
                       <MicroLoading />
                     ) : (
                       
-                      (formData.eventType === "Paid" && currentSection.name === "Payment Details")?"Pay Now":"Submit"
+                      (formData.eventType === "Paid" && currentSection.name === "Process Your Payment")?"Pay Now":"Submit"
                      
                     )}
                   </Button>
