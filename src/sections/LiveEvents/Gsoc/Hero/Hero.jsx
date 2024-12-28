@@ -151,7 +151,7 @@ function Hero({ ongoingEvents, isRegisteredInRelatedEvents, eventName }) {
           : remainingTime || "REGISTER NOW"
       );
 
-      setTimeout(() => setIsMicroLoading(false), 3000);
+      setTimeout(() => setIsMicroLoading(false), 2500);
     };
 
     updateButtonText();
