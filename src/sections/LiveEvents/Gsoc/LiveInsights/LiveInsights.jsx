@@ -62,53 +62,22 @@ function LiveInsights({ ongoingEvents, isRegisteredInRelatedEvents }) {
     }
   }, [alert]);
 
-  // useEffect(() => {
-  //   if (shouldNavigate) {
-  //     navigate(navigatePath);
-  //     setShouldNavigate(false);
-  //   }
-  // }, [shouldNavigate, navigatePath, navigate]);
-
-  // useEffect(() => {
-  //     const intervalId = setInterval(() => {
-  //       calculateRemainingTime();
-  //     }, 1000); // Update every second
-
-  //     return () => clearInterval(intervalId);
-  //   }, []);
-
-    useEffect(() => {
-      const ongoingInfo = ongoingEvents.find(
-        (e) => e.info.relatedEvent === "null"
-      )?.info;
-  
-      setInfo(ongoingInfo);
-      setIsRegistrationClosed(ongoingInfo?.isRegistrationClosed || false);
-  
-      const relatedId = ongoingEvents.find(
-        (e) => e.info.relatedEvent === "null"
-      )?.id;
-      setRelatedEventId(relatedId);
-
-    }, [ongoingEvents]);
-
   const calculateRemainingTime = () => {
     try {
       const regStartDate = parse(
-        "December 29, 2024, 08:00:00 PM",
-        "MMMM dd, yyyy, h:mm:ss a",
+        info.regDateAndTime,
+        "MMMM do yyyy, h:mm:ss a",
         new Date()
       );
-      const regEndDate = parse(
-        "January 9, 2025, 12:00:00 PM",
-        "MMMM dd, yyyy, h:mm:ss a",
-        new Date()
-      );
+      // const regEndDate = parse(
+      //   "January 9, 2025, 12:00:00 PM",
+      //   "MMMM dd, yyyy, h:mm:ss a",
+      //   new Date()
+      // );
       const now = new Date();
 
-      if (now >= regEndDate) {
+      if (info.isRegistrationClosed) {
         setRemainingTime(null);
-        setBtnTxt("Registration Closed");
         setIsRegistrationClosed(true);
         return;
       }
@@ -143,7 +112,7 @@ function LiveInsights({ ongoingEvents, isRegisteredInRelatedEvents }) {
     )?.info;
 
     setInfo(ongoingInfo);
-    setIsRegistrationClosed(ongoingInfo?.isRegistrationClosed || false);
+    // setIsRegistrationClosed(ongoingInfo?.isRegistrationClosed || false);
 
     const relatedId = ongoingEvents.find(
       (e) => e.info.relatedEvent === "null"
@@ -203,17 +172,19 @@ function LiveInsights({ ongoingEvents, isRegisteredInRelatedEvents }) {
 
   useEffect(() => {
     const updateButtonText = () => {
-      if (isRegistrationClosed) {
-        setBtnTxt("CLOSED");
-      } else if (!authCtx.isLoggedIn) {
-        setBtnTxt(remainingTime || "REGISTER NOW");
-      } else if (authCtx.user.access !== "USER") {
-        setBtnTxt("ALREADY MEMBER");
-      } else if (authCtx.user.regForm?.includes(relatedEventId)) {
-        setBtnTxt("ALREADY REGISTERED");
-      } else {
-        setBtnTxt(remainingTime || "REGISTER NOW");
-      }
+      setBtnTxt(
+        isRegistrationClosed
+          ? authCtx.user?.regForm?.includes(relatedEventId) 
+            ? "ALREADY REGISTERED"
+            : "REGISTRATION CLOSED"
+          : !authCtx.isLoggedIn 
+          ? remainingTime || "REGISTER NOW"
+          : authCtx.user.access !== "USER" 
+          ? "ALREADY MEMBER"
+          : authCtx.user?.regForm?.includes(relatedEventId) 
+          ? "ALREADY REGISTERED"
+          : remainingTime || "REGISTER NOW"
+      );
 
       setIsMicroLoading(false);
     };
@@ -274,7 +245,7 @@ function LiveInsights({ ongoingEvents, isRegisteredInRelatedEvents }) {
           disabled={
             isMicroLoading ||
             isRegistrationClosed ||
-            btnTxt === "CLOSED" ||
+            btnTxt === "REGISTRATION CLOSED" ||
             btnTxt === "ALREADY REGISTERED" ||
             btnTxt === "ALREADY MEMBER" ||
             btnTxt === `${remainingTime}`
@@ -282,7 +253,7 @@ function LiveInsights({ ongoingEvents, isRegisteredInRelatedEvents }) {
           style={{
             cursor:
               isRegistrationClosed ||
-              btnTxt === "CLOSED" ||
+              btnTxt === "REGISTRATION CLOSED" ||
               btnTxt === "ALREADY REGISTERED" ||
               btnTxt === "ALREADY MEMBER" ||
               btnTxt === `${remainingTime}`
