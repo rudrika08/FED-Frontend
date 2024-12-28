@@ -187,7 +187,7 @@ function LiveInsights({ ongoingEvents, isRegisteredInRelatedEvents }) {
           : remainingTime || "REGISTER NOW"
       );
 
-      setTimeout(() => setIsMicroLoading(false), 2000);
+      setTimeout(() => setIsMicroLoading(false), 2500);
     };
 
     updateButtonText();
