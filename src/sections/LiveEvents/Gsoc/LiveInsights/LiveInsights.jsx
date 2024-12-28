@@ -172,6 +172,7 @@ function LiveInsights({ ongoingEvents, isRegisteredInRelatedEvents }) {
 
   useEffect(() => {
     const updateButtonText = () => {
+      setIsMicroLoading(true);
       setBtnTxt(
         isRegistrationClosed
           ? authCtx.user?.regForm?.includes(relatedEventId) 
@@ -186,7 +187,7 @@ function LiveInsights({ ongoingEvents, isRegisteredInRelatedEvents }) {
           : remainingTime || "REGISTER NOW"
       );
 
-      setIsMicroLoading(false);
+      setTimeout(() => setIsMicroLoading(false), 1000);
     };
 
     updateButtonText();
@@ -196,7 +197,6 @@ function LiveInsights({ ongoingEvents, isRegisteredInRelatedEvents }) {
     authCtx.user?.access,
     authCtx.user?.regForm,
     relatedEventId,
-    remainingTime,
   ]);
 
   return (
@@ -252,6 +252,7 @@ function LiveInsights({ ongoingEvents, isRegisteredInRelatedEvents }) {
           }
           style={{
             cursor:
+              isMicroLoading ||
               isRegistrationClosed ||
               btnTxt === "REGISTRATION CLOSED" ||
               btnTxt === "ALREADY REGISTERED" ||
@@ -261,7 +262,7 @@ function LiveInsights({ ongoingEvents, isRegisteredInRelatedEvents }) {
                 : "pointer",
           }}
         >
-          {isMicroLoading ? <MicroLoading color="#38ccff" /> : btnTxt}
+          {isMicroLoading ? <MicroLoading color="#ffffff" /> : btnTxt}
         </button>
       </div>
       <Alert />

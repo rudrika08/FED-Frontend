@@ -136,6 +136,7 @@ function Hero({ ongoingEvents, isRegisteredInRelatedEvents, eventName }) {
 
   useEffect(() => {
     const updateButtonText = () => {
+      setIsMicroLoading(true);
       setBtnTxt(
         isRegistrationClosed
           ? authCtx.user?.regForm?.includes(relatedEventId) 
@@ -150,7 +151,7 @@ function Hero({ ongoingEvents, isRegisteredInRelatedEvents, eventName }) {
           : remainingTime || "REGISTER NOW"
       );
 
-      setIsMicroLoading(false);
+      setTimeout(() => setIsMicroLoading(false), 1000);
     };
 
     updateButtonText();
@@ -160,7 +161,6 @@ function Hero({ ongoingEvents, isRegisteredInRelatedEvents, eventName }) {
     authCtx.user?.access,
     authCtx.user?.regForm,
     relatedEventId,
-    remainingTime,
   ]);
 
   return (
@@ -204,6 +204,7 @@ function Hero({ ongoingEvents, isRegisteredInRelatedEvents, eventName }) {
           }
           style={{
             cursor:
+              isMicroLoading ||
               isRegistrationClosed ||
               btnTxt === "REGISTRATION CLOSED" ||
               btnTxt === "ALREADY REGISTERED" ||
@@ -213,7 +214,7 @@ function Hero({ ongoingEvents, isRegisteredInRelatedEvents, eventName }) {
                 : "pointer",
           }}
         >
-          {isMicroLoading ? <MicroLoading color="#38ccff" /> : btnTxt}
+          {isMicroLoading ? <MicroLoading color="#ffffff" /> : btnTxt}
         </button>
       </div>
       <Alert />
