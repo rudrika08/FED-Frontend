@@ -10,13 +10,13 @@ import { Alert, MicroLoading } from "../../../../microInteraction";
 function Hero({ ongoingEvents, eventName }) {
   const authCtx = useContext(AuthContext);
   const [alert, setAlert] = useState(null);
-  const [remainingTime, setRemainingTime] = useState("");
+  const [remainingTime, setRemainingTime] = useState(null);
   const [info, setInfo] = useState({});
   const [isRegistrationClosed, setIsRegistrationClosed] = useState(false);
   const navigate = useNavigate();
   const [isMicroLoading, setIsMicroLoading] = useState(false);
   const [relatedEventId, setRelatedEventId] = useState(null);
-  const [btnTxt, setBtnTxt] = useState("Loading...");
+  const [btnTxt, setBtnTxt] = useState(null);
 
   // Display alerts using Alert component
   useEffect(() => {
@@ -26,7 +26,6 @@ function Hero({ ongoingEvents, eventName }) {
       setAlert(null);
     }
   }, [alert]);
-
 
   const calculateRemainingTime = () => {
     try {
@@ -42,8 +41,7 @@ function Hero({ ongoingEvents, eventName }) {
       const timeDifference = differenceInMilliseconds(regStartDate, now);
 
       if (timeDifference <= 0) {
-        setRemainingTime(null);
-        setBtnTxt("REGISTER NOW");
+        setRemainingTime("REGISTER NOW");
         return;
       }
 
@@ -58,14 +56,13 @@ function Hero({ ongoingEvents, eventName }) {
           : `${hours}h ${minutes}m ${seconds}s`;
 
       setRemainingTime(remaining);
-      setBtnTxt(remaining);
+      
     } catch (error) {
       console.error("Date parsing error:", error);
       setRemainingTime(null);
     }
   };
 
-  
   useEffect(() => {
     const ongoingInfo = ongoingEvents.find(
       (e) => e.info.relatedEvent === "null"
@@ -130,7 +127,6 @@ function Hero({ ongoingEvents, eventName }) {
     }
   };
 
-
   useEffect(() => {
     const updateButtonText = () => {
       setIsMicroLoading(true);
@@ -138,16 +134,17 @@ function Hero({ ongoingEvents, eventName }) {
         if (isRegistrationClosed) {
           setBtnTxt("CLOSED");
         } else if (!authCtx.isLoggedIn) {
-          setBtnTxt(remainingTime || "REGISTER NOW");
+          setBtnTxt(remainingTime || <MicroLoading color="#38ccff" />);
         } else if (authCtx.user.access !== "USER") {
           setBtnTxt("ALREADY MEMBER");
         } else if (authCtx.user.regForm?.includes(relatedEventId)) {
           setBtnTxt("ALREADY REGISTERED");
         } else {
-          setBtnTxt(remainingTime || "REGISTER NOW");
+          setBtnTxt(remainingTime || <MicroLoading color="#2F0048" />);
         }
-        setIsMicroLoading(false);
+       
       });
+      setIsMicroLoading(false);
     };
 
     updateButtonText();
@@ -197,7 +194,7 @@ function Hero({ ongoingEvents, eventName }) {
             btnTxt === "CLOSED" ||
             btnTxt === "ALREADY REGISTERED" ||
             btnTxt === "ALREADY MEMBER" ||
-            btnTxt === `${remainingTime}`
+            btnTxt === `${remainingTime }` && btnTxt !== "REGISTER NOW"
           }
           style={{
             cursor:
@@ -205,12 +202,12 @@ function Hero({ ongoingEvents, eventName }) {
               btnTxt === "CLOSED" ||
               btnTxt === "ALREADY REGISTERED" ||
               btnTxt === "ALREADY MEMBER" ||
-              btnTxt === `${remainingTime}`
+              btnTxt === `${remainingTime}` && btnTxt !== "REGISTER NOW"
                 ? "not-allowed"
                 : "pointer",
           }}
         >
-          {isMicroLoading ? <MicroLoading color="#38ccff" /> : btnTxt}
+          {isMicroLoading ? <MicroLoading color="#2F0048" /> : btnTxt}
         </button>
       </div>
       <Alert />

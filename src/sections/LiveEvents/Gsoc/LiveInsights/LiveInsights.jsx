@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "../../../../context/AuthContext";
 import styles from "./styles/LiveInsights.module.scss";
-import { parse, differenceInMilliseconds } from "date-fns";
+import { parse, differenceInMilliseconds, set } from "date-fns";
 import { Alert, MicroLoading } from "../../../../microInteraction";
 
 function Card2({ img }) {
@@ -110,9 +110,7 @@ function LiveInsights({ ongoingEvents, isRegisteredInRelatedEvents }) {
       const timeDifference = differenceInMilliseconds(regStartDate, now);
 
       if (timeDifference <= 0) {
-        setRemainingTime(null);
-        setBtnTxt("Registration Closed");
-        setIsRegistrationClosed(true);
+        setRemainingTime("REGISTER NOW");
         return;
       }
 
@@ -179,6 +177,8 @@ function LiveInsights({ ongoingEvents, isRegisteredInRelatedEvents }) {
 
   useEffect(() => {
     const updateButtonText = () => {
+      setIsMicroLoading(true);  
+      setTimeout(() => {
       if (isRegistrationClosed) {
         setBtnTxt("CLOSED");
       } else if (!authCtx.isLoggedIn) {
@@ -188,11 +188,11 @@ function LiveInsights({ ongoingEvents, isRegisteredInRelatedEvents }) {
       } else if (authCtx.user.regForm?.includes(relatedEventId)) {
         setBtnTxt("ALREADY REGISTERED");
       } else {
-        setBtnTxt(remainingTime || "REGISTER NOW");
+        setBtnTxt(remainingTime || <MicroLoading color="#2F0048" />); 
       }
-
-      setIsMicroLoading(false);
-    };
+    });
+    setIsMicroLoading(false);
+  };
 
     updateButtonText();
   }, [
@@ -266,7 +266,7 @@ function LiveInsights({ ongoingEvents, isRegisteredInRelatedEvents }) {
                 : "pointer",
           }}
         >
-          {isMicroLoading ? <MicroLoading color="#38ccff" /> : btnTxt}
+          {isMicroLoading ? <MicroLoading color="#2F0048" /> : btnTxt}
         </button>
       </div>
       <Alert />
