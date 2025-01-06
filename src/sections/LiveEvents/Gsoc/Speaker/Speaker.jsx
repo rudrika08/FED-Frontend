@@ -34,12 +34,12 @@ function FedShow() {
   const calculateRemainingTime = () => {
     try {
       const regStartDate = parse(
-        "January 10, 2025, 05:00:00 PM",
+        "January 10, 2025, 07:00:00 PM",
         "MMMM dd, yyyy, h:mm:ss a",
         new Date()
       );
       const endTime = parse(
-        "January 10, 2025, 07:00:00 PM",
+        "January 10, 2025, 09:00:00 PM",
         "MMMM dd, yyyy, h:mm:ss a",
         new Date()
       );
@@ -47,11 +47,11 @@ function FedShow() {
 
       if (now >= endTime) {
         setRemainingTime(null);
-        setBtnTxt("SHOW ENDED");
+        setBtnTxt("ENDED");
         return;
       } else if (now >= regStartDate) {
         setRemainingTime(null);
-        setBtnTxt("SHOW IS LIVE");
+        setBtnTxt("LIVE");
         return;
       }
 
@@ -111,7 +111,7 @@ function FedShow() {
           >
             <img
               className={styles.imgLeft}
-              src="https://cdn.prod.website-files.com/66096a30ae498a9206aee6a0/67714a7cf881c31c8b690e4e_Group%201000002842.png"
+              src="https://cdn.prod.website-files.com/663d1907e337de23e83c30b2/677b6c158dd2c944d2ea4a85_updated%20ankit.png"
               alt="Hero"
               style={{
                 Width: "100%",
@@ -147,7 +147,7 @@ function FedShow() {
             <div className={styles.speaker}>
             <img
               className={styles.imgMobile}
-              src="https://cdn.prod.website-files.com/66096a30ae498a9206aee6a0/67714a7cf881c31c8b690e4e_Group%201000002842.png"
+              src="https://cdn.prod.website-files.com/663d1907e337de23e83c30b2/677b6c158dd2c944d2ea4a85_updated%20ankit.png"
               alt="Hero"
               
             />
