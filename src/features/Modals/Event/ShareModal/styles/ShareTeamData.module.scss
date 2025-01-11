@@ -26,6 +26,7 @@
   z-index: 1000;
   background: rgba(42, 42, 42, 0.9);
   border-radius: 10px;
+  gap: 0.7rem;
   padding: 2rem;
   position: relative;
   display: flex;
@@ -83,15 +84,15 @@
 }
 
 .shareTitle{
-  font-weight:bold;
-  margin-left:-5rem;
-  font-size:1.5rem;
+  font-weight:700;
+  // margin-left:-5rem;
+  font-size:1rem;
 }
 
 .registrationTitle{
   font-weight:bold;
-  margin-left:-9.5rem;
-  margin-top: -1.3rem;
+  // margin-left:-9.5rem;
+  margin-top: 1rem;
   font-size:1.5rem;
   background: linear-gradient(
     260deg,
@@ -114,14 +115,14 @@ background-clip: text;
   }
 
   .shareTitle{
-      font-size: 1.2rem;
-      margin-left: -6rem;
+      font-size: 0.8rem;
+      // margin-left: -6rem;
   }
 
   .registrationTitle{
-      font-size: 1.4rem;
-      margin-top: -20px;
-      margin-left: -2.5rem;
+      font-size: 1rem;
+      // margin-top: -20px;
+      // margin-left: -2.5rem;
   }
 
 
