@@ -19,7 +19,9 @@ import {
   ProfileView,
   ViewEvent,
   ViewMember,
+  CertificateForm,
 } from "./sections";
+
 
 // Lazy loading pages
 const Home = lazy(() => import("./pages/Home/Home"));
@@ -108,12 +110,17 @@ function App() {
                 />
                 {authCtx.user.access === "ADMIN" ? (
                   <Route path="events" element={<ViewEvent />} />
+                  
                 ) : (
                   <Route path="events" element={<EventsView />} />
                 )}
                 <Route path="Form" element={<NewForm />} />
+               
                 {authCtx.user.access === "ADMIN" && (
                   <Route path="members" element={<ViewMember />} />
+                )}
+                {authCtx.user.access === "ADMIN" && (
+                  <Route path="certificates" element={<CertificateForm />} />
                 )}
                 <Route
                   path="events/:eventId"
@@ -150,8 +157,9 @@ function App() {
               ]}
             />
 
+
             <Route
-              path="/Events/:eventId/Form"
+              path="/Events/:eventId/"
               element={[<Event />, <EventForm />]}
             />
 
