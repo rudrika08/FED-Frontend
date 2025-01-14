@@ -205,6 +205,7 @@ const Sidebar = ({ activepage, handleChange }) => {
         <div className={styles.menu}>
           {designation === "Admin" && renderAdminMenu()}
           {designation !== "Admin" && (
+            <>
             <div
               onClick={() => handleChange("events")}
               style={{ color: activepage === "events" ? "#FF8A00" : "white" }}
@@ -213,6 +214,25 @@ const Sidebar = ({ activepage, handleChange }) => {
                 <SlCalender size={17} style={{ marginRight: "10px" }} /> Event
               </NavLink>
             </div>
+            <div
+            onClick={() => handleChange("Certificate")}
+            style={{
+              background: activepage === "Certificate" ? "var(--primary)" : "transparent",
+              WebkitBackgroundClip: activepage === "Certificate" ? "text" : "initial",
+              backgroundClip: activepage === "Certificate" ? "text" : "initial",
+              color: activepage === "Certificate" ? "transparent" : "inherit",
+            }}
+          >
+            <GrCertificate
+              size={17}
+              style={{
+                color: activepage === "Certificate" ? "#FF8A00" : "white",
+                marginRight: "10px",
+              }}
+            />{" "}
+            <Link to={"/profile/certificates"}>Certificate</Link>
+          </div>
+          </>
           )}
           <div
             onClick={handleLogout}
