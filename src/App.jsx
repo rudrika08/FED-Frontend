@@ -130,7 +130,7 @@ function App() {
                 )}
 
                 {authCtx.user.access === "ADMIN" && (
-                  <Route path="createCertificates" element={<CertificatesForm />} />
+                  <Route path="events/createCertificates/:eventId" element={<CertificatesForm />} />
                 )}
 
                 <Route

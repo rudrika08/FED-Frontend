@@ -1,7 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import styles from "./styles/CertificatesView.module.scss";
 import AuthContext from "../../../../context/AuthContext";
-import eventsData from "../../../../data/FormData.json";
 import { Link } from "react-router-dom";
 import { api } from "../../../../services";
 import { ComponentLoading } from "../../../../microInteraction";
@@ -188,7 +187,7 @@ const Events = () => {
                           </Link>
                         </td>
                       )}
-                      {/* Add more table cells */}
+                      
                     </tr>
                   ))}
                 </tbody>
