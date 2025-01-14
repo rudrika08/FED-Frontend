@@ -6,8 +6,9 @@ export { default as AddMemberForm } from "./Admin/Form/MemberForm/AddMemberForm"
 export { default as NewForm } from "./Admin/Form/NewForm/NewForm";
 export { default as ViewEvent } from "./Admin/View/ViewEvent/VIewEvent";
 export { default as ViewMember } from "./Admin/View/ViewMember/ViewMember";
-export { default as CertificateForm } from "./Admin/Form/CertificateForm/CertificateForm";
+export { default as CertificatesForm } from "./Admin/Form/CertificatesForm/CertificatesForm";
 
 //General
 export { default as ProfileView } from "./General/ProfileView/ProfileView";
 export { default as EventsView } from "./General/EventsView/EventsView";
+export { default as CertificatesView } from "./General/CertificatesView/CertificatesView";

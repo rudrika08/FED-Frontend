@@ -1,10 +1,10 @@
 import React, { useState, useRef } from "react";
 import html2canvas from "html2canvas";
 import axios from "axios"; // Import axios for backend communication
-import styles from "../CertificateForm/styles/CertificateForm.module.scss";
+import styles from "../CertificatesForm/styles/CertificatesForm.module.scss";
 import CertificateManagement from "./CertificateManagement";
 
-const CertificateForm = () => {
+const CertificatesForm = () => {
   const [name, setName] = useState("Prityanshu Singh");
   const [x, setX] = useState(0.5); // X Position as a percentage (50%)
   const [y, setY] = useState(0.5); // Y Position as a percentage (50%)
@@ -55,6 +55,7 @@ const CertificateForm = () => {
 
   return (
     <div className={styles.container}>
+      <h1 className={styles.heading}>Event Name</h1>
       {/* Form Section */}
       <div className={styles.form}>
         <h1 className={styles.heading}>Certificate Form</h1>
@@ -169,4 +170,4 @@ const CertificateForm = () => {
   );
 };
 
-export default CertificateForm;
+export default CertificatesForm;

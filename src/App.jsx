@@ -19,7 +19,8 @@ import {
   ProfileView,
   ViewEvent,
   ViewMember,
-  CertificateForm,
+  CertificatesView,
+  CertificatesForm,
 } from "./sections";
 
 
@@ -112,16 +113,26 @@ function App() {
                   <Route path="events" element={<ViewEvent />} />
                   
                 ) : (
+                  <>
                   <Route path="events" element={<EventsView />} />
+                  <Route path="certificates" element={<CertificatesView />} />
+                  </>
                 )}
                 <Route path="Form" element={<NewForm />} />
                
                 {authCtx.user.access === "ADMIN" && (
                   <Route path="members" element={<ViewMember />} />
                 )}
+                {/* Certificates Route */}
+
                 {authCtx.user.access === "ADMIN" && (
-                  <Route path="certificates" element={<CertificateForm />} />
+                  <Route path="certificates" element={<CertificatesView />} />
                 )}
+
+                {authCtx.user.access === "ADMIN" && (
+                  <Route path="createCertificates" element={<CertificatesForm />} />
+                )}
+
                 <Route
                   path="events/:eventId"
                   element={[<EventModal onClosePath="/profile/events" />]}
@@ -139,6 +150,7 @@ function App() {
                       element={[<EventStats onClosePath="/profile/events" />]}
                     />
                   )}
+
               </Route>
             )}
             <Route
