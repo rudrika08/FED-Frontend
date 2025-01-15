@@ -2,9 +2,10 @@ import { useState } from "react";
 import { useParams } from "react-router-dom";
 import Input from "../../../../../components/Core/Input";
 import { Button } from "../../../../../components";
+import { api } from "../../../../../services";
 
 const CertificatesForm = () => {
-  const { eventId } = useParams();
+  const { eventId , eventTitle } = useParams();
   const [certificate, setCertificate] = useState(null);
   const [namePosition, setNamePosition] = useState({ x: 0, y: 0 });
   const [qrPosition, setQrPosition] = useState({ x: 0, y: 0 });
@@ -51,7 +52,7 @@ const CertificatesForm = () => {
   const handleSubmit = async () => {
     setLoading(true);
     try {
-      const response = await fetch(`/api/getCertificateByEventId`, { //doubt: have to check api here, for save and get
+      const response = await api.post(`/api/certificate/saveCertificate`, { //doubt: have to check api here, for save and get
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
