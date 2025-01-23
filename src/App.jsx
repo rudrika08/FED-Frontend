@@ -21,6 +21,7 @@ import {
   ViewMember,
   CertificatesView,
   CertificatesForm,
+  CertificatesPreview,
 } from "./sections";
 
 
@@ -131,6 +132,10 @@ function App() {
 
                 {authCtx.user.access === "ADMIN" && (
                   <Route path="events/createCertificates/:eventId" element={<CertificatesForm />} />
+                )}
+
+                {authCtx.user.access === "ADMIN" && (
+                  <Route path="events/viewCertificates/:eventId" element={<CertificatesPreview />} />
                 )}
 
                 <Route
