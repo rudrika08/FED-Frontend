@@ -13,6 +13,7 @@ const Events = () => {
   const viewPath = "/profile/Events";
   const analyticsPath = "/profile/events/Analytics";
   const createCertificatesPath = "/profile/events/createCertificates";
+  const viewCertificatesPath = "/profile/events/viewCertificates";
 
   const analyticsAccessRoles = [
     "PRESIDENT",
@@ -139,7 +140,7 @@ const Events = () => {
                       </td>
 
                       <td className={styles.mobilewidthtd}>
-                        <Link to={`${viewPath}/${event.id}`}>
+                        <Link to={`${viewCertificatesPath}/${event.id}`}>
                           <button
                             className={styles.viewButton}
                             style={{

@@ -179,12 +179,15 @@ const CertificatesForm = () => {
               onChange={handleQrPositionChange}
             />
           </div>
+          <div style={{ display: "flex", gap: "10px", width: "100%"}}>
           <Button onClick={handleSubmit} disabled={loading}>
             {loading ? "Saving..." : "Save Certificate"}
           </Button>
-          {message && <p style={{ marginTop: "10px", color: "green" }}>{message}</p>}
+          <Button Link to = {`/SendCertificate/${event.id}`}>Send</Button>
+          
         </div>
       </div>
+    </div>
     </div>
   );
 };
