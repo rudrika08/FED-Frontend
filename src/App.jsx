@@ -22,6 +22,7 @@ import {
   CertificatesView,
   CertificatesForm,
   CertificatesPreview,
+  SendCertificate,
 } from "./sections";
 
 
@@ -131,13 +132,17 @@ function App() {
                 )}
 
                 {authCtx.user.access === "ADMIN" && (
+                    <Route path="events/SendCertificate/:eventId" element={<SendCertificate />} />
+                 )}
+
+                {authCtx.user.access === "ADMIN" && (
                   <Route path="events/createCertificates/:eventId" element={<CertificatesForm />} />
                 )}
 
                 {authCtx.user.access === "ADMIN" && (
                   <Route path="events/viewCertificates/:eventId" element={<CertificatesPreview />} />
                 )}
-
+           
                 <Route
                   path="events/:eventId"
                   element={[<EventModal onClosePath="/profile/events" />]}

@@ -14,17 +14,19 @@ const CertificatesPreview = () => {
   const [recipientEmail, setRecipientEmail] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // Mock certificate schema
   const certificateSchema = {
-    img: "https://via.placeholder.com/600x300.png?text=Certificate+Preview",
+    img: "https://i.pinimg.com/736x/c9/2e/f3/c92ef3a93fdcf7acb6e43a511291ca97.jpghttps://via.placeholder.com/600x300.png?text=Certificate+Preview",
     title: "Certificate of Achievement",
     recipientName: "John Doe",
     description: "Awarded for outstanding performance.",
+    eventId: "event123",
+    x: 100,
+    y: 100,
     date: "2025-01-20",
     issuer: "ABC Organization",
   };
 
-  // Fetch certificate data from JSON schema
+ 
   useEffect(() => {
     const fetchCertificateData = async () => {
       setLoading(true);
@@ -33,11 +35,11 @@ const CertificatesPreview = () => {
         if (response.status === 200) {
           setCertificateData(response.data);
         } else {
-          setCertificateData(certificateSchema); // Use mock schema if API fails
+          setCertificateData(certificateSchema);
         }
       } catch (error) {
         console.error("Error fetching certificate data:", error);
-        setCertificateData(certificateSchema); // Use mock schema if API fails
+        setCertificateData(certificateSchema);
       } finally {
         setLoading(false);
       }
@@ -54,7 +56,6 @@ const CertificatesPreview = () => {
   };
 
   const handleCreateNow = () => {
-    // Redirect to the certificate creation page
     navigate(`/certificate/create/${eventId}`);
   };
 
@@ -75,7 +76,7 @@ const CertificatesPreview = () => {
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            backgroundImage: certificateData?.img ? `url(${certificateData.img})` : "none",
+            backgroundImage: certificateSchema?.img ? `url(${certificateSchema.img})` : "none",
             backgroundSize: "contain",
             backgroundRepeat: "no-repeat",
             backgroundPosition: "center",

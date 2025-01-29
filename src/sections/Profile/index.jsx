@@ -8,6 +8,7 @@ export { default as ViewEvent } from "./Admin/View/ViewEvent/VIewEvent";
 export { default as ViewMember } from "./Admin/View/ViewMember/ViewMember";
 export { default as CertificatesForm } from "./Admin/Form/CertificatesForm/CertificatesForm";
 export {default as CertificatesPreview} from "./Admin/View/CertificatePreview/CertificatePreview";
+export {default as SendCertificate} from "./Admin/Form/SendCertificate";
 
 //General
 export { default as ProfileView } from "./General/ProfileView/ProfileView";
