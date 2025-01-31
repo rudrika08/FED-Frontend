@@ -38,7 +38,7 @@ const CertificatesForm = () => {
     setFields(fields.filter((_, i) => i !== index));
   };
 
-  const handleSubmit = async () => {
+  const handleRefresh = async () => {
     if (!certificateFile) {
       setMessage("Please upload a certificate image first.");
       return;
@@ -123,7 +123,7 @@ const CertificatesForm = () => {
             ))}
           </div>
 
-          <Button onClick={handleSubmit} disabled={loading}>{loading ? "Updating..." : "Refresh"}</Button>
+          <Button onClick={handleRefresh} disabled={loading}>{loading ? "Updating..." : "Refresh"}</Button>
           <Button onClick={handleSave} disabled={loading} style={{ backgroundColor: "#FF8A00", color: "white" }}>Save Certificate</Button>
           {message && <p style={{ marginTop: "10px", color: "green" }}>{message}</p>}
         </div>
