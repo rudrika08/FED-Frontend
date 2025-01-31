@@ -5,17 +5,17 @@ const accessOrCreateEventByFormId = async (formId) => {
   try {
     let res = await api.post("/api/certificate/getEventByFormId", { formId });
 
-
     if (res.status !== 200) {
-
-      const form = await api.get("/api/form/getAllForms", { params: { id: formId } });
-      console.log(form);
+      const form = await api.get("/api/form/getAllForms", {
+        params: { id: formId },
+      });
+      // console.log(form);
       if (form.status === 200) {
         res = await api.post("/api/certificate/createOrganisationEvent", {
           name: form.data.events.info.eventTitle,
           description: form.data.events.info.eventdescription,
           organisationId: import.meta.env.VITE_CERT_ORG,
-          formId: form.data.id,
+          formId: form.data.events.id,
         });
       }
     }
