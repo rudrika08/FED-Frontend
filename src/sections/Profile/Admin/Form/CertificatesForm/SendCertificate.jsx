@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { Button, Input } from "../../../../components";
-import { api } from "../../../../services";
+import { Button, Input } from "../../../../../components";
+import { api } from "../../../../../services";
 
 const Checkbox = ({ id, checked, onCheckedChange }) => {
     return (

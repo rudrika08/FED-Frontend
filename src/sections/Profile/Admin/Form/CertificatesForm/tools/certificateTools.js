@@ -1,32 +1,25 @@
-import axios from "axios";
+import { api } from "../../../../../../services";
 
-//this will give you the form id needed for accesing and using all the certificate routes
+// This function retrieves or creates an event based on the provided formId
 const accessOrCreateEventByFormId = async (formId) => {
   try {
-    let res;
-    res = await axios.post(
-      `${import.meta.env.VITE_API_URL}/api/certificate/getEventByFormId`,
-      { formId }
-    );
+    let res = await api.post("/api/certificate/getEventByFormId", { formId });
+
+
     if (res.status !== 200) {
-      const form = await axios.get(
-        `${import.meta.env.VITE_API_URL}/api/form/getAllForms`,
-        { params: { id: formId } }
-      );
+
+      const form = await api.get("/api/form/getAllForms", { params: { id: formId } });
+      console.log(form);
       if (form.status === 200) {
-        res = await axios.post(
-          `${
-            import.meta.env.VITE_API_URL
-          }/api/certificate/createOrganisationEvent`,
-          {
-            name: form.data.info.eventTitle,
-            description: form.data.info.eventdescription,
-            organisationId: import.meta.env.VITE_CERT_ORG,
-            formId: form.data.id,
-          }
-        );
+        res = await api.post("/api/certificate/createOrganisationEvent", {
+          name: form.data.events.info.eventTitle,
+          description: form.data.events.info.eventdescription,
+          organisationId: import.meta.env.VITE_CERT_ORG,
+          formId: form.data.id,
+        });
       }
     }
+
     return res.data;
   } catch (error) {
     console.error("Error fetching event by form ID:", error);
