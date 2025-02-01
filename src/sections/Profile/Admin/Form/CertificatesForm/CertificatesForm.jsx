@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Input from "../../../../../components/Core/Input";
 import { Button } from "../../../../../components";
@@ -7,6 +7,7 @@ import {
   accessOrCreateEventByFormId,
   getCertificatePreview,
 } from "./tools/certificateTools";
+import { Alert, MicroLoading } from "../../../../../microInteraction";
 
 const CertificatesForm = () => {
   const { eventId } = useParams();
@@ -14,21 +15,44 @@ const CertificatesForm = () => {
   const [certificateFile, setCertificateFile] = useState(null);
   const [fields, setFields] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState("");
+  const [previewLoading, setPreviewLoading] = useState(false);
+  const [saveLoading, setSaveLoading] = useState(false);
+  const [alert, setAlert] = useState(null);
   const [responseImg, setResponseImg] = useState("");
+
+  useEffect(() => {
+    if (alert) {
+      Alert(alert);
+      setAlert(null);
+    }
+  }, [alert]);
 
   const handleCertificateChange = (e) => {
     const file = e.target.files[0];
     if (file) {
+      if (!file.type.startsWith('image/')) {
+        setAlert({
+          type: "error",
+          message: "Please upload a valid image file",
+          position: "top-right",
+          duration: 3000
+        });
+        return;
+      }
       const reader = new FileReader();
-      reader.onload = () => setCertificate(reader.result);
+      reader.onload = () => {
+        setCertificate(reader.result);
+        setAlert({
+          type: "success",
+          message: "Certificate image uploaded successfully",
+          position: "top-right",
+          duration: 2000
+        });
+      };
       setCertificateFile(file);
       reader.readAsDataURL(file);
     }
   };
-
-  // console.log(accessOrCreateEventByFormId(eventId));
-  console.log(getCertificatePreview(eventId));
 
   const handleFieldChange = (index, key, value) => {
     const updatedFields = [...fields];
@@ -48,18 +72,36 @@ const CertificatesForm = () => {
         minimized: false,
       },
     ]);
+    setAlert({
+      type: "info",
+      message: "New field added",
+      position: "top-right",
+      duration: 2000
+    });
   };
 
   const removeField = (index) => {
     setFields(fields.filter((_, i) => i !== index));
+    setAlert({
+      type: "info",
+      message: "Field removed",
+      position: "top-right",
+      duration: 2000
+    });
   };
 
   const handleRefresh = async () => {
     if (!certificateFile) {
-      setMessage("Please upload a certificate image first.");
+      setAlert({
+        type: "warning",
+        message: "Please upload a certificate image first",
+        position: "top-right",
+        duration: 3000
+      });
       return;
     }
-    setLoading(true);
+
+    setPreviewLoading(true);
     try {
       const formData = new FormData();
       formData.append("image", certificateFile);
@@ -72,47 +114,72 @@ const CertificatesForm = () => {
         throw new Error(`API error: ${response.statusText}`);
       }
       setResponseImg(response.data.imageSrc);
-      setMessage(response.data.message || "Certificate updated successfully");
+      setAlert({
+        type: "success",
+        message: "Preview updated successfully",
+        position: "top-right",
+        duration: 2000
+      });
     } catch (error) {
-      setMessage("Error updating certificate. Please try again.");
+      setAlert({
+        type: "error",
+        message: "Error updating preview. Please try again",
+        position: "top-right",
+        duration: 3000
+      });
     } finally {
-      setLoading(false);
+      setPreviewLoading(false);
     }
   };
 
   const handleSave = async () => {
     if (!certificateFile) {
-      setMessage("Please upload a certificate image first.");
+      setAlert({
+        type: "warning",
+        message: "Please upload a certificate image first",
+        position: "top-right",
+        duration: 3000
+      });
       return;
     }
-    setLoading(true);
+
+    setSaveLoading(true);
     try {
       const eventData = await accessOrCreateEventByFormId(eventId);
-      // console.log(eventData, "eventData in handleSave");
       if (!eventData || !eventData.id) {
         throw new Error("Failed to retrieve or create event.");
       }
+
       const formData = new FormData();
       formData.append("image", certificateFile);
       formData.append("eventId", eventData.id);
       formData.append("fields", JSON.stringify(fields));
+      
       const response = await api.post(
         "/api/certificate/addCertificateTemplate",
         formData
       );
-      // console.log(response, "formdata response in handleSave");
+
       if (response.status !== 200) {
         throw new Error(`API error: ${response.statusText}`);
       }
-      // setResponseImg(response.data.imageSrc);
-      setMessage(
-        response.data.message || "Certificate template saved successfully"
-      );
+
+      setAlert({
+        type: "success",
+        message: "Certificate template saved successfully",
+        position: "top-right",
+        duration: 3000
+      });
     } catch (error) {
       console.error("Error saving certificate template:", error);
-      setMessage("Error saving certificate template. Please try again.");
+      setAlert({
+        type: "error",
+        message: "Error saving certificate template. Please try again",
+        position: "top-right",
+        duration: 3000
+      });
     } finally {
-      setLoading(false);
+      setSaveLoading(false);
     }
   };
 
@@ -136,11 +203,26 @@ const CertificatesForm = () => {
             backgroundSize: "contain",
             backgroundRepeat: "no-repeat",
             backgroundPosition: "center",
+            position: "relative",
           }}
-        ></div>
+        >
+          {loading && (
+            <div style={{ 
+              position: "absolute", 
+              top: "50%", 
+              left: "50%", 
+              transform: "translate(-50%, -50%)",
+              backgroundColor: "rgba(255, 255, 255, 0.8)",
+              padding: "20px",
+              borderRadius: "5px"
+            }}>
+              <MicroLoading />
+            </div>
+          )}
+        </div>
 
         <div style={{ width: "30%" }}>
-          <input type="file" onChange={handleCertificateChange} />
+          <input type="file" onChange={handleCertificateChange} accept="image/*" />
           <Button onClick={addField}>+ Add Field</Button>
 
           <div
@@ -245,19 +327,21 @@ const CertificatesForm = () => {
             ))}
           </div>
 
-          <Button onClick={handleRefresh} disabled={loading}>
-            {loading ? "Updating..." : "Refresh"}
-          </Button>
-          <Button
-            onClick={handleSave}
-            disabled={loading}
-            style={{ backgroundColor: "#FF8A00", color: "white" }}
-          >
-            Save Certificate
-          </Button>
-          {message && (
-            <p style={{ marginTop: "10px", color: "green" }}>{message}</p>
-          )}
+          <div style={{ display: "flex", gap: "10px", marginTop: "10px" }}>
+            <Button 
+              onClick={handleRefresh} 
+              disabled={previewLoading || saveLoading}
+            >
+              {previewLoading ? <MicroLoading /> : "Refresh"}
+            </Button>
+            <Button
+              onClick={handleSave}
+              disabled={previewLoading || saveLoading}
+              style={{ backgroundColor: "#FF8A00", color: "white" }}
+            >
+              {saveLoading ? <MicroLoading /> : "Save Certificate"}
+            </Button>
+          </div>
         </div>
       </div>
     </div>
