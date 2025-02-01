@@ -49,4 +49,19 @@ const getCertificatePreview = async (formId) => {
   }
 };
 
+// const sendBatchMail = async () => {
+//   try {
+//     const response = await api.post("/api/certificate/sendBatchMails", {
+//       batchSize: 10,
+//       formId: "your-form-id",
+//       subject: "Your email subject",
+//       htmlContent: "Your email HTML content"
+//     });
+
+//     console.log(response.data);
+//   } catch (error) {
+//     console.error("Error sending batch mail:", error);
+//   }
+// }; 
+
 export { accessOrCreateEventByFormId, getCertificatePreview };
