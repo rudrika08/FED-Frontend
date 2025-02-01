@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { Button, Input } from "../../../../../components";
 import { api } from "../../../../../services";
 import { getCertificatePreview, sendBatchMail } from "./tools/certificateTools";
+import { object } from "prop-types";
 
 const Checkbox = ({ id, checked, onCheckedChange }) => {
   return (
@@ -149,12 +150,13 @@ const SendCertificate = () => {
               border: "1px solid #ccc",
               borderRadius: 10,
               height: 300,
+              objectFit: "cover",
             }}
           >
             <img
               src={certificatePreview}
               alt="Certificate Preview"
-              style={{ width: "50%", height: "auto", borderRadius: 10 }}
+              style={{ width: "100%", height: "auto", borderRadius: 10 }}
             />
           </div>
           <div
@@ -186,7 +188,7 @@ const SendCertificate = () => {
                 borderRadius: "5px",
                 padding: "10px",
                 marginTop: "10px",
-                                marginLeft: "8px",
+                marginLeft: "8px",
               }}
             >
               {loading ? (
@@ -222,7 +224,7 @@ const SendCertificate = () => {
             borderRadius: 10,
             maxHeight: "330px",
             overflowY: "auto",
-                        width: "50%",
+            width: "50%",
           }}
         >
           <h3 style={{marginLeft: "5px"}}>Checked Attendees</h3>
@@ -241,8 +243,9 @@ const SendCertificate = () => {
               borderRadius: "5px",
               padding: "10px",
               marginTop: "10px",
-                            marginLeft: "8px",
-                            width: "100%",
+              marginLeft: "8px" ,
+              width: "100%",
+              padding: "10px",
             
             }}
           >
