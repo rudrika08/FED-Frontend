@@ -4,6 +4,7 @@ import AuthContext from "../../../../context/AuthContext";
 import { Link } from "react-router-dom";
 import { api } from "../../../../services";
 import { ComponentLoading } from "../../../../microInteraction";
+import { Send } from "lucide-react";
 
 const Events = () => {
   const authCtx = useContext(AuthContext);
@@ -11,6 +12,7 @@ const Events = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const viewPath = "/profile/Events";
+  const SendCertificatePath = "/profile/events/SendCertificate";
   const analyticsPath = "/profile/events/Analytics";
   const createCertificatesPath = "/profile/events/createCertificates";
   const viewCertificatesPath = "/profile/events/viewCertificates";
@@ -156,7 +158,7 @@ const Events = () => {
                       </td>
                       {(analyticsAccessRoles.includes(authCtx.user.access) || authCtx.user.email == "srex@fedkiit.com") && (
                         <td className={styles.mobilewidthtd}>
-                          <Link to={`${analyticsPath}/${event.id}`}>
+                          <Link to={`${SendCertificatePath}/${event.id}`}>
                             <button
                               className={styles.viewButton}
                               style={{

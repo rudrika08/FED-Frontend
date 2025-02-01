@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { Button, Input } from "../../../../../components";
 import { api } from "../../../../../services";
 import { getCertificatePreview, sendBatchMail } from "./tools/certificateTools";
+import { object } from "prop-types";
 
 const Checkbox = ({ id, checked, onCheckedChange }) => {
   return (
@@ -149,12 +150,13 @@ const SendCertificate = () => {
               border: "1px solid #ccc",
               borderRadius: 10,
               height: 300,
+              objectFit: "cover",
             }}
           >
             <img
               src={certificatePreview}
               alt="Certificate Preview"
-              style={{ width: "50%", height: "auto", borderRadius: 10 }}
+              style={{ width: "100%", height: "auto", borderRadius: 10 }}
             />
           </div>
           <div
@@ -166,7 +168,7 @@ const SendCertificate = () => {
               height: 300,
             }}
           >
-            <h3>Unchecked Attendees</h3>
+            <h3 style={{marginLeft: "5px"}}>Unchecked Attendees</h3>
             <Input
               type="text"
               placeholder="Filter Unchecked"
@@ -174,7 +176,7 @@ const SendCertificate = () => {
               onChange={(e) => setUncheckedFilterText(e.target.value)}
               style={{ width: "100%", marginTop: "-10px" }}
             />
-            <div style={{ display: "flex", gap: 10, margin: "10px 0" }}>
+            <div style={{ display: "flex", gap: 10, marginTop: -10,marginLeft: "5px" }}>
               <Button onClick={handleSelectAllUnchecked}>Select All</Button>
               <Button onClick={handleDeselectAllUnchecked}>Deselect All</Button>
             </div>
@@ -186,6 +188,7 @@ const SendCertificate = () => {
                 borderRadius: "5px",
                 padding: "10px",
                 marginTop: "10px",
+                marginLeft: "8px",
               }}
             >
               {loading ? (
@@ -221,9 +224,10 @@ const SendCertificate = () => {
             borderRadius: 10,
             maxHeight: "330px",
             overflowY: "auto",
+            width: "50%",
           }}
         >
-          <h3>Checked Attendees</h3>
+          <h3 style={{marginLeft: "5px"}}>Checked Attendees</h3>
           <Input
             type="text"
             placeholder="Filter Checked"
@@ -239,6 +243,10 @@ const SendCertificate = () => {
               borderRadius: "5px",
               padding: "10px",
               marginTop: "10px",
+              marginLeft: "8px" ,
+              width: "100%",
+              padding: "10px",
+            
             }}
           >
             {checkedAttendees.length > 0 ? (
@@ -250,7 +258,7 @@ const SendCertificate = () => {
             )}
           </div>
 
-          <h3>Recipient Email</h3>
+          <h3 style={{marginLeft: "5px",marginTop: "10px"}}>Recipient Email</h3>
           <Input
             type="email"
             placeholder="Emails will be added here"
@@ -259,7 +267,7 @@ const SendCertificate = () => {
             style={{ width: "100%" }}
           />
 
-          <h3>Subject</h3>
+          <h3 style={{marginLeft: "5px"}}>Subject</h3>
           <Input
             type="text"
             placeholder="Subject"
@@ -268,30 +276,36 @@ const SendCertificate = () => {
             style={{ width: "100%" }}
           />
 
-          <h3>Description</h3>
-          <textarea
-            placeholder="Description"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            style={{
-              width: "100%",
-              height: 80,
-              padding: 10,
-              borderRadius: 5,
-              border: "1px solid #ccc",
-            }}
-          />
+                    <h3 style={{marginLeft: "5px"}}>Description</h3>
+                    <Input
+                        type="text"
+                        placeholder="Description"
+                        value={description}
+                        onChange={(e) => setDescription(e.target.value)}
+                        style={{
+                            width: "100%",
+                            height: 80,
+                            marginTop: -10,
+                        }}
+                    />
 
-          {/* <h3>Mail Frequency</h3>
-                    <Input type="number" placeholder="Set mail frequency" value={mailFrequency} onChange={(e) => setMailFrequency(e.target.value)} style={{ width: "100%" }} /> */}
-
-          <Button onClick={handleSendBatchMail}>Send Mail</Button>
-          {successMessage && <p style={{ color: "green" }}>{successMessage}</p>}
-          {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
+                    <h3 style={{marginLeft: "5px"}}>Mail Frequency</h3>
+                    <Input
+                        type="number"
+                        placeholder="Set mail frequency"
+                        value={mailFrequency}
+                        onChange={(e) => setMailFrequency(e.target.value)}
+                        style={{ marginTop: -10, width: "100%" }}
+                    />
+                    <div style={{ display: "flex", gap: 10, marginTop: -10,marginLeft: "5px" }}>
+                    <Button onClick={() => console.log("Sending mail...")}>Test Mail</Button>
+                    <Button onClick={() => console.log("Sending mail...")}>Send Mail</Button>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  );
+    );
+
 };
 
 export default SendCertificate;
