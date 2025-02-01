@@ -19,7 +19,7 @@ const accessOrCreateEventByFormId = async (formId) => {
         });
       }
     }
-
+    console.log(res.data);
     return res.data;
   } catch (error) {
     console.error("Error fetching event by form ID:", error);

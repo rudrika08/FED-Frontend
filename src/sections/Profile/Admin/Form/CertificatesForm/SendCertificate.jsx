@@ -32,9 +32,7 @@ const SendCertificate = () => {
   const [uncheckedFilterText, setUncheckedFilterText] = useState("");
   const [checkedFilterText, setCheckedFilterText] = useState("");
   const [fileUploading, setFileUploading] = useState(false);
-  const [certificatePreview, setCertificatePreview] = useState(
-    "https://via.placeholder.com/600x300/ff6347/ffffff?text=Certificate+Preview"
-  );
+  const [certificatePreview, setCertificatePreview] = useState("Loading...");
   const [alert, setAlert] = useState(null);
 
   useEffect(() => {
