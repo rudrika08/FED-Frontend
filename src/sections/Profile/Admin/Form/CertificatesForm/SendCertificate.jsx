@@ -98,7 +98,7 @@ const SendCertificate = () => {
                         />
                     </div>
                     <div style={{ flex: 1, padding: 20, border: "1px solid #ccc", borderRadius: 10, height: 300 }}>
-                        <h3>Unchecked Attendees</h3>
+                        <h3 style={{marginLeft: "5px"}}>Unchecked Attendees</h3>
                         <Input
                             style={{ width: "100%", marginTop: "-10px" }}
                             type="text"
@@ -106,7 +106,7 @@ const SendCertificate = () => {
                             value={uncheckedFilterText}
                             onChange={(e) => setUncheckedFilterText(e.target.value)}
                         />
-                        <div style={{ display: "flex", gap: 10, margin: "10px 0" }}>
+                        <div style={{ display: "flex", gap: 10, marginTop: -10,marginLeft: "5px" }}>
                             <Button onClick={handleSelectAllUnchecked}>Select All</Button>
                             <Button onClick={handleDeselectAllUnchecked}>Deselect All</Button>
                         </div>
@@ -118,6 +118,7 @@ const SendCertificate = () => {
                                 borderRadius: "5px",
                                 padding: "10px",
                                 marginTop: "10px",
+                                marginLeft: "8px",
                             }}
                         >
                             {loading ? (
@@ -147,10 +148,11 @@ const SendCertificate = () => {
                         borderRadius: 10,
                         maxHeight: "330px",
                         overflowY: "auto",
+                        width: "50%",
 
                     }}
                 >
-                    <h3>Checked Attendees</h3>
+                    <h3 style={{marginLeft: "5px"}}>Checked Attendees</h3>
                     <Input
                         style={{ width: "100%", marginTop: "-10px" }}
                         type="text"
@@ -166,6 +168,9 @@ const SendCertificate = () => {
                             borderRadius: "5px",
                             padding: "10px",
                             marginTop: "10px",
+                            marginLeft: "8px",
+                            width: "100%",
+            
                         }}
                     >
                         {checkedAttendees.length > 0 ? (
@@ -179,7 +184,7 @@ const SendCertificate = () => {
                         )}
                     </div>
 
-                    <h3>Recipient Email</h3>
+                    <h3 style={{marginLeft: "5px",marginTop: "10px"}}>Recipient Email</h3>
                     <Input
                         type="email"
                         placeholder="Emails will be added here"
@@ -188,7 +193,7 @@ const SendCertificate = () => {
                         style={{ marginTop: -10, flex: 1, width: "100%" }}
                     />
 
-                    <h3>Subject</h3>
+                    <h3 style={{marginLeft: "5px"}}>Subject</h3>
                     <Input
                         type="text"
                         placeholder="Subject"
@@ -197,23 +202,20 @@ const SendCertificate = () => {
                         style={{ marginTop: -10, width: "100%" }}
                     />
 
-                    <h3>Description</h3>
-                    <textarea
+                    <h3 style={{marginLeft: "5px"}}>Description</h3>
+                    <Input
+                        type="text"
                         placeholder="Description"
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
                         style={{
                             width: "100%",
                             height: 80,
-                            marginTop: 10,
-                            padding: 10,
-                            borderRadius: 5,
-                            border: "1px solid #ccc",
-                            background: "Transparent",
+                            marginTop: -10,
                         }}
                     />
 
-                    <h3>Mail Frequency</h3>
+                    <h3 style={{marginLeft: "5px"}}>Mail Frequency</h3>
                     <Input
                         type="number"
                         placeholder="Set mail frequency"
@@ -221,8 +223,10 @@ const SendCertificate = () => {
                         onChange={(e) => setMailFrequency(e.target.value)}
                         style={{ marginTop: -10, width: "100%" }}
                     />
-
+                    <div style={{ display: "flex", gap: 10, marginTop: -10,marginLeft: "5px" }}>
+                    <Button onClick={() => console.log("Sending mail...")}>Test Mail</Button>
                     <Button onClick={() => console.log("Sending mail...")}>Send Mail</Button>
+                    </div>
                 </div>
             </div>
         </div>
