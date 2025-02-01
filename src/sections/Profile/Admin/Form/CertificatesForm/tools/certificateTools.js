@@ -26,4 +26,27 @@ const accessOrCreateEventByFormId = async (formId) => {
   }
 };
 
-export { accessOrCreateEventByFormId };
+const getCertificatePreview = async (formId) => {
+  try {
+    //1 get event
+    const event = await accessOrCreateEventByFormId(formId);
+    console.log(event);
+    //get certifcate template src from event and fields
+    const certificate = event.certificates[0].template;
+    const fields = event.certificates[0].fields;
+
+    //create a dummy certificate
+
+    const cert = await api.post("/api/certificate/dummyCertificate", {
+      imageLink: certificate,
+      fields,
+    });
+
+    console.log(cert.data.imageSrc);
+    return cert.data.imageSrc;
+  } catch (error) {
+    console.error("Error fetching certificate preview:", error);
+  }
+};
+
+export { accessOrCreateEventByFormId, getCertificatePreview };

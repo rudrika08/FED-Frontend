@@ -3,7 +3,10 @@ import { useParams } from "react-router-dom";
 import Input from "../../../../../components/Core/Input";
 import { Button } from "../../../../../components";
 import { api } from "../../../../../services";
-import { accessOrCreateEventByFormId } from "./tools/certificateTools";
+import {
+  accessOrCreateEventByFormId,
+  getCertificatePreview,
+} from "./tools/certificateTools";
 
 const CertificatesForm = () => {
   const { eventId } = useParams();
@@ -25,6 +28,7 @@ const CertificatesForm = () => {
   };
 
   // console.log(accessOrCreateEventByFormId(eventId));
+  console.log(getCertificatePreview(eventId));
 
   const handleFieldChange = (index, key, value) => {
     const updatedFields = [...fields];
