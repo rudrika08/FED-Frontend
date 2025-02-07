@@ -3,8 +3,8 @@ import { useParams } from "react-router-dom";
 import { Button, Input } from "../../../../../components";
 import { api } from "../../../../../services";
 import * as XLSX from "xlsx";
+import { getCertificatePreview, sendBatchMail } from "./tools/certificateTools";
 import { Alert, MicroLoading } from "../../../../../microInteraction";
-import { getCertificatePreview, accessOrCreateEventByFormId } from "../CertificatesForm/tools/certificateTools";
 
 const Checkbox = ({ id, checked, onCheckedChange }) => {
   return (
@@ -35,7 +35,6 @@ const SendCertificate = () => {
   const [certificatePreview, setCertificatePreview] = useState("Loading...");
   const [alert, setAlert] = useState(null);
 
-  // Fetch certificate preview on component mount
   useEffect(() => {
     const fetchCertificatePreview = async () => {
       setPreviewLoading(true);
@@ -58,6 +57,7 @@ const SendCertificate = () => {
 
     fetchCertificatePreview();
   }, [eventId]);
+
   const handleFileUpload = async (event) => {
     const file = event.target.files[0];
     if (!file) return;
@@ -171,7 +171,6 @@ const SendCertificate = () => {
     });
   };
 
-  // Update recipient email string when checked attendees change
   useEffect(() => {
     setRecipientEmail(
       checkedAttendees.map((attendee) => attendee.email).join(", ")
@@ -207,32 +206,24 @@ const SendCertificate = () => {
 
     setSendingMail(true);
     try {
-        const eventData = await accessOrCreateEventByFormId(eventId);
-      const response = await api.post("/api/certificate/sendBatchMails", {
-        formId: eventData.Id,
-        batchSize: parseInt(mailFrequency, 10),
+      await sendBatchMail({
+        batchSize: mailFrequency,
+        formId: eventId,
         subject: subject,
         htmlContent: description,
-        recipients: checkedAttendees.map(attendee => ({
-          email: attendee.email,
-          name: attendee.name || ''
-        }))
+        recipients: checkedAttendees,
       });
 
-      if (response.status === 200) {
-        setAlert({
-          type: "success",
-          message: "Certificates sent successfully!",
-          position: "top-right",
-          duration: 3000,
-        });
-      } else {
-        throw new Error(response.data?.error || 'Failed to send certificates');
-      }
+      setAlert({
+        type: "success",
+        message: "Certificates sent successfully!",
+        position: "top-right",
+        duration: 3000,
+      });
     } catch (error) {
       setAlert({
         type: "error",
-        message: `Failed to send certificates: ${error.message}`,
+        message: "Failed to send certificates: " + error.message,
         position: "top-right",
         duration: 3000,
       });
@@ -254,31 +245,24 @@ const SendCertificate = () => {
 
     setSendingMail(true);
     try {
-      const response = await api.post("/api/certificate/sendBatchMails", {
-        formId: eventId,
+      await sendBatchMail({
         batchSize: 1,
+        formId: eventId,
         subject: `[TEST] ${subject}`,
         htmlContent: description,
-        recipients: [{
-          email: checkedAttendees[0].email,
-          name: checkedAttendees[0].name || ''
-        }]
+        recipients: [checkedAttendees[0]],
       });
 
-      if (response.status === 200) {
-        setAlert({
-          type: "success",
-          message: "Test mail sent successfully!",
-          position: "top-right",
-          duration: 3000,
-        });
-      } else {
-        throw new Error(response.data?.error || 'Failed to send test mail');
-      }
+      setAlert({
+        type: "success",
+        message: "Test mail sent successfully!",
+        position: "top-right",
+        duration: 3000,
+      });
     } catch (error) {
       setAlert({
         type: "error",
-        message: `Failed to send test mail: ${error.message}`,
+        message: "Failed to send test mail: " + error.message,
         position: "top-right",
         duration: 3000,
       });
@@ -288,40 +272,10 @@ const SendCertificate = () => {
   };
 
   return (
-    <div style={{ marginLeft: "5%", marginRight: "5%" }}>
+    <div style={{ marginLeft: "5%", marginRight: "5%" ,marginTop:"30px"}}>
+      <h1 style={{ textAlign: "center", marginBottom: "30px", marginTop: "-30px" }}>Send <span style={{ color: "#FF8A00" }}>Certificate</span></h1>
       <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
-        {/* File Upload Section */}
-        <div style={{ marginBottom: 20 }}>
-          <input
-            type="file"
-            accept=".xlsx,.xls,.csv"
-            onChange={handleFileUpload}
-            style={{ display: "none" }}
-            id="excel-upload"
-            onClick={(e) => {
-              e.target.value = null;
-            }}
-          />
-          <label htmlFor="excel-upload">
-            <Button
-              as="span"
-              disabled={fileUploading}
-              style={{ cursor: "pointer" }}
-              onClick={() => {
-                document.getElementById("excel-upload").click();
-              }}
-            >
-              {fileUploading ? <MicroLoading /> : "Upload Excel/CSV"}
-            </Button>
-          </label>
-          <span style={{ marginLeft: 10, color: "#666" }}>
-            Upload Excel/CSV file containing attendee details
-          </span>
-        </div>
-
-        {/* Preview and Attendees Section */}
         <div style={{ display: "flex", gap: 20 }}>
-          {/* Certificate Preview */}
           <div
             style={{
               flex: 1,
@@ -352,14 +306,13 @@ const SendCertificate = () => {
               />
             )}
           </div>
-
-          {/* Unchecked Attendees */}
           <div
             style={{
               flex: 1,
               padding: 20,
               border: "1px solid #ccc",
               borderRadius: 10,
+              overflowY: "auto",
               height: 300,
             }}
           >
@@ -379,6 +332,7 @@ const SendCertificate = () => {
                 marginLeft: "5px",
               }}
             >
+              
               <Button onClick={handleSelectAllUnchecked}>Select All</Button>
               <Button onClick={handleDeselectAllUnchecked}>Deselect All</Button>
             </div>
@@ -432,10 +386,37 @@ const SendCertificate = () => {
                 <p>No unchecked attendees.</p>
               )}
             </div>
+            <div style={{ marginBottom: 20 }}>
+          <input
+            type="file"
+            accept=".xlsx,.xls,.csv"
+            onChange={handleFileUpload}
+            style={{ display: "none" }}
+            id="excel-upload"
+            onClick={(e) => {
+            e.target.value = null;
+            }}
+          />
+          <label htmlFor="excel-upload">
+            <Button
+              as="span"
+              disabled={fileUploading}
+              style={{ cursor: "pointer",marginLeft:"6px" }}
+              onClick={() => {
+                document.getElementById("excel-upload").click();
+              }}
+            >
+              {fileUploading ? <MicroLoading /> : "Upload Excel/CSV"}
+            </Button>
+          </label>
+          <span style={{ marginLeft: 9, color: "#666" }}>
+            Upload Excel/CSV file containing attendee details
+          </span>
+        </div>
           </div>
+          
         </div>
 
-        {/* Email Configuration Section */}
         <div
           style={{
             padding: 20,
@@ -462,7 +443,7 @@ const SendCertificate = () => {
               borderRadius: "5px",
               padding: "10px",
               marginTop: "10px",
-              marginLeft: "8px",
+              marginLeft: "7px",
               width: "100%",
             }}
           >
@@ -487,7 +468,7 @@ const SendCertificate = () => {
             placeholder="Emails will be added here"
             value={recipientEmail}
             readOnly
-            style={{ width: "100%" }}
+            style={{ width: "100%", marginTop: "-10px" }}
           />
 
           <h3 style={{ marginLeft: "5px" }}>Subject</h3>
@@ -496,7 +477,7 @@ const SendCertificate = () => {
             placeholder="Subject"
             value={subject}
             onChange={(e) => setSubject(e.target.value)}
-            style={{ width: "100%" }}
+            style={{ width: "100%", marginTop: -10 }}
           />
 
           <h3 style={{ marginLeft: "5px" }}>Description</h3>

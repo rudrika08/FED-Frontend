@@ -73,7 +73,7 @@ const VerifyCertificate = () => {
 
   return (
     <div className={styles.container}>
-      <h2 className={styles.title}>Certificate Verification</h2>
+      <h1 className={styles.title} style={{textAlign:"center"}}>Certificate <span style={{ color: "#FF8A00" }}>Verification</span></h1>
       <div className={styles.contentWrapper}>
         {/* Certificate Image */}
         <div className={styles.imageContainer}>
@@ -82,23 +82,25 @@ const VerifyCertificate = () => {
         </div>
 
         {/* Certificate Details Panel */}
-        <div className={styles.detailsContainer}>
-          <table className={styles.detailsTable}>
+        <div className={styles.detailsContainer} >
+          <table className={styles.detailsTable}
+          >
             <tbody>
               <tr>
-                <th>Certificate ID:</th>
+                <th style={{ color: "#FF8A00" }}>Certificate ID:
+                </th>
                 <td>{certificateData.certificateId}</td>
               </tr>
               <tr>
-                <th>Name:</th>
+                <th  style={{ color: "#FF8A00" }}>Name:</th>
                 <td>{certificateData.name}</td>
               </tr>
               <tr>
-                <th>Event:</th>
+                <th  style={{ color: "#FF8A00" }}>Event:</th>
                 <td>{certificateData.event}</td>
               </tr>
               <tr>
-                <th>Email:</th>
+                <th  style={{ color: "#FF8A00" }}>Email:</th>
                 <td>{certificateData.email}</td>
               </tr>
               <tr>

@@ -9,6 +9,7 @@ import {
   generatedAndSendCertificate,
 } from "./tools/certificateTools";
 import { Alert, MicroLoading } from "../../../../../microInteraction";
+import { Link } from "react-router-dom";
 
 const CertificatesForm = () => {
   const { eventId } = useParams();
@@ -20,7 +21,7 @@ const CertificatesForm = () => {
   const [saveLoading, setSaveLoading] = useState(false);
   const [alert, setAlert] = useState(null);
   const [responseImg, setResponseImg] = useState("");
-
+  const SendCertificatePath = "/profile/events/SendCertificate";
   const test = async () => {
     // let formId = await accessOrCreateEventByFormId(eventId);
 
@@ -135,7 +136,6 @@ const CertificatesForm = () => {
       });
       return;
     }
-
     setPreviewLoading(true);
     try {
       const formData = new FormData();
@@ -219,10 +219,10 @@ const CertificatesForm = () => {
   };
 
   return (
-    <div style={{ padding: "20px", marginRight: "30px" }}>
-      <h2>
+    <div style={{ padding: "10px", marginRight: "30px" }}>
+      <h1>
         Create <span style={{ color: "#FF8A00" }}>Certificate</span>
-      </h2>
+      </h1>
       <p>for Event: {eventId}</p>
       <div style={{ display: "flex", gap: "20px", marginTop: "20px" }}>
         <div
@@ -258,11 +258,12 @@ const CertificatesForm = () => {
           )}
         </div>
 
-        <div style={{ width: "30%" }}>
+        <div style={{ width: "30%", }}>
           <input
             type="file"
             onChange={handleCertificateChange}
             accept="image/*"
+            style={{color: "#FF8A00"}}
           />
           <Button onClick={addField}>+ Add Field</Button>
 
@@ -283,6 +284,11 @@ const CertificatesForm = () => {
                   padding: "10px",
                   marginTop: "10px",
                   borderRadius: "5px",
+                  marginLeft: "20px",
+                  marginRight: "20px",
+                  backgroundColor: "rgba(128, 127, 126, 0.066)",
+                  marginBottom: "20px",
+                 
                 }}
               >
                 <div
@@ -303,7 +309,7 @@ const CertificatesForm = () => {
                       cursor: "pointer",
                     }}
                   >
-                    {field.minimized ? "Open" : "Close"}
+                    {field.minimized ? "Open" : "✖"}
                   </button>
                 </div>
                 {!field.minimized && (
@@ -321,7 +327,7 @@ const CertificatesForm = () => {
                       label="X Position (%)"
                       value={field.x}
                       onChange={(e) =>
-                        handleFieldChange(index, "x", Number(e.target.value))
+                      handleFieldChange(index, "x", Number(e.target.value))
                       }
                     />
                     <Input
@@ -382,6 +388,18 @@ const CertificatesForm = () => {
             >
               {saveLoading ? <MicroLoading /> : "Save Certificate"}
             </Button>
+            <Link to={SendCertificatePath}>
+    <Button
+      style={{
+        backgroundColor: "#FF8A00",
+        color: "white",
+        whiteSpace: "nowrap",
+        height: "fit-content",
+      }}
+    >
+      Next
+    </Button>
+  </Link>
           </div>
         </div>
       </div>

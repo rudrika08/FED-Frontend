@@ -69,19 +69,25 @@ const CertificatesPreview = () => {
   };
 
   return (
-    <div style={{ padding: "20px", maxWidth: "800px", margin: "0 auto", border: "1px solid #ccc", borderRadius: "10px" }}>
-      <h2 style={{ textAlign: "center" }}>{eventTitle || "Event Name"} Certificate Preview</h2>
+    <div style={{ padding: "20px", maxWidth: "800px", margin: "0 auto", border: "1px solid #ccc", borderRadius: "10px",overflowY:"auto" ,height:"90vh"}}>
+      <h1 style={{ textAlign: "center" }}>{eventTitle || "Event Name"} Certificate  <span style={{ color: "#FF8A00" }}>Preview</span></h1>
 
       <div style={{ display: "flex", flexDirection: "column", alignItems: "center", marginTop: "20px" }}>
         {previewLoading ? (
           <div
-            style={{
-              position: "absolute",
-              top: "50%",
-              left: "50%",
-              transform: "translate(-50%, -50%)",
-            }}
-          >
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            marginTop: "20px",
+            width: "100%",
+            height: "450px",
+            border: "1px solid #ccc",
+            borderRadius: "10px",
+            position: "relative",
+            justifyContent: "center",
+          }}
+        >
             <MicroLoading />
           </div>
         ) : (
@@ -93,45 +99,45 @@ const CertificatesPreview = () => {
         )}
 
         <div style={{ width: "100%", marginBottom: "20px" }}>
-          <label style={{ display: "block", fontWeight: "bold", marginBottom: "5px" }}>Recipient Name:</label>
+          <label style={{ display: "block", fontWeight: "bold",marginTop:"20px",marginLeft:"6px" }}>Recipient Name:</label>
           <Input
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            style={{ width: "100%", marginBottom: "20px" }}
+            style={{ width: "100%", marginBottom: "20px",marginTop:"-10px" }}
           />
 
-          <label style={{ display: "block", fontWeight: "bold", marginBottom: "5px" }}>Subject:</label>
+          <label style={{ display: "block", fontWeight: "bold", marginTop: "20px",marginLeft:"6px" }}>Subject:</label>
           <Input
             type="text"
             value={subject}
             onChange={(e) => setSubject(e.target.value)}
-            style={{ width: "100%", marginBottom: "20px" }}
+            style={{ width: "100%", marginBottom: "20px",marginTop:"-10px" }}
           />
 
-          <div className={styles.info} style={{ display: "flex", justifyContent: "center", width: "100%", gap: "30px" }}>
+          <div className={styles.info} style={{ justifyContent: "center", width: "100%", marginTop: "20px" }}>
             <div>
-              <label style={{ display: "block", fontWeight: "bold" }}>Description:</label>
+              <label style={{ display: "block", fontWeight: "bold",marginLeft:"6px" }}>Description:</label>
               <Input
                 type="text"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
-                style={{ width: "100%", marginBottom: "20px" }}
+                style={{ width: "100%", marginBottom: "20px",marginTop:"-10px" }}
               />
             </div>
             <div>
-              <label style={{ display: "block", fontWeight: "bold" }}>Recipient's Email ID:</label>
+              <label style={{ display: "block", fontWeight: "bold",marginLeft:"6px" }}>Recipient's Email ID:</label>
               <Input
                 type="email"
                 value={recipientEmail}
                 onChange={(e) => setRecipientEmail(e.target.value)}
-                style={{ width: "100%", padding: "10px", border: "1px solid #ccc", borderRadius: "5px" }}
+                style={{ width: "100%", padding: "10px", border: "1px solid #ccc", borderRadius: "5px",marginTop:"-10px" }}
               />
             </div>
           </div>
         </div>
 
-        <Button onClick={handleSendTestMail} style={{ padding: "10px 20px", borderRadius: "5px", marginTop: "20px" }} disabled={loading}>
+        <Button onClick={handleSendTestMail} style={{ padding: "10px 20px", borderRadius: "5px", marginTop: "-10px" }} disabled={loading}>
           {loading ? "Sending..." : "Send Test Mail"}
         </Button>
       </div>
