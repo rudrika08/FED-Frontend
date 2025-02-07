@@ -6,6 +6,7 @@ import { api } from "../../../../../services";
 import {
   accessOrCreateEventByFormId,
   getCertificatePreview,
+  generatedAndSendCertificate,
 } from "./tools/certificateTools";
 import { Alert, MicroLoading } from "../../../../../microInteraction";
 
@@ -20,6 +21,40 @@ const CertificatesForm = () => {
   const [alert, setAlert] = useState(null);
   const [responseImg, setResponseImg] = useState("");
 
+  const test = async () => {
+    // let formId = await accessOrCreateEventByFormId(eventId);
+
+    // console.log(formId);
+
+    //APNA EMAIL DAAL KE TEST KR LENA
+
+    const attendees = [
+      {
+        fieldValues: {
+          name: "Prakash Bhaia1",
+          email: "",
+        },
+        certificateId: "cm6uu3ryd0001uaox7rctsrod",
+      },
+      {
+        fieldValues: {
+          name: "Prakash Bhaia2",
+          email: "",
+        },
+        certificateId: "cm6uu3ryd0001uaox7rctsrod",
+      },
+    ];
+
+    console.log(
+      await generatedAndSendCertificate({
+        eventId: "67a611e963ace4bfc73cd94e",
+        attendees,
+      })
+    );
+  };
+
+  test();
+
   useEffect(() => {
     if (alert) {
       Alert(alert);
@@ -30,12 +65,12 @@ const CertificatesForm = () => {
   const handleCertificateChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      if (!file.type.startsWith('image/')) {
+      if (!file.type.startsWith("image/")) {
         setAlert({
           type: "error",
           message: "Please upload a valid image file",
           position: "top-right",
-          duration: 3000
+          duration: 3000,
         });
         return;
       }
@@ -46,7 +81,7 @@ const CertificatesForm = () => {
           type: "success",
           message: "Certificate image uploaded successfully",
           position: "top-right",
-          duration: 2000
+          duration: 2000,
         });
       };
       setCertificateFile(file);
@@ -76,7 +111,7 @@ const CertificatesForm = () => {
       type: "info",
       message: "New field added",
       position: "top-right",
-      duration: 2000
+      duration: 2000,
     });
   };
 
@@ -86,7 +121,7 @@ const CertificatesForm = () => {
       type: "info",
       message: "Field removed",
       position: "top-right",
-      duration: 2000
+      duration: 2000,
     });
   };
 
@@ -96,7 +131,7 @@ const CertificatesForm = () => {
         type: "warning",
         message: "Please upload a certificate image first",
         position: "top-right",
-        duration: 3000
+        duration: 3000,
       });
       return;
     }
@@ -118,14 +153,14 @@ const CertificatesForm = () => {
         type: "success",
         message: "Preview updated successfully",
         position: "top-right",
-        duration: 2000
+        duration: 2000,
       });
     } catch (error) {
       setAlert({
         type: "error",
         message: "Error updating preview. Please try again",
         position: "top-right",
-        duration: 3000
+        duration: 3000,
       });
     } finally {
       setPreviewLoading(false);
@@ -138,7 +173,7 @@ const CertificatesForm = () => {
         type: "warning",
         message: "Please upload a certificate image first",
         position: "top-right",
-        duration: 3000
+        duration: 3000,
       });
       return;
     }
@@ -154,7 +189,7 @@ const CertificatesForm = () => {
       formData.append("image", certificateFile);
       formData.append("eventId", eventData.id);
       formData.append("fields", JSON.stringify(fields));
-      
+
       const response = await api.post(
         "/api/certificate/addCertificateTemplate",
         formData
@@ -168,7 +203,7 @@ const CertificatesForm = () => {
         type: "success",
         message: "Certificate template saved successfully",
         position: "top-right",
-        duration: 3000
+        duration: 3000,
       });
     } catch (error) {
       console.error("Error saving certificate template:", error);
@@ -176,7 +211,7 @@ const CertificatesForm = () => {
         type: "error",
         message: "Error saving certificate template. Please try again",
         position: "top-right",
-        duration: 3000
+        duration: 3000,
       });
     } finally {
       setSaveLoading(false);
@@ -207,22 +242,28 @@ const CertificatesForm = () => {
           }}
         >
           {loading && (
-            <div style={{ 
-              position: "absolute", 
-              top: "50%", 
-              left: "50%", 
-              transform: "translate(-50%, -50%)",
-              backgroundColor: "rgba(255, 255, 255, 0.8)",
-              padding: "20px",
-              borderRadius: "5px"
-            }}>
+            <div
+              style={{
+                position: "absolute",
+                top: "50%",
+                left: "50%",
+                transform: "translate(-50%, -50%)",
+                backgroundColor: "rgba(255, 255, 255, 0.8)",
+                padding: "20px",
+                borderRadius: "5px",
+              }}
+            >
               <MicroLoading />
             </div>
           )}
         </div>
 
         <div style={{ width: "30%" }}>
-          <input type="file" onChange={handleCertificateChange} accept="image/*" />
+          <input
+            type="file"
+            onChange={handleCertificateChange}
+            accept="image/*"
+          />
           <Button onClick={addField}>+ Add Field</Button>
 
           <div
@@ -328,8 +369,8 @@ const CertificatesForm = () => {
           </div>
 
           <div style={{ display: "flex", gap: "10px", marginTop: "10px" }}>
-            <Button 
-              onClick={handleRefresh} 
+            <Button
+              onClick={handleRefresh}
               disabled={previewLoading || saveLoading}
             >
               {previewLoading ? <MicroLoading /> : "Refresh"}

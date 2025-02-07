@@ -55,13 +55,46 @@ const sendBatchMail = async () => {
       batchSize: 10,
       formId: "your-form-id",
       subject: "Your email subject",
-      htmlContent: "Your email HTML content"
+      htmlContent: "Your email HTML content",
     });
 
     console.log(response.data);
   } catch (error) {
     console.error("Error sending batch mail:", error);
   }
-}; 
+};
 
-export { accessOrCreateEventByFormId, getCertificatePreview, sendBatchMail };
+const generatedAndSendCertificate = async ({ eventId, attendees }) => {
+  //attendees is an array and eventId is my eventid
+  let batchSize = attendees.length;
+
+  const responseAddAttendees = await api.post("/api/certificate/addAttendee", {
+    eventId,
+    attendees,
+  });
+
+  console.log(responseAddAttendees);
+
+  const responseGetCert = await api.post("/api/certificate/getCertificate", {
+    eventId,
+    batchSize,
+  });
+
+  console.log(responseGetCert);
+
+  const resSendMailinBatch = await api.post("/api/certificate/sendBatchMails", {
+    batchSize,
+    eventId,
+    subject: "Your email subject",
+    htmlContent: "Your email HTML content",
+  });
+
+  console.log(resSendMailinBatch);
+};
+
+export {
+  accessOrCreateEventByFormId,
+  getCertificatePreview,
+  sendBatchMail,
+  generatedAndSendCertificate,
+};
