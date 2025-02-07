@@ -3,8 +3,8 @@ import { useParams } from "react-router-dom";
 import { Button, Input } from "../../../../../components";
 import { api } from "../../../../../services";
 import * as XLSX from "xlsx";
-import { getCertificatePreview, sendBatchMail } from "./tools/certificateTools";
 import { Alert, MicroLoading } from "../../../../../microInteraction";
+import { getCertificatePreview, accessOrCreateEventByFormId } from "../CertificatesForm/tools/certificateTools";
 
 const Checkbox = ({ id, checked, onCheckedChange }) => {
   return (
@@ -35,6 +35,7 @@ const SendCertificate = () => {
   const [certificatePreview, setCertificatePreview] = useState("Loading...");
   const [alert, setAlert] = useState(null);
 
+  // Fetch certificate preview on component mount
   useEffect(() => {
     const fetchCertificatePreview = async () => {
       setPreviewLoading(true);
@@ -57,7 +58,6 @@ const SendCertificate = () => {
 
     fetchCertificatePreview();
   }, [eventId]);
-
   const handleFileUpload = async (event) => {
     const file = event.target.files[0];
     if (!file) return;
@@ -171,6 +171,7 @@ const SendCertificate = () => {
     });
   };
 
+  // Update recipient email string when checked attendees change
   useEffect(() => {
     setRecipientEmail(
       checkedAttendees.map((attendee) => attendee.email).join(", ")
@@ -206,24 +207,32 @@ const SendCertificate = () => {
 
     setSendingMail(true);
     try {
-      await sendBatchMail({
-        batchSize: mailFrequency,
-        formId: eventId,
+        const eventData = await accessOrCreateEventByFormId(eventId);
+      const response = await api.post("/api/certificate/sendBatchMails", {
+        formId: eventData.Id,
+        batchSize: parseInt(mailFrequency, 10),
         subject: subject,
         htmlContent: description,
-        recipients: checkedAttendees,
+        recipients: checkedAttendees.map(attendee => ({
+          email: attendee.email,
+          name: attendee.name || ''
+        }))
       });
 
-      setAlert({
-        type: "success",
-        message: "Certificates sent successfully!",
-        position: "top-right",
-        duration: 3000,
-      });
+      if (response.status === 200) {
+        setAlert({
+          type: "success",
+          message: "Certificates sent successfully!",
+          position: "top-right",
+          duration: 3000,
+        });
+      } else {
+        throw new Error(response.data?.error || 'Failed to send certificates');
+      }
     } catch (error) {
       setAlert({
         type: "error",
-        message: "Failed to send certificates: " + error.message,
+        message: `Failed to send certificates: ${error.message}`,
         position: "top-right",
         duration: 3000,
       });
@@ -245,24 +254,31 @@ const SendCertificate = () => {
 
     setSendingMail(true);
     try {
-      await sendBatchMail({
-        batchSize: 1,
+      const response = await api.post("/api/certificate/sendBatchMails", {
         formId: eventId,
+        batchSize: 1,
         subject: `[TEST] ${subject}`,
         htmlContent: description,
-        recipients: [checkedAttendees[0]],
+        recipients: [{
+          email: checkedAttendees[0].email,
+          name: checkedAttendees[0].name || ''
+        }]
       });
 
-      setAlert({
-        type: "success",
-        message: "Test mail sent successfully!",
-        position: "top-right",
-        duration: 3000,
-      });
+      if (response.status === 200) {
+        setAlert({
+          type: "success",
+          message: "Test mail sent successfully!",
+          position: "top-right",
+          duration: 3000,
+        });
+      } else {
+        throw new Error(response.data?.error || 'Failed to send test mail');
+      }
     } catch (error) {
       setAlert({
         type: "error",
-        message: "Failed to send test mail: " + error.message,
+        message: `Failed to send test mail: ${error.message}`,
         position: "top-right",
         duration: 3000,
       });
@@ -283,7 +299,6 @@ const SendCertificate = () => {
             style={{ display: "none" }}
             id="excel-upload"
             onClick={(e) => {
-              // Reset the input value to allow selecting the same file again
               e.target.value = null;
             }}
           />
@@ -293,7 +308,6 @@ const SendCertificate = () => {
               disabled={fileUploading}
               style={{ cursor: "pointer" }}
               onClick={() => {
-                // Programmatically trigger the file input click
                 document.getElementById("excel-upload").click();
               }}
             >
@@ -304,7 +318,10 @@ const SendCertificate = () => {
             Upload Excel/CSV file containing attendee details
           </span>
         </div>
+
+        {/* Preview and Attendees Section */}
         <div style={{ display: "flex", gap: 20 }}>
+          {/* Certificate Preview */}
           <div
             style={{
               flex: 1,
@@ -335,6 +352,8 @@ const SendCertificate = () => {
               />
             )}
           </div>
+
+          {/* Unchecked Attendees */}
           <div
             style={{
               flex: 1,
@@ -416,6 +435,7 @@ const SendCertificate = () => {
           </div>
         </div>
 
+        {/* Email Configuration Section */}
         <div
           style={{
             padding: 20,
