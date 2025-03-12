@@ -64,32 +64,49 @@ const sendBatchMail = async () => {
   }
 };
 
+// const generatedAndSendCertificate = async ({ eventId, attendees }) => {
+//   // //attendees is an array and eventId is my eventid
+//   // let batchSize = attendees.length;
+
+//   // const responseAddAttendees = await api.post("/api/certificate/addAttendee", {
+//   //   eventId,
+//   //   attendees,
+//   // });
+
+//   // // console.log(responseAddAttendees);
+
+//   // const responseGetCert = await api.post("/api/certificate/getCertificate", {
+//   //   eventId,
+//   //   batchSize,
+//   // });
+
+//   // // console.log(responseGetCert);
+
+//   // const resSendMailinBatch = await api.post("/api/certificate/sendBatchMails", {
+//   //   batchSize,
+//   //   eventId,
+//   //   subject: "Your email subject",
+//   //   htmlContent: "Your email HTML content",
+//   // });
+
+//   // // console.log(resSendMailinBatch);
+// };
+
 const generatedAndSendCertificate = async ({ eventId, attendees }) => {
-  //attendees is an array and eventId is my eventid
-  let batchSize = attendees.length;
+  try {
+    const response = await api.post("/api/certificate/sendCertViaEmail", {
+      eventId,
+      attendees,
+    });
 
-  const responseAddAttendees = await api.post("/api/certificate/addAttendee", {
-    eventId,
-    attendees,
-  });
-
-  console.log(responseAddAttendees);
-
-  const responseGetCert = await api.post("/api/certificate/getCertificate", {
-    eventId,
-    batchSize,
-  });
-
-  console.log(responseGetCert);
-
-  const resSendMailinBatch = await api.post("/api/certificate/sendBatchMails", {
-    batchSize,
-    eventId,
-    subject: "Your email subject",
-    htmlContent: "Your email HTML content",
-  });
-
-  console.log(resSendMailinBatch);
+    if (response.status === 200) {
+      console.log("Certificates generated and sent successfully!");
+    } else {
+      console.error("Error:", response.data);
+    }
+  } catch (error) {
+    console.error("Failed to generate and send certificates:", error);
+  }
 };
 
 export {
