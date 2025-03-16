@@ -5,7 +5,7 @@ import { Button } from "../../../../../components";
 import { api } from "../../../../../services";
 import {
   accessOrCreateEventByFormId,
-  getCertificatePreview,
+  // getCertificatePreview,
   generatedAndSendCertificate,
 } from "./tools/certificateTools";
 import { Alert, MicroLoading } from "../../../../../microInteraction";
@@ -22,35 +22,38 @@ const CertificatesForm = () => {
   const [responseImg, setResponseImg] = useState("");
 
   const test = async () => {
-    // let formId = await accessOrCreateEventByFormId(eventId);
+    let formId = await accessOrCreateEventByFormId(eventId);
 
-    // console.log(formId);
+    console.log(formId);
 
     //APNA EMAIL DAAL KE TEST KR LENA
+
+    console.log(formId);
 
     const attendees = [
       {
         fieldValues: {
-          name: "Prakash Bhaia1",
-          email: "",
+          name: `Prakash Bhaia21 ${Date.now()}`,
+          email: "23051625@kiit.ac.in",
         },
-        certificateId: "cm6uu3ryd0001uaox7rctsrod",
+        certificateId: formId.certificates[formId.certificates.length - 1].id,
       },
       {
         fieldValues: {
-          name: "Prakash Bhaia2",
-          email: "",
+          name: `Prakash Bhaia22 ${Date.now()}`,
+          email: "shreyashks02@gmail.com",
         },
-        certificateId: "cm6uu3ryd0001uaox7rctsrod",
+        certificateId: formId.certificates[formId.certificates.length - 1].id,
       },
     ];
 
-    console.log(
-      await generatedAndSendCertificate({
-        eventId: "67a611e963ace4bfc73cd94e",
-        attendees,
-      })
-    );
+    console.log;
+    await generatedAndSendCertificate({
+      eventId: formId.id,
+      attendees,
+    });
+    // attendees
+    // ();
   };
 
   test();
