@@ -1,10 +1,14 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Button, Input } from "../../../../../components";
 import { api } from "../../../../../services";
 import * as XLSX from "xlsx";
 import { getCertificatePreview, sendBatchMail } from "./tools/certificateTools";
 import { Alert, MicroLoading } from "../../../../../microInteraction";
+import {
+  getCertificatePreview,
+  accessOrCreateEventByFormId,
+} from "../CertificatesForm/tools/certificateTools";
 
 const Checkbox = ({ id, checked, onCheckedChange }) => {
   return (
@@ -206,20 +210,28 @@ const SendCertificate = () => {
 
     setSendingMail(true);
     try {
-      await sendBatchMail({
-        batchSize: mailFrequency,
-        formId: eventId,
+        const eventData = await accessOrCreateEventByFormId(eventId);
+      const response = await api.post("/api/certificate/sendBatchMails", {
+        formId: eventData.Id,
+        batchSize: parseInt(mailFrequency, 10),
         subject: subject,
         htmlContent: description,
-        recipients: checkedAttendees,
+        recipients: checkedAttendees.map((attendee) => ({
+          email: attendee.email,
+          name: attendee.name || "",
+        })),
       });
 
-      setAlert({
-        type: "success",
-        message: "Certificates sent successfully!",
-        position: "top-right",
-        duration: 3000,
-      });
+      if (response.status === 200) {
+        setAlert({
+          type: "success",
+          message: "Certificates sent successfully!",
+          position: "top-right",
+          duration: 3000,
+        });
+      } else {
+        throw new Error(response.data?.error || "Failed to send certificates");
+      }
     } catch (error) {
       setAlert({
         type: "error",
@@ -250,15 +262,24 @@ const SendCertificate = () => {
         formId: eventId,
         subject: `[TEST] ${subject}`,
         htmlContent: description,
-        recipients: [checkedAttendees[0]],
+        recipients: [
+          {
+            email: checkedAttendees[0].email,
+            name: checkedAttendees[0].name || "",
+          },
+        ],
       });
 
-      setAlert({
-        type: "success",
-        message: "Test mail sent successfully!",
-        position: "top-right",
-        duration: 3000,
-      });
+      if (response.status === 200) {
+        setAlert({
+          type: "success",
+          message: "Test mail sent successfully!",
+          position: "top-right",
+          duration: 3000,
+        });
+      } else {
+        throw new Error(response.data?.error || "Failed to send test mail");
+      }
     } catch (error) {
       setAlert({
         type: "error",
