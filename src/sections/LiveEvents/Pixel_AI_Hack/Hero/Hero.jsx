@@ -18,7 +18,6 @@ function Hero({ ongoingEvents, eventName }) {
   const [relatedEventId, setRelatedEventId] = useState(null);
   const [btnTxt, setBtnTxt] = useState(null);
 
-  // Display alerts using Alert component
   useEffect(() => {
     if (alert) {
       const { type, message, position, duration } = alert;
@@ -30,33 +29,26 @@ function Hero({ ongoingEvents, eventName }) {
   const calculateRemainingTime = () => {
     try {
       if (!info.regDateAndTime) return;
-
       const regStartDate = parse(
         info.regDateAndTime,
         "MMMM do yyyy, h:mm:ss a",
         new Date()
       );
       const now = new Date();
-
       const timeDifference = differenceInMilliseconds(regStartDate, now);
-
       if (timeDifference <= 0) {
         setRemainingTime("REGISTER NOW");
         return;
       }
-
       const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
       const hours = Math.floor((timeDifference / (1000 * 60 * 60)) % 24);
       const minutes = Math.floor((timeDifference / (1000 * 60)) % 60);
       const seconds = Math.floor((timeDifference / 1000) % 60);
-
       const remaining =
         days > 0
           ? `${days} day${days > 1 ? "s" : ""} left`
           : `${hours}h ${minutes}m ${seconds}s`;
-
       setRemainingTime(remaining);
-      
     } catch (error) {
       console.error("Date parsing error:", error);
       setRemainingTime(null);
@@ -67,15 +59,12 @@ function Hero({ ongoingEvents, eventName }) {
     const ongoingInfo = ongoingEvents.find(
       (e) => e.info.relatedEvent === "null"
     )?.info;
-
     setInfo(ongoingInfo);
     setIsRegistrationClosed(ongoingInfo?.isRegistrationClosed || false);
-
     const relatedId = ongoingEvents.find(
       (e) => e.info.relatedEvent === "null"
     )?.id;
     setRelatedEventId(relatedId);
-
     if (ongoingInfo?.regDateAndTime) {
       calculateRemainingTime();
       const intervalId = setInterval(calculateRemainingTime, 1000);
@@ -85,7 +74,6 @@ function Hero({ ongoingEvents, eventName }) {
 
   const handleButtonClick = () => {
     if (isRegistrationClosed) return;
-
     if (!authCtx.isLoggedIn) {
       setIsMicroLoading(true);
       sessionStorage.setItem("prevPage", window.location.pathname);
@@ -94,68 +82,6 @@ function Hero({ ongoingEvents, eventName }) {
       handleForm();
     }
   };
-
-  const handleForm = () => {
-    if (authCtx.isLoggedIn) {
-      setIsMicroLoading(true);
-
-      if (authCtx.user.access !== "USER" && authCtx.user.access !== "ADMIN") {
-        setTimeout(() => {
-          setIsMicroLoading(false);
-          setAlert({
-            type: "info",
-            message: "Team Members are not allowed to register for the Event",
-            position: "bottom-right",
-            duration: 3000,
-          });
-        }, 1500);
-        return;
-      }
-
-      if (authCtx.user.regForm?.includes(relatedEventId)) {
-        setAlert({
-          type: "info",
-          message: "You have already registered for this event",
-          position: "bottom-right",
-          duration: 3000,
-        });
-        setIsMicroLoading(false);
-        return;
-      }
-
-      navigate(`/Events/${relatedEventId}/Form`);
-    }
-  };
-
-  useEffect(() => {
-    const updateButtonText = () => {
-      setIsMicroLoading(true);
-      setTimeout(() => {
-        if (isRegistrationClosed) {
-          setBtnTxt("CLOSED");
-        } else if (!authCtx.isLoggedIn) {
-          setBtnTxt(remainingTime || <MicroLoading color="#38ccff" />);
-        } else if (authCtx.user.access !== "USER") {
-          setBtnTxt("ALREADY MEMBER");
-        } else if (authCtx.user.regForm?.includes(relatedEventId)) {
-          setBtnTxt("ALREADY REGISTERED");
-        } else {
-          setBtnTxt(remainingTime || <MicroLoading color="#2F0048" />);
-        }
-       
-      });
-      setIsMicroLoading(false);
-    };
-
-    updateButtonText();
-  }, [
-    isRegistrationClosed,
-    authCtx.isLoggedIn,
-    authCtx.user?.access,
-    authCtx.user?.regForm,
-    relatedEventId,
-    remainingTime,
-  ]);
 
   return (
     <div className={styles.hero}>
@@ -166,9 +92,9 @@ function Hero({ ongoingEvents, eventName }) {
           initial={{ opacity: 0, y: -10, scale: 0.5 }}
           animate={{ opacity: 1, y: 0, rotate: 0, scale: 1 }}
           transition={{ duration: 0.6, ease: "easeOut" }}
-          style={{ perspective: 1000 }}
         >
-          <p className={styles.head}>FED PRESENTS</p>
+         
+          <p className={styles.head}>FED REPRESENTS</p>
         </motion.div>
       </Element>
       <Element name="img">
@@ -176,38 +102,17 @@ function Hero({ ongoingEvents, eventName }) {
           initial={{ opacity: 0, y: -10, scale: 0.5 }}
           animate={{ opacity: 1, y: 0, rotate: 0, scale: 1 }}
           transition={{ duration: 0.6, ease: "easeOut" }}
-          style={{ perspective: 1000 }}
         >
           <img
-            src="https://cdn.prod.website-files.com/663d1907e337de23e83c30b2/676919ef6caf6de8079c286a_image%20(44).png"
-            alt="Hero"
+            src="https://cdn.prod.website-files.com/66ffb182a2a1dbe73904d0b5/67d7f6b6f12d2942bba0adce_Screenshot_2025-03-17_154354-removebg-preview.png"
+            alt="PixelHack Hero"
           />
         </motion.div>
       </Element>
       <div className={styles.text}>
-        <p>Code, Collaborate, Conquer: Your GSoC Journey Starts Here!</p>
-        <button
-          onClick={handleButtonClick}
-          disabled={
-            isMicroLoading ||
-            isRegistrationClosed ||
-            btnTxt === "CLOSED" ||
-            btnTxt === "ALREADY REGISTERED" ||
-            btnTxt === "ALREADY MEMBER" ||
-            btnTxt === `${remainingTime }` && btnTxt !== "REGISTER NOW"
-          }
-          style={{
-            cursor:
-              isRegistrationClosed ||
-              btnTxt === "CLOSED" ||
-              btnTxt === "ALREADY REGISTERED" ||
-              btnTxt === "ALREADY MEMBER" ||
-              btnTxt === `${remainingTime}` && btnTxt !== "REGISTER NOW"
-                ? "not-allowed"
-                : "pointer",
-          }}
-        >
-          {isMicroLoading ? <MicroLoading color="#2F0048" /> : btnTxt}
+        <p>Design, Develop & Innovate with AI at PixelHack!</p>
+        <button onClick={handleButtonClick} disabled={isRegistrationClosed}>
+          {remainingTime}
         </button>
       </div>
       <Alert />

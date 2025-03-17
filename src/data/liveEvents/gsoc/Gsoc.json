@@ -1,42 +1,54 @@
 [
   {
-    "title": "What is this Webinar about?",
-    "content": "This webinar is an exclusive opportunity to gain live insights and inspiration from a GSoC winner. Get tailored strategies, insider tips for winning proposals, and real-life inspiration for kicking off your GSoC journey with the right guidance."
+    "title": "What is PixelHack?",
+    "content": "PixelHack is an immersive hackathon designed to bring together designers, developers, and innovators to explore the synergy between AI, Design Thinking, and Technology. Participants will ideate and create AI-powered solutions for real-world challenges."
   },
   {
     "title": "Who is organizing this event?",
-    "content": "The event is organized by FEDKIIT and features a GSoC alumni sharing their expertise on how to take active participation in Google Summer of Code."
+    "content": "The event is organized by FEDKIIT in collaboration with TBI (Technology Business Incubator) to promote AI-driven innovation and problem-solving using design thinking methodologies."
   },
   {
     "title": "When and where will the event be held?",
-    "content": "The webinar will be conducted online on 3rd January. Join us from the comfort of your home and get ready to learn directly from a GSoC alumni."
+    "content": "PixelHack will be conducted across three days:\n- Day 1 (Workshops & Ideation) - Camp-17 Audi\n- Day 2 (Pitching Round) - Camp-14 Lab\n- Day 3 (Final Submission & Showcase) - Online"
   },
   {
-    "title": "What is the fee for attending the event?",
-    "content": "The event is paid, with a nominal registration fee of ₹49 to gain access to this invaluable session."
+    "title": "Is there a participation fee?",
+    "content": "No, participation in PixelHack is completely free. However, participants must register in advance to secure their spot."
   },
   {
-    "title": "What will I learn from this session?",
-    "content": "The session will cover tailored strategies for GSoC, insider tips for crafting winning proposals, making impactful contributions, community engagement, strategic preparation, and more. Additionally, there will be an interactive real-time Q&A session."
+    "title": "What will I gain from this hackathon?",
+    "content": "You will learn Design Thinking methodologies, explore AI development tools, participate in hands-on workshops, and build AI-driven solutions. Additionally, you’ll gain networking opportunities, mentorship, and a chance to win prizes."
   },
   {
-    "title": "Why should I attend this webinar?",
-    "content": "This session is a unique opportunity to learn from a GSoC alumni who has firsthand experience in succeeding in the program. Gain practical insights, enhance your open source skills, and kickstart your journey with the right guidance."
+    "title": "How do I register for PixelHack?",
+    "content": "Click on the 'Register Now' button on the official event page and complete the registration process. Stay tuned for email updates after registering."
   },
   {
-    "title": "What is the highlight of this event?",
-    "content": "The highlight is learning directly from a GSoC winner, gaining real-world inspiration, and interacting in real-time to clear your doubts and concerns about participating in GSoC."
+    "title": "What is the format of the hackathon?",
+    "content": "PixelHack is divided into three phases:\n- **Day 1:** Workshops on Design Thinking & AI, problem statement selection.\n- **Day 2:** Pitching round for shortlisted teams.\n- **Day 3:** 24-hour project development & final submission (Online)."
   },
   {
-    "title": "How do I register for this webinar?",
-    "content": "Click on the 'Register Now' button on the event page and complete the payment process to secure your spot in the webinar."
+    "title": "Do I need a team to participate?",
+    "content": "Yes, participants must form teams of 2-4 members. If you don't have a team, networking sessions will help you find one."
   },
   {
-    "title": "What will be covered in the Q&A session?",
-    "content": "The Q&A session will address participant queries related to preparing for GSoC, choosing projects, writing impactful proposals, and making meaningful contributions to open source communities."
+    "title": "Will there be mentorship during the hackathon?",
+    "content": "Yes, industry mentors will be available to guide teams throughout the event, helping with design thinking, AI integration, and project development."
   },
   {
-    "title": "Where can I find more information about this webinar?",
-    "content": "Stay tuned for updates on the official FEDKIIT website and social media handles. For any specific queries, you can reach out to the organizers directly."
+    "title": "What are the judging criteria?",
+    "content": "Projects will be evaluated based on:\n- **Innovation & Uniqueness**\n- **Feasibility & Practicality**\n- **AI Integration & Use of Design Thinking**\n- **Presentation & Clarity**"
+  },
+  {
+    "title": "What are the prizes and recognition?",
+    "content": "The top 3 winning teams will be recognized in an **offline felicitation ceremony at TBI** with certificates and prizes. All participants will receive certificates of participation."
+  },
+  {
+    "title": "Can I use a pre-built project?",
+    "content": "No, all projects must be built during the hackathon to ensure fair competition."
+  },
+  {
+    "title": "Where can I find more updates?",
+    "content": "Stay updated through the official FEDKIIT website and social media channels. For specific queries, reach out to the organizers."
   }
 ]

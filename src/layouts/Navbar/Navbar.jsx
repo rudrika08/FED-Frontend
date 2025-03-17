@@ -47,8 +47,8 @@ const Navbar = () => {
 
   useEffect(() => {
     let currentPath = location.pathname;
-    if (/\/gsoc|\/GSOC|\/GSoC|\/gsoc/i.test(currentPath)) {
-      currentPath = "/Gsoc"; // Normalize Gsoc path
+    if (/\/Pixel_AI_Hack|\/Pixel_AI_Hack|\/Pixel_AI_Hack|\/Pixel_AI_Hack/i.test(currentPath)) {
+      currentPath = "/Pixel_AI_Hack"; // Normalize Pixel_AI_Hack path
     }
     setActiveLink(currentPath);
   }, [location]);
@@ -83,9 +83,8 @@ const Navbar = () => {
       window.removeEventListener("scroll", handleNavbarBlur);
     };
   }, []);
-
   const isOmegaActive = activeLink === "/Omega";
-  const isGsocActive = activeLink === "/Gsoc";
+  const isPixel_AI_HackActive = activeLink === "/Pixel_AI_Hack";
 
   return (
     <nav
@@ -151,7 +150,7 @@ const Navbar = () => {
                 to="/"
                 className={`${styles.link} ${
                   activeLink === "/" ? styles.activeLink : ""
-                } ${activeLink === "/Gsoc" ? styles.gsocHover : ""}`}
+                } ${activeLink === "/Pixel_AI_Hack" ? styles.Pixel_AI_HackHover : ""}`}
                 onClick={closeMobileMenu}
               >
                 Home
@@ -162,7 +161,7 @@ const Navbar = () => {
                 to="/Events"
                 className={`${styles.link} ${
                   activeLink === "/Events" ? styles.activeLink : ""
-                } ${activeLink === "/Gsoc" ? styles.gsocHover : ""}`}
+                } ${activeLink === "/Pixel_AI_Hack" ? styles.Pixel_AI_HackHover : ""}`}
                 onClick={closeMobileMenu}
               >
                 Event
@@ -170,13 +169,13 @@ const Navbar = () => {
             </li>
             <li>
               <NavLink
-                to="/Gsoc"
-                className={`${styles.linkGsoc} ${
-                  activeLink === "/Gsoc" ? styles.activeLinkGsoc : ""
-                } ${activeLink === "/Gsoc" ? styles.gsocHover : ""}`}
+                to="/Pixel_AI_Hack"
+                className={`${styles.linkPixel_AI_Hack} ${
+                  activeLink === "/Pixel_AI_Hack" ? styles.activeLinkPixel_AI_Hack : ""
+                } ${activeLink === "/Pixel_AI_Hack" ? styles.Pixel_AI_HackHover : ""}`}
                 onClick={closeMobileMenu}
               >
-                GSoC
+                Pixel_AI_Hack
               </NavLink>
             </li>
             <li>
@@ -184,7 +183,7 @@ const Navbar = () => {
                 to="/Social"
                 className={`${styles.link} ${
                   activeLink === "/Social" ? styles.activeLink : ""
-                } ${activeLink === "/Gsoc" ? styles.gsocHover : ""}`}
+                } ${activeLink === "/Pixel_AI_Hack" ? styles.Pixel_AI_HackHover : ""}`}
                 onClick={closeMobileMenu}
               >
                 Social
@@ -195,7 +194,7 @@ const Navbar = () => {
                 to="/Team"
                 className={`${styles.link} ${
                   activeLink === "/Team" ? styles.activeLink : ""
-                } ${activeLink === "/Gsoc" ? styles.gsocHover : ""}`}
+                } ${activeLink === "/Pixel_AI_Hack" ? styles.Pixel_AI_HackHover : ""}`}
                 onClick={closeMobileMenu}
               >
                 Team
@@ -232,7 +231,7 @@ const Navbar = () => {
             <NavLink to="/Login" onClick={closeMobileMenu}>
               <button
                 className={`${styles.authButton} ${
-                  activeLink === "/Gsoc" ? styles.GsocButton : ""
+                  activeLink === "/Pixel_AI_Hack" ? styles.Pixel_AI_HackButton : ""
                 }`}
               >
                 Login
