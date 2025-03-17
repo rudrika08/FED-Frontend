@@ -22,40 +22,40 @@ const CertificatesForm = () => {
   const [alert, setAlert] = useState(null);
   const [responseImg, setResponseImg] = useState("");
   const SendCertificatePath = "/profile/events/SendCertificate";
-  const test = async () => {
-    let formId = await accessOrCreateEventByFormId(eventId);
+  // const test = async () => {
+  //   let formId = await accessOrCreateEventByFormId(eventId);
 
-    console.log(formId);
+  //   console.log(formId);
 
-    //APNA EMAIL DAAL KE TEST KR LENA
+  //   //APNA EMAIL DAAL KE TEST KR LENA
 
-    console.log(formId);
+  //   console.log(formId);
 
-    const attendees = [
-      {
-        fieldValues: {
-          name: `Prakash Bhaia21 ${Date.now()}`,
-          email: "23051625@kiit.ac.in",
-        },
-        certificateId: formId.certificates[formId.certificates.length - 1].id,
-      },
-      {
-        fieldValues: {
-          name: `Prakash Bhaia22 ${Date.now()}`,
-          email: "shreyashks02@gmail.com",
-        },
-        certificateId: formId.certificates[formId.certificates.length - 1].id,
-      },
-    ];
+  //   const attendees = [
+  //     {
+  //       fieldValues: {
+  //         name: `Prakash Bhaia21 ${Date.now()}`,
+  //         email: "23051625@kiit.ac.in",
+  //       },
+  //       certificateId: formId.certificates[formId.certificates.length - 1].id,
+  //     },
+  //     {
+  //       fieldValues: {
+  //         name: `Prakash Bhaia22 ${Date.now()}`,
+  //         email: "shreyashks02@gmail.com",
+  //       },
+  //       certificateId: formId.certificates[formId.certificates.length - 1].id,
+  //     },
+  //   ];
 
-    console.log;
-    await generatedAndSendCertificate({
-      eventId: formId.id,
-      attendees,
-    });
-    // attendees
-    // ();
-  };
+  //   console.log;
+  //   await generatedAndSendCertificate({
+  //     eventId: formId.id,
+  //     attendees,
+  //   });
+  //   // attendees
+  //   // ();
+  // };
 
   test();
 

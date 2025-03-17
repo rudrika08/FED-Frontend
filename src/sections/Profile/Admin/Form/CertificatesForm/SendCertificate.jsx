@@ -3,10 +3,11 @@ import { useParams } from "react-router-dom";
 import { Button, Input } from "../../../../../components";
 import { api } from "../../../../../services";
 import * as XLSX from "xlsx";
-import { getCertificatePreview, sendBatchMail } from "./tools/certificateTools";
+import {  sendBatchMail } from "./tools/certificateTools";
 import { Alert, MicroLoading } from "../../../../../microInteraction";
 import {
   getCertificatePreview,
+  generatedAndSendCertificate,
   accessOrCreateEventByFormId,
 } from "../CertificatesForm/tools/certificateTools";
 
@@ -196,7 +197,6 @@ const SendCertificate = () => {
       (attendee.name &&
         attendee.name.toLowerCase().includes(checkedFilterText.toLowerCase()))
   );
-
   const handleSendBatchMail = async () => {
     if (!checkedAttendees.length) {
       setAlert({
@@ -207,22 +207,38 @@ const SendCertificate = () => {
       });
       return;
     }
-
+  
     setSendingMail(true);
+  
     try {
-        const eventData = await accessOrCreateEventByFormId(eventId);
-      const response = await api.post("/api/certificate/sendBatchMails", {
-        formId: eventData.Id,
-        batchSize: parseInt(mailFrequency, 10),
-        subject: subject,
-        htmlContent: description,
-        recipients: checkedAttendees.map((attendee) => ({
-          email: attendee.email,
+      const eventData = await accessOrCreateEventByFormId(eventId);
+      if (!eventData || !eventData.id || !eventData.certificates?.length) {
+        throw new Error("Event data retrieval failed or certificates not found");
+      }
+      const certificateId =
+        eventData.certificates[eventData.certificates.length - 1]?.id;
+  
+      if (!certificateId) {
+        throw new Error("Certificate ID not found");
+      }
+  
+      const attendees = checkedAttendees.map((attendee) => ({
+        fieldValues: {
           name: attendee.name || "",
-        })),
+          email: attendee.email,
+        },
+        certificateId,
+      }));
+  
+      if (attendees.length === 0) {
+        throw new Error("No valid attendees found");
+      }
+      const response = await generatedAndSendCertificate({
+        eventId: eventData.id,
+        attendees,
       });
-
-      if (response.status === 200) {
+  
+      if (response?.status === 200) {
         setAlert({
           type: "success",
           message: "Certificates sent successfully!",
@@ -230,9 +246,10 @@ const SendCertificate = () => {
           duration: 3000,
         });
       } else {
-        throw new Error(response.data?.error || "Failed to send certificates");
+        throw new Error("Failed to send certificates");
       }
     } catch (error) {
+      console.error("Error in handleSendBatchMail:", error);
       setAlert({
         type: "error",
         message: "Failed to send certificates: " + error.message,
@@ -243,7 +260,8 @@ const SendCertificate = () => {
       setSendingMail(false);
     }
   };
-
+  
+  
   const handleTestMail = async () => {
     if (!checkedAttendees.length) {
       setAlert({
