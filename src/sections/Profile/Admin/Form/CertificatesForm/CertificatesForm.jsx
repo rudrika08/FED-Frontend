@@ -57,7 +57,7 @@ const CertificatesForm = () => {
   //   // ();
   // };
 
-  test();
+  //test();
 
   useEffect(() => {
     if (alert) {
@@ -391,7 +391,7 @@ const CertificatesForm = () => {
             >
               {saveLoading ? <MicroLoading /> : "Save Certificate"}
             </Button>
-            <Link to={SendCertificatePath}>
+            <Link to={`${SendCertificatePath}/${eventId}`}>
     <Button
       style={{
         backgroundColor: "#FF8A00",
@@ -403,6 +403,7 @@ const CertificatesForm = () => {
       Next
     </Button>
   </Link>
+  
           </div>
         </div>
       </div>
