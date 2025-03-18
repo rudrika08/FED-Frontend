@@ -1,64 +1,28 @@
 import React, { useContext, useEffect, useState } from "react";
+import { Element } from "react-scroll";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "../../../../context/AuthContext";
-import styles from "./styles/LiveInsights.module.scss";
+import styles from "./styles/Hero.module.scss";
 import { parse, differenceInMilliseconds } from "date-fns";
 import { Alert, MicroLoading } from "../../../../microInteraction";
 
-function Card2({ img }) {
-  return (
-    <motion.div
-      className={styles.card}
-      initial={{ opacity: 0, y: 50, scale: 0.5 }}
-      whileInView={{ opacity: 1, y: 0, scale: 1 }}
-      transition={{ duration: 0.6, ease: "easeOut" }}
-      viewport={{ once: true }}
-    >
-      <div className={styles.card_img2}>
-        <img src="https://cdn.prod.website-files.com/645fbc01f38b6fb6255c240c/676dd558d2026a8428f83ded_image-removebg-preview%20(3).png" alt="GSOC" />
-      </div>
-    </motion.div>
-  );
-}
-
-function Card({ img }) {
-  return (
-    <motion.div
-      className={styles.card}
-      initial={{ opacity: 0, y: 50, scale: 0.5 }}
-      whileInView={{ opacity: 1, y: 0, scale: 1 }}
-      transition={{ duration: 0.6, ease: "easeOut" }}
-      viewport={{ once: true }}
-    >
-      <div className={styles.card_img}>
-        <img
-          src="https://cdn.prod.website-files.com/645fbc01f38b6fb6255c240c/676dd6757e773446d895f1c4_gsoc%202025.png"
-          alt="GSOC"
-        />
-      </div>
-    </motion.div>
-  );
-}
-
-function LiveInsights({ ongoingEvents, isRegisteredInRelatedEvents }) {
+function Hero({ ongoingEvents, isRegisteredInRelatedEvents, eventName }) {
   const authCtx = useContext(AuthContext);
   const [alert, setAlert] = useState(null);
   const [remainingTime, setRemainingTime] = useState("");
   const [info, setInfo] = useState({});
   const [isRegistrationClosed, setIsRegistrationClosed] = useState(false);
   const navigate = useNavigate();
-  const [shouldNavigate, setShouldNavigate] = useState(false);
-  const [navigatePath, setNavigatePath] = useState("/");
   const [isMicroLoading, setIsMicroLoading] = useState(false);
-  const [btnTxt, setBtnTxt] = useState("REGISTER NOW");
   const [relatedEventId, setRelatedEventId] = useState(null);
+  const [btnTxt, setBtnTxt] = useState("REGISTER NOW");
 
   useEffect(() => {
     if (alert) {
       const { type, message, position, duration } = alert;
       Alert({ type, message, position, duration });
-      setAlert(null); // Reset alert after displaying it
+      setAlert(null);
     }
   }, [alert]);
 
@@ -69,11 +33,7 @@ function LiveInsights({ ongoingEvents, isRegisteredInRelatedEvents }) {
         "MMMM do yyyy, h:mm:ss a",
         new Date()
       );
-      // const regEndDate = parse(
-      //   "January 9, 2025, 12:00:00 PM",
-      //   "MMMM dd, yyyy, h:mm:ss a",
-      //   new Date()
-      // );
+
       const now = new Date();
 
       if (info.isRegistrationClosed) {
@@ -112,8 +72,6 @@ function LiveInsights({ ongoingEvents, isRegisteredInRelatedEvents }) {
     )?.info;
 
     setInfo(ongoingInfo);
-    // setIsRegistrationClosed(ongoingInfo?.isRegistrationClosed || false);
-
     const relatedId = ongoingEvents.find(
       (e) => e.info.relatedEvent === "null"
     )?.id;
@@ -175,14 +133,14 @@ function LiveInsights({ ongoingEvents, isRegisteredInRelatedEvents }) {
       setIsMicroLoading(true);
       setBtnTxt(
         isRegistrationClosed
-          ? authCtx.user?.regForm?.includes(relatedEventId) 
+          ? authCtx.user?.regForm?.includes(relatedEventId)
             ? "ALREADY REGISTERED"
             : "REGISTRATION CLOSED"
-          : !authCtx.isLoggedIn 
+          : !authCtx.isLoggedIn
           ? remainingTime || "REGISTER NOW"
-          : authCtx.user.access !== "USER" 
+          : authCtx.user.access !== "USER"
           ? "ALREADY MEMBER"
-          : authCtx.user?.regForm?.includes(relatedEventId) 
+          : authCtx.user?.regForm?.includes(relatedEventId)
           ? "ALREADY REGISTERED"
           : remainingTime || "REGISTER NOW"
       );
@@ -200,46 +158,34 @@ function LiveInsights({ ongoingEvents, isRegisteredInRelatedEvents }) {
   ]);
 
   return (
-    <div className={styles.container}>
+    <div className={styles.hero}>
       <div className={styles.circle}></div>
       <div className={styles.circle2}></div>
-      <h1>
-        GET <span className={styles.para}>LIVE</span> INSIGHTS AND INSPIRATION
-      </h1>
-      <div className={styles.mid}>
-        <div className={styles.outerbox}>
-          <Card
-            src="https://cdn.prod.website-files.com/645fbc01f38b6fb6255c240c/676dd558d2026a8428f83ded_image-removebg-preview%20(3).png"
-            alt="GSOC image"
+      <Element name="p">
+        <motion.div
+          initial={{ opacity: 0, y: -10, scale: 0.5 }}
+          animate={{ opacity: 1, y: 0, rotate: 0, scale: 1 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          style={{ perspective: 1000 }}
+        >
+          <p className={styles.head}>FED PRESENTS</p>
+        </motion.div>
+      </Element>
+      <Element name="img">
+        <motion.div
+          initial={{ opacity: 0, y: -10, scale: 0.5 }}
+          animate={{ opacity: 1, y: 0, rotate: 0, scale: 1 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          style={{ perspective: 1000 }}
+        >
+          <img
+            src="https://res.cloudinary.com/dsh3wfn9h/image/upload/v1742324861/image_2025-03-19_00-35-55_1_dslca0.png"
+            alt="PixelHack Hero"
           />
-          <div className={styles.flex1}>
-            <h2>KICK OFF YOUR JOURNEY WITH RIGHT GUIDANCE FROM GSoC ALUMNUS</h2>
-            <div className={styles.mid}>
-              <Card2
-                src="https://cdn.prod.website-files.com/645fbc01f38b6fb6255c240c/676dd558d2026a8428f83ded_image-removebg-preview%20(3).png"
-                alt="GSOC Logo"
-              />
-              <h2>Tailored Strategies for GSoC</h2>
-            </div>
-            <div className={styles.mid}>
-              <Card2
-                src="https://cdn.prod.website-files.com/645fbc01f38b6fb6255c240c/676dd558d2026a8428f83ded_image-removebg-preview%20(3).png"
-                alt="GSOC Logo"
-              />
-              <h2>Real-Life Inspiration</h2>
-            </div>
-            <div className={styles.mid}>
-              <Card2
-                src="https://cdn.prod.website-files.com/645fbc01f38b6fb6255c240c/676dd558d2026a8428f83ded_image-removebg-preview%20(3).png"
-                alt="GSOC Logo"
-              />
-              <h2>Insider Tips for Winning Proposals</h2>
-            </div>
-           
-          </div>
-        </div>
-      </div>
-      <div className={styles.mid}>
+        </motion.div>
+      </Element>
+      <div className={styles.text}>
+        <p>Design, Develop & Innovate with AI at PixelHack!</p>
         <button
           onClick={handleButtonClick}
           disabled={
@@ -268,6 +214,6 @@ function LiveInsights({ ongoingEvents, isRegisteredInRelatedEvents }) {
       <Alert />
     </div>
   );
-  }
+}
 
-export default LiveInsights;
+export default Hero;
