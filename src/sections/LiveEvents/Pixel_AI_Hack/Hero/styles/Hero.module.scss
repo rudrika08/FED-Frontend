@@ -42,16 +42,16 @@
     height: 500px;
     width: 100%;
     object-fit: cover;
-    margin-top: -30px;
+    margin-top: -50px;
 }
 
 .head {
     border: 1px solid #fff;
-    padding: 10px;
+    padding: 10px 15px;
     border-radius: 20px;
     font-family: 'Oswald', sans-serif;
-    font-size: 2rem;
-    font-weight: bold;
+    font-size: 1.2rem;
+    // font-weight: bold;
     color: white;
     text-align: center;
     margin-top: 20px;
@@ -122,10 +122,14 @@
     }
 
     .hero img {
-        height: 350px;
+        height: 300px;
+        margin-top: 1.6rem;
+    }
+    .text p:first-child {
+        font-size: 1rem;
+        margin: 5rem 4rem;
+        font-family: 'Pixelify Sans', sans-serif;
     }
 
-    .text p {
-        font-size: 1rem;
-    }
+    
 }

@@ -168,7 +168,7 @@ function Hero({ ongoingEvents, isRegisteredInRelatedEvents, eventName }) {
           transition={{ duration: 0.6, ease: "easeOut" }}
           style={{ perspective: 1000 }}
         >
-          <p className={styles.head}>FED REPRESENTS</p>
+          <p className={styles.head}>FED PRESENTS</p>
         </motion.div>
       </Element>
       <Element name="img">
@@ -179,7 +179,7 @@ function Hero({ ongoingEvents, isRegisteredInRelatedEvents, eventName }) {
           style={{ perspective: 1000 }}
         >
           <img
-            src="https://cdn.prod.website-files.com/66ffb182a2a1dbe73904d0b5/67d7f6b6f12d2942bba0adce_Screenshot_2025-03-17_154354-removebg-preview.png"
+            src="https://res.cloudinary.com/dsh3wfn9h/image/upload/v1742324861/image_2025-03-19_00-35-55_1_dslca0.png"
             alt="PixelHack Hero"
           />
         </motion.div>

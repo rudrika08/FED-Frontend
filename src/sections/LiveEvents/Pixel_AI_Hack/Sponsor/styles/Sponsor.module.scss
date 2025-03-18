@@ -18,7 +18,7 @@
   font-size: 32px;
   font-weight: bold;
   color: #fff;
-  margin-bottom: 20px;
+  margin-bottom: 40px;
 }
 
 .sponsorBox {
@@ -26,7 +26,7 @@
   align-items: center;
   justify-content: center;
   background: rgba(255, 255, 255, 0.2);
-  width: 50%;
+  // width: 50%;
   padding: 20px;
   border-radius: 15px;
   backdrop-filter: blur(10px);
@@ -55,4 +55,13 @@
   font-size: 28px;
   font-weight: bold;
   color: #FFD389;
+}
+
+@media (max-width: 768px) {
+  .sponsorBox {
+    width: 80%;
+  }
+  .title {
+    font-size: 24px;
+  }
 }

@@ -15,6 +15,9 @@
       color: #FFD389;
       font-family: 'Pixelify Sans', sans-serif;
     }
+    @media (max-width: 768px) {
+      font-size: 1.8rem;
+    }
   }
   .manualButton {
     display: inline-block;
@@ -73,6 +76,10 @@
       font-family: 'Oswald', sans-serif;
       font-size: 1.8rem;
       margin-bottom: 1rem;
+
+      @media(max-width: 768px) {
+        font-size: 1.2rem;
+      }
     }
 
     p {
@@ -80,5 +87,13 @@
       font-weight: 300;
       line-height: 1.5;
     }
+    
   }
+}
+@media (max-width: 768px) {
+  .featureCard {
+    width: 100%;
+  }
+  
+  
 }
