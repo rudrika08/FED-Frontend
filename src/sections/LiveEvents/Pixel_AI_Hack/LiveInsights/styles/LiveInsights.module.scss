@@ -1,0 +1,65 @@
+@import url('https://fonts.googleapis.com/css2?family=Pixelify+Sans&display=swap');
+
+.pixelHackSection {
+  background: #000026;
+  color: white;
+  text-align: center;
+  padding: 4rem 2rem;
+  font-family: 'Pixelify Sans', sans-serif;
+
+  .topic {
+    font-size: 3rem;
+    font-weight: bold;
+    margin-bottom: 2rem;
+    font-family: 'Pixelify Sans', sans-serif;
+    span {
+      color: #FFD389;
+      font-family: 'Pixelify Sans', sans-serif;
+    }
+  }
+
+  .featuresContainer {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .featureCard {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    padding: 2rem;
+    width: 300px;
+    text-align: center;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease-in-out;
+    
+    &:hover {
+      transform: translateY(-5px);
+    }
+
+    .icon {
+      font-size: 3rem;
+      color: #FFD389;
+      margin-bottom: 1rem;
+    }
+    h2{
+        font-size: 2rem;
+        margin-bottom: 1rem;
+        font-style: 'Pixelify Sans', sans-serif;
+    }
+
+    h3 {
+      font-family: 'Agency FB', sans-serif;
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+    }
+
+    p {
+      font-size: 1rem;
+      font-weight: 300;
+      line-height: 1.5;
+    }
+  }
+}
