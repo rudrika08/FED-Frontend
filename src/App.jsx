@@ -56,7 +56,7 @@ const MainLayout = () => {
 
   useEffect(() => {
     if (isPixel_AI_HackPage) {
-      document.body.style.backgroundColor = "black";
+      document.body.style.backgroundColor = "#000026";
     } else {
       document.body.style.backgroundColor = "";
     }

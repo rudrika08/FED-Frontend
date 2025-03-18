@@ -122,12 +122,12 @@ header {
 }
 .Pixel_AI_HackBackGround:hover{
   transition: .2s linear;
-  background: linear-gradient( to right,
-    rgba(17, 44, 60, 0.8),
-    rgba(226, 8, 76, 0.8),
-    rgba(255, 211, 137, 0.8),
-    rgba(180, 223, 255, 0.8)
-  );
+  background:  linear-gradient( to left,
+  rgb(14, 46, 65),
+  rgb(149, 6, 51),
+  rgba(255, 211, 137, 1),
+  rgba(180, 223, 255, 1)
+) !important;
 }
 .close {
   margin-right: 15px;

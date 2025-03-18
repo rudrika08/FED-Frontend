@@ -91,8 +91,8 @@
 
 .navLinks .activeLinkPixel_AI_Hack {
   background: linear-gradient( to left,
-    #112C3C,
-    #E2084C,
+    #64b0dd,
+    #e9487b,
     #FFD389,
     #B4DFFF
   );
@@ -104,7 +104,7 @@
 
 .navLinks .Pixel_AI_HackHover:hover {
   background: linear-gradient( to right,
-    #112C3C,
+    #2a6588,
     #E2084C,
     #FFD389,
     #B4DFFF
@@ -278,9 +278,9 @@
   ) !important;
 
   &:hover {
-    background: linear-gradient( to right,
-      rgba(17, 44, 60, 1),
-      rgba(226, 8, 76, 1),
+    background: linear-gradient( to left,
+      rgb(14, 46, 65),
+      rgb(149, 6, 51),
       rgba(255, 211, 137, 1),
       rgba(180, 223, 255, 1)
     ) !important;

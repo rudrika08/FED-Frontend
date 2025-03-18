@@ -5,7 +5,7 @@ import styles from "./styles/LiveInsights.module.scss";
 const PixelHackSection = () => {
   return (
     <section className={styles.pixelHackSection}>
-      <h2 className={styles.topic}>Why Join <span>PixelHack?</span></h2>
+      <h2 className={styles.topic}>Why Join <span>Pixel-AI-Hack?</span></h2>
       <div className={styles.featuresContainer}>
         
         <div className={styles.featureCard}>
