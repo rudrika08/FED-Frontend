@@ -6,7 +6,7 @@ import { Element } from "react-scroll";
 import { useInView } from "react-intersection-observer";
 import styles from "./styles/Pixel_AI_Hack.module.scss";
 import Hero from "../../../sections/LiveEvents/Pixel_AI_Hack/Hero/Hero.jsx"; 
-import Speaker from "../../../sections/LiveEvents/Pixel_AI_Hack/Speaker/Speaker.jsx";
+import Sponsor from "../../../sections/LiveEvents/Pixel_AI_Hack/Sponsor/Sponsor.jsx";
 import Attend from "../../../sections/LiveEvents/Pixel_AI_Hack/Attend/Attend.jsx";
 import ChatBot from "../../../features/ChatBot/ChatBot.jsx";
 import Accordion from "../../../components/LiveEvents/Accordian/Accordian.jsx";
@@ -119,7 +119,7 @@ function Pixel_AI_Hack() {
         isRegisteredInRelatedEvents={isRegisteredInRelatedEvents}
         eventName={eventName}
       />
-      <Speaker />
+      <Sponsor />
       <LiveInsights 
         ongoingEvents={ongoingEvents}
         isRegisteredInRelatedEvents={isRegisteredInRelatedEvents}

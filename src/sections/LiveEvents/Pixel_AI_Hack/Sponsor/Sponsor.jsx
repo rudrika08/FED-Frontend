@@ -1,5 +1,5 @@
 import React from "react";
-import style from "./styles/Speaker.module.scss";
+import style from "./styles/Sponsor.module.scss";
 
 const TitleSponsor = () => {
   return (
