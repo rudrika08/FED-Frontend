@@ -84,33 +84,28 @@
     }
 
     button {
-        margin-top: 0px;
-        --border: 5px;
-        --slant: 0.7em;
-        --color: rgba(255, 211, 137, 0.8);
-        font-size: 20px;
-        padding: 1rem 1.8rem ;
-        border-radius: 10px;
+        display: inline-block;
+        padding: 15px 28px;
+        background-color: #FFD389;
+        color: #000026;
+        text-decoration: none;
+        border-radius: 5px;
         font-weight: bold;
-        min-width: 13rem;
-        
-        transition: ease-in 0.5s, font-size 0.3s ease-in-out;
-  
-  
-        position: relative;
-        color: white;
-        background: rgba(226, 8, 76, 0.8);
-        
+        transition: background-color 0.3s ease;
+        font-family: 'Oswald', sans-serif;
+        margin-top: 0rem;
+        font-size: 1.2rem;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    
         &:hover {
-          font-size: 22px;
-          transition: border 0.5 ease-out 0.5 , font-size 0.5s ease-in-out 0.5s;
-          border: none;
-          background: rgba(239, 130, 165, 0.8);
-          color: black;
+          background-color: #FFD389;
+          transition: 0.3s;
+          scale: 1.1;
+
+        }
           
         }
       }
-}
 
 @media (max-width: 480px) {
     .circle {

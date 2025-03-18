@@ -6,6 +6,7 @@ import AuthContext from "../../../../context/AuthContext";
 import styles from "./styles/Hero.module.scss";
 import { parse, differenceInMilliseconds } from "date-fns";
 import { Alert, MicroLoading } from "../../../../microInteraction";
+import { Link } from "react-router-dom";
 
 function Hero({ ongoingEvents, eventName }) {
   const authCtx = useContext(AuthContext);
@@ -111,9 +112,10 @@ function Hero({ ongoingEvents, eventName }) {
       </Element>
       <div className={styles.text}>
         <p>Design, Develop & Innovate with AI at PixelHack!</p>
-        <button onClick={handleButtonClick} disabled={isRegistrationClosed}>
-          {remainingTime}
-        </button>
+
+        <Link to="/Events/67d718716144f3ad08301612" className={styles.btn}>
+        <button> Register Now</button> 
+        </Link>
       </div>
       <Alert />
     </div>

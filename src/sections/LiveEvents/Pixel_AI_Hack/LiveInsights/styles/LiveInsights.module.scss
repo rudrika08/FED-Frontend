@@ -16,6 +16,26 @@
       font-family: 'Pixelify Sans', sans-serif;
     }
   }
+  .manualButton {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #FFD389;
+    color: #000026;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    font-family: 'Oswald', sans-serif;
+    margin-top: 2rem;
+    font-size: 1.2rem;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+
+    &:hover {
+      background-color: #FFD389;
+      transition: 0.3s;
+      scale: 1.1;
+    }
+  }
 
   .featuresContainer {
     display: flex;

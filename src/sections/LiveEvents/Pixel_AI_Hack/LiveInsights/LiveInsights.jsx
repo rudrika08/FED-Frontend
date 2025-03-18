@@ -25,8 +25,11 @@ const PixelHackSection = () => {
           <h3>Exciting Prizes & More</h3>
           <p>Compete for cash prizes, certificates, and exclusive learning opportunities.</p>
         </div>
-        
+       
       </div>
+      <a href="https://docs.google.com/document/d/1G85pAcR6lUi6zp6EuzofsUBmumCkd0qIfWBZd3eCM3k/edit?tab=t.htfc7n5buqfj" target="_blank" rel="noreferrer" className={styles.manualButton}>
+        Read Manual
+      </a>
     </section>
   );
 };
