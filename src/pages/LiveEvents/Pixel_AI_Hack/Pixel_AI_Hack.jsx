@@ -4,17 +4,17 @@ import AuthContext from "../../../context/AuthContext.jsx";
 import { motion } from "framer-motion";
 import { Element } from "react-scroll";
 import { useInView } from "react-intersection-observer";
-import styles from "./styles/Gsoc.module.scss";
-import Hero from "../../../sections/LiveEvents/Gsoc/Hero/Hero.jsx"; 
-import Speaker from "../../../sections/LiveEvents/Gsoc/Speaker/Speaker.jsx";
-import Attend from "../../../sections/LiveEvents/Gsoc/Attend/Attend.jsx";
+import styles from "./styles/Pixel_AI_Hack.module.scss";
+import Hero from "../../../sections/LiveEvents/Pixel_AI_Hack/Hero/Hero.jsx"; 
+import Sponsor from "../../../sections/LiveEvents/Pixel_AI_Hack/Sponsor/Sponsor.jsx";
+import Attend from "../../../sections/LiveEvents/Pixel_AI_Hack/Attend/Attend.jsx";
 import ChatBot from "../../../features/ChatBot/ChatBot.jsx";
 import Accordion from "../../../components/LiveEvents/Accordian/Accordian.jsx";
-import Faqs from "../../../sections/LiveEvents/Gsoc/Faqs/Faqs.jsx";
-import LiveInsights from "../../../sections/LiveEvents/Gsoc/LiveInsights/LiveInsights.jsx";
-import TeamPage from "../../../sections/LiveEvents/Gsoc/TeamPage/TeamPage.jsx";
+import Faqs from "../../../sections/LiveEvents/Pixel_AI_Hack/Faqs/Faqs.jsx";
+import LiveInsights from "../../../sections/LiveEvents/Pixel_AI_Hack/LiveInsights/LiveInsights.jsx";
+import TeamPage from "../../../sections/LiveEvents/Pixel_AI_Hack/TeamPage/TeamPage.jsx";
 
-function Gsoc() {
+function Pixel_AI_Hack() {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -119,7 +119,7 @@ function Gsoc() {
         isRegisteredInRelatedEvents={isRegisteredInRelatedEvents}
         eventName={eventName}
       />
-      <Speaker />
+      <Sponsor />
       <LiveInsights 
         ongoingEvents={ongoingEvents}
         isRegisteredInRelatedEvents={isRegisteredInRelatedEvents}
@@ -136,4 +136,4 @@ function Gsoc() {
   );
 }
 
-export default Gsoc;
+export default Pixel_AI_Hack;
