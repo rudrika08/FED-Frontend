@@ -1,16 +1,19 @@
 import { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import { api } from "../../../../../services";
 import { MicroLoading } from "../../../../../microInteraction";
 import styles from "./styles/VerifyCertificate.module.scss";
 import { Button } from "../../../../../components";
+import { use } from "react";
 
 const VerifyCertificate = () => {
   const [searchParams] = useSearchParams();
   const certificateId = searchParams.get("id");
+  const {issuedCertificateId} = useParams();
   const [certificateData, setCertificateData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  
 
   useEffect(() => {
     if (!certificateId) {
@@ -18,6 +21,9 @@ const VerifyCertificate = () => {
       setLoading(false);
       return;
     }
+
+    console.log("Certificate ID:", certificateId);  
+   
 
     const fetchCertificate = async () => {
       try {
@@ -89,7 +95,7 @@ const VerifyCertificate = () => {
               <tr>
                 <th style={{ color: "#FF8A00" }}>Certificate ID:
                 </th>
-                <td>{certificateData.certificateId}</td>
+                <td>{certificateId}</td>
               </tr>
               <tr>
                 <th  style={{ color: "#FF8A00" }}>Name:</th>
