@@ -37,7 +37,8 @@ const VerifyCertificate = () => {
             certificateId: response.data.certificate.certificateId,
             name: response.data.certificate.fieldValues?.name || "N/A",
             email: response.data.certificate.email || "N/A",
-            event: response.data.certificate.eventId || "N/A",
+            event: response.data.event?.name  || "N/A",
+            date: response.data.event?.createdAt  || "N/A",
           });
         } else {
           setError("Invalid certificate data.");
@@ -110,12 +111,13 @@ const VerifyCertificate = () => {
                 <td>{certificateData.email}</td>
               </tr>
               <tr>
-                
-                
-                  <Button onClick={handleDownload}>
+                <th  style={{ color: "#FF8A00" }}>Date:</th>
+                <td>{certificateData.date}</td>
+              </tr>
+              <tr>
+                  <Button onClick={handleDownload}> 
                     Download
                   </Button>
-                
               </tr>
             </tbody>
           </table>

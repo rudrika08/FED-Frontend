@@ -31,7 +31,7 @@ const SendCertificate = () => {
   const [attendees, setAttendees] = useState([]);
   const [checkedAttendees, setCheckedAttendees] = useState([]);
   const [subject, setSubject] = useState("Certificate of Appreciation");
-  const [description, setDescription] = useState("");
+  const [body, setDescription] = useState("");
   const [recipientEmail, setRecipientEmail] = useState("");
   const [mailFrequency, setMailFrequency] = useState(20);
   const [uncheckedFilterText, setUncheckedFilterText] = useState("");
@@ -236,6 +236,8 @@ const SendCertificate = () => {
       const response = await generatedAndSendCertificate({
         eventId: eventData.id,
         attendees,
+        subject,
+        body,
       });
   
       if (response?.status === 200) {
@@ -324,6 +326,8 @@ const SendCertificate = () => {
               height: 300,
               objectFit: "cover",
               position: "relative",
+              overflow: "hidden",
+              maxWidth:"800px",
             }}
           >
             {previewLoading ? (
@@ -341,7 +345,7 @@ const SendCertificate = () => {
               <img
                 src={certificatePreview}
                 alt="Certificate Preview"
-                style={{ width: "100%", height: "auto", borderRadius: 10 }}
+                style={{ width: "98%", borderRadius: 10, objectFit:"cotain", maxHeight:"270px" }}
               />
             )}
           </div>
@@ -464,6 +468,7 @@ const SendCertificate = () => {
             maxHeight: "330px",
             overflowY: "auto",
             width: "50%",
+            overflowX: "hidden",
           }}
         >
           <h3 style={{ marginLeft: "5px" }}>Checked Attendees</h3>
@@ -523,7 +528,7 @@ const SendCertificate = () => {
           <Input
             type="text"
             placeholder="Description"
-            value={description}
+            value={body}
             onChange={(e) => setDescription(e.target.value)}
             style={{
               width: "100%",

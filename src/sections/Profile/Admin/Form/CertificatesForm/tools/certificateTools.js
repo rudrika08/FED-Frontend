@@ -92,11 +92,13 @@ const sendBatchMail = async () => {
 //   // // console.log(resSendMailinBatch);
 // };
 
-const generatedAndSendCertificate = async ({ eventId, attendees }) => {
+const generatedAndSendCertificate = async ({ eventId, attendees, subject, body }) => {
   try {
     const response = await api.post("/api/certificate/sendCertViaEmail", {
       eventId,
       attendees,
+      subject,
+      body,
     });
 
     if (response.status === 200) {
