@@ -5,6 +5,7 @@ import { MicroLoading } from "../../../../../microInteraction";
 import styles from "./styles/VerifyCertificate.module.scss";
 import { Button } from "../../../../../components";
 import { use } from "react";
+import { color } from "framer-motion";
 
 const VerifyCertificate = () => {
   const [searchParams] = useSearchParams();
@@ -111,11 +112,11 @@ const VerifyCertificate = () => {
                 <td>{certificateData.email}</td>
               </tr>
               <tr>
-                <th  style={{ color: "#FF8A00" }}>Date:</th>
+                <th  style={{ color: "#FF8A00" }}>Event Date:</th>
                 <td>{certificateData.date}</td>
               </tr>
               <tr>
-                  <Button onClick={handleDownload}> 
+                  <Button onClick={handleDownload} style={{backgroundColor: "#FF8A00", color: "white"}}> 
                     Download
                   </Button>
               </tr>
