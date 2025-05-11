@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./styles/Faqs.module.scss";
-import faqs from "../../../../data/liveEvents/gsoc/Gsoc.json";
+import faqs from "../../../../data/liveEvents/Pixel_AI_Hack/Pixel_AI_Hack.json";
 import Accordion from "../../../../components/LiveEvents/Accordian/Accordian";
 
 const Faqs = () => {

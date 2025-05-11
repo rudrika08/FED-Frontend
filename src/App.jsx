@@ -36,7 +36,7 @@ const Team = lazy(() => import("./pages/Team/Team"));
 const Alumni = lazy(() => import("./pages/Alumni/Alumni"));
 const Profile = lazy(() => import("./pages/Profile/Profile"));
 // const Omega = lazy(() => import("./pages/Omega/Omega"));
-// const Gsoc = lazy(() => import("./pages/LiveEvents/Gsoc/Gsoc"));
+const Pixel_AI_Hack = lazy(() => import("./pages/LiveEvents/Pixel_AI_Hack/Pixel_AI_Hack"));
 
 const Signup = lazy(() => import("./pages/Authentication/Signup/Signup"));
 const ForgotPassword = lazy(() =>
@@ -57,19 +57,19 @@ const OTPInput = lazy(() =>
 
 const MainLayout = () => {
   const location = useLocation();
-  // const isGsocPage = /\/gsoc|\/GSOC|\/GSoC|\/gsoc/i.test(location.pathname);
+  const isPixel_AI_HackPage = location.pathname === "/Pixel_AI_Hack";
 
-  // useEffect(() => {
-  //   if (isGsocPage) {
-  //     document.body.style.backgroundColor = "black";
-  //   } else {
-  //     document.body.style.backgroundColor = "";
-  //   }
+  useEffect(() => {
+    if (isPixel_AI_HackPage) {
+      document.body.style.backgroundColor = "#000026";
+    } else {
+      document.body.style.backgroundColor = "";
+    }
 
-  //   return () => {
-  //     document.body.style.backgroundColor = "";
-  //   };
-  // }, [isGsocPage]);
+    return () => {
+      document.body.style.backgroundColor = "";
+    };
+  }, [isPixel_AI_HackPage]);
 
   return (
     <div>
@@ -103,7 +103,7 @@ function App() {
             <Route path="/Team" element={<Team />} />
             <Route path="/Alumni" element={<Alumni />} />
             {/* <Route path="/Omega" element={<Omega />} /> */}
-            {/* <Route path="/Gsoc" element={<Gsoc />} /> */}
+            <Route path="/Pixel_AI_Hack" element={<Pixel_AI_Hack />}/>
             {/* Route After Login */}
             {authCtx.isLoggedIn && (
               <Route path="/profile" element={<Profile />}>
